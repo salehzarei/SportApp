@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:get/get.dart';
 import 'package:sportapplication/Pages/Component/Constans.dart';
 import 'package:sportapplication/Pages/Lists/PackagesListItem.dart';
 
-class Home extends StatelessWidget {
+import '../CategoryList.dart';
 
+class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -39,7 +41,9 @@ class Home extends StatelessWidget {
               children: [
                 Expanded(
                     child: GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    Get.to(CategoryList());
+                  },
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -137,6 +141,4 @@ class Home extends StatelessWidget {
       ),
     );
   }
-
-  
 }
