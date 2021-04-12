@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sportapplication/Controller/Functions/Controller.dart';
+import 'package:sportapplication/controller/Functions/Controller.dart';
 
 import 'PackagesListItemDetail.dart';
 
@@ -15,7 +15,7 @@ class PackagesListItem extends StatelessWidget {
       child: ListView.builder(
           physics: BouncingScrollPhysics(),
           shrinkWrap: true,
-          padding: EdgeInsets.symmetric(horizontal: 20),
+          padding: EdgeInsets.symmetric(horizontal: 15),
           scrollDirection: Axis.horizontal,
           itemCount: 10,
           itemBuilder: (context, index) {

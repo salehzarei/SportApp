@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sportapplication/Controller/Functions/Controller.dart';
-import 'Views/Profile.dart';
-import 'Views/Home.dart';
+import 'package:sportapplication/controller/Functions/Controller.dart';
+import 'package:sportapplication/view/component/appBarWidget.dart';
+import 'package:sportapplication/view/page/home/Home.dart';
+import 'package:sportapplication/view/page/profile/Profile.dart';
 
-class HomePage extends StatelessWidget {
+class MainPage extends StatelessWidget {
   final Controller active = Get.put(Controller());
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -170,60 +172,31 @@ class HomePage extends StatelessWidget {
             body: Column(
               children: [
                 active.activclick.value != 4
-                    ? Card(
-                        margin: EdgeInsets.all(0),
-                        elevation: 10.0,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(0)),
-                        child: Padding(
-                          padding: const EdgeInsets.all(10),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                  child: Container(
-                                height: 50,
-                                padding: EdgeInsets.all(10),
-                                decoration: BoxDecoration(
-                                    border: Border.all(
-                                        width: 0.5, color: Colors.black),
-                                    borderRadius: BorderRadius.circular(5)),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  // mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(Icons.search),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Expanded(
-                                        child: TextFormField(
-                                      decoration: InputDecoration(
-                                          border: InputBorder.none,
-                                          hintText: 'جستجو در اسپورت'),
-                                    ))
-                                  ],
-                                ),
-                              )),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Icon(Icons.shopping_basket_outlined),
-                            ],
-                          ),
-                        ),
-                      )
+                    ? AppBarWidget()
                     : Container(),
-                ///////////////////////////main//////////////////////////////
-                active.activclick.value == 0
-                    ? Home()
-                    : active.activclick.value == 4
-                        ? Profile()
-                        : Container()
+                _pageView(),
               ],
             ),
           ),
         ),
       ),
     );
+  }
+
+  _pageView() {
+    switch (active.activclick.value) {
+      case 0:
+        return Home();
+        break;
+      case 1:
+        break;
+      case 2:
+        break;
+      case 3:
+        break;
+      case 4:
+        return Profile();
+        break;
+    }
   }
 }

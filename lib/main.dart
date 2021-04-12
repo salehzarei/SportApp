@@ -1,8 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-
-import 'Pages/HomePage.dart';
+import 'package:sportapplication/view/MainPage.dart';
 
 //Color(0xfffbc02d)
 main() async {
@@ -24,7 +23,7 @@ main() async {
   runApp(GetMaterialApp(
     title: 'Sport+',
     debugShowCheckedModeBanner: false,
-    home: HomePage(),
+    home: MainPage(),
     theme: ThemeData(
         // backgroundColor: Colors.white.withOpacity(.9),
         backgroundColor: Colors.white,
@@ -44,4 +43,5 @@ main() async {
               borderRadius: BorderRadius.all(Radius.circular(5.0))),
         )),
   ));
+
 }

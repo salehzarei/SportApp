@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sportapplication/Controller/Functions/Controller.dart';
-import 'package:sportapplication/Pages/Component/Constans.dart';
+import 'package:sportapplication/controller/Functions/Controller.dart';
+import 'package:sportapplication/view/component/Constans.dart';
 
 class CategoryList extends StatelessWidget {
   final Controller activ = Get.put(Controller());
@@ -106,7 +106,7 @@ class CategoryList extends StatelessWidget {
                   flex: 4,
                   child: Column(
                     children: [
-                      Constans().divider('تور و سفر'),
+                      divider(title: 'تور و سفر', callback: (){}),
                       Expanded(
                         child: GridView.builder(
                             shrinkWrap: true,
