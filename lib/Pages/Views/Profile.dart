@@ -194,7 +194,9 @@ class Profile extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: 2,),
+          SizedBox(
+            height: 2,
+          ),
           Card(
             elevation: 5.0,
             margin: EdgeInsets.all(0),
