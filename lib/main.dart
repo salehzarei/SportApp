@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:sportapplication/view/MainPage.dart';
 
+import 'view/page/login/LoginPage.dart';
+
 //Color(0xfffbc02d)
 main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,7 +25,7 @@ main() async {
   runApp(GetMaterialApp(
     title: 'Sport+',
     debugShowCheckedModeBanner: false,
-    home: MainPage(),
+    home: LoginPage(),
     theme: ThemeData(
         // backgroundColor: Colors.white.withOpacity(.9),
         backgroundColor: Colors.white,

@@ -3,7 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
-divider({@required String title, @required callback}) {
+divider({
+  @required String title,
+  @required callback,
+}) {
   return Container(
     margin: EdgeInsets.only(left: 4, right: 15, top: 8, bottom: 10),
     child: IntrinsicHeight(
@@ -43,6 +46,67 @@ divider({@required String title, @required callback}) {
             ),
           )
         ],
+      ),
+    ),
+  );
+}
+
+textFieldLogin(
+    {@required BuildContext context,
+    @required String labeltext,
+    @required bool obscureText,
+    @required TextInputType textInputType,
+    TextEditingController controller,
+    Icon icons,
+    bool enabled = true}) {
+  return Directionality(
+    textDirection: TextDirection.rtl,
+    child: Container(
+      height: 45,
+      // padding: EdgeInsets.symmetric(horizontal: 0),
+      // decoration: BoxDecoration(
+      //     borderRadius: BorderRadius.circular(10),
+      //     border: Border.all(width: 1, color: Theme.of(context).primaryColor)),
+      child: TextFormField(
+        controller: controller,
+        keyboardType: textInputType,
+        obscureText: obscureText,
+        enableSuggestions: false,
+        autocorrect: false,
+        enabled: enabled,
+        obscuringCharacter: '*',
+        style: TextStyle(color: Colors.black, fontSize: 18),
+        decoration: InputDecoration(
+          // icon: icons,
+          prefixIcon: icons,
+          fillColor: Colors.white,
+          filled: true,
+          labelStyle: TextStyle(color: Colors.black, fontSize: 16),
+          counterText: '',
+          border: InputBorder.none,
+          labelText: labeltext,
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10.0),
+            borderSide: BorderSide(
+              color: Colors.grey,
+              width: 2.0,
+            ),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10.0),
+            borderSide: BorderSide(
+              color: Theme.of(context).primaryColor,
+              width: 2.0,
+            ),
+          ),
+          disabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10.0),
+            borderSide: BorderSide(
+              color: Theme.of(context).primaryColor,
+              width: 2.0,
+            ),
+          ),
+        ),
       ),
     ),
   );
@@ -97,7 +161,11 @@ textFormFieldHintWidget(
   );
 }
 
-imageShower({@required imageUrl, @required margin, @required fit, @required borderRadius}) {
+imageShower(
+    {@required imageUrl,
+    @required margin,
+    @required fit,
+    @required borderRadius}) {
   return CachedNetworkImage(
     imageUrl: imageUrl,
     imageBuilder: (context, imageProvider) => Container(
@@ -106,7 +174,7 @@ imageShower({@required imageUrl, @required margin, @required fit, @required bord
         color: Colors.grey,
         // shape: BoxShape.circle,
         borderRadius: borderRadius,
-        image: DecorationImage(image: imageProvider,fit: fit),
+        image: DecorationImage(image: imageProvider, fit: fit),
       ),
     ),
     placeholder: (context, url) => Shimmer.fromColors(

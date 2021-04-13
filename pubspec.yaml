@@ -19,6 +19,7 @@ dependencies:
   shimmer: ^1.1.2
   flutter_svg: ^0.21.0+1
   flutter_masked_text: ^0.8.0
+  pin_code_text_field: ^1.7.1
 
 
 
