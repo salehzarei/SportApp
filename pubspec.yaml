@@ -35,6 +35,11 @@ flutter:
     - family: Yekan
       fonts:
         - asset: assets/fonts/Yekan.ttf
+    - family: sanse
+      fonts:
+        - asset: assets/fonts/sansbold.ttf
+        - asset: assets/fonts/sansnormal.ttf
+
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

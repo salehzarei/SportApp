@@ -8,7 +8,7 @@ divider({
   @required callback,
 }) {
   return Container(
-    margin: EdgeInsets.only(left: 4, right: 15, top: 8, bottom: 10),
+    margin: EdgeInsets.only(left: 4, right: 16, top: 4, bottom: 4),
     child: IntrinsicHeight(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -17,7 +17,7 @@ divider({
           Text(
             title,
             style: TextStyle(
-                fontSize: 14, fontWeight: FontWeight.w200, color: Colors.black),
+                fontSize: 14, fontWeight: FontWeight.bold, color: Colors.black),
           ),
           InkWell(
             onTap: callback,
@@ -29,7 +29,7 @@ divider({
                   Text(
                     'مشاهده همه',
                     style: TextStyle(
-                        fontWeight: FontWeight.w200,
+                        fontWeight: FontWeight.bold,
                         fontSize: 14,
                         color: Colors.black),
                   ),

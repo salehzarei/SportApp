@@ -29,7 +29,8 @@ main() async {
     theme: ThemeData(
         // backgroundColor: Colors.white.withOpacity(.9),
         backgroundColor: Colors.white,
-        primaryColor: Color(0xffE24A62),
+        primaryColor: Colors.red[900],
+        primaryColorDark: Colors.red,
         accentColor: Colors.white,
         cardColor: Colors.white,
         buttonColor: Color(0xffE24A62),
