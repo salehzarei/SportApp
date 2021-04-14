@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
+import 'package:sportapplication/view/page/category/CategoryList.dart';
 
 class CategoriesPage extends StatelessWidget {
   @override
@@ -21,35 +23,44 @@ class CategoriesPage extends StatelessWidget {
   _itemCat(BuildContext context,String image,String title,int indext){
     return InkWell(
       onTap: () {
-
+        Get.to(CategoryList(from: 1));
       },
-      child: Container(
-        padding: EdgeInsets.all(8),
-        child: IntrinsicHeight(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                width: 50,
-                height: 50,
-                margin: EdgeInsets.only(left: 20),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color:Theme.of(context).primaryColorDark
-                ),
-                child: Center(
-                  child: SvgPicture.asset(
-                    image,
-                    width: 25,
-                    height: 25,
-                    color: Colors.white,
+      child: Column(
+        children: [
+          Container(
+            padding: EdgeInsets.all(8),
+            child: IntrinsicHeight(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 45,
+                    height: 45,
+                    margin: EdgeInsets.only(left: 20),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      color:Theme.of(context).primaryColorDark
+                    ),
+                    child: Center(
+                      child: SvgPicture.asset(
+                        image,
+                        width: 25,
+                        height: 25,
+                        color: Colors.white,
+                      ),
+                    ),
                   ),
-                ),
+                  Expanded(child: Text(title,style: TextStyle(fontSize: 16,fontWeight: FontWeight.w200,color: Colors.black),))
+                ],
               ),
-              Expanded(child: Text(title,style: TextStyle(fontSize: 17,fontWeight: FontWeight.w200,color: Colors.black),))
-            ],
+            ),
           ),
-        ),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 30),
+            height: 1,
+            color: Colors.grey[300],
+          )
+        ],
       ),
     );
   }

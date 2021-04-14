@@ -5,6 +5,7 @@ import 'package:sportapplication/view/component/appBarWidget.dart';
 import 'package:sportapplication/view/component/navigationBarWidget.dart';
 import 'package:sportapplication/view/page/category/CategoriesPage.dart';
 import 'package:sportapplication/view/page/home/Home.dart';
+import 'package:sportapplication/view/page/mapPage/AroundTab.dart';
 import 'package:sportapplication/view/page/profile/Profile.dart';
 
 class MainPage extends StatelessWidget {
@@ -21,7 +22,7 @@ class MainPage extends StatelessWidget {
             body: Column(
               children: [
                 active.activclick.value != 4
-                    ? AppBarWidget()
+                    ? AppBarWidget(from: 0, onBackPressed: () {  }, onShopPressed: () {  },)
                     : Container(),
                 _pageView(),
 
@@ -45,7 +46,7 @@ class MainPage extends StatelessWidget {
         return Container();
         break;
       case 3:
-        return Container();
+        return AroundTab();
         break;
       case 4:
         return Profile();

@@ -20,6 +20,8 @@ dependencies:
   flutter_svg: ^0.21.0+1
   flutter_masked_text: ^0.8.0
   pin_code_text_field: ^1.7.1
+  google_maps_flutter: ^2.0.3
+  geolocator: ^7.0.3
 
 
 
@@ -38,7 +40,9 @@ flutter:
     - family: sanse
       fonts:
         - asset: assets/fonts/sansbold.ttf
+          weight: 700
         - asset: assets/fonts/sansnormal.ttf
+          weight: 100
 
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic

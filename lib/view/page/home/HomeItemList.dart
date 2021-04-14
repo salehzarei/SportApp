@@ -513,11 +513,11 @@ followingItem(){
         offset: Offset(0,-40),
         child: Container(
           margin: EdgeInsets.only(left: 6),
-          width:  Get.width*.3,
+          width:  Get.width*.26,
           child: Column(
             children: [
               Transform.translate(
-                offset: Offset(0,Get.width*.3+30),
+                offset: Offset(0,Get.width*.26+30),
                 child: Container(
                     padding: EdgeInsets.all(8),
                     height: 40,
@@ -538,8 +538,8 @@ followingItem(){
                 ),
               ),
               Container(
-                width:  Get.width*.3,
-                height:  Get.width*.3,
+                width:  Get.width*.26,
+                height:  Get.width*.26,
                 padding: EdgeInsets.all(5),
                 decoration: BoxDecoration(
                     color: Colors.white,

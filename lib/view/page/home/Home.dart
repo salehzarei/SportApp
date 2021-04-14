@@ -4,7 +4,6 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:get/get.dart';
 import 'package:sportapplication/controller/Functions/Controller.dart';
 import 'package:sportapplication/view/component/Constans.dart';
-import 'package:sportapplication/view/lists/PackagesListItem.dart';
 import 'package:sportapplication/view/page/home/HomeItemList.dart';
 
 import '../category/CategoryList.dart';
@@ -55,13 +54,13 @@ class Home extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                _itemCategory(context, 'assets/svg/coach.svg', 'مربیان'),
+                _itemCategory(context, 'assets/svg/coach.svg', 'مربیان',3),
                 SizedBox(width: 30,),
-                _itemCategory(context, 'assets/svg/doctor.svg', 'پزشکان'),
+                _itemCategory(context, 'assets/svg/doctor.svg', 'پزشکان',4),
                 SizedBox(width: 30,),
-                _itemCategory(context, 'assets/svg/gym.svg', 'باشگاهها'),
+                _itemCategory(context, 'assets/svg/gym.svg', 'باشگاهها',2),
                 SizedBox(width: 30,),
-                _itemCategory(context, 'assets/svg/shop.svg', 'فروشگاهها'),
+                _itemCategory(context, 'assets/svg/shop.svg', 'فروشگاهها',5),
               ],
             ),
             SizedBox(height: 13,),
@@ -165,7 +164,7 @@ class Home extends StatelessWidget {
             divider(title: 'دنبال شونده ها', callback: () {}),
             Container(
               margin: EdgeInsets.only(bottom: 8),
-              height:Get.width*.5,
+              height:Get.width*.4,
               child: ListView.builder(
                   padding: EdgeInsets.symmetric(horizontal: 10),
                   itemCount:4,
@@ -183,10 +182,10 @@ class Home extends StatelessWidget {
     );
   }
 
-  _itemCategory(context, String image,String name) {
+  _itemCategory(context, String image,String name,int from) {
     return GestureDetector(
       onTap: () {
-        Get.to(CategoryList());
+        Get.to(() => CategoryList(from: from));
       },
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,

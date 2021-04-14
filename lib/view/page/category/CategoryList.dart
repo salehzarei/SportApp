@@ -1,158 +1,83 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sportapplication/controller/Functions/Controller.dart';
-import 'package:sportapplication/view/component/Constans.dart';
+import 'package:sportapplication/view/component/appBarWidget.dart';
+import 'package:sportapplication/view/page/category/CategoryItemList.dart';
 
-class CategoryList extends StatelessWidget {
+class CategoryList extends StatefulWidget {
+
+  int from;
+  CategoryList({@required this.from});
+
+  @override
+  _CategoryListState createState() => _CategoryListState();
+}
+
+class _CategoryListState extends State<CategoryList> {
   final Controller activ = Get.put(Controller());
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    return Obx(()=>SafeArea(
       child: Directionality(
         textDirection: TextDirection.rtl,
         child: Scaffold(
-          appBar: AppBar(
-            title: Container(
-              margin: EdgeInsets.all(0),
-              // elevation: 10.0,
-              // shape:
-              //     RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
-              child: Container(
-                height: 50,
-                padding: EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                    border: Border.all(width: 0.5, color: Colors.black),
-                    borderRadius: BorderRadius.circular(5)),
+          body: Column(
+            children: [
+              AppBarWidget(from: 1, onShopPressed: () {  }, onBackPressed: () { Get.back();},),
+              Expanded(
                 child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  // mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Icon(Icons.search),
-                    SizedBox(
-                      width: 10,
+                    Expanded(
+                      child: Container(
+                        margin: EdgeInsets.only(top: 4),
+                        color: Colors.grey[200],
+                        height: Get.height,
+                        child: ListView.builder(
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            itemCount: 10,
+                            itemBuilder:(context, index) => levelCategoryItem(context: context, index: index, controller: activ)),
+                      ),
                     ),
                     Expanded(
-                        child: TextFormField(
-                      decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: 'جستجو در اسپورت'),
-                    ))
+                        flex: 4,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 10 , vertical: 20),
+                              child: Text(
+                                activ.catTitle.value,
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.black),
+                              ),
+                            ),
+                            GridView.builder(
+                                shrinkWrap: true,
+                                padding: EdgeInsets.symmetric(horizontal: 10),
+                                gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                                  childAspectRatio: 3 / 3,
+                                  crossAxisCount: 3,
+                                  crossAxisSpacing: 4,
+                                  mainAxisSpacing: 10
+                                ),
+                                itemCount: 6,
+                                physics: BouncingScrollPhysics(),
+                                itemBuilder: (context, index) => userItem(context: context, index: index, controller: activ),)
+                          ],
+                        ))
                   ],
                 ),
               ),
-            ),
-            actions: [
-              IconButton(
-                  icon: Icon(Icons.shopping_basket_outlined), onPressed: () {})
-            ],
-          ),
-          body: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: ListView.builder(
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    itemCount: 10,
-                    itemBuilder: (context, index) {
-                      return Obx(
-                        () => GestureDetector(
-                          onTap: () {
-                            activ.catActive.value = index;
-                          },
-                          child: Container(
-                            // alignment: Alignment.center,
-                            height: 100,
-                            // width: 100,
-                            decoration: BoxDecoration(
-                                color: activ.catActive.value == index
-                                    ? Colors.white
-                                    : Colors.grey,
-                                border: Border(
-                                    right: BorderSide(
-                                        width: activ.catActive.value == index
-                                            ? 5
-                                            : 0,
-                                        color: Theme.of(context).primaryColor),
-                                    bottom: BorderSide(
-                                        width: 1, color: Colors.grey[350]))),
-                            padding: EdgeInsets.all(5),
-                            // color: Colors.green,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  Icons.ac_unit,
-                                  color: activ.catActive.value == index
-                                      ? Theme.of(context).primaryColor
-                                      : Colors.black,
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Text(
-                                  'تور و سفر',
-                                  textAlign: TextAlign.center,
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                      );
-                    }),
-              ),
-              Expanded(
-                  flex: 4,
-                  child: Column(
-                    children: [
-                      divider(title: 'تور و سفر', callback: (){}),
-                      Expanded(
-                        child: GridView.builder(
-                            shrinkWrap: true,
-                            padding: EdgeInsets.all(10),
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                              childAspectRatio: 3 / 3,
-                              crossAxisCount: 3,
-                            ),
-                            itemCount: 6,
-                            physics: BouncingScrollPhysics(),
-                            itemBuilder: (context, index) {
-                              return Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    // alignment: Alignment.center,
-                                    // margin: EdgeInsets.only(left: 10),
-                                    height: 70,
-                                    width: 70,
-                                    decoration: BoxDecoration(
-                                        image: DecorationImage(
-                                            image: NetworkImage(
-                                                "https://assets1.risnews.com/styles/content_sm/s3/2019-09/Big_Lots_CliftonPlaza.jpg?itok=5K_InGyc"),
-                                            fit: BoxFit.fill),
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Text(
-                                    'تور چند روزه',
-                                    textAlign: TextAlign.center,
-                                  )
-                                ],
-                              );
-                            }),
-                      )
-                    ],
-                  ))
             ],
           ),
         ),
       ),
-    );
+    ));
   }
 }
