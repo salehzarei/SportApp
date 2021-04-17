@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sportapplication/view/page/mapPage/MapConstant.dart';
+import 'package:sportapplication/view/page/map/MapConstant.dart';
 
 class ListPage extends StatefulWidget {
   @override

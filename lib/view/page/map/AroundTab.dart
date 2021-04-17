@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sportapplication/controller/Functions/Controller.dart';
-import 'package:sportapplication/view/page/mapPage/ListInMapPage.dart';
-import 'package:sportapplication/view/page/mapPage/ListPage.dart';
-import 'package:sportapplication/view/page/mapPage/MapConstant.dart';
+import 'package:sportapplication/view/page/map/ListInMapPage.dart';
+import 'package:sportapplication/view/page/map/ListPage.dart';
+import 'package:sportapplication/view/page/map/MapConstant.dart';
 
 class AroundTab extends StatelessWidget {
 

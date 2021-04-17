@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sportapplication/controller/util.dart';
 import 'package:sportapplication/view/component/Constans.dart';
+import 'package:sportapplication/view/lists/PackagesListItemDetail.dart';
 
 categoryItemList({@required String title}){
   return InkWell(
@@ -86,6 +88,9 @@ itemPackageList({@required BuildContext context,@required int index}){
     padding: EdgeInsets.symmetric(horizontal: 6 , vertical: 8),
     margin: EdgeInsets.only(left: 6 , right: 6 , bottom: 10),
     child: InkWell(
+      onTap: () {
+        Get.to(PackagesListItemDetail());
+      },
       child:Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,

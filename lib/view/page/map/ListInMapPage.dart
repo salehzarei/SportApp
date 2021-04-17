@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:sportapplication/view/page/mapPage/MapConstant.dart';
+import 'package:sportapplication/view/page/map/MapConstant.dart';
 
 class ListInMapPage extends StatefulWidget {
   @override

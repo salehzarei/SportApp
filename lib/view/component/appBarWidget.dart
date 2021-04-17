@@ -19,22 +19,18 @@ class AppBarWidget extends StatelessWidget {
         child: IntrinsicHeight(
           child: Row(
             children: [
-              from == 1?  IconButton(
-                onPressed: onBackPressed,
-                highlightColor: Colors.transparent,
+              IconButton(
+                onPressed: onShopPressed,
                 focusColor: Colors.transparent,
                 splashColor: Colors.transparent,
                 hoverColor: Colors.transparent,
                 icon: Icon(
-                  Icons.arrow_back_rounded,
+                  Icons.shopping_cart_outlined,
                   size: 24,
-                  color: Colors.black,
+                  color: Colors.grey[600],
                 ),
                 // icon: FaIcon(FontAwesomeIcons.shoppingCart,size: 18 , color: Colors.grey[800],),
-              ):Container(),
-              from == 1?  SizedBox(
-                width: 4,
-              ):Container(),
+              ),
               Expanded(
                   child: Container(
                     padding: EdgeInsets.symmetric(vertical: 6 , horizontal: 4),
@@ -62,18 +58,22 @@ class AppBarWidget extends StatelessWidget {
               SizedBox(
                 width: 4,
               ),
-              IconButton(
-               onPressed: onShopPressed,
+              from == 1?  SizedBox(
+                width: 4,
+              ):Container(),
+              from == 1?  IconButton(
+                onPressed: onBackPressed,
+                highlightColor: Colors.transparent,
                 focusColor: Colors.transparent,
                 splashColor: Colors.transparent,
                 hoverColor: Colors.transparent,
                 icon: Icon(
-                  Icons.shopping_cart_outlined,
+                  Icons.arrow_forward,
                   size: 24,
-                  color: Colors.grey[600],
+                  color: Colors.black,
                 ),
                 // icon: FaIcon(FontAwesomeIcons.shoppingCart,size: 18 , color: Colors.grey[800],),
-              )
+              ):Container(),
             ],
           ),
         ),

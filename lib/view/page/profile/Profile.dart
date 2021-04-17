@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sportapplication/view/component/Constans.dart';
 
 class Profile extends StatelessWidget {
   @override
@@ -9,26 +10,68 @@ class Profile extends StatelessWidget {
         children: [
           Container(
             width: Get.width,
-            height: 170,
+            height: 150,
+            padding: EdgeInsets.only(top: 10),
             decoration: BoxDecoration(
                 gradient: LinearGradient(colors: [
               Colors.black26,
+              Colors.black54,
               Colors.grey[800],
               // Colors.grey[850]
             ], begin: Alignment.centerLeft, end: Alignment.centerRight)),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text(
-                  'برای یک تجربه بی نظیر, وارد شوید.',
-                  style: TextStyle(color: Colors.white),
+                Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: IntrinsicHeight(
+                    child: Row(
+                      children: [
+                        Expanded(flex: 1,
+                            child: AspectRatio(aspectRatio: 2 / 2,
+                              child: imageShower(imageUrl:"https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png",
+                                  margin: EdgeInsets.all(6),
+                                  fit: BoxFit.fill,
+                                  borderRadius: BorderRadius.circular(8)),)),
+                        Expanded(
+                            flex: 3, child: Padding(
+                          padding:  EdgeInsets.all(8.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("نام کاربری",
+                                style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.white
+                                ),),
+                              SizedBox(height: 6,),
+                              Text("09123456789",
+                                style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.white
+                                ),),
+                            ],
+                          ),
+                        )),
+                        Expanded(flex: 1,
+                            child: AspectRatio(
+                              aspectRatio: 1,
+                              child: InkWell(onTap: () {
+                                dialogBase(context: context, child: _showQr("https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/QR_deWP.svg/1200px-QR_deWP.svg.png"));
+                              },
+                                child: imageShower(imageUrl:"https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/QR_deWP.svg/1200px-QR_deWP.svg.png",
+                                    margin: EdgeInsets.all(6),
+                                    fit: BoxFit.fill,
+                                    borderRadius: BorderRadius.circular(8))
+                            ),
+                            )),
+                      ],
+                    ),
+                  ),
                 ),
-                ElevatedButton(
-                    onPressed: () {},
-                    style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                            Theme.of(context).primaryColor)),
-                    child: Text('ورود / ثبت نام'))
               ],
             ),
           ),
@@ -229,6 +272,35 @@ class Profile extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  _showQr(String url) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Dialog(
+          shape:
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(10),
+            child: Directionality(
+              textDirection: TextDirection.rtl,
+              child: AspectRatio(
+                aspectRatio: 1,
+                child: Container(
+                    width:Get.width,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10.0),
+                        border: Border.all(color: Colors.grey[800], width: 1)),
+                    child: Image.network("https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/QR_deWP.svg/1200px-QR_deWP.svg.png")
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
