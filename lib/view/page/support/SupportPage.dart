@@ -1,22 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:sportapplication/view/page/favorite/ArticleFavoritePage.dart';
-import 'package:sportapplication/view/page/favorite/PackageFavoritePage.dart';
+import 'package:sportapplication/view/page/support/AboutUsPage.dart';
+import 'package:sportapplication/view/page/support/CallUsPage.dart';
+import 'package:sportapplication/view/page/support/RulesPage.dart';
 
-class FavoritePage extends StatefulWidget {
+class SupportPage extends StatefulWidget {
   @override
-  _FavoritePageState createState() => _FavoritePageState();
+  _SupportPageState createState() => _SupportPageState();
 }
 
-class _FavoritePageState extends State<FavoritePage> with SingleTickerProviderStateMixin{
+class _SupportPageState extends State<SupportPage> with SingleTickerProviderStateMixin{
+
 
   TabController _tabController;
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(vsync: this, length: 2);
+    _tabController = TabController(vsync: this, length: 3);
   }
 
   @override
@@ -31,11 +33,11 @@ class _FavoritePageState extends State<FavoritePage> with SingleTickerProviderSt
       appBar: AppBar(
         elevation: 2,
         title: Text(
-          "علاقه مندی ها",
-          style: TextStyle(
-            fontSize: 18,
-            color: Colors.white
-           )
+            "پشتیبانی و قوانین",
+            style: TextStyle(
+                fontSize: 18,
+                color: Colors.white
+            )
         ),
         leading:IconButton(
             color: Colors.white,
@@ -49,7 +51,7 @@ class _FavoritePageState extends State<FavoritePage> with SingleTickerProviderSt
         bottom: TabBar(
           tabs: <Widget>[
             Tab(
-                text: "پکیج ها",
+                text: "قوانین",
                 icon: SvgPicture.asset(
                   "assets/svg/shop.svg",
                   width: 18,
@@ -58,7 +60,16 @@ class _FavoritePageState extends State<FavoritePage> with SingleTickerProviderSt
                 )
             ),
             Tab(
-                text: "مقالات ",
+                text: "تماس با ما ",
+                icon: SvgPicture.asset(
+                  "assets/svg/gym.svg",
+                  width: 18,
+                  height: 18,
+                  color: Colors.white,
+                )
+            ),
+            Tab(
+                text: "در باره ما ",
                 icon: SvgPicture.asset(
                   "assets/svg/gym.svg",
                   width: 18,
@@ -72,12 +83,12 @@ class _FavoritePageState extends State<FavoritePage> with SingleTickerProviderSt
       ),
       body: TabBarView(
         children: <Widget>[
-          PackageFavoritePage(),
-          ArticleFavoritePage(),
+          AboutUsPage(),
+          CallUsPage(),
+          RulesPage(),
         ],
         controller: _tabController,
       ),
     );
   }
-
 }

@@ -5,7 +5,6 @@ import 'package:sportapplication/view/component/TabViewHeader.dart';
 import 'package:sportapplication/view/page/userInfo/ArticleTab.dart';
 import 'package:sportapplication/view/page/userInfo/DetailConstant.dart';
 import 'package:sportapplication/view/page/userInfo/SubsetTab.dart';
-import 'package:sportapplication/view/page/userInfo/UserInfoTab.dart';
 import 'package:sportapplication/view/page/userInfo/UserPackageTab.dart';
 
 class DetailUserInfoPage extends StatefulWidget {
