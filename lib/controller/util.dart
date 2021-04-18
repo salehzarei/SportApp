@@ -1,6 +1,7 @@
 
 import 'package:flutter_masked_text/flutter_masked_text.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 maskedText(String price) {
   return MoneyMaskedTextController(
@@ -20,4 +21,12 @@ Future<String> getShared(String key) async {
   final prefs = await SharedPreferences.getInstance();
   final _loadShared = prefs.getString(key);
   return _loadShared;
+}
+
+launchURL(String url) async {
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    throw 'امکان باز کردن این سایت وجود ندارد:  $url';
+  }
 }

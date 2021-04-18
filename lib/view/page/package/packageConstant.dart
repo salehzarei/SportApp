@@ -77,3 +77,61 @@ itemPackage({@required BuildContext context}){
     ),
   );
 }
+
+itemMyBox({@required BuildContext context}){
+  return Card(
+    elevation: 3,
+    shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8)),
+    child: Padding(
+      padding: EdgeInsets.symmetric(horizontal: 6 , vertical: 15),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                  "پکیج یک ماهه ویژه",
+                  style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.black
+              )),
+              Text(
+                '${maskedText('50000')} تومان ',
+                style: TextStyle(
+                    color: Colors.green,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15),
+              ),
+            ],
+          ),
+          Container(
+           height: 1,
+           color: Colors.grey[300],
+           margin: EdgeInsets.symmetric(vertical: 10),
+         ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                  "تاریخ خرید:",
+                  style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.black
+                  )),
+              Text(
+                '1400/01/20',
+                style: TextStyle(
+                    color: Colors.red,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15),
+              ),
+            ],
+          ),
+        ],
+      ),
+    ),
+  );
+}

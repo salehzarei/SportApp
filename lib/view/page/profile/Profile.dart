@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sportapplication/controller/util.dart';
 import 'package:sportapplication/view/component/Constans.dart';
 import 'package:sportapplication/view/page/favorite/FavoritePage.dart';
+import 'package:sportapplication/view/page/following/FollowPage.dart';
+import 'package:sportapplication/view/page/mySubSet/MySubSet.dart';
+import 'package:sportapplication/view/page/package/MyBoxPage.dart';
+import 'package:sportapplication/view/page/package/PackageListPage.dart';
 import 'package:sportapplication/view/page/profile/profileConstance.dart';
+import 'package:sportapplication/view/page/support/SupportPage.dart';
 
 class Profile extends StatelessWidget {
   @override
@@ -114,9 +120,15 @@ class Profile extends StatelessWidget {
             itemProfile(context: context, onTap: (){
               Get.to(FavoritePage());
             } , title: "علاقه مندی ها"),
-            itemProfile(context: context, onTap: (){} , title: "لیست بسته ها"),
-            itemProfile(context: context, onTap: (){} , title: "بسته های من"),
-            itemProfile(context: context, onTap: (){} , title: "دنبال شونده ها"),
+            itemProfile(context: context, onTap: (){
+              Get.to(PackageListPage());
+            } , title: "لیست بسته ها"),
+            itemProfile(context: context, onTap: (){
+              Get.to(MyBoxPage());
+            } , title: "بسته های من"),
+            itemProfile(context: context, onTap: (){
+              Get.to(FollowPage());
+            } , title: "دنبال کننده ها"),
 
             SizedBox(
               height: 20,
@@ -124,13 +136,23 @@ class Profile extends StatelessWidget {
 
             itemProfile(context: context, onTap: (){} , title: "افزودن مقاله"),
             itemProfile(context: context, onTap: (){} , title: "افزودن پکیج"),
-            itemProfile(context: context, onTap: (){} , title: "مربیان من"),
-            itemProfile(context: context, onTap: (){} , title: "باشگاه های من"),
+            itemProfile(context: context, onTap: (){
+              Get.to(MySubSet());
+            } , title: "مربیان من"),
+            itemProfile(context: context, onTap: (){
+              Get.to(MySubSet());
+            } , title: "باشگاه های من"),
             itemProfile(context: context, onTap: (){} , title: "بررسی qrCode"),
             SizedBox(
               height: 20,
             ),
-            itemProfile(context: context, onTap: (){} , title: "پشتیبانی و قوانین"),
+            itemProfile(context: context, onTap: (){
+              Get.to(SupportPage());
+            } , title: "پشتیبانی و قوانین"),
+            itemProfile(context: context, onTap: (){
+                // dialogBase(context: context, child: _aboutDeveloper());
+              Get.dialog(_dialogDeveloper(context));
+            } , title: "درباره توسعه دهنده"),
 
           ],
         ),
@@ -166,5 +188,92 @@ class Profile extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  _aboutDeveloper() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Dialog(
+          shape:
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(10),
+            child: Directionality(
+              textDirection: TextDirection.rtl,
+              child:Column(
+                children: [
+
+                ],
+              )
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  _dialogDeveloper(BuildContext context) {
+    return Directionality(
+        textDirection: TextDirection.rtl,
+        child: Dialog(
+          shape: RoundedRectangleBorder(
+              borderRadius:
+              BorderRadius.circular(10)),
+          child: Container(
+            height: 220,
+            width: MediaQuery.of(context).size.width,
+            child: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Column(
+                children: [
+                  Container(
+                    width: 100,
+                    height: 100,
+                    child: Image.asset(
+                        'assets/image/pish.png'),
+                  ),
+                  Text(
+                    'شرکت پیشگامان دامنه فناوری',
+                    style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.black,
+                        fontWeight:
+                        FontWeight.bold),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    'www.pdf.co.ir',
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.white,
+                    ),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      launchURL(
+                          'https://pdf.co.ir/');
+                    },
+                    style: ButtonStyle(
+                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                                side: BorderSide(color: Colors.white)
+                            )
+                        ),
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                            Colors.red)),
+                    child: Text(
+                      "ارتباط با توسعه دهنده",
+                      style: TextStyle(fontSize: 14, color: Colors.white),
+                    ),),
+                ],
+              ),
+            ),
+          ),
+        ));
   }
 }
