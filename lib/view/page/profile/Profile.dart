@@ -1,30 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sportapplication/view/component/Constans.dart';
+import 'package:sportapplication/view/page/favorite/FavoritePage.dart';
+import 'package:sportapplication/view/page/profile/profileConstance.dart';
 
 class Profile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Column(
-        children: [
-          Container(
-            width: Get.width,
-            height: 150,
-            padding: EdgeInsets.only(top: 10),
-            decoration: BoxDecoration(
-                gradient: LinearGradient(colors: [
-              Colors.black26,
-              Colors.black54,
-              Colors.grey[800],
-              // Colors.grey[850]
-            ], begin: Alignment.centerLeft, end: Alignment.centerRight)),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: IntrinsicHeight(
+      child: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              width: Get.width,
+              height: 150,
+              padding: EdgeInsets.symmetric(vertical: 10,horizontal: 10),
+              decoration: BoxDecoration(
+                  gradient: LinearGradient(colors: [
+                Colors.black26,
+                Colors.black54,
+                Colors.grey[800],
+                // Colors.grey[850]
+              ], begin: Alignment.centerLeft, end: Alignment.centerRight)),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  IntrinsicHeight(
                     child: Row(
                       children: [
                         Expanded(flex: 1,
@@ -42,17 +45,33 @@ class Profile extends StatelessWidget {
                             children: [
                               Text("نام کاربری",
                                 style: TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w600,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w200,
                                     color: Colors.white
                                 ),),
                               SizedBox(height: 6,),
                               Text("09123456789",
                                 style: TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w600,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w200,
                                     color: Colors.white
                                 ),),
+                              SizedBox(height: 6,),
+                              Row(children: [
+                                Text("نوع کاربری:",
+                                  style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w200,
+                                      color: Colors.white
+                                  ),),
+                                SizedBox(width: 6,),
+                                Text("فروشگاه",
+                                  style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w200,
+                                      color: Colors.white
+                                  ),),
+                              ],)
                             ],
                           ),
                         )),
@@ -71,209 +90,54 @@ class Profile extends StatelessWidget {
                       ],
                     ),
                   ),
-                ),
-              ],
-            ),
-          ),
-          Card(
-            elevation: 5.0,
-            margin: EdgeInsets.all(0),
-            child: Padding(
-              padding: const EdgeInsets.all(20),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
+                  SizedBox(
+                    height: 6,
+                  ),
                   Row(
                     children: [
-                      Icon(
-                        Icons.calendar_today_outlined,
-                        color: Theme.of(context).primaryColor,
+                      Icon(Icons.location_on_outlined,
+                          size: 18,
+                          color: Colors.white
                       ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Text('تخفیف های من')
+                      SizedBox(width: 8,),
+                      Text("پنج راه سناباد بین ابن سینای 16 و 18 پلاک 210",
+                        style: TextStyle(
+                            fontSize: 13,
+                            fontWeight: FontWeight.w100,
+                            color: Colors.white
+                        ),),
                     ],
                   ),
-                  Icon(
-                    Icons.arrow_forward_ios,
-                    size: 20,
-                    color: Colors.grey,
-                  )
                 ],
               ),
             ),
-          ),
-          SizedBox(
-            height: 2,
-          ),
-          Card(
-            elevation: 5.0,
-            margin: EdgeInsets.all(0),
-            child: Padding(
-              padding: const EdgeInsets.all(20),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.calendar_today_outlined,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Text('کیف پول')
-                    ],
-                  ),
-                  Icon(
-                    Icons.arrow_forward_ios,
-                    size: 20,
-                    color: Colors.grey,
-                  )
-                ],
-              ),
+            itemProfile(context: context, onTap: (){
+              Get.to(FavoritePage());
+            } , title: "علاقه مندی ها"),
+            itemProfile(context: context, onTap: (){} , title: "لیست بسته ها"),
+            itemProfile(context: context, onTap: (){} , title: "بسته های من"),
+            itemProfile(context: context, onTap: (){} , title: "دنبال شونده ها"),
+
+            SizedBox(
+              height: 20,
             ),
-          ),
-          SizedBox(
-            height: 2,
-          ),
-          Card(
-            elevation: 5.0,
-            margin: EdgeInsets.all(0),
-            child: Padding(
-              padding: const EdgeInsets.all(20),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.calendar_today_outlined,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Text('لیست علاقه مندی ها')
-                    ],
-                  ),
-                  Icon(
-                    Icons.arrow_forward_ios,
-                    size: 20,
-                    color: Colors.grey,
-                  )
-                ],
-              ),
+
+            itemProfile(context: context, onTap: (){} , title: "افزودن مقاله"),
+            itemProfile(context: context, onTap: (){} , title: "افزودن پکیج"),
+            itemProfile(context: context, onTap: (){} , title: "مربیان من"),
+            itemProfile(context: context, onTap: (){} , title: "باشگاه های من"),
+            itemProfile(context: context, onTap: (){} , title: "بررسی qrCode"),
+            SizedBox(
+              height: 20,
             ),
-          ),
-          SizedBox(
-            height: 2,
-          ),
-          Card(
-            elevation: 5.0,
-            margin: EdgeInsets.all(0),
-            child: Padding(
-              padding: const EdgeInsets.all(20),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.calendar_today_outlined,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Text('کارت های من')
-                    ],
-                  ),
-                  Icon(
-                    Icons.arrow_forward_ios,
-                    size: 20,
-                    color: Colors.grey,
-                  )
-                ],
-              ),
-            ),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Card(
-            elevation: 5.0,
-            margin: EdgeInsets.all(0),
-            child: Padding(
-              padding: const EdgeInsets.all(20),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.calendar_today_outlined,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Text('انتخاب شهر')
-                    ],
-                  ),
-                  Icon(
-                    Icons.arrow_forward_ios,
-                    size: 20,
-                    color: Colors.grey,
-                  )
-                ],
-              ),
-            ),
-          ),
-          SizedBox(
-            height: 2,
-          ),
-          Card(
-            elevation: 5.0,
-            margin: EdgeInsets.all(0),
-            child: Padding(
-              padding: const EdgeInsets.all(20),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.calendar_today_outlined,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Text('پشتیبانی')
-                    ],
-                  ),
-                  Icon(
-                    Icons.arrow_forward_ios,
-                    size: 20,
-                    color: Colors.grey,
-                  )
-                ],
-              ),
-            ),
-          ),
-        ],
+            itemProfile(context: context, onTap: (){} , title: "پشتیبانی و قوانین"),
+
+          ],
+        ),
       ),
     );
   }
+
 
   _showQr(String url) {
     return Column(

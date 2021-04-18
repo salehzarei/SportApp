@@ -19,18 +19,18 @@ class AppBarWidget extends StatelessWidget {
         child: IntrinsicHeight(
           child: Row(
             children: [
-              IconButton(
-                onPressed: onShopPressed,
-                focusColor: Colors.transparent,
-                splashColor: Colors.transparent,
-                hoverColor: Colors.transparent,
-                icon: Icon(
-                  Icons.shopping_cart_outlined,
-                  size: 24,
-                  color: Colors.grey[600],
-                ),
-                // icon: FaIcon(FontAwesomeIcons.shoppingCart,size: 18 , color: Colors.grey[800],),
-              ),
+              // IconButton(
+              //   onPressed: onShopPressed,
+              //   focusColor: Colors.transparent,
+              //   splashColor: Colors.transparent,
+              //   hoverColor: Colors.transparent,
+              //   icon: Icon(
+              //     Icons.shopping_cart_outlined,
+              //     size: 24,
+              //     color: Colors.grey[600],
+              //   ),
+              //   // icon: FaIcon(FontAwesomeIcons.shoppingCart,size: 18 , color: Colors.grey[800],),
+              // ),
               Expanded(
                   child: Container(
                     padding: EdgeInsets.symmetric(vertical: 6 , horizontal: 4),

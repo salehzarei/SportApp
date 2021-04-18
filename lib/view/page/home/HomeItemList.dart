@@ -59,7 +59,7 @@ specialList({@required context,@required controller,}){
                         maxLines: 1,
                         style: TextStyle(
                             color: Colors.black ,
-                            fontWeight: FontWeight.w500,
+                            fontWeight: FontWeight.w100,
                             fontSize: 16),
                       ),
                       Container(
@@ -73,7 +73,7 @@ specialList({@required context,@required controller,}){
                               color: Colors.red[300],
                             ),
                             SizedBox(width: 6,),
-                            Expanded(child: Text('سیاره فوتسال',style: TextStyle(color: Colors.black , fontWeight: FontWeight.w200 , fontSize: 12),)),
+                            Expanded(child: Text('سیاره فوتسال',style: TextStyle(color: Colors.black , fontWeight: FontWeight.w100 , fontSize: 12),)),
                           ],
                         ),
                       ),
@@ -97,7 +97,7 @@ specialList({@required context,@required controller,}){
                             '${maskedText('50000')} تومان ',
                             style: TextStyle(
                                 color: Colors.green,
-                                fontWeight: FontWeight.bold,
+                                fontWeight: FontWeight.w100,
                                 fontSize: 15),
                           ),
                         ],
@@ -363,7 +363,7 @@ packageMe({@required context,@required controller}){
                             '${maskedText('50000')} تومان ',
                             style: TextStyle(
                                 color: Colors.green,
-                                fontWeight: FontWeight.bold,
+                                fontWeight: FontWeight.w100,
                                 fontSize: 15),
                           ),
                         ],
@@ -478,7 +478,7 @@ articleMe({@required context}){
                          overflow: TextOverflow.clip,
                          maxLines: 1,
                          style: TextStyle(
-                             fontWeight: FontWeight.bold, fontSize: 15),
+                             fontWeight: FontWeight.w100, fontSize: 15),
                        ),
                        SizedBox(height: 10),
                        Text(
@@ -532,7 +532,7 @@ followingItem(){
                       maxLines: 1,
                       style: TextStyle(
                           color: Colors.black,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.w100,
                           fontSize: 13),
                     ),)
                 ),
@@ -617,7 +617,7 @@ suggestedUser({@required context}){
                             overflow: TextOverflow.clip,
                             style: TextStyle(
                                 fontSize: 16,
-                                fontWeight: FontWeight.bold),
+                                fontWeight: FontWeight.w100),
                           ),
                         )),
                         Padding(
