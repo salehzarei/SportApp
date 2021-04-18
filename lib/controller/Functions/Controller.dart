@@ -13,4 +13,14 @@ class Controller extends GetxController {
   final activeStepthree = 0.obs;
   final activeStepcomplete = 0.obs;
   final stepPlus = 0.obs;
+//متغییر نوع کاربری
+  final accountTypeTitle = ''.obs;
+  final accountTypeId = 0.obs;
+
+  //متغییر های ارسال مغادیر ثبت نام
+  final name = ''.obs;
+  final ostanSelected = 0.obs;
+  final citySelected = 0.obs;
+  final pass = ''.obs;
+
 }

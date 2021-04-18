@@ -1,24 +1,58 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:sportapplication/controller/Functions/Controller.dart';
 import 'package:sportapplication/controller/Functions/RegisterFunction.dart';
 import 'package:sportapplication/view/component/Constans.dart';
 
 class RegisterPage extends StatefulWidget {
+  RegisterFunction place;
+  RegisterPage({@required this.place});
   @override
   _RegisterPageState createState() => _RegisterPageState();
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  final RegisterFunction place = Get.put(RegisterFunction());
+  // final RegisterFunction place = Get.put(RegisterFunction());
+  // TextEditingController _mobile = TextEditingController();
+  // TextEditingController _mobile = TextEditingController();
+  // TextEditingController _mobile = TextEditingController();
+  // TextEditingController _mobile = TextEditingController();
 
   final Controller step = Get.put(Controller());
+  Completer<GoogleMapController> controllerr;
+  static const LatLng _center = const LatLng(0, 0);
+
+  LatLng _lastMapPosition = _center;
+  void _onCameraMove(CameraPosition position) {
+    _lastMapPosition = position.target;
+  }
+
+  Future<Position> displayCurrentLocation() async {
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+    return position;
+  }
+
+  void currentLocation(LatLng latlong, zoom) async {
+    final GoogleMapController controller = await controllerr.future;
+    controller.animateCamera(
+      CameraUpdate.newCameraPosition(
+        CameraPosition(target: latlong, zoom: zoom),
+      ),
+    );
+  }
+
+  List<String> accountList = ['کاربر', 'باشگاه', 'مربی', 'دکتر', 'فروشگاه'];
   @override
   void initState() {
-    place.getPlaceData().then((v) {
-      place.ostanLoding.value = false;
-      if (place.ostanSelected > 0) {
-        place.fetchCity(place.ostanSelected.value);
+    widget.place.getPlaceData().then((v) {
+      widget.place.ostanLoding.value = false;
+      if (step.ostanSelected > 0) {
+        widget.place.fetchCity(step.ostanSelected.value);
       }
     });
     super.initState();
@@ -28,233 +62,531 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     return Directionality(
       textDirection: TextDirection.rtl,
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            'ثبت نام',
-            textAlign: TextAlign.right,
-            style: TextStyle(color: Colors.black, fontSize: 14),
+      child: GetBuilder<RegisterFunction>(
+        init: RegisterFunction(),
+        builder: (val) => Scaffold(
+          appBar: AppBar(
+            title: Text(
+              'ثبت نام',
+              textAlign: TextAlign.right,
+              style: TextStyle(color: Colors.black, fontSize: 14),
+            ),
           ),
-        ),
-        body: Obx(
-          () => Padding(
-            padding: const EdgeInsets.all(15),
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    Container(
-                      width: 40,
-                      height: 40,
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                              width: 2,
+          body: Obx(
+            () => Padding(
+              padding: const EdgeInsets.all(15),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Container(
+                        width: 40,
+                        height: 40,
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                width: 2,
+                                color: step.activeStepOne.value == 0
+                                    ? Colors.green
+                                    : Colors.black),
+                            borderRadius: BorderRadius.circular(50)),
+                        child: Center(
+                            child: Text(
+                          step.activeSteptwo.value == 1 ? '✓' : '1',
+                          style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
                               color: step.activeStepOne.value == 0
                                   ? Colors.green
                                   : Colors.black),
-                          borderRadius: BorderRadius.circular(50)),
-                      child: Center(
-                          child: Text(
-                        step.activeSteptwo.value == 1 ? '✓' : '1',
-                        style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: step.activeStepOne.value == 0
-                                ? Colors.green
-                                : Colors.black),
+                        )),
+                      ),
+                      Expanded(
+                          child: Container(
+                        margin: EdgeInsets.symmetric(horizontal: 10),
+                        height: 1,
+                        color: step.activeSteptwo.value == 1
+                            ? Colors.green
+                            : Colors.grey,
                       )),
-                    ),
-                    Expanded(
-                        child: Container(
-                      margin: EdgeInsets.symmetric(horizontal: 10),
-                      height: 1,
-                      color: step.activeSteptwo.value == 1
-                          ? Colors.green
-                          : Colors.grey,
-                    )),
-                    Container(
-                      width: 40,
-                      height: 40,
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                              width: 2,
+                      Container(
+                        width: 40,
+                        height: 40,
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                width: 2,
+                                color: step.activeSteptwo.value == 1
+                                    ? Colors.green
+                                    : Colors.grey),
+                            borderRadius: BorderRadius.circular(50)),
+                        child: Center(
+                            child: Text(
+                          step.activeStepthree.value == 1 ? '✓' : '2',
+                          style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
                               color: step.activeSteptwo.value == 1
                                   ? Colors.green
                                   : Colors.grey),
-                          borderRadius: BorderRadius.circular(50)),
-                      child: Center(
-                          child: Text(
-                        step.activeStepthree.value == 1 ? '✓' : '2',
-                        style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: step.activeSteptwo.value == 1
-                                ? Colors.green
-                                : Colors.grey),
+                        )),
+                      ),
+                      Expanded(
+                          child: Container(
+                        margin: EdgeInsets.symmetric(horizontal: 10),
+                        height: 1,
+                        color: step.activeStepthree.value == 1
+                            ? Colors.green
+                            : Colors.grey,
                       )),
-                    ),
-                    Expanded(
-                        child: Container(
-                      margin: EdgeInsets.symmetric(horizontal: 10),
-                      height: 1,
-                      color: step.activeStepthree.value == 1
-                          ? Colors.green
-                          : Colors.grey,
-                    )),
-                    Container(
-                      width: 40,
-                      height: 40,
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                              width: 2,
+                      Container(
+                        width: 40,
+                        height: 40,
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                width: 2,
+                                color: step.activeStepthree.value == 1
+                                    ? Colors.green
+                                    : Colors.grey),
+                            borderRadius: BorderRadius.circular(50)),
+                        child: Center(
+                            child: Text(
+                          step.activeStepcomplete.value == 1 ? '✓' : '3',
+                          //✓
+                          style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
                               color: step.activeStepthree.value == 1
                                   ? Colors.green
                                   : Colors.grey),
-                          borderRadius: BorderRadius.circular(50)),
-                      child: Center(
-                          child: Text(
-                        step.activeStepcomplete.value == 1 ? '✓' : '3',
-                        //✓
-                        style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: step.activeStepthree.value == 1
-                                ? Colors.green
-                                : Colors.grey),
-                      )),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 30,
-                ),
-                step.stepPlus.value == 0
-                    ? Expanded(
-                        child: SingleChildScrollView(
-                        physics: BouncingScrollPhysics(),
-                        child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'تکمیل اطلاعات شخصی',
-                                style:
-                                    TextStyle(color: Colors.blue, fontSize: 18),
-                              ),
-                              SizedBox(
-                                height: 15,
-                              ),
-                              textFieldLogin(
-                                  context: context,
-                                  labeltext: 'نام و نام خانوادگی',
-                                  obscureText: false,
-                                  textInputType: TextInputType.text,
-                                  icons: null),
-                              SizedBox(
-                                height: 15,
-                              ),
-                              textFieldLogin(
-                                  context: context,
-                                  labeltext: 'شماره همراه',
-                                  obscureText: false,
-                                  enabled: false,
-                                  textInputType: TextInputType.number,
-                                  icons: null),
-                              SizedBox(
-                                height: 15,
-                              ),
-                              _buildOstanList(context),
-                              SizedBox(
-                                height: 15,
-                              ),
-                              _buildCityList(context),
-                              SizedBox(
-                                height: 15,
-                              ),
-                              textFieldLogin(
-                                  context: context,
-                                  labeltext: 'رمز عبور',
-                                  obscureText: true,
-                                  textInputType: TextInputType.text,
-                                  icons: null),
-                              SizedBox(
-                                height: 15,
-                              ),
-                              textFieldLogin(
-                                  context: context,
-                                  labeltext: 'تکرار رمز عبور',
-                                  obscureText: true,
-                                  enabled: true,
-                                  textInputType: TextInputType.text,
-                                  icons: null),
-                              SizedBox(
-                                height: 15,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  ElevatedButton(
-                                    onPressed: () {
-                                      step.activeSteptwo.value = 1;
-                                      step.stepPlus.value = 1;
-                                    },
-                                    child: Text(
-                                      'مرحله بعد',
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    style: ButtonStyle(
-                                        backgroundColor:
-                                            MaterialStateProperty.all(
-                                                Theme.of(context)
+                        )),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  step.stepPlus.value == 0
+                      ? Expanded(
+                          child: SingleChildScrollView(
+                          physics: BouncingScrollPhysics(),
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'تکمیل اطلاعات شخصی',
+                                  style: TextStyle(
+                                      color: Colors.blue, fontSize: 18),
+                                ),
+                                SizedBox(
+                                  height: 15,
+                                ),
+                                textFieldLogin(
+                                    context: context,
+                                    controller: widget.place.name,
+                                    labeltext: 'نام و نام خانوادگی',
+                                    obscureText: false,
+                                    textInputType: TextInputType.text,
+                                    icons: null),
+                                SizedBox(
+                                  height: 15,
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    Get.dialog(Dialog(
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
+                                      child: Container(
+                                        height: 300,
+                                        width: 200,
+                                        child: Column(
+                                          children: [
+                                            Container(
+                                              alignment: Alignment.center,
+                                              width: Get.width,
+                                              height: 40,
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.only(
+                                                          topLeft:
+                                                              Radius.circular(
+                                                                  10),
+                                                          topRight:
+                                                              Radius.circular(
+                                                                  10)),
+                                                  color: Theme.of(context)
+                                                      .primaryColor),
+                                              child: Text(
+                                                'نوع کاربری خود را انتخاب کنید',
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: 10,
+                                            ),
+                                            Expanded(
+                                                child: ListView.builder(
+                                                    itemCount:
+                                                        accountList.length,
+                                                    shrinkWrap: true,
+                                                    physics:
+                                                        NeverScrollableScrollPhysics(),
+                                                    itemBuilder:
+                                                        (context, index) {
+                                                      return Center(
+                                                          child: InkWell(
+                                                        onTap: () {
+                                                          step.accountTypeTitle
+                                                                  .value =
+                                                              accountList[
+                                                                  index];
+                                                          step.accountTypeId
+                                                                  .value =
+                                                              index + 1;
+                                                          Get.back();
+                                                          print(step
+                                                              .accountTypeId
+                                                              .value);
+                                                        },
+                                                        child: Container(
+                                                          height: 40,
+                                                          alignment:
+                                                              Alignment.center,
+                                                          width: Get.width,
+                                                          child: Text(
+                                                            accountList[index],
+                                                            textAlign: TextAlign
+                                                                .center,
+                                                            style: TextStyle(
+                                                                fontSize: 16),
+                                                          ),
+                                                        ),
+                                                      ));
+                                                    }))
+                                          ],
+                                        ),
+                                      ),
+                                    ));
+                                  },
+                                  child: Container(
+                                    padding: EdgeInsets.all(10),
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        border: Border.all(
+                                            width: 2,
+                                            color: step.accountTypeId.value == 0
+                                                ? Colors.grey
+                                                : Theme.of(context)
                                                     .primaryColor)),
+                                    // height: 45,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          step.accountTypeTitle.value == ''
+                                              ? 'انتخاب نوع کاربری'
+                                              : 'نوع کاربری : ${step.accountTypeTitle.value}',
+                                          style: TextStyle(color: Colors.black),
+                                        ),
+                                        Icon(
+                                          Icons.arrow_drop_down,
+                                          color: Colors.grey,
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 15,
+                                ),
+                                textFieldLogin(
+                                    context: context,
+                                    controller: widget.place.mobile,
+                                    labeltext: 'شماره همراه',
+                                    obscureText: false,
+                                    enabled: false,
+                                    textInputType: TextInputType.number,
+                                    icons: null),
+                                SizedBox(
+                                  height: 15,
+                                ),
+                                _buildOstanList(context, val),
+                                SizedBox(
+                                  height: 15,
+                                ),
+                                _buildCityList(context, val),
+                                SizedBox(
+                                  height: 15,
+                                ),
+                                textFieldLogin(
+                                    context: context,
+                                    controller: widget.place.pass,
+                                    labeltext: 'رمز عبور',
+                                    maxLength: 15,
+                                    obscureText: true,
+                                    textInputType: TextInputType.text,
+                                    icons: null),
+                                SizedBox(
+                                  height: 15,
+                                ),
+                                textFieldLogin(
+                                    context: context,
+                                    controller: widget.place.repass,
+                                    labeltext: 'تکرار رمز عبور',
+                                    obscureText: true,
+                                    maxLength: 15,
+                                    enabled: true,
+                                    textInputType: TextInputType.text,
+                                    icons: null),
+                                SizedBox(
+                                  height: 15,
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        if (widget.place.name.text.isEmpty) {
+                                          errorSnackBar(
+                                              text:
+                                                  'نام و نام خانوادگی نمی تواند خالی باشد');
+                                        } else if (step.accountTypeId.value ==
+                                            0) {
+                                          errorSnackBar(
+                                              text:
+                                                  'انتخاب نوع کاربری اجباری می باشد');
+                                        } else if (step.ostanSelected.value ==
+                                            0) {
+                                          errorSnackBar(
+                                              text:
+                                                  'انتخاب استان اجباری می باشد');
+                                        } else if (step.citySelected.value ==
+                                            0) {
+                                          errorSnackBar(
+                                              text:
+                                                  'انتخاب شهرستان اجباری می باشد');
+                                        } else if (widget
+                                                .place.pass.text.isEmpty ||
+                                            widget.place.pass.text.length <=
+                                                5) {
+                                          errorSnackBar(
+                                              text: 'رمز عبور را وارد کنید');
+                                        }else if (widget
+                                                .place.repass.text.isEmpty) {
+                                          errorSnackBar(
+                                              text: 'تکرار رمز عبور را وارد کنید');
+                                        }  else if (widget.place.pass.text !=
+                                            widget.place.repass.text) {
+                                          errorSnackBar(
+                                              text: 'رمز عبور همخوانی ندارد');
+                                        } else {
+                                          step.name.value =
+                                              widget.place.name.text;
+                                          step.pass.value =
+                                              widget.place.pass.text;
+                                          step.activeSteptwo.value = 1;
+                                          step.stepPlus.value = 1;
+                                        }
+                                      },
+                                      child: Text(
+                                        'مرحله بعد',
+                                        textAlign: TextAlign.center,
+                                      ),
+                                      style: ButtonStyle(
+                                          backgroundColor:
+                                              MaterialStateProperty.all(
+                                                  Theme.of(context)
+                                                      .primaryColor)),
+                                    ),
+                                  ],
+                                ),
+                              ]),
+                        ))
+                      : step.stepPlus.value == 1
+                          ? Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'آدرس خود را وارد کنید',
+                                    style: TextStyle(
+                                        color: Colors.blue, fontSize: 18),
+                                  ),
+                                  SizedBox(
+                                    height: 15,
+                                  ),
+                                  Stack(
+                                    children: [
+                                      Container(
+                                        height: 400,
+                                        child: GoogleMap(
+                                          onMapCreated:
+                                              (GoogleMapController controller) {
+                                            controllerr.complete(controller);
+                                          },
+                                          initialCameraPosition: CameraPosition(
+                                            target: _center,
+                                            zoom: 15.0,
+                                          ),
+                                          mapType: MapType.normal,
+                                          // markers: _markers,
+                                          onCameraMove: _onCameraMove,
+                                          zoomControlsEnabled: false,
+                                          myLocationEnabled: false,
+                                          zoomGesturesEnabled: false,
+                                          myLocationButtonEnabled: false,
+                                        ),
+                                      ),
+                                      Container(
+                                        height: 400,
+                                        child: Align(
+                                          child: Icon(
+                                            Icons.location_on,
+                                            size: 50,
+                                            color:
+                                                Theme.of(context).primaryColor,
+                                          ),
+                                          alignment: Alignment.center,
+                                        ),
+                                      ),
+                                      Container(
+                                        height: 400,
+                                        child: Align(
+                                          alignment: Alignment.bottomRight,
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(20),
+                                            child: InkWell(
+                                              onTap: () {
+                                                displayCurrentLocation()
+                                                    .then((value) {
+                                                  // _location = value;
+                                                  currentLocation(
+                                                      LatLng(value.latitude,
+                                                          value.longitude),
+                                                      15.0);
+                                                });
+                                              },
+                                              child: Container(
+                                                // width: Get.width,
+                                                padding: EdgeInsets.all(5),
+                                                decoration: BoxDecoration(
+                                                    color: Colors.white,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            50)),
+                                                child: Icon(
+                                                  Icons.location_searching,
+                                                  size: 30,
+                                                  color: Colors.red,
+                                                ),
+                                              ),
+                                            ),
+                                            // child: IconButton(
+                                            //     icon: Icon(
+                                            //       Icons.location_searching,
+                                            //       size: 40,
+                                            //       color: Colors.red,
+                                            //     ),
+                                            //     onPressed: () {
+                                            //       submit.displayCurrentLocation()
+                                            //           .then((value) {
+                                            //         // _location = value;
+                                            //         submit.currentLocation(
+                                            //             LatLng(
+                                            //                 value.latitude,
+                                            //                 value
+                                            //                     .longitude),
+                                            //             15.0);
+                                            //       });
+                                            //     }),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      ElevatedButton(
+                                        onPressed: () {
+                                          step.activeStepthree.value = 1;
+                                          step.stepPlus.value = 2;
+                                        },
+                                        child: Text(
+                                          'مرحله بعد',
+                                          textAlign: TextAlign.center,
+                                        ),
+                                        style: ButtonStyle(
+                                            backgroundColor:
+                                                MaterialStateProperty.all(
+                                                    Theme.of(context)
+                                                        .primaryColor)),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
-                            ]),
-                      ))
-                    : step.stepPlus.value == 1
-                        ? Expanded(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                ElevatedButton(
-                                  onPressed: () {
-                                    step.activeStepthree.value = 1;
-                                    step.stepPlus.value = 2;
-                                  },
-                                  child: Text(
-                                    'مرحله بعد',
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  style: ButtonStyle(
-                                      backgroundColor:
-                                          MaterialStateProperty.all(
-                                              Theme.of(context).primaryColor)),
+                            )
+                          : Expanded(
+                              child: SingleChildScrollView(
+                                physics: BouncingScrollPhysics(),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'دسته بندی های حوزه فعالیت خود را انتخاب کید',
+                                      style: TextStyle(
+                                          color: Colors.blue, fontSize: 18),
+                                    ),
+                                    SizedBox(
+                                      height: 15,
+                                    ),
+                                    ListView.builder(
+                                        itemCount: 10,
+                                        shrinkWrap: true,
+                                        physics: NeverScrollableScrollPhysics(),
+                                        itemBuilder: (context, index) {
+                                          return Row(
+                                            children: [
+                                              Checkbox(
+                                                  value: true,
+                                                  activeColor:
+                                                      Colors.orangeAccent,
+                                                  onChanged: (newValue) {}),
+                                              Text('سیاره فوتسال')
+                                            ],
+                                          );
+                                        }),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        ElevatedButton(
+                                          onPressed: () {
+                                            step.activeStepcomplete.value = 1;
+                                            step.stepPlus.value = 2;
+                                          },
+                                          child: Text(
+                                            'تکمیل ثبت نام',
+                                            textAlign: TextAlign.center,
+                                          ),
+                                          style: ButtonStyle(
+                                              backgroundColor:
+                                                  MaterialStateProperty.all(
+                                                      Theme.of(context)
+                                                          .primaryColor)),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
                                 ),
-                              ],
+                              ),
                             ),
-                          )
-                        : Expanded(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                ElevatedButton(
-                                  onPressed: () {
-                                    step.activeStepcomplete.value = 1;
-                                    step.stepPlus.value = 2;
-                                  },
-                                  child: Text(
-                                    'تکمیل ثبت نام',
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  style: ButtonStyle(
-                                      backgroundColor:
-                                          MaterialStateProperty.all(
-                                              Theme.of(context).primaryColor)),
-                                ),
-                              ],
-                            ),
-                          ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
@@ -262,10 +594,9 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
-  Widget _buildOstanList(BuildContext context) {
-    return GetBuilder<RegisterFunction>(
-      init: RegisterFunction(),
-      builder: (g) => Directionality(
+  Widget _buildOstanList(BuildContext context, RegisterFunction g) {
+    return Obx(
+      () => Directionality(
         textDirection: TextDirection.rtl,
         child: Container(
           margin: EdgeInsets.symmetric(horizontal: 0),
@@ -275,12 +606,12 @@ class _RegisterPageState extends State<RegisterPage> {
               borderRadius: BorderRadius.circular(10),
               border: Border.all(
                   width: 2,
-                  color: g.ostanSelected.value == 0
+                  color: step.ostanSelected.value == 0
                       ? Colors.grey
                       : Theme.of(context).primaryColor)),
           child: FormField<String>(
             onSaved: (value) {
-              g.ostanSelected.value = int.parse(value);
+              step.ostanSelected.value = int.parse(value);
             },
             builder: (
               FormFieldState<String> state,
@@ -288,9 +619,15 @@ class _RegisterPageState extends State<RegisterPage> {
               final List<DropdownMenuItem<String>> _ostanArr = [
                 (DropdownMenuItem<String>(
                   value: '0',
-                  child: Text(
-                    'انتخاب استان',
-                    style: TextStyle(color: Colors.grey),
+                  child: Row(
+                    textDirection: TextDirection.rtl,
+                    children: [
+                      Text(
+                        'انتخاب استان',
+                        textAlign: TextAlign.right,
+                        style: TextStyle(color: Colors.black),
+                      ),
+                    ],
                   ),
                 ))
               ];
@@ -304,7 +641,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         textDirection: TextDirection.rtl,
                         children: <Widget>[
                           Text(
-                            title,
+                            'استان : $title',
                             textAlign: TextAlign.right,
                             style: TextStyle(color: Colors.black),
                           )
@@ -320,12 +657,12 @@ class _RegisterPageState extends State<RegisterPage> {
                 children: <Widget>[
                   new InputDecorator(
                     decoration: const InputDecoration(
-
-                        // fillColor: Colors.grey,
-                        border: InputBorder.none,
-                        contentPadding: EdgeInsets.all(10),
-                        labelText: 'استان',
-                        labelStyle: TextStyle(color: Colors.grey)),
+                      // fillColor: Colors.grey,
+                      border: InputBorder.none,
+                      // contentPadding: EdgeInsets.all(10),
+                      // labelText: 'استان',
+                      // labelStyle: TextStyle(color: Colors.black)
+                    ),
                     child: g.ostanLoding.value
                         ? Center(
                             child: Container(
@@ -337,15 +674,18 @@ class _RegisterPageState extends State<RegisterPage> {
                           )
                         : DropdownButtonHideUnderline(
                             child: DropdownButton<String>(
-                              hint: Text("انتخاب استان"),
-                              value: g.ostanSelected.value != null
-                                  ? g.ostanSelected.value.toString()
+                              hint: Text(
+                                "انتخاب استان",
+                                textAlign: TextAlign.right,
+                              ),
+                              value: step.ostanSelected.value != null
+                                  ? step.ostanSelected.value.toString()
                                   : '0',
-                              dropdownColor: Color(0xff212121),
+                              dropdownColor: Colors.white,
                               onChanged: (String newValue) {
                                 state.didChange(newValue);
-                                g.ostanSelected.value = int.parse(newValue);
-                                g.citySelected.value = 0;
+                                step.ostanSelected.value = int.parse(newValue);
+                                step.citySelected.value = 0;
                                 g.fetchCity(int.parse(newValue));
                               },
                               items: _ostanArr,
@@ -361,17 +701,16 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
-  Widget _buildCityList(BuildContext context) {
-    return GetBuilder<RegisterFunction>(
-      init: RegisterFunction(),
-      builder: (g2) => Directionality(
+  Widget _buildCityList(BuildContext context, RegisterFunction g2) {
+    return Obx(
+      () => Directionality(
         textDirection: TextDirection.rtl,
         child: Container(
           margin: EdgeInsets.symmetric(horizontal: 0),
           decoration: BoxDecoration(
               border: Border.all(
                   width: 2,
-                  color: g2.citySelected.value == 0
+                  color: step.citySelected.value == 0
                       ? Colors.grey
                       : Theme.of(context).primaryColor),
               borderRadius: BorderRadius.circular(10)),
@@ -379,7 +718,7 @@ class _RegisterPageState extends State<RegisterPage> {
           // color: Theme.of(context).primaryColor,
           child: FormField<String>(
             onSaved: (value) {
-              g2.citySelected.value = int.parse(value);
+              step.citySelected.value = int.parse(value);
             },
             builder: (
               FormFieldState<String> state,
@@ -387,9 +726,14 @@ class _RegisterPageState extends State<RegisterPage> {
               final List<DropdownMenuItem<String>> _cityArr = [
                 (DropdownMenuItem<String>(
                   value: '0',
-                  child: Text(
-                    'انتخاب شهرستان',
-                    style: TextStyle(color: Colors.grey),
+                  child: Row(
+                    textDirection: TextDirection.rtl,
+                    children: [
+                      Text(
+                        'انتخاب شهرستان',
+                        style: TextStyle(color: Colors.black),
+                      ),
+                    ],
                   ),
                 )),
               ];
@@ -402,14 +746,14 @@ class _RegisterPageState extends State<RegisterPage> {
                         textDirection: TextDirection.rtl,
                         children: <Widget>[
                           Text(
-                            title,
+                            'شهرستان : $title',
                             textAlign: TextAlign.right,
                             style: TextStyle(color: Colors.black),
                           )
                         ],
                       ),
                       onTap: () {
-                        g2.citySelected.value = int.parse(id);
+                        step.citySelected.value = int.parse(id);
                         // Get.back();
                       },
                     ));
@@ -422,10 +766,11 @@ class _RegisterPageState extends State<RegisterPage> {
                 children: <Widget>[
                   new InputDecorator(
                     decoration: const InputDecoration(
-                        border: InputBorder.none,
-                        contentPadding: EdgeInsets.all(10),
-                        labelText: 'شهرستان',
-                        labelStyle: TextStyle(color: Colors.grey)),
+                      border: InputBorder.none,
+                      // contentPadding: EdgeInsets.all(10),
+                      // labelText: 'شهرستان',
+                      // labelStyle: TextStyle(color: Colors.black)
+                    ),
                     child: g2.cityLoding.value
                         ? Center(
                             child: Container(
@@ -437,14 +782,14 @@ class _RegisterPageState extends State<RegisterPage> {
                           )
                         : DropdownButtonHideUnderline(
                             child: DropdownButton<String>(
-                              hint: Text("انتخاب شهرستان "),
-                              value: g2.citySelected.value != null
-                                  ? g2.citySelected.value.toString()
+                              hint: Text("انتخاب شهرستان"),
+                              value: step.citySelected.value != null
+                                  ? step.citySelected.value.toString()
                                   : '0',
-                              dropdownColor: Color(0xff212121),
+                              dropdownColor: Colors.white,
                               onChanged: (String newValue) {
                                 state.didChange(newValue);
-                                g2.citySelected.value = int.parse(newValue);
+                                step.citySelected.value = int.parse(newValue);
                               },
                               items: _cityArr,
                             ),

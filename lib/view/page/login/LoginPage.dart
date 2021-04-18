@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sportapplication/controller/Functions/RegisterFunction.dart';
 import 'package:sportapplication/view/component/Constans.dart';
 import 'CheckPhonePage.dart';
 

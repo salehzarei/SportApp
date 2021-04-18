@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
 
 divider({
@@ -58,6 +59,7 @@ textFieldLogin(
     @required TextInputType textInputType,
     TextEditingController controller,
     Icon icons,
+    int maxLength,
     bool enabled = true}) {
   return Directionality(
     textDirection: TextDirection.rtl,
@@ -72,6 +74,7 @@ textFieldLogin(
         keyboardType: textInputType,
         obscureText: obscureText,
         enableSuggestions: false,
+        maxLength: maxLength,
         autocorrect: false,
         enabled: enabled,
         obscuringCharacter: '*',
@@ -157,6 +160,26 @@ textFormFieldHintWidget(
             color: focus.hasFocus ? Colors.blueGrey[600] : Colors.blueGrey),
         counterText: "",
       ),
+    ),
+  );
+}
+
+errorSnackBar({@required String text}) {
+  return Get.snackbar(
+    '',
+    '',
+    titleText: Text(''),
+    messageText: Text(
+      text,
+      textDirection: TextDirection.rtl,
+      style: TextStyle(color: Colors.white, fontSize: 18),
+    ),
+    backgroundColor: Colors.red,
+    colorText: Colors.white,
+    icon: Icon(
+      Icons.error,
+      color: Colors.white,
+      size: 40,
     ),
   );
 }

@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pin_code_text_field/pin_code_text_field.dart';
+import 'package:sportapplication/controller/Functions/RegisterFunction.dart';
 
 import 'RegisterPage.dart';
 
 class VerificationCodePage extends StatelessWidget {
+  RegisterFunction reg;
+  VerificationCodePage({@required this.reg});
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -38,7 +41,12 @@ class VerificationCodePage extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10)),
                 child: FittedBox(
                   child: PinCodeTextField(
-                    onDone: (_){Get.to(RegisterPage());},
+                    onDone: (text) {
+                      reg.code.value = text;
+                      print('reg.code.value');
+                      print(reg.code.value);
+                      Get.to(RegisterPage(place: reg,));
+                    },
                     autofocus: true,
                     // controller: controller,
                     hideCharacter: false,
