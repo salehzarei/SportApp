@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sportapplication/Model/CategoryAccountTypeModel.dart';
 import 'package:sportapplication/controller/Service/Request.dart';
 
 import 'Controller.dart';
@@ -10,12 +11,15 @@ class RegisterFunction extends GetxController {
   Map<dynamic, dynamic> ostanList = {};
   Map<dynamic, dynamic> cityList = {};
   final ostanLoding = false.obs;
+  final categoryLoading = false.obs;
+
   final cityLoding = false.obs;
   final registerLoading = false.obs;
   final checkLoginLoading = false.obs;
   final checkerror = false.obs;
   final verificationCode = ''.obs;
   final code = ''.obs;
+  List<CategoryAccountTypeModel> categoryList = [];
 
   List<dynamic> errorMassages = [];
   TextEditingController mobile = TextEditingController();
@@ -129,6 +133,30 @@ class RegisterFunction extends GetxController {
     checkLoginLoading.value = false;
   }
 
+////////ارسال شماره و کد احراز هویت برای درست یا نادرست بودن کد احراز
+  Future checkVerificationCode(String mobile, String code) async {
+    // checkLoginLoading.value = true;
+    errorMassages = [];
+    final response = await ApiService().checkVerificationCode(mobile, code);
+    checkerror.value = response.body['error'];
+    // print('chekerror');
+    // print(checkerror);
+    if (response.statusCode == 200 && !checkerror.value) {
+      // verificationCode.value = response.body['verification_token'];
+      // checkregister.value = response.body['register'];
+      // setRegisterCode(checkregister.value);
+      // print('verificationCode');
+      // print(verificationCode);
+      // print('checkregister');
+      // print(checkregister);
+    } else {
+      errorMassages = (response.body['error_msg'] is List)
+          ? response.body['error_msg']
+          : [response.body['error_msg']];
+    }
+    // checkLoginLoading.value = false;
+  }
+
 ////////ارسال شماره و دریافت کد احراز هویت
   Future getVerificationCode(String m) async {
     checkLoginLoading.value = true;
@@ -151,5 +179,27 @@ class RegisterFunction extends GetxController {
           : [response.body['error_msg']];
     }
     checkLoginLoading.value = false;
+  }
+
+  //////دریافت لیست دسته بندی ها
+  Future getProductCategories(int level) async {
+    categoryLoading.value = true;
+    categoryList.clear();
+    final response = await ApiService().getCategoryAccountType(level);
+    if (response.statusCode == 200) {
+      final List<dynamic> responseData = response.body['post'];
+      List<CategoryAccountTypeModel> cat = (responseData)
+          .map((i) => CategoryAccountTypeModel.fromJson(i))
+          .toList();
+      categoryList = cat;
+      update();
+      categoryLoading.value = false;
+    } else {
+      // Constans().dialogboxCheckInternet(response.statusCode);
+    }
+    update();
+    categoryLoading.value = false;
+    print('Category List account Type');
+    print(categoryList);
   }
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sportapplication/view/component/Constans.dart';
+
+import '../../MainPage.dart';
 import 'CheckPhonePage.dart';
 
 class LoginPage extends StatefulWidget {
@@ -72,7 +74,9 @@ class _LoginPageState extends State<LoginPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+
+                        },
                         child: Container(
                             decoration: BoxDecoration(
                                 border: Border(
@@ -89,7 +93,9 @@ class _LoginPageState extends State<LoginPage> {
                       width: Get.width,
                       height: 40,
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Get.to(MainPage());
+                        },
                         child: Text(
                           'ورود',
                           textAlign: TextAlign.center,

@@ -49,4 +49,16 @@ class ApiService extends GetConnect {
 ////////ارسال شماره و دریافت کد احراز هویت
   Future<Response> verificationCode(String mobile) =>
       post(apiUrl + '/user/getVerificationCode', FormData({'mobile': mobile}));
+
+////////ارسال شماره و کد احراز هویت برای درست یا نادرست بودن کد احراز
+  Future<Response> checkVerificationCode(String mobile, String code) => post(
+      apiUrl + '/user/checkVerificationCode',
+      FormData({
+        'mobile': mobile,
+        'code': code,
+      }));
+
+////////ارسال لول و دریافت دسته بندی های هر عنوان شغلی
+  Future<Response> getCategoryAccountType(int level) =>
+      get(apiUrl + '/category?level=${level.toString()}');
 }

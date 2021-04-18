@@ -9,7 +9,7 @@ divider({
   @required callback,
 }) {
   return Container(
-    margin: EdgeInsets.only(left: 4, right: 15, top: 8, bottom: 10),
+    margin: EdgeInsets.only(left: 4, right: 16, top: 8, bottom: 8),
     child: IntrinsicHeight(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -18,7 +18,7 @@ divider({
           Text(
             title,
             style: TextStyle(
-                fontSize: 14, fontWeight: FontWeight.w200, color: Colors.black),
+                fontSize: 14, fontWeight: FontWeight.w100, color: Colors.black),
           ),
           InkWell(
             onTap: callback,
@@ -30,7 +30,7 @@ divider({
                   Text(
                     'مشاهده همه',
                     style: TextStyle(
-                        fontWeight: FontWeight.w200,
+                        fontWeight: FontWeight.w100,
                         fontSize: 14,
                         color: Colors.black),
                   ),
@@ -165,21 +165,80 @@ textFormFieldHintWidget(
 }
 
 errorSnackBar({@required String text}) {
-  return Get.snackbar(
-    '',
-    '',
-    titleText: Text(''),
-    messageText: Text(
-      text,
+  return Get.snackbar('', '',
+      titleText: Text(''),
+      messageText: Text(
+        text,
+        textDirection: TextDirection.rtl,
+        style: TextStyle(color: Colors.white, fontSize: 18),
+      ),
+      backgroundColor: Colors.red,
+      colorText: Colors.white,
+      icon: Icon(
+        Icons.error,
+        color: Colors.white,
+        size: 40,
+      ));
+}
+
+formTextLabelWidget(
+    {@required context,
+    @required focus,
+    @required controller,
+    @required label,
+    @required maxLine,
+    @required keyboardType,
+    @required readeOnly,
+    @required maxLength}) {
+  return Directionality(
+    textDirection: TextDirection.rtl,
+    child: TextFormField(
+      controller: controller,
+      enableSuggestions: false,
+      autovalidate: false,
+      showCursor: false,
+      readOnly: readeOnly,
+      focusNode: focus,
+      enableInteractiveSelection: true,
+      keyboardType: keyboardType,
+      maxLines: maxLine,
+      maxLength: maxLength,
+      textAlign: TextAlign.right,
       textDirection: TextDirection.rtl,
-      style: TextStyle(color: Colors.white, fontSize: 18),
-    ),
-    backgroundColor: Colors.red,
-    colorText: Colors.white,
-    icon: Icon(
-      Icons.error,
-      color: Colors.white,
-      size: 40,
+      style: TextStyle(fontSize: 14, color: Color(0xff3D4152)),
+      decoration: InputDecoration(
+        contentPadding: EdgeInsets.symmetric(
+          horizontal: 18,
+          vertical: 10,
+        ),
+        // enabledBorder: OutlineInputBorder(
+        //   borderRadius: BorderRadius.circular(6.0),
+        //   borderSide: BorderSide(
+        //     color: Colors.grey[400],
+        //     width: 1.0,
+        //   ),
+        // ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(6.0),
+          borderSide: BorderSide(
+            color: Theme.of(context).primaryColorDark,
+            width: 1.0,
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(6.0),
+          borderSide: BorderSide(
+            color: Theme.of(context).primaryColorDark,
+            width: 1.0,
+          ),
+        ),
+        labelText: label,
+        labelStyle: TextStyle(
+          fontSize: 14,
+          color: Theme.of(context).primaryColorDark,
+        ),
+        counterText: "",
+      ),
     ),
   );
 }
@@ -214,4 +273,37 @@ imageShower(
     ),
     errorWidget: (context, url, error) => Icon(Icons.error),
   );
+}
+
+dialogBase({@required context, @required child}) {
+  showGeneralDialog(
+      barrierColor: Colors.black.withOpacity(0.5),
+      transitionBuilder: (context, a1, a2, widget) {
+        final curvedValue = Curves.easeInOutBack.transform(a1.value) - 1.0;
+        return Transform(
+          transform: Matrix4.translationValues(0.0, curvedValue * 200, 0.0),
+          child: Opacity(opacity: a1.value, child: child),
+        );
+      },
+      transitionDuration: Duration(milliseconds: 200),
+      barrierDismissible: true,
+      barrierLabel: '',
+      context: context,
+      pageBuilder: (context, animation1, animation2) {});
+}
+
+fadeDialogBase(context, child) {
+  showGeneralDialog(
+      barrierColor: Colors.black.withOpacity(0.5),
+      transitionBuilder: (context, a1, a2, widget) {
+        return Transform.scale(
+          scale: a1.value,
+          child: Opacity(opacity: a1.value, child: child),
+        );
+      },
+      transitionDuration: Duration(milliseconds: 200),
+      barrierDismissible: true,
+      barrierLabel: '',
+      context: context,
+      pageBuilder: (context, animation1, animation2) {});
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:get/get.dart';
 import 'package:pin_code_text_field/pin_code_text_field.dart';
 import 'package:sportapplication/controller/Functions/RegisterFunction.dart';
@@ -8,6 +9,7 @@ import 'RegisterPage.dart';
 class VerificationCodePage extends StatelessWidget {
   RegisterFunction reg;
   VerificationCodePage({@required this.reg});
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -26,7 +28,7 @@ class VerificationCodePage extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 30, vertical: 30),
                 alignment: Alignment.center,
                 child: Text(
-                  'تا ثانیه های دیگر کد احراز هویت برای شما ارسال میشود. کد را وارد کنید',
+                  'تا ثانیه های دیگر کد احراز هویت برای شماره ${reg.mobile.text} ارسال میشود. کد را وارد کنید',
                   textAlign: TextAlign.right,
                   style: TextStyle(color: Colors.black),
                 ),
@@ -45,7 +47,57 @@ class VerificationCodePage extends StatelessWidget {
                       reg.code.value = text;
                       print('reg.code.value');
                       print(reg.code.value);
-                      Get.to(RegisterPage(place: reg,));
+                      reg
+                          .checkVerificationCode(reg.mobile.text, text)
+                          .whenComplete(() {
+                        if (reg.checkerror.value == true) {
+                          Get.snackbar(
+                            '',
+                            '',
+                            titleText: Text(''),
+                            messageText: Container(
+                              // height: 300,
+                              child: ListView.builder(
+                                  itemCount: reg.errorMassages.length,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  shrinkWrap: true,
+                                  itemBuilder: (context, index) {
+                                    return Directionality(
+                                      textDirection: TextDirection.rtl,
+                                      child: HtmlWidget(
+                                        reg.errorMassages[index],
+                                        // onTapUrl: (url) =>
+                                        //     print('tapped $url'),
+                                        textStyle: TextStyle(
+                                            color: Colors.white,
+                                            // letterSpacing: 10,
+                                            // textBaseline: TextBaseline.alphabetic,
+                                            height: 2.5,
+                                            fontSize: 18),
+                                      ),
+                                    );
+                                    // return Text(
+                                    //   register.errorMassages[index],
+                                    //   textDirection: TextDirection.rtl,
+                                    //   style: TextStyle(
+                                    //       color: Colors.white, fontSize: 18),
+                                    // );
+                                  }),
+                            ),
+                            backgroundColor: Colors.red,
+                            colorText: Colors.white,
+                            icon: Icon(
+                              Icons.error,
+                              color: Colors.white,
+                              size: 40,
+                            ),
+                          );
+                        } else {
+                          Get.to(RegisterPage(
+                            place: reg,
+                          ));
+                        }
+                      });
                     },
                     autofocus: true,
                     // controller: controller,
@@ -66,6 +118,7 @@ class VerificationCodePage extends StatelessWidget {
                         ProvidedPinBoxTextAnimation.scalingTransition,
                     pinTextAnimatedSwitcherDuration:
                         Duration(milliseconds: 150),
+
                     highlightAnimationBeginColor: Colors.black,
                     // highlightAnimationEndColor: Colors.blue,
                     keyboardType: TextInputType.number,

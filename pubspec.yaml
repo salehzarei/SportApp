@@ -24,6 +24,7 @@ dependencies:
   geolocator: ^6.2.1
   flutter_widget_from_html: ^0.5.2+1
   flutter_spinkit: "^4.1.2"
+  grouped_buttons: ^1.0.4
 
 
 dev_dependencies:
@@ -38,6 +39,13 @@ flutter:
     - family: Yekan
       fonts:
         - asset: assets/fonts/Yekan.ttf
+    - family: sanse
+      fonts:
+        - asset: assets/fonts/sansbold.ttf
+          weight: 700
+        - asset: assets/fonts/sansnormal.ttf
+          weight: 100
+
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

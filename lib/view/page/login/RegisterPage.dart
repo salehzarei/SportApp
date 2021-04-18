@@ -1,9 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:grouped_buttons/grouped_buttons.dart';
 import 'package:sportapplication/controller/Functions/Controller.dart';
 import 'package:sportapplication/controller/Functions/RegisterFunction.dart';
 import 'package:sportapplication/view/component/Constans.dart';
@@ -23,10 +25,11 @@ class _RegisterPageState extends State<RegisterPage> {
   // TextEditingController _mobile = TextEditingController();
 
   final Controller step = Get.put(Controller());
-  Completer<GoogleMapController> controllerr;
+  Completer<GoogleMapController> controllerr = Completer();
   static const LatLng _center = const LatLng(0, 0);
 
   LatLng _lastMapPosition = _center;
+
   void _onCameraMove(CameraPosition position) {
     _lastMapPosition = position.target;
   }
@@ -375,11 +378,12 @@ class _RegisterPageState extends State<RegisterPage> {
                                                 5) {
                                           errorSnackBar(
                                               text: 'رمز عبور را وارد کنید');
-                                        }else if (widget
-                                                .place.repass.text.isEmpty) {
+                                        } else if (widget
+                                            .place.repass.text.isEmpty) {
                                           errorSnackBar(
-                                              text: 'تکرار رمز عبور را وارد کنید');
-                                        }  else if (widget.place.pass.text !=
+                                              text:
+                                                  'تکرار رمز عبور را وارد کنید');
+                                        } else if (widget.place.pass.text !=
                                             widget.place.repass.text) {
                                           errorSnackBar(
                                               text: 'رمز عبور همخوانی ندارد');
@@ -419,102 +423,122 @@ class _RegisterPageState extends State<RegisterPage> {
                                   SizedBox(
                                     height: 15,
                                   ),
-                                  Stack(
-                                    children: [
-                                      Container(
-                                        height: 400,
-                                        child: GoogleMap(
-                                          onMapCreated:
-                                              (GoogleMapController controller) {
-                                            controllerr.complete(controller);
-                                          },
-                                          initialCameraPosition: CameraPosition(
-                                            target: _center,
-                                            zoom: 15.0,
+                                  Expanded(
+                                    child: Stack(
+                                      children: [
+                                        Container(
+                                          // height: 400,
+                                          child: GoogleMap(
+                                            onMapCreated: (GoogleMapController
+                                                controller) {
+                                              controllerr.complete(controller);
+                                            },
+                                            initialCameraPosition:
+                                                CameraPosition(
+                                              target: _center,
+                                              zoom: 15.0,
+                                            ),
+                                            mapType: MapType.normal,
+                                            // markers: _markers,
+                                            onCameraMove: _onCameraMove,
+                                            zoomControlsEnabled: false,
+                                            myLocationEnabled: false,
+                                            zoomGesturesEnabled: false,
+                                            myLocationButtonEnabled: false,
                                           ),
-                                          mapType: MapType.normal,
-                                          // markers: _markers,
-                                          onCameraMove: _onCameraMove,
-                                          zoomControlsEnabled: false,
-                                          myLocationEnabled: false,
-                                          zoomGesturesEnabled: false,
-                                          myLocationButtonEnabled: false,
                                         ),
-                                      ),
-                                      Container(
-                                        height: 400,
-                                        child: Align(
-                                          child: Icon(
-                                            Icons.location_on,
-                                            size: 50,
-                                            color:
-                                                Theme.of(context).primaryColor,
+                                        Container(
+                                          // height: 400,
+                                          child: Align(
+                                            child: Icon(
+                                              Icons.location_on,
+                                              size: 50,
+                                              color: Theme.of(context)
+                                                  .primaryColor,
+                                            ),
+                                            alignment: Alignment.center,
                                           ),
-                                          alignment: Alignment.center,
                                         ),
-                                      ),
-                                      Container(
-                                        height: 400,
-                                        child: Align(
-                                          alignment: Alignment.bottomRight,
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(20),
-                                            child: InkWell(
-                                              onTap: () {
-                                                displayCurrentLocation()
-                                                    .then((value) {
-                                                  // _location = value;
-                                                  currentLocation(
-                                                      LatLng(value.latitude,
-                                                          value.longitude),
-                                                      15.0);
-                                                });
-                                              },
-                                              child: Container(
-                                                // width: Get.width,
-                                                padding: EdgeInsets.all(5),
-                                                decoration: BoxDecoration(
-                                                    color: Colors.white,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            50)),
-                                                child: Icon(
-                                                  Icons.location_searching,
-                                                  size: 30,
-                                                  color: Colors.red,
+                                        Container(
+                                          // height: 400,
+                                          child: Align(
+                                            alignment: Alignment.bottomRight,
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(20),
+                                              child: InkWell(
+                                                onTap: () {
+                                                  displayCurrentLocation()
+                                                      .then((value) {
+                                                    // _location = value;
+                                                    currentLocation(
+                                                        LatLng(value.latitude,
+                                                            value.longitude),
+                                                        15.0);
+                                                  });
+                                                },
+                                                child: Container(
+                                                  // width: Get.width,
+                                                  padding: EdgeInsets.all(5),
+                                                  decoration: BoxDecoration(
+                                                      color: Colors.white,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              50)),
+                                                  child: Icon(
+                                                    Icons.location_searching,
+                                                    size: 30,
+                                                    color: Colors.red,
+                                                  ),
                                                 ),
                                               ),
+                                              // child: IconButton(
+                                              //     icon: Icon(
+                                              //       Icons.location_searching,
+                                              //       size: 40,
+                                              //       color: Colors.red,
+                                              //     ),
+                                              //     onPressed: () {
+                                              //       submit.displayCurrentLocation()
+                                              //           .then((value) {
+                                              //         // _location = value;
+                                              //         submit.currentLocation(
+                                              //             LatLng(
+                                              //                 value.latitude,
+                                              //                 value
+                                              //                     .longitude),
+                                              //             15.0);
+                                              //       });
+                                              //     }),
                                             ),
-                                            // child: IconButton(
-                                            //     icon: Icon(
-                                            //       Icons.location_searching,
-                                            //       size: 40,
-                                            //       color: Colors.red,
-                                            //     ),
-                                            //     onPressed: () {
-                                            //       submit.displayCurrentLocation()
-                                            //           .then((value) {
-                                            //         // _location = value;
-                                            //         submit.currentLocation(
-                                            //             LatLng(
-                                            //                 value.latitude,
-                                            //                 value
-                                            //                     .longitude),
-                                            //             15.0);
-                                            //       });
-                                            //     }),
                                           ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     children: [
                                       ElevatedButton(
                                         onPressed: () {
+                                          print(_lastMapPosition.latitude);
+                                          print(_lastMapPosition.longitude);
+                                          step.lat.value = _lastMapPosition
+                                              .latitude
+                                              .toString();
+                                          step.long.value = _lastMapPosition
+                                              .longitude
+                                              .toString();
                                           step.activeStepthree.value = 1;
                                           step.stepPlus.value = 2;
+                                          if (step.accountTypeId.value == 1) {
+                                            widget.place
+                                                .getProductCategories(0);
+                                          } else {
+                                            // widget.place
+                                            //     .getProductCategories(0);
+                                            widget.place.getProductCategories(
+                                                step.accountTypeId.value);
+                                          }
                                         },
                                         child: Text(
                                           'مرحله بعد',
@@ -531,60 +555,111 @@ class _RegisterPageState extends State<RegisterPage> {
                                 ],
                               ),
                             )
-                          : Expanded(
-                              child: SingleChildScrollView(
-                                physics: BouncingScrollPhysics(),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'دسته بندی های حوزه فعالیت خود را انتخاب کید',
-                                      style: TextStyle(
-                                          color: Colors.blue, fontSize: 18),
-                                    ),
-                                    SizedBox(
-                                      height: 15,
-                                    ),
-                                    ListView.builder(
-                                        itemCount: 10,
-                                        shrinkWrap: true,
-                                        physics: NeverScrollableScrollPhysics(),
-                                        itemBuilder: (context, index) {
-                                          return Row(
-                                            children: [
-                                              Checkbox(
-                                                  value: true,
-                                                  activeColor:
-                                                      Colors.orangeAccent,
-                                                  onChanged: (newValue) {}),
-                                              Text('سیاره فوتسال')
-                                            ],
-                                          );
-                                        }),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
+                          : widget.place.categoryLoading.value == true
+                              ? Expanded(
+                                  child: Center(
+                                  child: SpinKitDualRing(
+                                    color: Colors.white,
+                                    size: 30.0,
+                                  ),
+                                ))
+                              : Expanded(
+                                  child: SingleChildScrollView(
+                                    physics: BouncingScrollPhysics(),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
-                                        ElevatedButton(
-                                          onPressed: () {
-                                            step.activeStepcomplete.value = 1;
-                                            step.stepPlus.value = 2;
-                                          },
-                                          child: Text(
-                                            'تکمیل ثبت نام',
-                                            textAlign: TextAlign.center,
-                                          ),
-                                          style: ButtonStyle(
-                                              backgroundColor:
-                                                  MaterialStateProperty.all(
-                                                      Theme.of(context)
-                                                          .primaryColor)),
+                                        Text(
+                                          'دسته بندی های حوزه فعالیت خود را انتخاب کید',
+                                          style: TextStyle(
+                                              color: Colors.blue, fontSize: 18),
+                                        ),
+                                        SizedBox(
+                                          height: 15,
+                                        ),
+                                        ListView.builder(
+                                            itemCount: widget
+                                                .place.categoryList.length,
+                                            shrinkWrap: true,
+                                            physics:
+                                                NeverScrollableScrollPhysics(),
+                                            itemBuilder: (context, index) {
+                                              return Row(
+                                                children: [
+                                                  CheckboxGroup(
+                                                      labels: <String>[
+                                                        widget
+                                                            .place
+                                                            .categoryList[index]
+                                                            .title
+                                                      ],
+                                                      activeColor:
+                                                          Theme.of(context)
+                                                              .primaryColor,
+                                                      onSelected: (List<String>
+                                                          checked) {
+                                                        // List<dynamic> ids = step
+                                                        //     .interest
+                                                        //     .where((w) => w
+                                                        //         .startsWith(widget
+                                                        //             .place
+                                                        //             .categoryList[
+                                                        //                 index]
+                                                        //             .id))
+                                                        //     .toList();
+                                                        // if (ids.length > 0) {
+                                                        //   step.interest
+                                                        //       .remove(ids[0]);
+                                                        // } else {
+
+                                                        // }
+                                                        step.interest.add(widget
+                                                            .place
+                                                            .categoryList[index]
+                                                            .id);
+                                                        print(step.interest);
+                                                        print(
+                                                            checked.toString());
+                                                      }),
+                                                  // Checkbox(
+                                                  //     value: true,
+                                                  //     activeColor:
+                                                  //         Colors.orangeAccent,
+                                                  //     onChanged: (newValue) {}),
+                                                  // Text(widget
+                                                  //     .place
+                                                  //     .categoryList[index]
+                                                  //     .title)
+                                                ],
+                                              );
+                                            }),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            ElevatedButton(
+                                              onPressed: () {
+                                                step.activeStepcomplete.value =
+                                                    1;
+                                                step.stepPlus.value = 2;
+                                              },
+                                              child: Text(
+                                                'تکمیل ثبت نام',
+                                                textAlign: TextAlign.center,
+                                              ),
+                                              style: ButtonStyle(
+                                                  backgroundColor:
+                                                      MaterialStateProperty.all(
+                                                          Theme.of(context)
+                                                              .primaryColor)),
+                                            ),
+                                          ],
                                         ),
                                       ],
                                     ),
-                                  ],
+                                  ),
                                 ),
-                              ),
-                            ),
                 ],
               ),
             ),
