@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sportapplication/controller/Functions/Controller.dart';
+import 'package:sportapplication/controller/Functions/RegisterFunction.dart';
 import 'package:sportapplication/view/component/appBarWidget.dart';
 import 'package:sportapplication/view/page/category/CategoryItemList.dart';
 
 class CategoryList extends StatefulWidget {
 
   int from;
-  CategoryList({@required this.from});
+  int level;
+  String title;
+  CategoryList({@required this.from,@required this.level,@required this.title});
 
   @override
   _CategoryListState createState() => _CategoryListState();
@@ -15,6 +18,15 @@ class CategoryList extends StatefulWidget {
 
 class _CategoryListState extends State<CategoryList> {
   final Controller activ = Get.put(Controller());
+  final RegisterFunction registerFunction = Get.put(RegisterFunction());
+
+
+  @override
+  void initState() {
+    activ.catActive(0);
+    registerFunction.getProductCategories(widget.level);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,8 +49,14 @@ class _CategoryListState extends State<CategoryList> {
                         child: ListView.builder(
                             scrollDirection: Axis.vertical,
                             shrinkWrap: true,
-                            itemCount: 10,
-                            itemBuilder:(context, index) => levelCategoryItem(context: context, index: index, controller: activ)),
+                            itemCount: registerFunction.categoryLoading.value?0:registerFunction.categoryList.length,
+                            itemBuilder:(context, index) => levelCategoryItem(
+                                context: context,
+                                index: index,
+                                controller: activ,
+                                model: registerFunction.categoryList[index], onTap:(){
+                                 activ.catActive(index);
+                            })),
                       ),
                     ),
                     Expanded(
@@ -48,8 +66,14 @@ class _CategoryListState extends State<CategoryList> {
                           children: [
                             Padding(
                               padding: EdgeInsets.symmetric(horizontal: 10 , vertical: 20),
-                              child: Text(
-                                activ.catTitle.value,
+                              child: registerFunction.categoryLoading.value?Container(
+                                  margin: EdgeInsets.only(left: 10),
+                                  width: 16,
+                                  height: 16,
+                                  child: CircularProgressIndicator(
+                                      strokeWidth: 2,
+                                      backgroundColor: Colors.red)):Text(
+                                widget.title,
                                 style: TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w600,
@@ -80,4 +104,5 @@ class _CategoryListState extends State<CategoryList> {
       ),
     ));
   }
+
 }

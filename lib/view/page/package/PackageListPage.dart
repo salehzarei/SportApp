@@ -1,11 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sportapplication/controller/Functions/PlanFunction.dart';
+import 'package:sportapplication/controller/util.dart';
 import 'package:sportapplication/view/page/package/packageConstant.dart';
 
-class PackageListPage extends StatelessWidget {
+class PackageListPage extends StatefulWidget {
+  @override
+  _PackageListPageState createState() => _PackageListPageState();
+}
+
+class _PackageListPageState extends State<PackageListPage> {
+
+  final PlanFunction planFunction = Get.put(PlanFunction());
+
+  @override
+  void initState() {
+    planFunction.getPlanList(token: "");
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Obx(()=>Scaffold(
       appBar: AppBar(
         elevation: 2,
         title: Text(
@@ -27,13 +43,14 @@ class PackageListPage extends StatelessWidget {
       ),
       body:Directionality(
         textDirection: TextDirection.rtl,
-        child: ListView.builder(
-          itemCount: 14,
-          padding: EdgeInsets.only(top: 10),
+        child: planFunction.planLoading.value?lottieLoading():ListView.builder(
+          itemCount:planFunction.planList.length,
+          padding: EdgeInsets.symmetric(vertical: 10),
           shrinkWrap: true,
-          itemBuilder: (context, index) => itemPackage(context: context),
+          itemBuilder: (context, index) => itemPackage(context: context, model: planFunction.planList[index]),
         ),
       ),
-    );
+    ));
   }
+
 }

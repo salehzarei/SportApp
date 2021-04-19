@@ -139,7 +139,7 @@ textFormFieldHintWidget(
       textDirection: TextDirection.rtl,
       style: TextStyle(fontSize: 14, color: Color(0xff3D4152)),
       decoration: InputDecoration(
-        contentPadding: EdgeInsets.symmetric(horizontal: 18, vertical: 20),
+        contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 0),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(6.0),
           borderSide: BorderSide(
@@ -150,13 +150,14 @@ textFormFieldHintWidget(
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(6.0),
           borderSide: BorderSide(
-            color: Colors.blueGrey[400],
+            color: Colors.grey[400],
             width: 1.0,
           ),
         ),
         hintText: hint,
+        prefixIcon: Icon(Icons.search,color: Colors.grey[600],size: 25,),
         labelStyle: TextStyle(
-            fontSize: 14,
+            fontSize: 12,
             color: focus.hasFocus ? Colors.blueGrey[600] : Colors.blueGrey),
         counterText: "",
       ),

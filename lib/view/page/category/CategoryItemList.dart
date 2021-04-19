@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sportapplication/Model/CategoryAccountTypeModel.dart';
 import 'package:sportapplication/controller/Functions/Controller.dart';
 import 'package:sportapplication/view/page/userInfo/DetailUserInfoPage.dart';
 import 'package:sportapplication/view/page/userInfo/newDetailTab.dart';
@@ -7,21 +8,12 @@ import 'package:sportapplication/view/page/userInfo/newDetailTab.dart';
 levelCategoryItem(
     {@required BuildContext context,
     @required int index,
+    @required CategoryAccountTypeModel model,
+    @required onTap,
     @required Controller controller}) {
   return Obx(
     () => GestureDetector(
-      onTap: () {
-        controller.catActive.value = index;
-        if (index == 0) {
-          controller.catTitle.value = "تور اولی";
-        } else if (index == 1) {
-          controller.catTitle.value = "تور دومی";
-        } else if (index == 2) {
-          controller.catTitle.value = "تور سومی";
-        } else {
-          controller.catTitle.value = "تور ها";
-        }
-      },
+      onTap:onTap,
       child: Container(
         // alignment: Alignment.center,
         // width: 100,
@@ -51,7 +43,7 @@ levelCategoryItem(
               height: 10,
             ),
             Text(
-              'تور و سفر',
+             model.title,
               textAlign: TextAlign.center,
               maxLines: 1,
               style: TextStyle(

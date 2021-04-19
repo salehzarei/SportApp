@@ -26,7 +26,7 @@ dependencies:
   flutter_spinkit: "^4.1.2"
   grouped_buttons: ^1.0.4
   url_launcher: ^5.1.2
-
+  lottie: ^0.5.1
 
 
 dev_dependencies:
@@ -37,6 +37,8 @@ flutter:
   assets:
     - assets/image/
     - assets/svg/
+    - assets/json/
+
   fonts:
     - family: Yekan
       fonts:

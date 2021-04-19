@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sportapplication/controller/Functions/RegisterFunction.dart';
 import 'package:sportapplication/view/page/map/MapConstant.dart';
 
 class ListPage extends StatefulWidget {
@@ -8,9 +9,19 @@ class ListPage extends StatefulWidget {
 }
 
 class _ListPageState extends State<ListPage> {
+
+  final RegisterFunction registerFunction = Get.put(RegisterFunction());
+  int indexItem = 0;
+
+  @override
+  void initState() {
+    registerFunction.getProductCategories(0);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Obx(()=>Scaffold(
       body: Directionality(
         textDirection: TextDirection.rtl,
         child: Container(
@@ -25,21 +36,27 @@ class _ListPageState extends State<ListPage> {
                   padding: EdgeInsets.only(right: 10),
                   scrollDirection: Axis.horizontal,
                   shrinkWrap: true,
-                  itemCount: 15,
-                  itemBuilder:(context, index) => categoryItemList(title: 'عنوان دسته') ,
+                  itemCount: registerFunction.categoryLoading.value?0:registerFunction.categoryList.length,
+                  itemBuilder:(context, index) => categoryItemList(model: registerFunction.categoryList[index],onTab:(){
+                    if(mounted){
+                      setState(() {
+                        indexItem = index;
+                      });
+                    }
+                  }, index: index , indexItem:indexItem, context: context),
                 ),
               ),
               Expanded(
                   child: ListView.builder(
                     itemCount: 20,
-                      scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) => itemPackageList(context: context, index: index),))
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) => itemPackageList(context: context, index: index),))
 
             ],
           ),
         ),
       ),
-    );
+    ));
   }
 }

@@ -1,11 +1,12 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 class ApiService extends GetConnect {
-  final String apiUrl = 'http://192.168.1.3/np-framework/sportplus/api';
+  final String apiUrl = 'http://192.168.1.3/np-framework/sportplus/api/';
 
   ////////دریافت لیست استان و شهر
   Future<Response> getProvinceList(int ostanid) =>
-      get(apiUrl + '/user/getplace?ostan=${ostanid.toString()}');
+      get(apiUrl + 'user/getplace?ostan=${ostanid.toString()}');
 
   ////////ارسال اطلاعات ثبت نام
   Future<Response> registerUser(
@@ -24,7 +25,7 @@ class ApiService extends GetConnect {
           List interest,
           String inviteCode) =>
       post(
-          apiUrl + '/user/register',
+          apiUrl + 'user/register',
           FormData({
             'name': name,
             'mobile': mobile,
@@ -44,15 +45,15 @@ class ApiService extends GetConnect {
 
 ////////چک کردن شماره همراه
   Future<Response> checkPhone(String mobile) =>
-      post(apiUrl + '/user/checkmobile', FormData({'mobile': mobile}));
+      post(apiUrl + 'user/checkmobile', FormData({'mobile': mobile}));
 
 ////////ارسال شماره و دریافت کد احراز هویت
   Future<Response> verificationCode(String mobile) =>
-      post(apiUrl + '/user/getVerificationCode', FormData({'mobile': mobile}));
+      post(apiUrl + 'user/getVerificationCode', FormData({'mobile': mobile}));
 
 ////////ارسال شماره و کد احراز هویت برای درست یا نادرست بودن کد احراز
   Future<Response> checkVerificationCode(String mobile, String code) => post(
-      apiUrl + '/user/checkVerificationCode',
+      apiUrl + 'user/checkVerificationCode',
       FormData({
         'mobile': mobile,
         'code': code,
@@ -60,5 +61,9 @@ class ApiService extends GetConnect {
 
 ////////ارسال لول و دریافت دسته بندی های هر عنوان شغلی
   Future<Response> getCategoryAccountType(int level) =>
-      get(apiUrl + '/category?level=${level.toString()}');
+      get(apiUrl + 'category?level=${level.toString()}');
+
+  //////دریافت لیست پلن ها
+  Future<Response> getPlan({@required String token}) =>
+      get(apiUrl + 'plans?token=${token}');
 }
