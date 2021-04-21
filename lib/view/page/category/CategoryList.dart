@@ -17,9 +17,9 @@ class CategoryList extends StatefulWidget {
 }
 
 class _CategoryListState extends State<CategoryList> {
+
   final Controller activ = Get.put(Controller());
   final RegisterFunction registerFunction = Get.put(RegisterFunction());
-
 
   @override
   void initState() {

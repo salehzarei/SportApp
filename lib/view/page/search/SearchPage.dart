@@ -29,7 +29,7 @@ class SearchPage extends StatelessWidget {
                       width: 10,
                     ),
                     Expanded(
-                        child:textFormFieldHintWidget(
+                        child:textFormFieldSearchHintWidget(
                             context: context,
                             focus: _searchFocus,
                             controller: _searchController,

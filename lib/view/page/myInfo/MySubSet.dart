@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sportapplication/view/page/following/followConstant.dart';
+import 'package:sportapplication/view/page/myInfo/subsetConstant.dart';
 
-class FollowPage extends StatelessWidget {
+class MySubSet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         elevation: 2,
         title: Text(
-            "دنبال کننده ها",
+            "لیست مربی ها",
             style: TextStyle(
                 fontSize: 18,
                 color: Colors.white
@@ -28,10 +28,11 @@ class FollowPage extends StatelessWidget {
       body:Directionality(
         textDirection: TextDirection.rtl,
         child: ListView.builder(
-          padding: EdgeInsets.only(top: 10),
           itemCount: 14,
+          padding: EdgeInsets.only(top: 10),
           shrinkWrap: true,
-          itemBuilder: (context, index) => followListItem(context: context, index: index),),
+          itemBuilder: (context, index) => subsetItemList(context: context, index: index),
+        ),
       ),
     );
   }

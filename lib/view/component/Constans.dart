@@ -1,8 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:dotted_border/dotted_border.dart';
 
 divider({
   @required String title,
@@ -115,7 +117,7 @@ textFieldLogin(
   );
 }
 
-textFormFieldHintWidget(
+textFormFieldSearchHintWidget(
     {@required context,
     @required focus,
     @required controller,
@@ -164,6 +166,88 @@ textFormFieldHintWidget(
     ),
   );
 }
+
+
+
+textFormFieldHintWidget(
+    {@required context,
+      @required focus,
+      @required controller,
+      @required hint,
+      @required minLine,
+      @required maxLine,
+      @required keyboardType,
+      @required maxLength}) {
+  return Directionality(
+    textDirection: TextDirection.rtl,
+    child: TextFormField(
+      controller: controller,
+      enableSuggestions: false,
+      autovalidate: false,
+      showCursor: true,
+      focusNode: focus,
+      enableInteractiveSelection: true,
+      keyboardType: keyboardType,
+      minLines: minLine,
+      maxLines: maxLine,
+      maxLength: maxLength,
+      textAlign: TextAlign.right,
+      textDirection: TextDirection.rtl,
+      style: TextStyle(fontSize: 14, height: 1.2,color: Color(0xff3D4152)),
+      decoration: InputDecoration(
+        contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(6.0),
+          borderSide: BorderSide(
+            color: Colors.grey[400],
+            width: 1.0,
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(6.0),
+          borderSide: BorderSide(
+            color: Colors.grey[400],
+            width: 1.0,
+          ),
+        ),
+        hintText: hint,
+        labelStyle: TextStyle(
+            fontSize: 12,
+            color: focus.hasFocus ? Colors.blueGrey[600] : Colors.blueGrey),
+        counterText: "",
+      ),
+    ),
+  );
+}
+
+checkBoxItem({@required context,
+  @required clicked,
+  @required title,
+  @required onChanged}) {
+  return Row(
+    children: [
+      Checkbox(
+        onChanged: onChanged,
+        value: clicked,
+        checkColor: Theme
+            .of(context)
+            .primaryColorDark,
+        activeColor: Colors.transparent,
+      ),
+      SizedBox(
+        width: 10,
+      ),
+      Text(
+        title,
+        style: TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.bold,
+            color: Colors.black),
+      ),
+    ],
+  );
+}
+
 
 errorSnackBar({@required String text}) {
   return Get.snackbar('', '',
@@ -307,4 +391,142 @@ fadeDialogBase(context, child) {
       barrierLabel: '',
       context: context,
       pageBuilder: (context, animation1, animation2) {});
+}
+
+itemImageAdd({@required context,
+  @required onTap,
+  @required loaded,
+  @required imageUri,
+  @required title,
+  @required imageSelected,
+  @required onPressed}) {
+  return InkWell(
+    onTap: onTap,
+    child: DottedBorder(
+      dashPattern: [4, 2],
+      strokeWidth: 1,
+      strokeCap: StrokeCap.round,
+      borderType: BorderType.RRect,
+      radius: Radius.circular(12),
+      padding: EdgeInsets.all(4),
+      child: AspectRatio(
+        aspectRatio: 1,
+        child: Container(
+            decoration: BoxDecoration(
+                color: Colors.grey[200],
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(
+                    style: BorderStyle.solid, color: Colors.grey[300], width: 1)),
+            child: loaded
+                ? imageSelected == 1 ?
+            Container(
+                width: double.infinity,
+                height: double.infinity,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(color: Colors.grey[300], width: 1)),
+                child:  ClipRRect(
+                  child: Container(
+                    width: double.infinity,
+                    height: double.infinity,
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: FileImage(imageUri),
+                          fit: BoxFit.fill,
+                        )),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                            begin: Alignment.bottomLeft,
+                            colors: [
+                              Colors.black12.withOpacity(.3),
+                              Colors.black12.withOpacity(.3),
+                              Colors.black12.withOpacity(.3),
+                            ]),
+                      ),
+                      child: Align(
+                        alignment: Alignment.topRight,
+                        child: InkWell(
+                          onTap: onPressed,
+                          child: Padding(
+                            padding: EdgeInsets.all(4),
+                            child: Icon(Icons.zoom_in_sharp,
+                                size: 23, color: Colors.white),
+                          ),
+                        ),
+                      )
+                    ),
+                  ),
+                  borderRadius: BorderRadius.circular(10),
+                )
+            )
+                : Center(
+                child: Container(
+                    margin: EdgeInsets.only(left: 10),
+                    width: 24,
+                    height: 24,
+                    child: CircularProgressIndicator(
+                        strokeWidth: 2.5,
+                        backgroundColor: Colors.white)))
+                : Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.camera_alt,
+                  size: 20,
+                  color: Colors.grey[800],
+                ),
+                SizedBox(
+                  height: 4,
+                ),
+                Text(
+                  title,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(),
+                ),
+              ],
+            )
+        ),
+      ),
+    ),
+  );
+}
+
+
+textSelected({@required context,
+  @required title,
+  @required bool,
+  @required selected,
+  @required tapFunction,
+  @required hoverFunction,
+  @required widthSize}) {
+  return InkWell(
+    onTap: tapFunction,
+    onHover: hoverFunction,
+    borderRadius: BorderRadius.circular(8),
+    child: Container(
+      width: widthSize,
+      padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(6),
+          border: Border.all(color: Colors.grey[400], width: 1)),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            title,
+            style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+                color: selected ? Colors.black :Colors.black26,),
+          ),
+          Icon(
+            Icons.arrow_forward_ios,
+            size: 18,
+            color:selected ? Colors.black :Colors.black26,
+          )
+        ],
+      ),
+    ),
+  );
 }

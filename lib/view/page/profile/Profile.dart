@@ -2,15 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sportapplication/controller/util.dart';
 import 'package:sportapplication/view/component/Constans.dart';
+import 'package:sportapplication/view/page/addArticle/AddArticlePage.dart';
+import 'package:sportapplication/view/page/addPackage/AddPackagePage.dart';
 import 'package:sportapplication/view/page/favorite/FavoritePage.dart';
 import 'package:sportapplication/view/page/following/FollowPage.dart';
-import 'package:sportapplication/view/page/mySubSet/MySubSet.dart';
-import 'package:sportapplication/view/page/package/MyBoxPage.dart';
-import 'package:sportapplication/view/page/package/PackageListPage.dart';
+import 'package:sportapplication/view/page/myInfo/MyArticle.dart';
+import 'package:sportapplication/view/page/myInfo/MyPackage.dart';
+import 'package:sportapplication/view/page/myInfo/MySubSet.dart';
+import 'package:sportapplication/view/page/plan/MyBoxPage.dart';
+import 'package:sportapplication/view/page/plan/PackageListPage.dart';
 import 'package:sportapplication/view/page/profile/profileConstance.dart';
 import 'package:sportapplication/view/page/support/SupportPage.dart';
-
-
 
 class Profile extends StatelessWidget {
   @override
@@ -148,50 +150,66 @@ class Profile extends StatelessWidget {
             ),
           ),
           Expanded(
-              child: SingleChildScrollView(
-                scrollDirection: Axis.vertical,
-                child: Column(
-                  children: [
-                    itemProfile(context: context, onTap: (){
-                      Get.to(FavoritePage());
-                    } , title: "علاقه مندی ها"),
-                    itemProfile(context: context, onTap: (){
-                      Get.to(PackageListPage());
-                    } , title: "لیست بسته ها"),
-                    itemProfile(context: context, onTap: (){
-                      Get.to(MyBoxPage());
-                    } , title: "بسته های من"),
-                    itemProfile(context: context, onTap: (){
-                      Get.to(FollowPage());
-                    } , title: "دنبال کننده ها"),
+              child: NotificationListener<OverscrollIndicatorNotification>(
+                onNotification: (notification) {
+                  notification.disallowGlow();
+                  return false;
+                },
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.vertical,
+                  child: Column(
+                    children: [
+                      itemProfile(context: context, onTap: (){
+                        Get.to(FavoritePage());
+                      } , title: "علاقه مندی ها"),
+                      itemProfile(context: context, onTap: (){
+                        Get.to(PackageListPage());
+                      } , title: "لیست بسته ها"),
+                      itemProfile(context: context, onTap: (){
+                        Get.to(MyBoxPage());
+                      } , title: "بسته های من"),
+                      itemProfile(context: context, onTap: (){
+                        Get.to(FollowPage());
+                      } , title: "دنبال کننده ها"),
 
-                    SizedBox(
-                      height: 20,
-                    ),
+                      SizedBox(
+                        height: 20,
+                      ),
 
-                    itemProfile(context: context, onTap: (){} , title: "افزودن مقاله"),
-                    itemProfile(context: context, onTap: (){} , title: "افزودن پکیج"),
-                    itemProfile(context: context, onTap: (){
-                      Get.to(MySubSet());
-                    } , title: "مربیان من"),
-                    itemProfile(context: context, onTap: (){
-                      Get.to(MySubSet());
-                    } , title: "باشگاه های من"),
-                    itemProfile(context: context, onTap: (){
-                    } , title: "بررسی qrCode"),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    itemProfile(context: context, onTap: (){
-                      Get.to(SupportPage());
-                    } , title: "پشتیبانی و قوانین"),
-                    itemProfile(context: context, onTap: (){
-                      // dialogBase(context: context, child: _aboutDeveloper());
-                      Get.dialog(_dialogDeveloper(context));
-                    } , title: "درباره توسعه دهنده"),
-                  ],
-                ),
-          )),
+                      itemProfile(context: context, onTap: (){
+                        Get.to(AddArticlePage());
+                      } , title: "افزودن مقاله"),
+                      itemProfile(context: context, onTap: (){
+                        Get.to(MyArticle());
+                      } , title: "مقاله های من"),
+                      itemProfile(context: context, onTap: (){
+                        Get.to(AddPackagePage());
+                      } , title: "افزودن پکیج"),
+                      itemProfile(context: context, onTap: (){
+                        Get.to(MyPackage());
+                      } , title: "پکیج های من"),
+                      itemProfile(context: context, onTap: (){
+                        Get.to(MySubSet());
+                      } , title: "مربیان من"),
+                      itemProfile(context: context, onTap: (){
+                        Get.to(MySubSet());
+                      } , title: "باشگاه های من"),
+                      itemProfile(context: context, onTap: (){
+                      } , title: "بررسی qrCode"),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      itemProfile(context: context, onTap: (){
+                        Get.to(SupportPage());
+                      } , title: "پشتیبانی و قوانین"),
+                      itemProfile(context: context, onTap: (){
+                        // dialogBase(context: context, child: _aboutDeveloper());
+                        Get.dialog(_dialogDeveloper(context));
+                      } , title: "درباره توسعه دهنده"),
+                    ],
+                  ),
+          ),
+              )),
         ],
       ),
     );

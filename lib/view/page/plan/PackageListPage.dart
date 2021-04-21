@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sportapplication/controller/Functions/PlanFunction.dart';
 import 'package:sportapplication/controller/util.dart';
-import 'package:sportapplication/view/page/package/packageConstant.dart';
+import 'package:sportapplication/view/page/plan/packageConstant.dart';
 
 class PackageListPage extends StatefulWidget {
   @override

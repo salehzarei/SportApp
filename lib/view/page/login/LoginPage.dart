@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sportapplication/controller/Functions/RegisterFunction.dart';
+import 'package:sportapplication/controller/util.dart';
 import 'package:sportapplication/view/component/Constans.dart';
 
 import '../../MainPage.dart';
@@ -12,16 +14,24 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
 
-  // @override
-  // void initState() {
-  //   place.getPlaceData().then((v) {
-  //     place.ostanLoding.value = false;
-  //     if (place.ostanSelected > 0) {
-  //       place.fetchCity(place.ostanSelected.value);
-  //     }
-  //   });
-  //   super.initState();
-  // }
+  TextEditingController _mobController;
+  TextEditingController _passController;
+  final RegisterFunction check = Get.put(RegisterFunction());
+  bool _clicked = false;
+
+  @override
+  void initState() {
+    _mobController = TextEditingController();
+    _passController = TextEditingController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _mobController.dispose();
+    _passController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,97 +52,149 @@ class _LoginPageState extends State<LoginPage> {
           body: Container(
             margin: EdgeInsets.only(top: 20),
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Text('لطفا برای ورود نام کاربری و رمز عبور را وارد کنید'),
-                SizedBox(
-                  height: 20,
-                ),
-                textFieldLogin(
-                    context: context,
-                    icons: Icon(Icons.phone_android_outlined),
-                    obscureText: false,
-                    labeltext: 'نام کاربری',
-                    textInputType: TextInputType.number),
-                SizedBox(
-                  height: 20,
-                ),
-                textFieldLogin(
-                    context: context,
-                    icons: Icon(Icons.lock),
-                    obscureText: true,
-                    labeltext: 'رمز عبور',
-                    textInputType: TextInputType.text),
-                SizedBox(
-                  height: 20,
-                ),
-                
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    TextButton(
-                        onPressed: () {
-
-                        },
-                        child: Container(
-                            decoration: BoxDecoration(
-                                border: Border(
-                                    bottom: BorderSide(
-                                        width: 1, color: Colors.blue))),
-                            child: Text(
-                              'فراموشی رمز عبور',
-                            ))),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Container(
-                      // margin: EdgeInsets.symmetric(horizontal: 10),
-                      width: Get.width,
-                      height: 40,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Get.to(MainPage());
-                        },
-                        child: Text(
-                          'ورود',
-                          textAlign: TextAlign.center,
-                        ),
-                        style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all(Colors.red)),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text('لطفا برای ورود موبایل و رمز عبور را وارد کنید'),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  textFieldLogin(
+                      context: context,
+                      icons: Icon(Icons.phone_android_outlined),
+                      obscureText: false,
+                      labeltext: ' موبایل ',
+                      controller: _mobController,
+                      maxLength: 11,
+                      textInputType: TextInputType.phone),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  textFieldLogin(
+                      context: context,
+                      icons: Icon(Icons.lock),
+                      obscureText: true,
+                      labeltext: 'رمز عبور',
+                      controller: _passController,
+                      maxLength: 11,
+                      textInputType: TextInputType.text),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TextButton(
+                          onPressed: () {},
+                          child: Container(
+                              decoration: BoxDecoration(
+                                  border: Border(
+                                      bottom: BorderSide(
+                                          width: 1, color: Colors.red))),
+                              child: Text(
+                                'فراموشی رمز عبور',
+                                style:
+                                    TextStyle(fontSize: 14, color: Colors.black),
+                              ))),
+                      SizedBox(
+                        height: 15,
                       ),
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Container(
-                      // margin: EdgeInsets.symmetric(horizontal: 10),
-                      width: Get.width,
-                      height: 40,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Get.to(CheckPhonePage());
-                        },
-                        child: Text(
-                          'ثبت نام',
-                          textAlign: TextAlign.center,
+                      Container(
+                        // margin: EdgeInsets.symmetric(horizontal: 10),
+                        width: Get.width,
+                        height: 40,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            if(_mobController.text.isEmpty){
+                              if(mounted){
+                                setState(() {
+                                  errorSnackBar(
+                                      text:
+                                      'موبایل را وارد کنید');
+                                });
+                                return;
+                              }
+                            }
+                            if(_mobController.text.length<11){
+                              if(mounted){
+                                setState(() {
+                                  errorSnackBar(
+                                      text:
+                                      'موبایل را کامل وارد کنید');
+                                });
+                                return;
+                              }
+                            }
+                            if(_passController.text.isEmpty){
+                              if(mounted){
+                                setState(() {
+                                  errorSnackBar(
+                                      text:
+                                      'رمز عبور را وارد کنید');
+                                });
+                                return;
+                              }
+                            }
+                            if(mounted){
+                              setState(() {
+                                _clicked = true;
+                              });
+                            }
+                            check.login(mobile: _mobController.text, pass: _passController.text).then((value){
+                              if(value == 200){
+                                Get.off(MainPage());
+                              }else{
+                                if(mounted){
+                                  setState(() {
+                                    _clicked = false;
+                                    listSnackBar(list: check.errorMassages, backgroundColor: Colors.red);
+                                  });
+                                }
+                              }
+                            });
+                          },
+                          child:_clicked? lottieLoading(widthLottie: 15, heightLottie: 15, heightc: 20):Text(
+                            'ورود',
+                            textAlign: TextAlign.center,
+                          ),
+                          style: ButtonStyle(
+                              backgroundColor:
+                                  MaterialStateProperty.all(Colors.red)),
                         ),
-                        style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all(Colors.grey)),
                       ),
-                    ),
-                  ],
-                )
-              ],
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Container(
+                        // margin: EdgeInsets.symmetric(horizontal: 10),
+                        width: Get.width,
+                        height: 40,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Get.to(CheckPhonePage());
+                          },
+                          child: Text(
+                            'ثبت نام',
+                            textAlign: TextAlign.center,
+                          ),
+                          style: ButtonStyle(
+                              backgroundColor:
+                                  MaterialStateProperty.all(Colors.grey)),
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
             ),
           ),
         ),
       ),
     );
   }
+
 
 }
