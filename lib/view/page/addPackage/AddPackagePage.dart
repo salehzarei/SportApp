@@ -284,7 +284,7 @@ class _AddPackagePageState extends State<AddPackagePage> {
                                 child:itemImageAdd(
                                     context: context,
                                     onTap: (){
-                                      _importImageSelectBottomSheet(context,1);
+                                      _importImageSelectBottomSheet(context,4);
                                     },
                                     loaded: _bool[3],
                                     imageUri: fileFour,
@@ -300,7 +300,7 @@ class _AddPackagePageState extends State<AddPackagePage> {
                                 child:itemImageAdd(
                                     context: context,
                                     onTap: (){
-                                      _importImageSelectBottomSheet(context, 2);
+                                      _importImageSelectBottomSheet(context, 5);
                                     },
                                     loaded: _bool[4],
                                     imageUri: fileFive,
@@ -316,7 +316,7 @@ class _AddPackagePageState extends State<AddPackagePage> {
                                 child:itemImageAdd(
                                     context: context,
                                     onTap: (){
-                                      _importImageSelectBottomSheet(context,3);
+                                      _importImageSelectBottomSheet(context,6);
                                     },
                                     loaded: _bool[5],
                                     imageUri: fileSix,
@@ -538,7 +538,10 @@ class _AddPackagePageState extends State<AddPackagePage> {
                             width: Get.width,
                             child: ElevatedButton(
                               onPressed: () {
-
+                                  print('_imageUrl');
+                                  print(_imageUrl);
+                                  print('cat');
+                                  print(_idCat);
                               },
                               style: ButtonStyle(
                                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(

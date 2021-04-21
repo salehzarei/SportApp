@@ -6,6 +6,7 @@ import 'package:sportapplication/view/page/addArticle/AddArticlePage.dart';
 import 'package:sportapplication/view/page/addPackage/AddPackagePage.dart';
 import 'package:sportapplication/view/page/favorite/FavoritePage.dart';
 import 'package:sportapplication/view/page/following/FollowPage.dart';
+import 'package:sportapplication/view/page/login/LoginPage.dart';
 import 'package:sportapplication/view/page/myInfo/MyArticle.dart';
 import 'package:sportapplication/view/page/myInfo/MyPackage.dart';
 import 'package:sportapplication/view/page/myInfo/MySubSet.dart';
@@ -156,6 +157,7 @@ class Profile extends StatelessWidget {
                   return false;
                 },
                 child: SingleChildScrollView(
+                  physics: BouncingScrollPhysics(),
                   scrollDirection: Axis.vertical,
                   child: Column(
                     children: [
@@ -206,6 +208,15 @@ class Profile extends StatelessWidget {
                         // dialogBase(context: context, child: _aboutDeveloper());
                         Get.dialog(_dialogDeveloper(context));
                       } , title: "درباره توسعه دهنده"),
+                      SizedBox(
+                        height: 20,
+                      ),
+
+                      itemProfile(context: context, onTap: (){
+                          saveShared('token' , "null").then((value) {
+                            Get.off(LoginPage());
+                          });
+                      } , title: "خروج از حساب کاربری"),
                     ],
                   ),
           ),
