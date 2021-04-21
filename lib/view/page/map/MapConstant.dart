@@ -1,15 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sportapplication/Model/CategoryAccountTypeModel.dart';
+import 'package:sportapplication/controller/Functions/Controller.dart';
 import 'package:sportapplication/controller/util.dart';
 import 'package:sportapplication/view/component/Constans.dart';
 import 'package:sportapplication/view/lists/PackagesListItemDetail.dart';
 
-categoryItemList({@required String title}){
-  return InkWell(
-    onTap: () {
+// final Controller constant = Get.put(Controller());
 
-    },
+categoryItemList({@required CategoryAccountTypeModel model,@required BuildContext context,@required onTab,@required int index,@required int indexItem }){
+  return InkWell(
+    onTap: onTab,
     focusColor: Colors.transparent,
     hoverColor: Colors.transparent,
     splashColor: Colors.transparent,
@@ -18,8 +20,8 @@ categoryItemList({@required String title}){
       margin: EdgeInsets.only(left: 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(6),
-          color: Colors.white,
-        border: Border.all(color: Colors.grey[300] , width: 1),
+          color: indexItem == index?Theme.of(context).primaryColorDark:Colors.white,
+        border: Border.all(color:indexItem == index?Theme.of(context).primaryColorDark:Colors.grey[300] , width: 1),
         // boxShadow:[
         //   BoxShadow(
         //     color: Colors.grey[300],
@@ -30,8 +32,8 @@ categoryItemList({@required String title}){
       ),
       padding: EdgeInsets.symmetric(horizontal: 20 ),
       child: Center(
-        child: Text(title , style: TextStyle(
-          fontSize: 15 , color: Colors.grey[600]
+        child: Text(model.title, style: TextStyle(
+          fontSize: 15 , color:indexItem == index?Colors.white: Colors.grey[600]
         ),),
       ),
     ),

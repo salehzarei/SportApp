@@ -185,7 +185,7 @@ class Home extends StatelessWidget {
   _itemCategory(context, String image,String name,int from) {
     return GestureDetector(
       onTap: () {
-        Get.to(() => CategoryList(from: from));
+        Get.to(() => CategoryList(from: from, level: from, title: name,));
       },
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,

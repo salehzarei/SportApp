@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:sportapplication/view/page/category/CategoryList.dart';
 
 class CategoriesPage extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -11,19 +12,19 @@ class CategoriesPage extends StatelessWidget {
         scrollDirection: Axis.vertical,
         padding: EdgeInsets.symmetric(vertical: 10),
         children: [
-          _itemCat(context,'assets/svg/coach.svg', 'مربیان',0),
-          _itemCat(context,'assets/svg/doctor.svg', 'پزشکان',1),
+          _itemCat(context,'assets/svg/coach.svg', 'مربیان',3),
+          _itemCat(context,'assets/svg/doctor.svg', 'پزشکان',4),
           _itemCat(context,'assets/svg/gym.svg', 'باشگاه ها',2),
-          _itemCat(context,'assets/svg/shop.svg', 'فروشگاه ها',3),
+          _itemCat(context,'assets/svg/shop.svg', 'فروشگاه ها',5),
         ],
       ),
     );
   }
 
-  _itemCat(BuildContext context,String image,String title,int indext){
+  _itemCat(BuildContext context,String image,String title,int index){
     return InkWell(
       onTap: () {
-        Get.to(CategoryList(from: 1));
+        Get.to(CategoryList(from: 1 , level:index, title: title,));
       },
       child: Column(
         children: [
@@ -64,4 +65,5 @@ class CategoriesPage extends StatelessWidget {
       ),
     );
   }
+
 }

@@ -10,8 +10,11 @@ class Controller extends GetxController {
   final catTitle = "0".obs;
 //مراحل ثبت نام
   final activeStepOne = 0.obs;
+
   //نمایش صفحه اطراف من
   final aroundActive = 1.obs;
+
+  final asd = 0.obs;
 
   final activeSteptwo = 0.obs;
   final activeStepthree = 0.obs;

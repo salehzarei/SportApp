@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:sportapplication/controller/Functions/RegisterFunction.dart';
 import 'package:sportapplication/view/page/map/MapConstant.dart';
 
 class ListInMapPage extends StatefulWidget {
@@ -15,6 +16,8 @@ class _ListInMapPageState extends State<ListInMapPage> {
 
   Set<Marker> _markers = {};
   Completer<GoogleMapController> _controller = Completer();
+  final RegisterFunction registerFunction = Get.put(RegisterFunction());
+  int indexItem = 0;
 
   @override
   void initState() {
@@ -23,6 +26,8 @@ class _ListInMapPageState extends State<ListInMapPage> {
       print("asfsd${value.longitude} + ${value.latitude}");
       _currentLocation(LatLng(value.latitude,value.longitude), 17.0);
     });
+
+    registerFunction.getProductCategories(0);
 
     _markers.add(Marker(
       position: LatLng(36.3000493,59.5866227),
@@ -58,7 +63,7 @@ class _ListInMapPageState extends State<ListInMapPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Obx(()=>Scaffold(
       body: Directionality(
         textDirection: TextDirection.rtl,
         child: Stack(
@@ -86,8 +91,14 @@ class _ListInMapPageState extends State<ListInMapPage> {
                 padding: EdgeInsets.only(right: 10),
                 scrollDirection: Axis.horizontal,
                 shrinkWrap: true,
-                itemCount: 15,
-                itemBuilder:(context, index) => categoryItemList(title: 'عنوان دسته') ,
+                itemCount: registerFunction.categoryLoading.value?0:registerFunction.categoryList.length,
+                itemBuilder:(context, index) => categoryItemList(model: registerFunction.categoryList[index],onTab:(){
+                    if(mounted){
+                      setState(() {
+                        indexItem = index;
+                      });
+                    }
+                }, index: index , indexItem:indexItem, context: context),
               ),
             ),
             Padding(
@@ -98,9 +109,9 @@ class _ListInMapPageState extends State<ListInMapPage> {
                   width: 40,
                   height: 40,
                   decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.white,
-                    border: Border.all(color: Colors.grey[400] , width: 1)
+                      shape: BoxShape.circle,
+                      color: Colors.white,
+                      border: Border.all(color: Colors.grey[400] , width: 1)
                   ),
                   child: Center(
                     child: IconButton(onPressed: () {
@@ -118,7 +129,7 @@ class _ListInMapPageState extends State<ListInMapPage> {
           ],
         ),
       ),
-    );
+    ));
   }
 
   void _currentLocation(LatLng latlong, zoom) async {

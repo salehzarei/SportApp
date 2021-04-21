@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sportapplication/view/page/mySubSet/subsetConstant.dart';
+import 'package:sportapplication/view/page/myInfo/subsetConstant.dart';
 
-class MySubSet extends StatelessWidget {
+class MyPackage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         elevation: 2,
         title: Text(
-            "لیست مربی ها",
+            "لیست پکیج های من",
             style: TextStyle(
                 fontSize: 18,
                 color: Colors.white
@@ -31,7 +31,7 @@ class MySubSet extends StatelessWidget {
           itemCount: 14,
           padding: EdgeInsets.only(top: 10),
           shrinkWrap: true,
-          itemBuilder: (context, index) => subsetItemList(context: context, index: index),
+          itemBuilder: (context, index) => myPackageList(context: context, index: index),
         ),
       ),
     );

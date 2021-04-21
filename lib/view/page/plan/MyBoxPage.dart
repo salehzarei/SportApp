@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sportapplication/view/page/package/packageConstant.dart';
+import 'package:sportapplication/view/page/plan/packageConstant.dart';
 
-class PackageListPage extends StatelessWidget {
+class MyBoxPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         elevation: 2,
         title: Text(
-            "لیست بسته ها",
+            "بسته های من",
             style: TextStyle(
                 fontSize: 18,
                 color: Colors.white
@@ -31,7 +31,7 @@ class PackageListPage extends StatelessWidget {
           itemCount: 14,
           padding: EdgeInsets.only(top: 10),
           shrinkWrap: true,
-          itemBuilder: (context, index) => itemPackage(context: context),
+          itemBuilder: (context, index) => itemMyBox(context: context),
         ),
       ),
     );

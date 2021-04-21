@@ -6,7 +6,7 @@ import 'package:sportapplication/view/component/navigationBarWidget.dart';
 import 'package:sportapplication/view/page/category/CategoriesPage.dart';
 import 'package:sportapplication/view/page/home/Home.dart';
 import 'package:sportapplication/view/page/map/AroundTab.dart';
-import 'package:sportapplication/view/page/package/PackagePage.dart';
+import 'package:sportapplication/view/page/plan/PackagePage.dart';
 import 'package:sportapplication/view/page/profile/Profile.dart';
 
 class MainPage extends StatelessWidget {

@@ -566,7 +566,7 @@ followingItem(){
                           color: Colors.grey,
                           image: DecorationImage(
                               fit: BoxFit.cover,
-                              image: AssetImage('images/icon.png')),
+                              image: AssetImage('assets/image/pish.png')),
                           borderRadius: BorderRadius.circular(12)),
                     ),
                   ),
@@ -679,7 +679,7 @@ suggestedUser({@required context}){
                                       image: DecorationImage(
                                           fit: BoxFit.cover,
                                           image: AssetImage(
-                                              'images/icon.png')),
+                                              'assets/image/pish.png')),
                                       borderRadius:
                                       BorderRadius.circular(60)),
                                 ),

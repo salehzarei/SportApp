@@ -1,10 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:sportapplication/view/page/package/packageConstant.dart';
+import 'package:get/get.dart';
+import 'package:sportapplication/controller/Functions/PlanFunction.dart';
+import 'package:sportapplication/controller/util.dart';
+import 'package:sportapplication/view/page/plan/packageConstant.dart';
 
-class PackagePage extends StatelessWidget {
+class PackagePage extends StatefulWidget {
+  @override
+  _PackagePageState createState() => _PackagePageState();
+}
+
+class _PackagePageState extends State<PackagePage> {
+
+  final PlanFunction planFunction = Get.put(PlanFunction());
+
+  @override
+  void initState() {
+    planFunction.getPlanList(token: "");
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Expanded(
+    return Obx(()=>Expanded(
       child: Column(
         children: [
           Container(
@@ -51,15 +68,15 @@ class PackagePage extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: ListView.builder(
-              itemCount: 8,
+            child: planFunction.planLoading.value?lottieLoading():ListView.builder(
+              itemCount:planFunction.planList.length,
               padding: EdgeInsets.symmetric(vertical: 10),
               shrinkWrap: true,
-              itemBuilder: (context, index) => itemPackage(context: context),
+              itemBuilder: (context, index) => itemPackage(context: context, model: planFunction.planList[index]),
             ),
           )
         ],
       ),
-    );
+    ));
   }
 }
