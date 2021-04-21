@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:sportapplication/controller/Functions/PlanFunction.dart';
 import 'package:sportapplication/controller/util.dart';
@@ -68,7 +69,12 @@ class _PackagePageState extends State<PackagePage> {
             ),
           ),
           Expanded(
-            child: planFunction.planLoading.value?lottieLoading():ListView.builder(
+            child: planFunction.planLoading.value?Center(
+              child: SpinKitThreeBounce(
+                color: Colors.white,
+                size: 30.0,
+              ),
+            ):ListView.builder(
               itemCount:planFunction.planList.length,
               padding: EdgeInsets.symmetric(vertical: 10),
               shrinkWrap: true,

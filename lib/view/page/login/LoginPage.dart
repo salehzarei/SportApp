@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:sportapplication/controller/Functions/RegisterFunction.dart';
 import 'package:sportapplication/controller/util.dart';
@@ -150,13 +151,18 @@ class _LoginPageState extends State<LoginPage> {
                                 if(mounted){
                                   setState(() {
                                     _clicked = false;
-                                    listSnackBar(list: check.errorMassages, backgroundColor: Colors.red);
+                                    listSnackBar(list: check.errorMassages, err: true);
                                   });
                                 }
                               }
                             });
                           },
-                          child:_clicked? lottieLoading(widthLottie: 15, heightLottie: 15, heightc: 20):Text(
+                          child:_clicked? Center(
+                            child: SpinKitThreeBounce(
+                              color: Colors.white,
+                              size: 30.0,
+                            ),
+                          ):Text(
                             'ورود',
                             textAlign: TextAlign.center,
                           ),
