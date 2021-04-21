@@ -47,6 +47,9 @@ class VerificationCodePage extends StatelessWidget {
                       reg.code.value = text;
                       print('reg.code.value');
                       print(reg.code.value);
+                      // Get.to(RegisterPage(
+                      //   place: reg,
+                      // ));
                       reg
                           .checkVerificationCode(reg.mobile.text, text)
                           .whenComplete(() {

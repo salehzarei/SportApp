@@ -22,6 +22,8 @@ class _LoginPageState extends State<LoginPage> {
   //   });
   //   super.initState();
   // }
+  TextEditingController _mobile = TextEditingController();
+  TextEditingController _pass = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +54,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 textFieldLogin(
                     context: context,
+                    controllers: _mobile,
                     icons: Icon(Icons.phone_android_outlined),
                     obscureText: false,
                     labeltext: 'نام کاربری',
@@ -61,6 +64,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 textFieldLogin(
                     context: context,
+                    controllers: _pass,
                     icons: Icon(Icons.lock),
                     obscureText: true,
                     labeltext: 'رمز عبور',

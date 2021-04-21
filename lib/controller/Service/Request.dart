@@ -15,12 +15,12 @@ class ApiService extends GetConnect {
           String code,
           String pass,
           String verificationToken,
-          String ostan,
-          String city,
+          int ostan,
+          int city,
           String sysApp,
           String lat,
           String long,
-          String level,
+          int level,
           List interest,
           String inviteCode) =>
       post(
@@ -51,12 +51,12 @@ class ApiService extends GetConnect {
       post(apiUrl + '/user/getVerificationCode', FormData({'mobile': mobile}));
 
 ////////ارسال شماره و کد احراز هویت برای درست یا نادرست بودن کد احراز
-  Future<Response> checkVerificationCode(String mobile, String code) => post(
-      apiUrl + '/user/checkVerificationCode',
-      FormData({
-        'mobile': mobile,
-        'code': code,
-      }));
+  Future<Response> checkVerificationCode(
+          String mobile, String code, String vcode) =>
+      post(
+          apiUrl + '/user/checkVerificationCode',
+          FormData(
+              {'mobile': mobile, 'code': code, 'verification_token': vcode}));
 
 ////////ارسال لول و دریافت دسته بندی های هر عنوان شغلی
   Future<Response> getCategoryAccountType(int level) =>

@@ -10,6 +10,8 @@ import 'package:sportapplication/controller/Functions/Controller.dart';
 import 'package:sportapplication/controller/Functions/RegisterFunction.dart';
 import 'package:sportapplication/view/component/Constans.dart';
 
+import '../../MainPage.dart';
+
 class RegisterPage extends StatefulWidget {
   RegisterFunction place;
   RegisterPage({@required this.place});
@@ -29,6 +31,24 @@ class _RegisterPageState extends State<RegisterPage> {
   static const LatLng _center = const LatLng(0, 0);
 
   LatLng _lastMapPosition = _center;
+  void findPersonUsingIndexWhere(List<dynamic> inter, int ids) {
+    // Find the index of person. If not found, index = -1
+    final indexs = inter.indexWhere((element) => element == ids);
+    // print('indexs');
+    // print(indexs);
+
+    if (indexs > -1) {
+      // print('Using indexWhere: ${inter[indexs]}');
+
+      inter.remove(ids);
+      print('inter remove');
+      print(inter);
+    } else {
+      inter.add(ids);
+      print('inter add');
+      print(inter);
+    }
+  }
 
   void _onCameraMove(CameraPosition position) {
     _lastMapPosition = position.target;
@@ -184,7 +204,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                 ),
                                 textFieldLogin(
                                     context: context,
-                                    controller: widget.place.name,
+                                    controllers: widget.place.name,
                                     labeltext: 'نام و نام خانوادگی',
                                     obscureText: false,
                                     textInputType: TextInputType.text,
@@ -308,7 +328,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                 ),
                                 textFieldLogin(
                                     context: context,
-                                    controller: widget.place.mobile,
+                                    controllers: widget.place.mobile,
                                     labeltext: 'شماره همراه',
                                     obscureText: false,
                                     enabled: false,
@@ -327,7 +347,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                 ),
                                 textFieldLogin(
                                     context: context,
-                                    controller: widget.place.pass,
+                                    controllers: widget.place.pass,
                                     labeltext: 'رمز عبور',
                                     maxLength: 15,
                                     obscureText: true,
@@ -338,7 +358,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                 ),
                                 textFieldLogin(
                                     context: context,
-                                    controller: widget.place.repass,
+                                    controllers: widget.place.repass,
                                     labeltext: 'تکرار رمز عبور',
                                     obscureText: true,
                                     maxLength: 15,
@@ -599,6 +619,13 @@ class _RegisterPageState extends State<RegisterPage> {
                                                               .primaryColor,
                                                       onSelected: (List<String>
                                                           checked) {
+                                                        findPersonUsingIndexWhere(
+                                                            step.interest,
+                                                            widget
+                                                                .place
+                                                                .categoryList[
+                                                                    index]
+                                                                .id);
                                                         // List<dynamic> ids = step
                                                         //     .interest
                                                         //     .where((w) => w
@@ -614,13 +641,10 @@ class _RegisterPageState extends State<RegisterPage> {
                                                         // } else {
 
                                                         // }
-                                                        step.interest.add(widget
-                                                            .place
-                                                            .categoryList[index]
-                                                            .id);
-                                                        print(step.interest);
-                                                        print(
-                                                            checked.toString());
+
+                                                        // print(step.interest);
+                                                        // print(
+                                                        //     checked.toString());
                                                       }),
                                                   // Checkbox(
                                                   //     value: true,
@@ -640,9 +664,45 @@ class _RegisterPageState extends State<RegisterPage> {
                                           children: [
                                             ElevatedButton(
                                               onPressed: () {
-                                                step.activeStepcomplete.value =
-                                                    1;
-                                                step.stepPlus.value = 2;
+                                                if (step.interest.length == 0 ||
+                                                    step.interest == []) {
+                                                  errorSnackBar(
+                                                      text:
+                                                          'انتخاب حداقل یک دسته بندی اجباری است');
+                                                } else {
+                                                  step.activeStepcomplete
+                                                      .value = 1;
+                                                  step.stepPlus.value = 2;
+                                                  widget.place
+                                                      .sendRegisterData(
+                                                          name: widget
+                                                              .place.name.text,
+                                                          level: step
+                                                              .accountTypeId
+                                                              .value,
+                                                          mobile: widget.place
+                                                              .mobile.text,
+                                                          ostan: step
+                                                              .ostanSelected
+                                                              .value,
+                                                          city: step
+                                                              .citySelected
+                                                              .value,
+                                                          pass: widget
+                                                              .place.pass.text,
+                                                          lat: _lastMapPosition
+                                                              .latitude
+                                                              .toString(),
+                                                          long: _lastMapPosition
+                                                              .longitude
+                                                              .toString(),
+                                                          interest:
+                                                              step.interest).whenComplete(() => null)
+                                                      .whenComplete(() =>
+                                                          Future.delayed(Duration(seconds: 2))
+                                                              .whenComplete(() =>
+                                                                  Get.offAll(MainPage())));
+                                                }
                                               },
                                               child: Text(
                                                 'تکمیل ثبت نام',

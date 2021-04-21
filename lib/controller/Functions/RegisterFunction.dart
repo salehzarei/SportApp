@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:sportapplication/Model/CategoryAccountTypeModel.dart';
 import 'package:sportapplication/controller/Service/Request.dart';
 
+import '../util.dart';
 import 'Controller.dart';
 
 class RegisterFunction extends GetxController {
@@ -61,20 +62,20 @@ class RegisterFunction extends GetxController {
 
   /////////ارسال اطلاعات کاربر برای ثبت نام
   Future sendRegisterData(
-      String name,
+      {String name,
       String mobile,
       String email,
       String code,
       String pass,
       String verificationToken,
-      String ostan,
-      String city,
+      int ostan,
+      int city,
       String sysApp,
       String lat,
       String long,
-      String level,
+      int level,
       List interest,
-      String inviteCode) async {
+      String inviteCode}) async {
     errorMassages = [];
     registerLoading.value = true;
     final response = await ApiService().registerUser(
@@ -96,8 +97,11 @@ class RegisterFunction extends GetxController {
     // print('chekerror');
     // print(checkerror);
     if (response.statusCode == 200 && !checkerror.value) {
-      // String _token = response.body['token'];
-      // to.setToken(_token);
+      String _token = response.body['token'];
+      saveShared('token', _token);
+      errorMassages = (response.body['report_msg'] is List)
+          ? response.body['report_msg']
+          : [response.body['report_msg']];
       update();
     } else {
       errorMassages = (response.body['error_msg'] is List)
@@ -137,7 +141,8 @@ class RegisterFunction extends GetxController {
   Future checkVerificationCode(String mobile, String code) async {
     // checkLoginLoading.value = true;
     errorMassages = [];
-    final response = await ApiService().checkVerificationCode(mobile, code);
+    final response = await ApiService()
+        .checkVerificationCode(mobile, code, verificationCode.value);
     checkerror.value = response.body['error'];
     // print('chekerror');
     // print(checkerror);

@@ -57,7 +57,7 @@ textFieldLogin(
     @required String labeltext,
     @required bool obscureText,
     @required TextInputType textInputType,
-    TextEditingController controller,
+    TextEditingController controllers,
     Icon icons,
     int maxLength,
     bool enabled = true}) {
@@ -70,7 +70,7 @@ textFieldLogin(
       //     borderRadius: BorderRadius.circular(10),
       //     border: Border.all(width: 1, color: Theme.of(context).primaryColor)),
       child: TextFormField(
-        controller: controller,
+        controller: controllers,
         keyboardType: textInputType,
         obscureText: obscureText,
         enableSuggestions: false,
@@ -91,7 +91,10 @@ textFieldLogin(
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10.0),
             borderSide: BorderSide(
-              color: Colors.grey,
+              // color: Colors.greenAccent,
+              color: controllers.text != ''
+                  ? Theme.of(context).primaryColor
+                  : Colors.grey,
               width: 2.0,
             ),
           ),
@@ -102,6 +105,7 @@ textFieldLogin(
               width: 2.0,
             ),
           ),
+
           disabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10.0),
             borderSide: BorderSide(
