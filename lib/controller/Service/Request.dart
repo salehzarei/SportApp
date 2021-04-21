@@ -57,7 +57,7 @@ class ApiService extends GetConnect {
   Future<Response> checkVerificationCode(
           String mobile, String code, String vcode) =>
       post(
-          apiUrl + '/user/checkVerificationCode',
+          apiUrl + 'user/checkVerificationCode',
           FormData(
               {'mobile': mobile, 'code': code, 'verification_token': vcode}));
 
@@ -81,7 +81,7 @@ class ApiService extends GetConnect {
 
   //////دریافت لیست پلن ها
   Future<Response> getPlan({@required String token}) =>
-      get(apiUrl + 'plans?token=${token}');
+      get(apiUrl + 'plans?token=$token');
 
   ////اد کردن پکیج توسط کاربران مجاز
   Future<Response> addPackage({@required String token,

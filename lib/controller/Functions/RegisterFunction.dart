@@ -160,7 +160,7 @@ class RegisterFunction extends GetxController {
   }
 
 ////////ارسال شماره و کد احراز هویت برای درست یا نادرست بودن کد احراز
-  Future checkVerificationCode(String mobile, String code) async {
+  Future checkVerificationCodes(String mobile, String code) async {
     // checkLoginLoading.value = true;
     errorMassages = [];
     final response = await ApiService()
@@ -222,6 +222,7 @@ class RegisterFunction extends GetxController {
     // print(checkerror);
     if (response.statusCode == 200 && !checkerror.value) {
       verificationCode.value = response.body['verification_token'];
+      // print(verificationCode.value);
       // checkregister.value = response.body['register'];
       // setRegisterCode(checkregister.value);
       // print('verificationCode');

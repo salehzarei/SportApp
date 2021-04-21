@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:sportapplication/controller/Functions/AddPackageFunction.dart';
 import 'package:sportapplication/controller/Functions/RegisterFunction.dart';
@@ -125,7 +126,12 @@ class _AddPackagePageState extends State<AddPackagePage> {
                     ),
                     Expanded(
                         child: registerFunction.categoryLoading.value
-                            ? lottieLoading()
+                            ? Center(
+                          child: SpinKitThreeBounce(
+                            color: Colors.white,
+                            size: 30.0,
+                          ),
+                        )
                             : ListView.builder(
                                 shrinkWrap: true,
                                 itemCount: registerFunction.categoryList.length,
@@ -651,7 +657,9 @@ class _AddPackagePageState extends State<AddPackagePage> {
                                         }
                                         _selectImage = 1;
                                         Get.back();
-                                        listSnackBar(list: addPackage.errorMassages, backgroundColor: Colors.green);
+                                        listSnackBar(list: addPackage.errorMassages, err: false,);
+                                      }else{
+                                        listSnackBar(list: addPackage.errorMassages, err: true,);
                                       }
                                     });
                                   });
@@ -705,10 +713,11 @@ class _AddPackagePageState extends State<AddPackagePage> {
                                       }
                                       _selectImage = 1;
                                       Get.back();
-                                      listSnackBar(list: addPackage.errorMassages, backgroundColor: Colors.green);
+                                      listSnackBar(list: addPackage.errorMassages, err: false,);
                                     }else{
-                                      listSnackBar(list: addPackage.errorMassages, backgroundColor: Colors.red);
+                                      listSnackBar(list: addPackage.errorMassages, err: true,);
                                     }
+
                                   });
                                 });
                               },

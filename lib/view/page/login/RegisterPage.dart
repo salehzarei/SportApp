@@ -8,6 +8,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:grouped_buttons/grouped_buttons.dart';
 import 'package:sportapplication/controller/Functions/Controller.dart';
 import 'package:sportapplication/controller/Functions/RegisterFunction.dart';
+import 'package:sportapplication/controller/util.dart';
 import 'package:sportapplication/view/component/Constans.dart';
 
 import '../../MainPage.dart';
@@ -690,18 +691,22 @@ class _RegisterPageState extends State<RegisterPage> {
                                                               .value,
                                                           pass: widget
                                                               .place.pass.text,
-                                                          lat: _lastMapPosition
-                                                              .latitude
+                                                          lat: _lastMapPosition.latitude
                                                               .toString(),
                                                           long: _lastMapPosition
                                                               .longitude
                                                               .toString(),
                                                           interest:
-                                                              step.interest).whenComplete(() => null)
-                                                      .whenComplete(() =>
-                                                          Future.delayed(Duration(seconds: 2))
-                                                              .whenComplete(() =>
-                                                                  Get.offAll(MainPage())));
+                                                              step.interest)
+                                                      .whenComplete(() => listSnackBar(
+                                                          list: widget.place
+                                                              .errorMassages,
+                                                          err: widget
+                                                              .place
+                                                              .checkerror
+                                                              .value))
+                                                      .whenComplete(
+                                                          () => Future.delayed(Duration(seconds: 2)).whenComplete(() => Get.offAll(MainPage())));
                                                 }
                                               },
                                               child: Text(

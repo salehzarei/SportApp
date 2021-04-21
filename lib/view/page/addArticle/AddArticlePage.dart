@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:sportapplication/controller/Functions/AddPackageFunction.dart';
 import 'package:sportapplication/controller/Functions/RegisterFunction.dart';
@@ -113,8 +114,12 @@ class _AddAtrticlePageState extends State<AddArticlePage> {
               ),
               Expanded(
                   child: registerFunction.categoryLoading.value
-                      ? lottieLoading()
-                      : ListView.builder(
+                      ? Center(
+                        child: SpinKitThreeBounce(
+                          color: Colors.white,
+                            size: 30.0,
+                        ),
+                      ): ListView.builder(
                     shrinkWrap: true,
                     itemCount: registerFunction.categoryList.length,
                     itemBuilder: (context, index) => Column(
