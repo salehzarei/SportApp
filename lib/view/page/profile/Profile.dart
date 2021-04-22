@@ -198,9 +198,11 @@ class Profile extends StatelessWidget {
                       } , title: "باشگاه های من"),
                       itemProfile(context: context, onTap: (){
                       } , title: "بررسی qrCode"),
+
                       SizedBox(
                         height: 20,
                       ),
+
                       itemProfile(context: context, onTap: (){
                         Get.to(SupportPage());
                       } , title: "پشتیبانی و قوانین"),
