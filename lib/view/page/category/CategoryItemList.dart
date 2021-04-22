@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:sportapplication/Model/CategoryAccountTypeModel.dart';
 import 'package:sportapplication/controller/Functions/Controller.dart';
 import 'package:sportapplication/view/page/userInfo/DetailUserInfoPage.dart';
-import 'package:sportapplication/view/page/userInfo/newDetailTab.dart';
 
 levelCategoryItem(
     {@required BuildContext context,

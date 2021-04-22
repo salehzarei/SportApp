@@ -1,24 +1,43 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:get/get.dart';
+import 'package:sportapplication/Model/SliderModel.dart';
 import 'package:sportapplication/controller/Functions/Controller.dart';
+import 'package:sportapplication/controller/Functions/SliderFunction.dart';
 import 'package:sportapplication/view/component/Constans.dart';
 import 'package:sportapplication/view/page/home/HomeItemList.dart';
 
 import '../category/CategoryList.dart';
 
-class Home extends StatelessWidget {
-  List<String> sliders = [
-    "https://dkstatics-public.digikala.com/digikala-adservice-banners/d8f5a15935d9baed2f6c9f62b48e16c005585500_1617784806.jpg",
-    "https://dkstatics-public.digikala.com/digikala-adservice-banners/28dd964b0f4f208fcaef1b063e0a21966135a71d_1606837205.jpg",
-    "https://dkstatics-public.digikala.com/digikala-adservice-banners/add1294ad889261aaf8f330e411e80178a2d70ff_1617637271.jpg",
-    "https://dkstatics-public.digikala.com/digikala-adservice-banners/93c450a61b4348187372630713dae60f41856fb6_1618061633.jpg",
-    "https://dkstatics-public.digikala.com/digikala-adservice-banners/34e89b808da8d22d85cab948c4a68a85745dcbee_1618168208.jpg",
-    "https://dkstatics-public.digikala.com/digikala-adservice-banners/b02ac3505c453ea6eb5f5c962d53ebb605256d02_1618210848.jpg",
-    "https://dkstatics-public.digikala.com/digikala-adservice-banners/29c5c2a1f36b62f68b5fb674ac89e330bce03c3b_1608640379.jpg"
-  ];
+class Home extends StatefulWidget {
+  @override
+  _HomeState createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+
   final Controller controller = Get.put(Controller());
+  final SliderFunction slider = Get.put(SliderFunction());
+  List<SliderModel> sliderList = [];
+  bool _sliderLoading = true;
+  @override
+  void initState() {
+     slider.getSlider().then((value) {
+       print("getslider");
+       print(value.length);
+       if(mounted){
+         setState(() {
+           sliderList = value;
+           _sliderLoading = false;
+         });
+       }
+     });
+    super.initState();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -30,13 +49,18 @@ class Home extends StatelessWidget {
               aspectRatio: 16 / 7,
               child: Padding(
                 padding: EdgeInsets.all(4.0),
-                child: Swiper(
+                child: _sliderLoading? Center(
+                  child: SpinKitThreeBounce(
+                    color: Theme.of(context).primaryColorDark,
+                    size: 25.0,
+                  ),
+                ):Swiper(
+                  itemCount: sliderList.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return imageShower(imageUrl: sliders[index],
+                    return imageShower(imageUrl: sliderList[index].pic,
                         margin: EdgeInsets.all(10),
                         borderRadius: BorderRadius.circular(10), fit: BoxFit.cover);
                   },
-                  itemCount: sliders.length,
                   autoplay: true,
                   duration: 10,
                   pagination: SwiperPagination(
@@ -75,7 +99,7 @@ class Home extends StatelessWidget {
                   physics: BouncingScrollPhysics(),
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) =>
-                  specialList(context: context, controller: controller)
+                      specialList(context: context, controller: controller)
               ),
             ),
             divider(title: 'جدید ترین مقالات', callback: () {}),
@@ -158,7 +182,7 @@ class Home extends StatelessWidget {
                   physics: BouncingScrollPhysics(),
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) =>
-                  suggestedUser(context: context)
+                      suggestedUser(context: context)
               ),
             ),
             divider(title: 'دنبال شونده ها', callback: () {}),
@@ -203,5 +227,4 @@ class Home extends StatelessWidget {
       ),
     );
   }
-
 }

@@ -38,6 +38,7 @@ class _AddPackagePageState extends State<AddPackagePage> {
   String _token = "0";
 
   int _selectImage = 0;
+  bool _loadToSend = false;
 
   List _bool=[
     false,
@@ -57,7 +58,7 @@ class _AddPackagePageState extends State<AddPackagePage> {
     'تاریخ شروع',
     'تاریخ پایان',
   ];
-  List _imageUrl = [];
+  List<String> _imageUrl = [];
 
   File fileOne;
   File fileTow;
@@ -93,7 +94,7 @@ class _AddPackagePageState extends State<AddPackagePage> {
     return Obx(() => Scaffold(
         appBar: AppBar(
           elevation: 2,
-          title: Text("افزودن مقاله",
+          title: Text("افزودن پکیج",
               style: TextStyle(fontSize: 18, color: Colors.white)),
           leading: IconButton(
               color: Colors.white,
@@ -485,8 +486,7 @@ class _AddPackagePageState extends State<AddPackagePage> {
                               ],
                             ),
                           ):Container(),
-
-                          Container(
+                          _bool[6] ?Container(
                             padding:EdgeInsets.only(right: 15 , left: 15 ,bottom: 15),
                             child:  textSelected(
                                 context: context,
@@ -508,8 +508,8 @@ class _AddPackagePageState extends State<AddPackagePage> {
                                 selected: _title[0] == "تاریخ شروع"
                                     ? false
                                     : true),
-                          ),
-                          Container(
+                          ):Container(),
+                          _bool[6] ?Container(
                             padding:EdgeInsets.only(right: 15 , left: 15 ,bottom: 15),
                             child:  textSelected(
                                 context: context,
@@ -531,17 +531,117 @@ class _AddPackagePageState extends State<AddPackagePage> {
                                 selected: _title[1] == "تاریخ پایان"
                                     ? false
                                     : true),
-                          ),
-
+                          ):Container(),
                           Container(
                             padding:EdgeInsets.only(right: 15 , left: 15 ,bottom: 15),
                             width: Get.width,
                             child: ElevatedButton(
                               onPressed: () {
-                                  print('_imageUrl');
-                                  print(_imageUrl);
-                                  print('cat');
-                                  print(_idCat);
+                               if(_titleController.text.isEmpty){
+                                 if(mounted){
+                                   setState(() {
+                                     errorSnackBar(text: "نام محصول را وارد نمایید");
+                                   });
+                                 }
+                                 return;
+                               }
+                               if(_desController.text.isEmpty){
+                                 if(mounted){
+                                   setState(() {
+                                     errorSnackBar(text: "توضیح محصول را وارد نمایید");
+                                   });
+                                 }
+                                 return;
+                               }
+                               if(_priceController.text.isEmpty){
+                                 if(mounted){
+                                   setState(() {
+                                     errorSnackBar(text: "قیمت محصول را وارد نمایید");
+                                   });
+                                 }
+                                 return;
+                               }
+                               if(_bool[6]){
+                                 if(_title[0] == "تاریخ شروع"){
+                                   if(mounted){
+                                     setState(() {
+                                       errorSnackBar(text: "تاریخ شروع را وارد نمایید");
+                                     });
+                                   }
+                                   return;
+                                 }
+                                 if(_title[1] == "تاریخ پایان"){
+                                   if(mounted){
+                                     setState(() {
+                                       errorSnackBar(text: "تاریخ پایان را وارد نمایید");
+                                     });
+                                   }
+                                   return;
+                                 }
+                                 if(_discountController.text.isEmpty){
+                                   if(mounted){
+                                     setState(() {
+                                       errorSnackBar(text: "تخفیف را وارد نمایید");
+                                     });
+                                   }
+                                   return;
+                                 }
+                               }
+                               if(_imageUrl.isEmpty){
+                                 if(mounted){
+                                   setState(() {
+                                     errorSnackBar(text: "عکس وارد نشده");
+                                   });
+                                 }
+                                 return;
+                               }
+                               if(mounted){
+                                 setState(() {
+                                   _loadToSend = true;
+                                 });
+                               }
+                               print('_imageUrl');
+                               print(_imageUrl.length);
+                               print(_imageUrl);
+
+                               print(_titleController.text);
+                               print(_desController.text);
+                               print(_idCat.toString());
+                               print(_priceController.text);
+                               print(_discountController.text);
+
+                               addPackage.addPackage(token: _token,
+                                   title: _titleController.text,
+                                   description: _desController.text,
+                                   category: _idCat.toString(),
+                                   pics: _imageUrl,
+                                   price:_priceController.text,
+                                   discount: _bool[6]?_discountController.text:"0",
+                                   discount_type:_bool[6]? _bool[7]?"2":"1":"",
+                                   sdate: _bool[6]? _title[0]:"",
+                                   edate: _bool[6]?  _title[1]:"").then((value){
+                                       if(value == 200){
+                                         if(mounted){
+                                           setState(() {
+                                             _loadToSend = false;
+                                             _titleController.text="";
+                                             _desController.text="";
+                                             _priceController.text="";
+                                             _discountController.text="";
+                                             _imageUrl.clear();
+                                             _bool.map((e) => e = false);
+                                           });
+                                         }
+                                         listSnackBar(list: addPackage.errorMassages, err: false,);
+                                       }else{
+                                         if(mounted){
+                                           setState(() {
+                                             _loadToSend = false;
+                                           });
+                                         }
+                                         listSnackBar(list: addPackage.errorMassages, err: true,);
+                                       }
+                                   });
                               },
                               style: ButtonStyle(
                                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -552,7 +652,12 @@ class _AddPackagePageState extends State<AddPackagePage> {
                                   ),
                                   backgroundColor: MaterialStateProperty.all<Color>(
                                       Colors.red)),
-                              child: Text(
+                              child: _loadToSend ? Center(
+                                child: SpinKitThreeBounce(
+                                  color: Theme.of(context).primaryColorDark,
+                                  size: 25.0,
+                                ),
+                              ):Text(
                                 "ثبت و ارسال",
                                 style: TextStyle(fontSize: 14, color: Colors.white),
                               ),),
@@ -818,7 +923,8 @@ class _AddPackagePageState extends State<AddPackagePage> {
       firstDate: Jalali(1385, 8),
       lastDate: Jalali(1450, 9),
     );
-    return picked.formatFullDate();
+
+    return picked.formatCompactDate();
   }
 
 }

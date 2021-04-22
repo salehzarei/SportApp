@@ -115,7 +115,7 @@ class AddPackageFunction extends GetxController {
             ? response.body['report_msg']
             : [response.body['report_msg']];
 
-        picUrl(response.body['url'].toString());
+        picUrl(response.body['file'].toString());
         addPicLoading.value = false;
         return 200;
       }else{
@@ -161,9 +161,12 @@ class AddPackageFunction extends GetxController {
         category: category,
         description: description,
         price: price);
+    print("response");
+    print(response.statusCode);
     if (response.statusCode == 200) {
       addPackageLoading.value = response.body['error'];
       if(!addPackageLoading.value){
+        print("200");
         errorMassages = (response.body['report_msg'] is List)
             ? response.body['report_msg']
             : [response.body['report_msg']];
@@ -172,10 +175,11 @@ class AddPackageFunction extends GetxController {
         errorMassages = (response.body['error_msg'] is List)
             ? response.body['error_msg']
             : [response.body['error_msg']];
-
+        print("201");
         return 201;
       }
     } else {
+      print("400");
       errorMassages = ["خطا در برقراری ارتباط با سرور"];
       return 400;
     }

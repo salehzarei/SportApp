@@ -73,11 +73,9 @@ class ApiService extends GetConnect {
   Future<Response> getCategoryAccountType(int level) =>
       get(apiUrl + 'category?level=${level.toString()}');
 
-
 ////////چک کردن لاگین بودن کاربر
   Future<Response> checkLogin({@required String token}) =>
       get(apiUrl + 'user/checkLogin?token=$token');
-
 
   //////دریافت لیست پلن ها
   Future<Response> getPlan({@required String token}) =>
@@ -107,7 +105,6 @@ class ApiService extends GetConnect {
             'edate': edate,
           }));
 
-
   ////آپلود عکس پکیج
   Future<Response> uploadProductPic({@required String token, @required File pic}) => post(
       apiUrl + 'providerpackage/uplaodPic',
@@ -118,5 +115,9 @@ class ApiService extends GetConnect {
           filename: pic.path.split('/').last,
         ),
       }));
+
+  ////  اسلایدر
+  Future<Response> getSlider() => get(
+      apiUrl + 'slider');
 
 }
