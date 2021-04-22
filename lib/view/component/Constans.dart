@@ -161,7 +161,11 @@ textFormFieldSearchHintWidget(
           ),
         ),
         hintText: hint,
-        prefixIcon: Icon(Icons.search,color: Colors.grey[600],size: 25,),
+        prefixIcon: Icon(
+          Icons.search,
+          color: Colors.grey[600],
+          size: 25,
+        ),
         labelStyle: TextStyle(
             fontSize: 12,
             color: focus.hasFocus ? Colors.blueGrey[600] : Colors.blueGrey),
@@ -171,17 +175,15 @@ textFormFieldSearchHintWidget(
   );
 }
 
-
-
 textFormFieldHintWidget(
     {@required context,
-      @required focus,
-      @required controller,
-      @required hint,
-      @required minLine,
-      @required maxLine,
-      @required keyboardType,
-      @required maxLength}) {
+    @required focus,
+    @required controller,
+    @required hint,
+    @required minLine,
+    @required maxLine,
+    @required keyboardType,
+    @required maxLength}) {
   return Directionality(
     textDirection: TextDirection.rtl,
     child: TextFormField(
@@ -197,7 +199,7 @@ textFormFieldHintWidget(
       maxLength: maxLength,
       textAlign: TextAlign.right,
       textDirection: TextDirection.rtl,
-      style: TextStyle(fontSize: 14, height: 1.2,color: Color(0xff3D4152)),
+      style: TextStyle(fontSize: 14, height: 1.2, color: Color(0xff3D4152)),
       decoration: InputDecoration(
         contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 12),
         enabledBorder: OutlineInputBorder(
@@ -224,18 +226,17 @@ textFormFieldHintWidget(
   );
 }
 
-checkBoxItem({@required context,
-  @required clicked,
-  @required title,
-  @required onChanged}) {
+checkBoxItem(
+    {@required context,
+    @required clicked,
+    @required title,
+    @required onChanged}) {
   return Row(
     children: [
       Checkbox(
         onChanged: onChanged,
         value: clicked,
-        checkColor: Theme
-            .of(context)
-            .primaryColorDark,
+        checkColor: Theme.of(context).primaryColorDark,
         activeColor: Colors.transparent,
       ),
       SizedBox(
@@ -244,14 +245,11 @@ checkBoxItem({@required context,
       Text(
         title,
         style: TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.bold,
-            color: Colors.black),
+            fontSize: 14, fontWeight: FontWeight.bold, color: Colors.black),
       ),
     ],
   );
 }
-
 
 errorSnackBar({@required String text}) {
   return Get.snackbar('', '',
@@ -397,13 +395,14 @@ fadeDialogBase(context, child) {
       pageBuilder: (context, animation1, animation2) {});
 }
 
-itemImageAdd({@required context,
-  @required onTap,
-  @required loaded,
-  @required imageUri,
-  @required title,
-  @required imageSelected,
-  @required onPressed}) {
+itemImageAdd(
+    {@required context,
+    @required onTap,
+    @required loaded,
+    @required imageUri,
+    @required title,
+    @required imageSelected,
+    @required onPressed}) {
   return InkWell(
     onTap: onTap,
     child: DottedBorder(
@@ -420,90 +419,90 @@ itemImageAdd({@required context,
                 color: Colors.grey[200],
                 borderRadius: BorderRadius.circular(10),
                 border: Border.all(
-                    style: BorderStyle.solid, color: Colors.grey[300], width: 1)),
+                    style: BorderStyle.solid,
+                    color: Colors.grey[300],
+                    width: 1)),
             child: loaded
-                ? imageSelected == 1 ?
-            Container(
-                width: double.infinity,
-                height: double.infinity,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(color: Colors.grey[300], width: 1)),
-                child:  ClipRRect(
-                  child: Container(
-                    width: double.infinity,
-                    height: double.infinity,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: FileImage(imageUri),
-                          fit: BoxFit.fill,
-                        )),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                            begin: Alignment.bottomLeft,
-                            colors: [
-                              Colors.black12.withOpacity(.3),
-                              Colors.black12.withOpacity(.3),
-                              Colors.black12.withOpacity(.3),
-                            ]),
-                      ),
-                      child: Align(
-                        alignment: Alignment.topRight,
-                        child: InkWell(
-                          onTap: onPressed,
-                          child: Padding(
-                            padding: EdgeInsets.all(4),
-                            child: Icon(Icons.zoom_in_sharp,
-                                size: 23, color: Colors.white),
+                ? imageSelected == 1
+                    ? Container(
+                        width: double.infinity,
+                        height: double.infinity,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            border:
+                                Border.all(color: Colors.grey[300], width: 1)),
+                        child: ClipRRect(
+                          child: Container(
+                            width: double.infinity,
+                            height: double.infinity,
+                            decoration: BoxDecoration(
+                                image: DecorationImage(
+                              image: FileImage(imageUri),
+                              fit: BoxFit.fill,
+                            )),
+                            child: Container(
+                                decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                      begin: Alignment.bottomLeft,
+                                      colors: [
+                                        Colors.black12.withOpacity(.3),
+                                        Colors.black12.withOpacity(.3),
+                                        Colors.black12.withOpacity(.3),
+                                      ]),
+                                ),
+                                child: Align(
+                                  alignment: Alignment.topRight,
+                                  child: InkWell(
+                                    onTap: onPressed,
+                                    child: Padding(
+                                      padding: EdgeInsets.all(4),
+                                      child: Icon(Icons.zoom_in_sharp,
+                                          size: 23, color: Colors.white),
+                                    ),
+                                  ),
+                                )),
                           ),
-                        ),
-                      )
-                    ),
-                  ),
-                  borderRadius: BorderRadius.circular(10),
-                )
-            )
-                : Center(
-                child: Container(
-                    margin: EdgeInsets.only(left: 10),
-                    width: 24,
-                    height: 24,
-                    child: CircularProgressIndicator(
-                        strokeWidth: 2.5,
-                        backgroundColor: Colors.white)))
+                          borderRadius: BorderRadius.circular(10),
+                        ))
+                    : Center(
+                        child: Container(
+                            margin: EdgeInsets.only(left: 10),
+                            width: 24,
+                            height: 24,
+                            child: CircularProgressIndicator(
+                                strokeWidth: 2.5,
+                                backgroundColor: Colors.white)))
                 : Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.camera_alt,
-                  size: 20,
-                  color: Colors.grey[800],
-                ),
-                SizedBox(
-                  height: 4,
-                ),
-                Text(
-                  title,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(),
-                ),
-              ],
-            )
-        ),
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.camera_alt,
+                        size: 20,
+                        color: Colors.grey[800],
+                      ),
+                      SizedBox(
+                        height: 4,
+                      ),
+                      Text(
+                        title,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(),
+                      ),
+                    ],
+                  )),
       ),
     ),
   );
 }
 
-
-textSelected({@required context,
-  @required title,
-  @required bool,
-  @required selected,
-  @required tapFunction,
-  @required hoverFunction,
-  @required widthSize}) {
+textSelected(
+    {@required context,
+    @required title,
+    @required bool,
+    @required selected,
+    @required tapFunction,
+    @required hoverFunction,
+    @required widthSize}) {
   return InkWell(
     onTap: tapFunction,
     onHover: hoverFunction,
@@ -520,14 +519,15 @@ textSelected({@required context,
           Text(
             title,
             style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.bold,
-                color: selected ? Colors.black :Colors.black26,),
+              fontSize: 14,
+              fontWeight: FontWeight.bold,
+              color: selected ? Colors.black : Colors.black26,
+            ),
           ),
           Icon(
             Icons.arrow_forward_ios,
             size: 18,
-            color:selected ? Colors.black :Colors.black26,
+            color: selected ? Colors.black : Colors.black26,
           )
         ],
       ),

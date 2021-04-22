@@ -674,6 +674,29 @@ class _RegisterPageState extends State<RegisterPage> {
                                                   step.activeStepcomplete
                                                       .value = 1;
                                                   step.stepPlus.value = 2;
+                                                  print(
+                                                    widget.place.name.text,
+                                                  );
+                                                  print(
+                                                      step.accountTypeId.value);
+                                                  print(
+                                                      widget.place.mobile.text);
+                                                  print(
+                                                      step.ostanSelected.value);
+                                                  print(
+                                                      step.citySelected.value);
+                                                  print(widget.place.pass.text);
+                                                  print(_lastMapPosition
+                                                      .latitude
+                                                      .toString());
+                                                  print(_lastMapPosition
+                                                      .longitude
+                                                      .toString());
+                                                  print(step.interest);
+                                                  print(
+                                                      widget.place.code.value);
+                                                  print(widget.place
+                                                      .verificationCode.value);
                                                   widget.place
                                                       .sendRegisterData(
                                                           name: widget
@@ -691,22 +714,35 @@ class _RegisterPageState extends State<RegisterPage> {
                                                               .value,
                                                           pass: widget
                                                               .place.pass.text,
-                                                          lat: _lastMapPosition.latitude
+                                                          lat: _lastMapPosition
+                                                              .latitude
                                                               .toString(),
                                                           long: _lastMapPosition
                                                               .longitude
                                                               .toString(),
                                                           interest:
-                                                              step.interest)
+                                                              step.interest,
+                                                          code: widget
+                                                              .place.code.value,
+                                                          verificationToken: widget
+                                                              .place
+                                                              .verificationCode
+                                                              .value)
                                                       .whenComplete(() => listSnackBar(
                                                           list: widget.place
                                                               .errorMassages,
-                                                          err: widget
-                                                              .place
-                                                              .checkerror
-                                                              .value))
-                                                      .whenComplete(
-                                                          () => Future.delayed(Duration(seconds: 2)).whenComplete(() => Get.offAll(MainPage())));
+                                                          err: widget.place.checkerror.value))
+                                                      .whenComplete(() {
+                                                    if (widget.place.checkerror
+                                                            .value ==
+                                                        false) {
+                                                      Future.delayed(Duration(
+                                                              seconds: 2))
+                                                          .whenComplete(() =>
+                                                              Get.offAll(
+                                                                  MainPage()));
+                                                    }
+                                                  });
                                                 }
                                               },
                                               child: Text(
