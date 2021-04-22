@@ -35,7 +35,7 @@ class CheckPhonePage extends StatelessWidget {
                   textFieldLogin(
                       context: context,
                       maxLength: 11,
-                      controller: check.mobile,
+                      controllers: check.mobile,
                       labeltext: 'شماره همراه',
                       obscureText: false,
                       textInputType: TextInputType.text,

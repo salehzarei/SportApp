@@ -14,7 +14,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-
   TextEditingController _mobController;
   TextEditingController _passController;
   final RegisterFunction check = Get.put(RegisterFunction());
@@ -67,7 +66,7 @@ class _LoginPageState extends State<LoginPage> {
                       icons: Icon(Icons.phone_android_outlined),
                       obscureText: false,
                       labeltext: ' موبایل ',
-                      controller: _mobController,
+                      controllers: _mobController,
                       maxLength: 11,
                       textInputType: TextInputType.phone),
                   SizedBox(
@@ -78,7 +77,7 @@ class _LoginPageState extends State<LoginPage> {
                       icons: Icon(Icons.lock),
                       obscureText: true,
                       labeltext: 'رمز عبور',
-                      controller: _passController,
+                      controllers: _passController,
                       maxLength: 11,
                       textInputType: TextInputType.text),
                   SizedBox(
@@ -97,8 +96,8 @@ class _LoginPageState extends State<LoginPage> {
                                           width: 1, color: Colors.red))),
                               child: Text(
                                 'فراموشی رمز عبور',
-                                style:
-                                    TextStyle(fontSize: 14, color: Colors.black),
+                                style: TextStyle(
+                                    fontSize: 14, color: Colors.black),
                               ))),
                       SizedBox(
                         height: 15,
@@ -109,46 +108,45 @@ class _LoginPageState extends State<LoginPage> {
                         height: 40,
                         child: ElevatedButton(
                           onPressed: () {
-                            if(_mobController.text.isEmpty){
-                              if(mounted){
+                            if (_mobController.text.isEmpty) {
+                              if (mounted) {
                                 setState(() {
-                                  errorSnackBar(
-                                      text:
-                                      'موبایل را وارد کنید');
+                                  errorSnackBar(text: 'موبایل را وارد کنید');
                                 });
                                 return;
                               }
                             }
-                            if(_mobController.text.length<11){
-                              if(mounted){
+                            if (_mobController.text.length < 11) {
+                              if (mounted) {
                                 setState(() {
                                   errorSnackBar(
-                                      text:
-                                      'موبایل را کامل وارد کنید');
+                                      text: 'موبایل را کامل وارد کنید');
                                 });
                                 return;
                               }
                             }
-                            if(_passController.text.isEmpty){
-                              if(mounted){
+                            if (_passController.text.isEmpty) {
+                              if (mounted) {
                                 setState(() {
-                                  errorSnackBar(
-                                      text:
-                                      'رمز عبور را وارد کنید');
+                                  errorSnackBar(text: 'رمز عبور را وارد کنید');
                                 });
                                 return;
                               }
                             }
-                            if(mounted){
+                            if (mounted) {
                               setState(() {
                                 _clicked = true;
                               });
                             }
-                            check.login(mobile: _mobController.text, pass: _passController.text).then((value){
-                              if(value == 200){
+                            check
+                                .login(
+                                    mobile: _mobController.text,
+                                    pass: _passController.text)
+                                .then((value) {
+                              if (value == 200) {
                                 Get.off(MainPage());
-                              }else{
-                                if(mounted){
+                              } else {
+                                if (mounted) {
                                   setState(() {
                                     _clicked = false;
                                     listSnackBar(list: check.errorMassages, err: true);
@@ -201,6 +199,4 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
-
-
 }

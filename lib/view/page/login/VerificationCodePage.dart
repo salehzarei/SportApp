@@ -3,6 +3,7 @@ import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:get/get.dart';
 import 'package:pin_code_text_field/pin_code_text_field.dart';
 import 'package:sportapplication/controller/Functions/RegisterFunction.dart';
+import 'package:sportapplication/controller/util.dart';
 
 import 'RegisterPage.dart';
 
@@ -47,51 +48,57 @@ class VerificationCodePage extends StatelessWidget {
                       reg.code.value = text;
                       print('reg.code.value');
                       print(reg.code.value);
+                      // Get.to(RegisterPage(
+                      //   place: reg,
+                      // ));
                       reg
-                          .checkVerificationCode(reg.mobile.text, text)
+                          .checkVerificationCodes(reg.mobile.text, text)
                           .whenComplete(() {
                         if (reg.checkerror.value == true) {
-                          Get.snackbar(
-                            '',
-                            '',
-                            titleText: Text(''),
-                            messageText: Container(
-                              // height: 300,
-                              child: ListView.builder(
-                                  itemCount: reg.errorMassages.length,
-                                  physics: NeverScrollableScrollPhysics(),
-                                  shrinkWrap: true,
-                                  itemBuilder: (context, index) {
-                                    return Directionality(
-                                      textDirection: TextDirection.rtl,
-                                      child: HtmlWidget(
-                                        reg.errorMassages[index],
-                                        // onTapUrl: (url) =>
-                                        //     print('tapped $url'),
-                                        textStyle: TextStyle(
-                                            color: Colors.white,
-                                            // letterSpacing: 10,
-                                            // textBaseline: TextBaseline.alphabetic,
-                                            height: 2.5,
-                                            fontSize: 18),
-                                      ),
-                                    );
-                                    // return Text(
-                                    //   register.errorMassages[index],
-                                    //   textDirection: TextDirection.rtl,
-                                    //   style: TextStyle(
-                                    //       color: Colors.white, fontSize: 18),
-                                    // );
-                                  }),
-                            ),
-                            backgroundColor: Colors.red,
-                            colorText: Colors.white,
-                            icon: Icon(
-                              Icons.error,
-                              color: Colors.white,
-                              size: 40,
-                            ),
-                          );
+                          listSnackBar(
+                              list: reg.errorMassages,
+                              err: reg.checkerror.value);
+                          // Get.snackbar(
+                          //   '',
+                          //   '',
+                          //   titleText: Text(''),
+                          //   messageText: Container(
+                          //     // height: 300,
+                          //     child: ListView.builder(
+                          //         itemCount: reg.errorMassages.length,
+                          //         physics: NeverScrollableScrollPhysics(),
+                          //         shrinkWrap: true,
+                          //         itemBuilder: (context, index) {
+                          //           return Directionality(
+                          //             textDirection: TextDirection.rtl,
+                          //             child: HtmlWidget(
+                          //               reg.errorMassages[index],
+                          //               // onTapUrl: (url) =>
+                          //               //     print('tapped $url'),
+                          //               textStyle: TextStyle(
+                          //                   color: Colors.white,
+                          //                   // letterSpacing: 10,
+                          //                   // textBaseline: TextBaseline.alphabetic,
+                          //                   height: 2.5,
+                          //                   fontSize: 18),
+                          //             ),
+                          //           );
+                          //           // return Text(
+                          //           //   register.errorMassages[index],
+                          //           //   textDirection: TextDirection.rtl,
+                          //           //   style: TextStyle(
+                          //           //       color: Colors.white, fontSize: 18),
+                          //           // );
+                          //         }),
+                          //   ),
+                          //   backgroundColor: Colors.red,
+                          //   colorText: Colors.white,
+                          //   icon: Icon(
+                          //     Icons.error,
+                          //     color: Colors.white,
+                          //     size: 40,
+                          //   ),
+                          // );
                         } else {
                           Get.to(RegisterPage(
                             place: reg,

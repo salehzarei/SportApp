@@ -18,12 +18,12 @@ class ApiService extends GetConnect {
           String code,
           String pass,
           String verificationToken,
-          String ostan,
-          String city,
+          int ostan,
+          int city,
           String sysApp,
           String lat,
           String long,
-          String level,
+          int level,
           List interest,
           String inviteCode) =>
       post(
@@ -54,12 +54,12 @@ class ApiService extends GetConnect {
       post(apiUrl + 'user/getVerificationCode', FormData({'mobile': mobile}));
 
 ////////ارسال شماره و کد احراز هویت برای درست یا نادرست بودن کد احراز
-  Future<Response> checkVerificationCode(String mobile, String code) => post(
-      apiUrl + 'user/checkVerificationCode',
-      FormData({
-        'mobile': mobile,
-        'code': code,
-      }));
+  Future<Response> checkVerificationCode(
+          String mobile, String code, String vcode) =>
+      post(
+          apiUrl + 'user/checkVerificationCode',
+          FormData(
+              {'mobile': mobile, 'code': code, 'verification_token': vcode}));
 
 ////////ارسال شماره و کد احراز هویت برای درست یا نادرست بودن کد احراز
   Future<Response> login({@required String mobile,@required String pass}) => post(
@@ -79,7 +79,7 @@ class ApiService extends GetConnect {
 
   //////دریافت لیست پلن ها
   Future<Response> getPlan({@required String token}) =>
-      get(apiUrl + 'plans?token=${token}');
+      get(apiUrl + 'plans?token=$token');
 
   ////اد کردن پکیج توسط کاربران مجاز
   Future<Response> addPackage({@required String token,
