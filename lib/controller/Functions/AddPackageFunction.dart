@@ -4,8 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:sportapplication/Model/MyPackageModel.dart';
 import 'package:sportapplication/controller/Service/Request.dart';
-import 'package:sportapplication/view/page/myInfo/MyPackage.dart';
 
 class AddPackageFunction extends GetxController {
 
@@ -13,6 +13,7 @@ class AddPackageFunction extends GetxController {
   final addPicLoading = false.obs;
   final picUrl = "0".obs;
   List errorMassages = [];
+
 
   Future<File> imagePicker({@required bool isCamera}) async {
     var pic = await ImagePicker.pickImage(
@@ -244,22 +245,20 @@ class AddPackageFunction extends GetxController {
   }
 
 
-  //////دریافت لیست پلن ها
-  Future getPlanList({@required String token}) async {
-    // final response = await ApiService().getMyPackage(token: token);
-    // if (response.statusCode == 200) {
-    //   final List<dynamic> responseData = response.body['data'];
-    //   List<MyPackage> pln = (responseData)
-    //       .map((i) => MyPackage.fromJson(i))
-    //       .toList();
-    //   planList = pln;
-    //   update();
-    //   planLoading.value = false;
-    // } else {
-    //   // Constans().dialogboxCheckInternet(response.statusCode);
-    // }
-    // update();
-    // planLoading.value = false;
+  //////دریافت لیست پکیح ها
+  Future <List<MyPackagePost>> getMyPackageList({@required String token}) async {
+    final response = await ApiService().getMyPackage(token: token);
+    if (response.statusCode == 200) {
+      final List<dynamic> responseData = response.body['post'];
+      List<MyPackagePost> pln = (responseData)
+          .map((i) => MyPackagePost.fromJson(i))
+          .toList();
+      return pln;
+
+    } else {
+      return [];
+    }
+
   }
 
 

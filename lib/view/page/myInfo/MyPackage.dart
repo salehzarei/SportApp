@@ -1,8 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sportapplication/Model/MyPackageModel.dart';
+import 'package:sportapplication/controller/Functions/AddPackageFunction.dart';
+import 'package:sportapplication/controller/util.dart';
 import 'package:sportapplication/view/page/myInfo/subsetConstant.dart';
 
-class MyPackage extends StatelessWidget {
+class MyPackage extends StatefulWidget {
+  @override
+  _MyPackageState createState() => _MyPackageState();
+}
+
+class _MyPackageState extends State<MyPackage> {
+
+  final AddPackageFunction addPackage = Get.put(AddPackageFunction());
+  List<MyPackagePost> _myListPackage = [];
+
+  @override
+  void initState() {
+    getShared("token").then((value) {
+      addPackage.getMyPackageList(token: value);
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,12 +48,13 @@ class MyPackage extends StatelessWidget {
       body:Directionality(
         textDirection: TextDirection.rtl,
         child: ListView.builder(
-          itemCount: 14,
+          itemCount: _myListPackage.length,
           padding: EdgeInsets.only(top: 10),
           shrinkWrap: true,
-          itemBuilder: (context, index) => myPackageList(context: context, index: index),
+          itemBuilder: (context, index) => myPackageList(context: context, index: index,data:_myListPackage[index]),
         ),
       ),
     );
   }
+
 }
