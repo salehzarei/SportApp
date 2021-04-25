@@ -32,7 +32,26 @@ class _RegisterPageState extends State<RegisterPage> {
   static const LatLng _center = const LatLng(0, 0);
 
   LatLng _lastMapPosition = _center;
-  void findPersonUsingIndexWhere(List<dynamic> inter, int ids) {
+  void findPersonActivityScopeWhere(List<dynamic> active, int ids) {
+    // Find the index of person. If not found, index = -1
+    final indexs = active.indexWhere((element) => element == ids);
+    // print('indexs');
+    // print(indexs);
+
+    if (indexs > -1) {
+      // print('Using indexWhere: ${inter[indexs]}');
+
+      active.remove(ids);
+      print('active remove');
+      print(active);
+    } else {
+      active.add(ids);
+      print('active add');
+      print(active);
+    }
+  }
+
+  void findPersonInterestWhere(List<dynamic> inter, int ids) {
     // Find the index of person. If not found, index = -1
     final indexs = inter.indexWhere((element) => element == ids);
     // print('indexs');
@@ -555,8 +574,6 @@ class _RegisterPageState extends State<RegisterPage> {
                                             widget.place
                                                 .getProductCategories(0);
                                           } else {
-                                            // widget.place
-                                            //     .getProductCategories(0);
                                             widget.place.getProductCategories(
                                                 step.accountTypeId.value);
                                           }
@@ -591,85 +608,146 @@ class _RegisterPageState extends State<RegisterPage> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text(
-                                          'دسته بندی های حوزه فعالیت خود را انتخاب کید',
-                                          style: TextStyle(
-                                              color: Colors.blue, fontSize: 18),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Expanded(
+                                                child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  'حوزه فعالیت',
+                                                  style: TextStyle(
+                                                      color: Colors.blue,
+                                                      fontSize: 18),
+                                                ),
+                                                SizedBox(
+                                                  height: 15,
+                                                ),
+                                                ListView.builder(
+                                                    itemCount: widget.place
+                                                        .categoryList.length,
+                                                    shrinkWrap: true,
+                                                    physics:
+                                                        NeverScrollableScrollPhysics(),
+                                                    itemBuilder:
+                                                        (context, index) {
+                                                      return Row(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          CheckboxGroup(
+                                                              labels: <String>[
+                                                                widget
+                                                                    .place
+                                                                    .categoryList[
+                                                                        index]
+                                                                    .title
+                                                              ],
+                                                              activeColor: Theme
+                                                                      .of(
+                                                                          context)
+                                                                  .primaryColor,
+                                                              onSelected:
+                                                                  (List<String>
+                                                                      checked) {
+                                                                findPersonActivityScopeWhere(
+                                                                    step
+                                                                        .activityScope,
+                                                                    widget
+                                                                        .place
+                                                                        .categoryList[
+                                                                            index]
+                                                                        .id);
+                                                              }),
+                                                        ],
+                                                      );
+                                                    }),
+                                              ],
+                                            )),
+                                            Expanded(
+                                                child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  'علاقه مندی',
+                                                  style: TextStyle(
+                                                      color: Colors.blue,
+                                                      fontSize: 18),
+                                                ),
+                                                SizedBox(
+                                                  height: 15,
+                                                ),
+                                                ListView.builder(
+                                                    itemCount: widget.place
+                                                        .interestList.length,
+                                                    shrinkWrap: true,
+                                                    
+                                                    physics:
+                                                        NeverScrollableScrollPhysics(),
+                                                    itemBuilder:
+                                                        (context, index) {
+                                                      return Row(
+                                                        children: [
+                                                          CheckboxGroup(
+                                                              labels: <String>[
+                                                                widget
+                                                                    .place
+                                                                    .interestList[
+                                                                        index]
+                                                                    .title
+                                                              ],
+                                                              activeColor: Theme
+                                                                      .of(
+                                                                          context)
+                                                                  .primaryColor,
+                                                              onSelected:
+                                                                  (List<String>
+                                                                      checked) {
+                                                                findPersonInterestWhere(
+                                                                    step
+                                                                        .interest,
+                                                                    widget
+                                                                        .place
+                                                                        .interestList[
+                                                                            index]
+                                                                        .id);
+                                                              }),
+                                                        ],
+                                                      );
+                                                    }),
+                                              ],
+                                            )),
+                                          ],
                                         ),
-                                        SizedBox(
-                                          height: 15,
-                                        ),
-                                        ListView.builder(
-                                            itemCount: widget
-                                                .place.categoryList.length,
-                                            shrinkWrap: true,
-                                            physics:
-                                                NeverScrollableScrollPhysics(),
-                                            itemBuilder: (context, index) {
-                                              return Row(
-                                                children: [
-                                                  CheckboxGroup(
-                                                      labels: <String>[
-                                                        widget
-                                                            .place
-                                                            .categoryList[index]
-                                                            .title
-                                                      ],
-                                                      activeColor:
-                                                          Theme.of(context)
-                                                              .primaryColor,
-                                                      onSelected: (List<String>
-                                                          checked) {
-                                                        findPersonUsingIndexWhere(
-                                                            step.interest,
-                                                            widget
-                                                                .place
-                                                                .categoryList[
-                                                                    index]
-                                                                .id);
-                                                        // List<dynamic> ids = step
-                                                        //     .interest
-                                                        //     .where((w) => w
-                                                        //         .startsWith(widget
-                                                        //             .place
-                                                        //             .categoryList[
-                                                        //                 index]
-                                                        //             .id))
-                                                        //     .toList();
-                                                        // if (ids.length > 0) {
-                                                        //   step.interest
-                                                        //       .remove(ids[0]);
-                                                        // } else {
-
-                                                        // }
-
-                                                        // print(step.interest);
-                                                        // print(
-                                                        //     checked.toString());
-                                                      }),
-                                                  // Checkbox(
-                                                  //     value: true,
-                                                  //     activeColor:
-                                                  //         Colors.orangeAccent,
-                                                  //     onChanged: (newValue) {}),
-                                                  // Text(widget
-                                                  //     .place
-                                                  //     .categoryList[index]
-                                                  //     .title)
-                                                ],
-                                              );
-                                            }),
                                         Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.end,
                                           children: [
                                             ElevatedButton(
                                               onPressed: () {
-                                                if (step.interest.length == 0 ||
+                                                if (step.activityScope.length ==
+                                                        0 ||
+                                                    step.activityScope == []) {
+                                                  errorSnackBar(
+                                                      text:
+                                                          'انتخاب حداقل یک حوزه فعالیت اجباری است');
+                                                } else if (step
+                                                            .interest.length ==
+                                                        0 ||
                                                     step.interest == []) {
                                                   errorSnackBar(
                                                       text:
-                                                          'انتخاب حداقل یک دسته بندی اجباری است');
+                                                          'انتخاب حداقل یک علاقه مندی اجباری است');
                                                 } else {
                                                   step.activeStepcomplete
                                                       .value = 1;
@@ -693,6 +771,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                                       .longitude
                                                       .toString());
                                                   print(step.interest);
+                                                   print(step.activityScope);
                                                   print(
                                                       widget.place.code.value);
                                                   print(widget.place
@@ -714,14 +793,15 @@ class _RegisterPageState extends State<RegisterPage> {
                                                               .value,
                                                           pass: widget
                                                               .place.pass.text,
-                                                          lat: _lastMapPosition
-                                                              .latitude
+                                                          lat: _lastMapPosition.latitude
                                                               .toString(),
                                                           long: _lastMapPosition
                                                               .longitude
                                                               .toString(),
                                                           interest:
                                                               step.interest,
+                                                          acivityScope:
+                                                              step.activityScope,
                                                           code: widget
                                                               .place.code.value,
                                                           verificationToken: widget

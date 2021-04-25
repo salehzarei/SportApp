@@ -55,7 +55,7 @@ class CheckPhonePage extends StatelessWidget {
                             // color: Colors.white,
                             onPressed: () {},
                             child: Center(
-                              child: SpinKitDualRing(
+                              child: SpinKitThreeBounce(
                                 color: Colors.white,
                                 size: 15.0,
                               ),

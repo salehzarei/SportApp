@@ -11,6 +11,10 @@ class ApiService extends GetConnect {
   Future<Response> getProvinceList(int ostanid) =>
       get(apiUrl + 'user/getplace?ostan=${ostanid.toString()}');
 
+////////ارسال توکن و دریافت اطلاعات کاربر
+  Future<Response> profileUserData({@required String token}) =>
+      post(apiUrl + 'profile', FormData({'token': token}));
+
   ////////ارسال اطلاعات ثبت نام
   Future<Response> registerUser(
           String name,
@@ -26,6 +30,7 @@ class ApiService extends GetConnect {
           String long,
           int level,
           List interest,
+          List acivityScope,
           String inviteCode) =>
       post(
           apiUrl + 'user/register',
@@ -40,12 +45,42 @@ class ApiService extends GetConnect {
             'city': city,
             'sysApp': sysApp,
             'lat': lat,
-            'long': long,
+            'lng': long,
             'level': level,
-            'interest': interest,
+            'interest': json.encode(interest),
+            'activity_scope': json.encode(acivityScope),
             'invite_code': inviteCode,
           }));
 
+  ////////ارسال اطلاعات ویرایش پروفایل
+  Future<Response> editeProfileUser({
+    String token,
+    String name,
+    String tell,
+    String email,
+    String ostan,
+    String city,
+    int lat,
+    int lng,
+    List interest,
+    List activityScope,
+    String pic,
+  }) =>
+      post(
+          apiUrl + 'profile/edit',
+          FormData({
+            'token': token,
+            'name': name,
+            'tell': tell,
+            'email': email,
+            'ostan': ostan,
+            'city': city,
+            'lat': lat,
+            'lng': lng,
+            'interest': json.encode(interest),
+            'activity_scope': json.encode(activityScope),
+            'pic': pic,
+          }));
 ////////چک کردن شماره همراه
   Future<Response> checkPhone(String mobile) =>
       post(apiUrl + 'user/checkmobile', FormData({'mobile': mobile}));
@@ -154,7 +189,7 @@ class ApiService extends GetConnect {
       'sdate': sdate,
       'edate': edate,
     });
-    return post( apiUrl + 'providerpackage/add?token=$token', form );
+    return post(apiUrl + 'providerpackage/add?token=$token', form);
   }
 
   ////آپلود عکس پکیج
