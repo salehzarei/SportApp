@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
@@ -62,12 +63,13 @@ class ApiService extends GetConnect {
               {'mobile': mobile, 'code': code, 'verification_token': vcode}));
 
 ////////ارسال شماره و کد احراز هویت برای درست یا نادرست بودن کد احراز
-  Future<Response> login({@required String mobile,@required String pass}) => post(
-      apiUrl + 'user/login',
-      FormData({
-        'mobile': mobile,
-        'pass': pass,
-      }));
+  Future<Response> login({@required String mobile, @required String pass}) =>
+      post(
+          apiUrl + 'user/login',
+          FormData({
+            'mobile': mobile,
+            'pass': pass,
+          }));
 
 ////////ارسال لول و دریافت دسته بندی های هر عنوان شغلی
   Future<Response> getCategoryAccountType(int level) =>
@@ -81,18 +83,24 @@ class ApiService extends GetConnect {
   Future<Response> getPlan({@required String token}) =>
       get(apiUrl + 'plans?token=$token');
 
+  //////دریافت لیست پکیح های من
+  Future<Response> getMyPackage({@required String token}) =>
+      get(apiUrl + 'providerpackage?token=$token&page=&limit=&catId=&word');
+
   ////اد کردن پکیج توسط کاربران مجاز
-  Future<Response> addPackage({@required String token,
-    @required String title,
-    @required String description,
-    @required String category,
-    @required List<String> pics,
-    @required String price,
-    @required String discount,
-    @required String discount_type,
-    @required String sdate,
-    @required String edate}) =>
-      post(apiUrl + 'providerpackage/add?token=$token',
+  Future<Response> addPackage(
+          {@required String token,
+          @required String title,
+          @required String description,
+          @required String category,
+          @required List<String> pics,
+          @required String price,
+          @required String discount,
+          @required String discount_type,
+          @required String sdate,
+          @required String edate}) =>
+      post(
+          apiUrl + 'providerpackage/add?token=$token',
           FormData({
             'title': title,
             'description': description,
@@ -105,19 +113,56 @@ class ApiService extends GetConnect {
             'edate': edate,
           }));
 
+  Future<Response> postCases(
+      {@required String token,
+      @required String title,
+      @required String description,
+      @required String category,
+      @required List pics,
+      @required String price,
+      @required String discount,
+      @required String discount_type,
+      @required String sdate,
+      @required String edate}) {
+    print(pics);
+    final form = FormData({
+      'title': title,
+      'description': description,
+      'category': category,
+      'pics': json.encode(pics),
+      'price': price,
+      'discount': discount,
+      'discount_type': discount_type,
+      'sdate': sdate,
+      'edate': edate,
+    });
+    final bode = json.encode({
+      'title': title,
+      'description': description,
+      'category': category,
+      'pics': pics,
+      'price': price,
+      'discount': discount,
+      'discount_type': discount_type,
+      'sdate': sdate,
+      'edate': edate,
+    });
+    return post( apiUrl + 'providerpackage/add?token=$token', form );
+  }
+
   ////آپلود عکس پکیج
-  Future<Response> uploadProductPic({@required String token, @required File pic}) => post(
-      apiUrl + 'providerpackage/uplaodPic',
-      FormData({
-        'token': token,
-        'file': MultipartFile(
-          pic,
-          filename: pic.path.split('/').last,
-        ),
-      }));
+  Future<Response> uploadProductPic(
+          {@required String token, @required File pic}) =>
+      post(
+          apiUrl + 'providerpackage/uplaodPic',
+          FormData({
+            'token': token,
+            'file': MultipartFile(
+              pic,
+              filename: pic.path.split('/').last,
+            ),
+          }));
 
   ////  اسلایدر
-  Future<Response> getSlider() => get(
-      apiUrl + 'slider');
-
+  Future<Response> getSlider() => get(apiUrl + 'slider');
 }

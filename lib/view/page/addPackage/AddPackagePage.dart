@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -58,7 +59,7 @@ class _AddPackagePageState extends State<AddPackagePage> {
     'تاریخ شروع',
     'تاریخ پایان',
   ];
-  List<String> _imageUrl = [];
+  List _imageUrl = [];
 
   File fileOne;
   File fileTow;
@@ -600,26 +601,16 @@ class _AddPackagePageState extends State<AddPackagePage> {
                                    _loadToSend = true;
                                  });
                                }
-                               print('_imageUrl');
-                               print(_imageUrl.length);
-                               print(_imageUrl);
-
-                               print(_titleController.text);
-                               print(_desController.text);
-                               print(_idCat.toString());
-                               print(_priceController.text);
-                               print(_discountController.text);
-
-                               addPackage.addPackage(token: _token,
+                               addPackage.addPackage2(token: _token,
                                    title: _titleController.text,
                                    description: _desController.text,
                                    category: _idCat.toString(),
                                    pics: _imageUrl,
                                    price:_priceController.text,
                                    discount: _bool[6]?_discountController.text:"0",
-                                   discount_type:_bool[6]? _bool[7]?"2":"1":"",
-                                   sdate: _bool[6]? _title[0]:"",
-                                   edate: _bool[6]?  _title[1]:"").then((value){
+                                   discount_type:_bool[6]? _bool[7]?"2":"1":" ",
+                                   sdate: _bool[6]? _title[0]:" ",
+                                   edate: _bool[6]?  _title[1]:" ").then((value){
                                        if(value == 200){
                                          if(mounted){
                                            setState(() {
@@ -662,15 +653,10 @@ class _AddPackagePageState extends State<AddPackagePage> {
                                 style: TextStyle(fontSize: 14, color: Colors.white),
                               ),),
                           ),
-
-
                           SizedBox(height: 20,),
-
                         ],
-                      ),
-                   ),
-            )),
-            )));
+                      )),
+            )))));
   }
 
   _importImageSelectBottomSheet(BuildContext context,int from) {

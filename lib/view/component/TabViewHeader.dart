@@ -18,7 +18,11 @@ class TabViewHeader extends SliverPersistentHeaderDelegate {
           onTap: (value) {
             onckick(value);
           },
-          isScrollable: true,
+          isScrollable: false,
+          labelStyle: TextStyle(
+            fontSize: 12,
+            fontFamily: 'sanse'
+          ),
           tabs: <Widget>[
             Tab(
                 text: "پکیج های ارائه شده",
@@ -30,7 +34,7 @@ class TabViewHeader extends SliverPersistentHeaderDelegate {
                 )
             ),
             Tab(
-                text: "مقالات ثبت شده ",
+                text: "مقالات ثبت شده",
                 icon: SvgPicture.asset(
                   "assets/svg/gym.svg",
                   width: 18,
@@ -39,7 +43,7 @@ class TabViewHeader extends SliverPersistentHeaderDelegate {
                 )
             ),
             Tab(
-                text: "مربی های زیر مجموعه",
+                text: "مربی های زیرمجموعه",
                 icon: SvgPicture.asset(
                   "assets/svg/doctor.svg",
                   width: 18,
