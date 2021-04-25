@@ -25,10 +25,10 @@ itemPackage({@required BuildContext context, @required PlanData model}) {
               children: [
                 Row(
                   children: [
-                   Text("قیمت:",style: TextStyle(
-                     fontSize: 15,
-                     color: Colors.black
-                   ),),
+                    Text(
+                      "قیمت:",
+                      style: TextStyle(fontSize: 15, color: Colors.black),
+                    ),
                     SizedBox(
                       width: 8,
                     ),
@@ -80,7 +80,7 @@ itemPackage({@required BuildContext context, @required PlanData model}) {
   );
 }
 
-itemMyBox({@required BuildContext context}) {
+itemMyBox({@required BuildContext context, @required MypackagesModel lists}) {
   return Card(
     elevation: 3,
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
@@ -93,7 +93,7 @@ itemMyBox({@required BuildContext context}) {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text("پکیج یک ماهه ویژه",
+              Text(lists.title,
                   style: TextStyle(fontSize: 14, color: Colors.black)),
               Text(
                 '${maskedText('50000')} تومان ',

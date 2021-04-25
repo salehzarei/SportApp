@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
@@ -9,6 +10,10 @@ class ApiService extends GetConnect {
   ////////دریافت لیست استان و شهر
   Future<Response> getProvinceList(int ostanid) =>
       get(apiUrl + 'user/getplace?ostan=${ostanid.toString()}');
+
+////////ارسال توکن و دریافت اطلاعات کاربر
+  Future<Response> profileUserData({@required String token}) =>
+      post(apiUrl + 'profile', FormData({'token': token}));
 
   ////////ارسال اطلاعات ثبت نام
   Future<Response> registerUser(
@@ -25,9 +30,11 @@ class ApiService extends GetConnect {
           String long,
           int level,
           List interest,
+          List acivityScope,
           String inviteCode) =>
       post(
           apiUrl + 'user/register',
+          
           FormData({
             'name': name,
             'mobile': mobile,
@@ -39,9 +46,10 @@ class ApiService extends GetConnect {
             'city': city,
             'sysApp': sysApp,
             'lat': lat,
-            'long': long,
+            'lng': long,
             'level': level,
-            'interest': interest,
+            'interest': jsonEncode(interest),
+            'activity_scope': jsonEncode(acivityScope),
             'invite_code': inviteCode,
           }));
 
@@ -62,12 +70,13 @@ class ApiService extends GetConnect {
               {'mobile': mobile, 'code': code, 'verification_token': vcode}));
 
 ////////ارسال شماره و کد احراز هویت برای درست یا نادرست بودن کد احراز
-  Future<Response> login({@required String mobile,@required String pass}) => post(
-      apiUrl + 'user/login',
-      FormData({
-        'mobile': mobile,
-        'pass': pass,
-      }));
+  Future<Response> login({@required String mobile, @required String pass}) =>
+      post(
+          apiUrl + 'user/login',
+          FormData({
+            'mobile': mobile,
+            'pass': pass,
+          }));
 
 ////////ارسال لول و دریافت دسته بندی های هر عنوان شغلی
   Future<Response> getCategoryAccountType(int level) =>
@@ -82,17 +91,19 @@ class ApiService extends GetConnect {
       get(apiUrl + 'plans?token=$token');
 
   ////اد کردن پکیج توسط کاربران مجاز
-  Future<Response> addPackage({@required String token,
-    @required String title,
-    @required String description,
-    @required String category,
-    @required List<String> pics,
-    @required String price,
-    @required String discount,
-    @required String discount_type,
-    @required String sdate,
-    @required String edate}) =>
-      post(apiUrl + 'providerpackage/add?token=$token',
+  Future<Response> addPackage(
+          {@required String token,
+          @required String title,
+          @required String description,
+          @required String category,
+          @required List<String> pics,
+          @required String price,
+          @required String discount,
+          @required String discount_type,
+          @required String sdate,
+          @required String edate}) =>
+      post(
+          apiUrl + 'providerpackage/add?token=$token',
           FormData({
             'title': title,
             'description': description,
@@ -106,18 +117,18 @@ class ApiService extends GetConnect {
           }));
 
   ////آپلود عکس پکیج
-  Future<Response> uploadProductPic({@required String token, @required File pic}) => post(
-      apiUrl + 'providerpackage/uplaodPic',
-      FormData({
-        'token': token,
-        'file': MultipartFile(
-          pic,
-          filename: pic.path.split('/').last,
-        ),
-      }));
+  Future<Response> uploadProductPic(
+          {@required String token, @required File pic}) =>
+      post(
+          apiUrl + 'providerpackage/uplaodPic',
+          FormData({
+            'token': token,
+            'file': MultipartFile(
+              pic,
+              filename: pic.path.split('/').last,
+            ),
+          }));
 
   ////  اسلایدر
-  Future<Response> getSlider() => get(
-      apiUrl + 'slider');
-
+  Future<Response> getSlider() => get(apiUrl + 'slider');
 }

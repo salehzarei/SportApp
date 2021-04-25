@@ -23,7 +23,7 @@ class RegisterFunction extends GetxController {
   final verificationCode = ''.obs;
   final code = ''.obs;
   List<CategoryAccountTypeModel> categoryList = [];
-
+  List<CategoryAccountTypeModel> interestList = [];
   List<dynamic> errorMassages = [];
   TextEditingController mobile = TextEditingController();
   TextEditingController name = TextEditingController();
@@ -77,6 +77,7 @@ class RegisterFunction extends GetxController {
       String long,
       int level,
       List interest,
+      List acivityScope,
       String inviteCode}) async {
     errorMassages = [];
     registerLoading.value = true;
@@ -94,6 +95,7 @@ class RegisterFunction extends GetxController {
         long,
         level,
         interest,
+        acivityScope,
         inviteCode);
     checkerror.value = response.body['error'];
     // print('chekerror');
@@ -143,20 +145,19 @@ class RegisterFunction extends GetxController {
   Future<int> checkLogin({@required String token}) async {
     checkLoginLoading.value = true;
     final response = await ApiService().checkLogin(token: token);
-    if (response.statusCode == 200 ) {
+    if (response.statusCode == 200) {
       checkerror.value = response.body['error'];
       print(response.body['error']);
       checkLoginLoading.value = false;
-      if(!checkerror.value){
+      if (!checkerror.value) {
         return 200;
-      }else{
+      } else {
         return 201;
       }
     } else {
       checkLoginLoading.value = false;
-     return 400;
+      return 400;
     }
-
   }
 
 ////////ارسال شماره و کد احراز هویت برای درست یا نادرست بودن کد احراز
@@ -185,17 +186,17 @@ class RegisterFunction extends GetxController {
   }
 
 ////////ارسال شماره و کد احراز هویت برای درست یا نادرست بودن کد احراز
-  Future<int> login({@required String mobile,@required String pass}) async {
+  Future<int> login({@required String mobile, @required String pass}) async {
     loginLoading.value = true;
     errorMassages = [];
     final response = await ApiService().login(pass: pass, mobile: mobile);
     if (response.statusCode == 200) {
       checkerror.value = response.body['error'];
-      if(!checkerror.value){
-          saveShared("token", response.body['token'].toString());
-          saveShared("active", response.body['active'].toString());
+      if (!checkerror.value) {
+        saveShared("token", response.body['token'].toString());
+        saveShared("active", response.body['active'].toString());
         return 200;
-      }else{
+      } else {
         errorMassages = (response.body['error_msg'] is List)
             ? response.body['error_msg']
             : [response.body['error_msg']];
@@ -205,7 +206,6 @@ class RegisterFunction extends GetxController {
         return 201;
       }
     } else {
-
       errorMassages = ["خطا در برقراری ارتباط با سرور"];
       return 400;
     }
@@ -241,13 +241,22 @@ class RegisterFunction extends GetxController {
   Future getProductCategories(int level) async {
     categoryLoading.value = true;
     categoryList.clear();
+    interestList.clear();
+
     final response = await ApiService().getCategoryAccountType(level);
-    if (response.statusCode == 200) {
+    final response2 = await ApiService().getCategoryAccountType(0);
+
+    if (response.statusCode == 200 && response2.statusCode == 200) {
       final List<dynamic> responseData = response.body['post'];
+      final List<dynamic> responseData2 = response2.body['post'];
       List<CategoryAccountTypeModel> cat = (responseData)
           .map((i) => CategoryAccountTypeModel.fromJson(i))
           .toList();
       categoryList = cat;
+      List<CategoryAccountTypeModel> cat2 = (responseData2)
+          .map((i) => CategoryAccountTypeModel.fromJson(i))
+          .toList();
+      interestList = cat2;
       update();
       categoryLoading.value = false;
     } else {
@@ -256,6 +265,6 @@ class RegisterFunction extends GetxController {
     update();
     categoryLoading.value = false;
     print('Category List account Type');
-    print(categoryList);
+    print(interestList);
   }
 }
