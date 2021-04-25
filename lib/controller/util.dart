@@ -22,6 +22,7 @@ Future saveShared(String key, String value) async {
 Future<String> getShared(String key) async {
   final prefs = await SharedPreferences.getInstance();
   final _loadShared = prefs.getString(key);
+  print('token is: $_loadShared');
   return _loadShared;
 }
 

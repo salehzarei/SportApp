@@ -101,8 +101,8 @@ class RegisterFunction extends GetxController {
     // print('chekerror');
     // print(checkerror);
     if (response.statusCode == 200 && !checkerror.value) {
-      String _token = response.body['token'];
-      saveShared('token', _token);
+      // String _token = response.body['token'];
+      saveShared("token", response.body['token'].toString());
       errorMassages = (response.body['report_msg'] is List)
           ? response.body['report_msg']
           : [response.body['report_msg']];

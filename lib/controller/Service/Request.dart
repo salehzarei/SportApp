@@ -34,7 +34,6 @@ class ApiService extends GetConnect {
           String inviteCode) =>
       post(
           apiUrl + 'user/register',
-          
           FormData({
             'name': name,
             'mobile': mobile,
@@ -48,11 +47,40 @@ class ApiService extends GetConnect {
             'lat': lat,
             'lng': long,
             'level': level,
-            'interest': jsonEncode(interest),
-            'activity_scope': jsonEncode(acivityScope),
+            'interest': json.encode(interest),
+            'activity_scope': json.encode(acivityScope),
             'invite_code': inviteCode,
           }));
 
+  ////////ارسال اطلاعات ویرایش پروفایل
+  Future<Response> editeProfileUser({
+    String token,
+    String name,
+    String tell,
+    String email,
+    String ostan,
+    String city,
+    int lat,
+    int lng,
+    List interest,
+    List activityScope,
+    String pic,
+  }) =>
+      post(
+          apiUrl + 'profile/edit',
+          FormData({
+            'token': token,
+            'name': name,
+            'tell': tell,
+            'email': email,
+            'ostan': ostan,
+            'city': city,
+            'lat': lat,
+            'lng': lng,
+            'interest': json.encode(interest),
+            'activity_scope': json.encode(activityScope),
+            'pic': pic,
+          }));
 ////////چک کردن شماره همراه
   Future<Response> checkPhone(String mobile) =>
       post(apiUrl + 'user/checkmobile', FormData({'mobile': mobile}));
@@ -154,7 +182,7 @@ class ApiService extends GetConnect {
       'sdate': sdate,
       'edate': edate,
     });
-    return post( apiUrl + 'providerpackage/add?token=$token', form );
+    return post(apiUrl + 'providerpackage/add?token=$token', form);
   }
 
   ////آپلود عکس پکیج

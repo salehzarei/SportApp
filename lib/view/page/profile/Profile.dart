@@ -55,14 +55,15 @@ class _ProfileState extends State<Profile> {
 
   @override
   void initState() {
-    getShared('token').then((value) => profile.loadingUserData(token: value));
+    getShared("token")
+        .then((va) => profile.loadingUserData(tokens: va));
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => profile.profileLoading.value
+      () => profile.profileLoading.value == true
           ? Expanded(
               child: Center(
               child: SpinKitThreeBounce(

@@ -18,8 +18,6 @@ class UserDataModel {
   List<ActivityScope> activityScope;
   String pic;
   String thumb;
-  String nationalCode;
-  String postalCode;
 
   UserDataModel(
       {this.id,
@@ -40,26 +38,24 @@ class UserDataModel {
       this.interest,
       this.activityScope,
       this.pic,
-      this.thumb,
-      this.nationalCode,
-      this.postalCode});
+      this.thumb});
 
   UserDataModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    user = json['User'];
-    status = json['Status'];
-    name = json['Name'];
-    tell = json['Tell'];
-    cell = json['Cell'];
-    email = json['Email'];
-    ostan = json['Ostan'];
-    city = json['City'];
-    address = json['Address'];
+    user = json['user'];
+    status = json['status'];
+    name = json['name'];
+    tell = json['tell'];
+    cell = json['cell'];
+    email = json['email'];
+    ostan = json['ostan'];
+    city = json['city'];
+    address = json['address'];
     lat = json['lat'];
     lng = json['lng'];
     level = json['level'];
     levelTitle = json['level_title'];
-    expire = json['Expire'];
+    expire = json['expire'];
     if (json['interest'] != null) {
       interest = new List<Interest>();
       json['interest'].forEach((v) {
@@ -72,29 +68,27 @@ class UserDataModel {
         activityScope.add(new ActivityScope.fromJson(v));
       });
     }
-    pic = json['Pic'];
-    thumb = json['Thumb'];
-    nationalCode = json['NationalCode'];
-    postalCode = json['PostalCode'];
+    pic = json['pic'];
+    thumb = json['thumb'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
-    data['User'] = this.user;
-    data['Status'] = this.status;
-    data['Name'] = this.name;
-    data['Tell'] = this.tell;
-    data['Cell'] = this.cell;
-    data['Email'] = this.email;
-    data['Ostan'] = this.ostan;
-    data['City'] = this.city;
-    data['Address'] = this.address;
+    data['user'] = this.user;
+    data['status'] = this.status;
+    data['name'] = this.name;
+    data['tell'] = this.tell;
+    data['cell'] = this.cell;
+    data['email'] = this.email;
+    data['ostan'] = this.ostan;
+    data['city'] = this.city;
+    data['address'] = this.address;
     data['lat'] = this.lat;
     data['lng'] = this.lng;
     data['level'] = this.level;
     data['level_title'] = this.levelTitle;
-    data['Expire'] = this.expire;
+    data['expire'] = this.expire;
     if (this.interest != null) {
       data['interest'] = this.interest.map((v) => v.toJson()).toList();
     }
@@ -102,10 +96,8 @@ class UserDataModel {
       data['activity_scope'] =
           this.activityScope.map((v) => v.toJson()).toList();
     }
-    data['Pic'] = this.pic;
-    data['Thumb'] = this.thumb;
-    data['NationalCode'] = this.nationalCode;
-    data['PostalCode'] = this.postalCode;
+    data['pic'] = this.pic;
+    data['thumb'] = this.thumb;
     return data;
   }
 }
