@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:sportapplication/Model/MyPackageModel.dart';
 import 'package:sportapplication/controller/util.dart';
 import 'package:sportapplication/view/component/Constans.dart';
 
@@ -149,7 +150,7 @@ subsetItemList({@required BuildContext context, @required int index}) {
   );
 }
 
-myPackageList({@required BuildContext context, @required int index}) {
+myPackageList({@required BuildContext context, @required int index , @required MyPackagePost data}) {
   return Container(
     decoration: BoxDecoration(
         color: Colors.white,
@@ -173,11 +174,7 @@ myPackageList({@required BuildContext context, @required int index}) {
               children: [
                 Expanded(flex: 2,
                     child: AspectRatio(aspectRatio: 2 / 2,
-                      child: imageShower(imageUrl: index % 2 == 0
-                          ?
-                      'https://dkstatics-public.digikala.com/digikala-adservice-banners/956cd52f1f18f11284016c86561d53bcdcfdeedd_1612606849.jpg?x-oss-process=image/quality,q_80'
-                          :
-                      "https://dkstatics-public.digikala.com/digikala-adservice-banners/bc928cad36c9cc9aed866ec4de30dfd9f5e50ec7_1607016116.jpg?x-oss-process=image/quality,q_80",
+                      child: imageShower(imageUrl: data.pic,
                           margin: EdgeInsets.only(left: 0, right: 0),
                           fit: BoxFit.fill,
                           borderRadius: BorderRadius.circular(8)),)),
@@ -187,14 +184,16 @@ myPackageList({@required BuildContext context, @required int index}) {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(height: 6,),
-                    Text("دوره تاکتیک در فوتسال",
+                    Text(data.title,
+                      maxLines: 1,
                       style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w400,
                           color: Colors.black
                       ),),
                     SizedBox(height: 8,),
-                    Text("25 خرید",
+                    Text(data.status_title,
+                      maxLines: 1,
                       style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w600,
@@ -206,8 +205,8 @@ myPackageList({@required BuildContext context, @required int index}) {
                       children: [
                         Row(
                           children: [
-                            Text(
-                              maskedText('75000'),
+                            data.discount ==0 ?Container(): Text(
+                              maskedText(data.price.toString()),
                               style: TextStyle(
                                   decoration: TextDecoration.lineThrough,
                                   decorationColor: Colors.red[800],
@@ -217,11 +216,11 @@ myPackageList({@required BuildContext context, @required int index}) {
                                   fontWeight: FontWeight.w600,
                                   fontSize: 13),
                             ),
-                            SizedBox(
+                            data.discount ==0 ?Container(): SizedBox(
                               width: 5,
                             ),
                             Text(
-                              '${maskedText('50000')} تومان ',
+                              '${maskedText(data.final_price.toString())} تومان ',
                               style: TextStyle(
                                   color: Colors.green,
                                   fontWeight: FontWeight.bold,
@@ -229,7 +228,7 @@ myPackageList({@required BuildContext context, @required int index}) {
                             ),
                           ],
                         ),
-                        Container(
+                        data.discount ==0 ?Container() : Container(
                           padding: EdgeInsets.symmetric(
                               horizontal: 10, vertical: 4),
                           decoration: BoxDecoration(
@@ -239,7 +238,8 @@ myPackageList({@required BuildContext context, @required int index}) {
                                   .primaryColorDark
                           ),
                           child: Center(
-                            child: Text("٪15",
+                            child: Text(
+                              data.discount_type == 2 ? '${data.discount} %':data.discount.toString(),
                               style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 13

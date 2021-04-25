@@ -1,13 +1,13 @@
 class MyPackageModel {
     int count;
-    List<Post> post;
+    List<MyPackagePost> post;
 
     MyPackageModel({this.count, this.post});
 
     factory MyPackageModel.fromJson(Map<String, dynamic> json) {
         return MyPackageModel(
             count: json['count'], 
-            post: json['post'] != null ? (json['post'] as List).map((i) => Post.fromJson(i)).toList() : null, 
+            post: json['post'] != null ? (json['post'] as List).map((i) => MyPackagePost.fromJson(i)).toList() : null,
         );
     }
 
@@ -21,7 +21,7 @@ class MyPackageModel {
     }
 }
 
-class Post {
+class MyPackagePost {
     int category;
     String category_title;
     String description;
@@ -37,12 +37,14 @@ class Post {
     int status;
     String status_title;
     String title;
+    int hasOff;
+    int final_price;
     int uid;
 
-    Post({this.category, this.category_title, this.description, this.discount, this.discount_type, this.edate, this.hits, this.id, this.pic, this.price, this.reason, this.sdate, this.status, this.status_title, this.title, this.uid});
+    MyPackagePost({this.category, this.category_title,this.final_price, this.hasOff, this.description, this.discount, this.discount_type, this.edate, this.hits, this.id, this.pic, this.price, this.reason, this.sdate, this.status, this.status_title, this.title, this.uid});
 
-    factory Post.fromJson(Map<String, dynamic> json) {
-        return Post(
+    factory MyPackagePost.fromJson(Map<String, dynamic> json) {
+        return MyPackagePost(
             category: json['category'], 
             category_title: json['category_title'], 
             description: json['description'], 
@@ -55,8 +57,10 @@ class Post {
             price: json['price'], 
             reason: json['reason'], 
             sdate: json['sdate'], 
-            status: json['status'], 
-            status_title: json['status_title'], 
+            status: json['status'],
+            final_price: json['final_price'],
+            hasOff: json['hasOff'],
+            status_title: json['status_title'],
             title: json['title'], 
             uid: json['uid'], 
         );
