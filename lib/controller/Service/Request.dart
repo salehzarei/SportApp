@@ -90,6 +90,10 @@ class ApiService extends GetConnect {
   Future<Response> getPlan({@required String token}) =>
       get(apiUrl + 'plans?token=$token');
 
+  //////دریافت لیست پکیح های من
+  Future<Response> getMyPackage({@required String token}) =>
+      get(apiUrl + 'providerpackage?token=$token&page=&limit=&catId=&word');
+
   ////اد کردن پکیج توسط کاربران مجاز
   Future<Response> addPackage(
           {@required String token,
@@ -115,6 +119,43 @@ class ApiService extends GetConnect {
             'sdate': sdate,
             'edate': edate,
           }));
+
+  Future<Response> postCases(
+      {@required String token,
+      @required String title,
+      @required String description,
+      @required String category,
+      @required List pics,
+      @required String price,
+      @required String discount,
+      @required String discount_type,
+      @required String sdate,
+      @required String edate}) {
+    print(pics);
+    final form = FormData({
+      'title': title,
+      'description': description,
+      'category': category,
+      'pics': json.encode(pics),
+      'price': price,
+      'discount': discount,
+      'discount_type': discount_type,
+      'sdate': sdate,
+      'edate': edate,
+    });
+    final bode = json.encode({
+      'title': title,
+      'description': description,
+      'category': category,
+      'pics': pics,
+      'price': price,
+      'discount': discount,
+      'discount_type': discount_type,
+      'sdate': sdate,
+      'edate': edate,
+    });
+    return post( apiUrl + 'providerpackage/add?token=$token', form );
+  }
 
   ////آپلود عکس پکیج
   Future<Response> uploadProductPic(
