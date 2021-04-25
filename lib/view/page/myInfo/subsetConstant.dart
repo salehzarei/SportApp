@@ -150,7 +150,7 @@ subsetItemList({@required BuildContext context, @required int index}) {
   );
 }
 
-myPackageList({@required BuildContext context, @required int index , @required MyPackagePost data}) {
+myPackageList({@required BuildContext context, @required int index , @required MyPackagePost data , @required removePackage, @required editPackage}) {
   return Container(
     decoration: BoxDecoration(
         color: Colors.white,
@@ -262,9 +262,7 @@ myPackageList({@required BuildContext context, @required int index , @required M
             children: [
               Expanded(
                 child: ElevatedButton(
-                  onPressed: () {
-
-                  },
+                  onPressed: removePackage,
                   style: ButtonStyle(
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
@@ -283,9 +281,7 @@ myPackageList({@required BuildContext context, @required int index , @required M
               SizedBox(width: 8,),
               Expanded(
                 child: ElevatedButton(
-                  onPressed: () {
-
-                  },
+                  onPressed:editPackage,
                   style: ButtonStyle(
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(

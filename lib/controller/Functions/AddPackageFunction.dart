@@ -164,10 +164,7 @@ class AddPackageFunction extends GetxController {
         category: category,
         description: description,
         price: price);
-    print("response");
-    print(discount+"   "+sdate+"     "+token+"     "+price+"     "+edate+"     ");
-    print(response);
-    print(response.statusCode);
+
     if (response.statusCode == 200) {
       addPackageLoading.value = response.body['error'];
       if(!addPackageLoading.value){
@@ -259,6 +256,32 @@ class AddPackageFunction extends GetxController {
       return [];
     }
 
+  }
+
+
+  //////حذف پکیح ها
+  Future <int> removePackage(String token , String pId) async {
+    final response = await ApiService().removePackage(token,pId);
+    if (response.statusCode == 200) {
+      addPackageLoading.value = response.body['error'];
+      if(!addPackageLoading.value){
+        print("200");
+        errorMassages = (response.body['report_msg'] is List)
+            ? response.body['report_msg']
+            : [response.body['report_msg']];
+        return 200;
+      }else{
+        errorMassages = (response.body['error_msg'] is List)
+            ? response.body['error_msg']
+            : [response.body['error_msg']];
+        print("201");
+        return 201;
+      }
+    } else {
+      print("400");
+      errorMassages = ["خطا در برقراری ارتباط با سرور"];
+      return 400;
+    }
   }
 
 

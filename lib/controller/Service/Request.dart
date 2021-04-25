@@ -75,6 +75,13 @@ class ApiService extends GetConnect {
   Future<Response> getCategoryAccountType(int level) =>
       get(apiUrl + 'category?level=${level.toString()}');
 
+
+////////ارسال لول و دریافت دسته بندی های هر عنوان شغلی
+  Future<Response> removePackage(String token,String pId) =>
+      post(apiUrl + 'providerblog/delete?token=$token', FormData({
+        'proId': pId,
+      }));
+
 ////////چک کردن لاگین بودن کاربر
   Future<Response> checkLogin({@required String token}) =>
       get(apiUrl + 'user/checkLogin?token=$token');

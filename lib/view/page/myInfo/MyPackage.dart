@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:sportapplication/Model/MyPackageModel.dart';
 import 'package:sportapplication/controller/Functions/AddPackageFunction.dart';
@@ -14,11 +15,21 @@ class _MyPackageState extends State<MyPackage> {
 
   final AddPackageFunction addPackage = Get.put(AddPackageFunction());
   List<MyPackagePost> _myListPackage = [];
+  bool _loaded = false;
+  String _token;
 
   @override
   void initState() {
-    getShared("token").then((value) {
-      addPackage.getMyPackageList(token: value);
+    getShared("token").then((token) {
+      addPackage.getMyPackageList(token: token).then((value) {
+        if(mounted){
+          setState(() {
+            _myListPackage=value;
+            _loaded = true;
+            _token = token;
+          });
+        }
+      });
     });
     super.initState();
   }
@@ -47,14 +58,44 @@ class _MyPackageState extends State<MyPackage> {
       ),
       body:Directionality(
         textDirection: TextDirection.rtl,
-        child: ListView.builder(
+        child: _loaded ?ListView.builder(
           itemCount: _myListPackage.length,
           padding: EdgeInsets.only(top: 10),
           shrinkWrap: true,
-          itemBuilder: (context, index) => myPackageList(context: context, index: index,data:_myListPackage[index]),
-        ),
+          itemBuilder: (context, index) => myPackageList(context: context, index: index,data:_myListPackage[index], removePackage: (){
+            _removePackage(_myListPackage[index].id.toString());
+          }, editPackage: (){
+
+          }),
+        ):SpinKitThreeBounce(
+            color: Theme.of(context).primaryColorDark,
+            size: 30.0,
+      ),
       ),
     );
+  }
+
+  _removePackage(String id) {
+    addPackage.removePackage(_token, id).then((value){
+      if(value == 200){
+        listSnackBar(list: addPackage.errorMassages, err: false,);
+        if(mounted){
+          setState(() {
+            _loaded = false;
+          });
+        }
+        addPackage.getMyPackageList(token: _token).then((value) {
+          if(mounted){
+            setState(() {
+              _myListPackage=value;
+              _loaded = true;
+            });
+          }
+        });
+      }else{
+        listSnackBar(list: addPackage.errorMassages, err: true,);
+      }
+    });
   }
 
 }
