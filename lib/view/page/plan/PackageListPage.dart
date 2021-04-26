@@ -25,6 +25,7 @@ class _PackageListPageState extends State<PackageListPage> {
     return Obx(()=>Scaffold(
       appBar: AppBar(
         elevation: 2,
+        brightness: Brightness.dark,
         title: Text(
             "لیست بسته ها",
             style: TextStyle(

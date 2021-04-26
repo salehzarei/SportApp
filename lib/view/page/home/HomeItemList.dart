@@ -5,12 +5,12 @@ import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:sportapplication/controller/util.dart';
 import 'package:sportapplication/view/component/Constans.dart';
-import 'package:sportapplication/view/lists/PackagesListItemDetail.dart';
+import 'package:sportapplication/view/page/packageDetail/PackagesListItemDetail.dart';
 
 specialList({@required context,@required controller,}){
   return GestureDetector(
     onTap: () {
-      Get.to(PackagesListItemDetail());
+      // Get.to(PackagesListItemDetail());
     },
     child: Container(
       margin: EdgeInsets.only(left: 6),
@@ -273,7 +273,7 @@ newArticleItemList({@required context}){
 packageMe({@required context,@required controller}){
   return GestureDetector(
     onTap: () {
-      Get.to(PackagesListItemDetail());
+      // Get.to(PackagesListItemDetail());
     },
     child: Container(
       // decoration: BoxDecoration(

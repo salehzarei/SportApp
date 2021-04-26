@@ -23,6 +23,7 @@ class _MyBoxPageState extends State<MyBoxPage> {
     return Obx(() => Scaffold(
           appBar: AppBar(
             elevation: 2,
+            brightness: Brightness.dark,
             title: Text("بسته های من",
                 style: TextStyle(fontSize: 18, color: Colors.white)),
             leading: IconButton(

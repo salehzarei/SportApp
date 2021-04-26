@@ -56,14 +56,17 @@ class _ProfileState extends State<Profile> {
   @override
   void initState() {
     getShared("token")
-        .then((va) => profile.loadingUserData(tokens: va));
+        .then((va){
+      profile.loadingUserData(tokens: va);
+      print(va);
+    });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => profile.profileLoading.value == true
+      () => profile.profileLoading.value
           ? Expanded(
               child: Center(
               child: SpinKitThreeBounce(
@@ -103,7 +106,7 @@ class _ProfileState extends State<Profile> {
                                         aspectRatio: 2 / 2,
                                         child: imageShower(
                                             imageUrl:
-                                                "https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png",
+                                            profile.userProfile.pic,
                                             margin: EdgeInsets.all(6),
                                             fit: BoxFit.fill,
                                             borderRadius:
@@ -155,7 +158,7 @@ class _ProfileState extends State<Profile> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          "نام کاربری",
+                                          profile.userProfile.name,
                                           style: TextStyle(
                                               fontSize: 14,
                                               fontWeight: FontWeight.w200,
@@ -308,48 +311,48 @@ class _ProfileState extends State<Profile> {
                           SizedBox(
                             height: 20,
                           ),
-                          itemProfile(
-                              context: context,
-                              onTap: () {
-                                Get.to(AddArticlePage());
-                              },
-                              title: "افزودن مقاله"),
-                          itemProfile(
-                              context: context,
-                              onTap: () {
-                                Get.to(MyArticle());
-                              },
-                              title: "مقاله های من"),
-                          itemProfile(
-                              context: context,
-                              onTap: () {
-                                Get.to(AddPackagePage());
-                              },
-                              title: "افزودن پکیج"),
-                          itemProfile(
-                              context: context,
-                              onTap: () {
-                                Get.to(MyPackage());
-                              },
-                              title: "پکیج های من"),
-                          itemProfile(
-                              context: context,
-                              onTap: () {
-                                Get.to(MySubSet());
-                              },
-                              title: "مربیان من"),
-                          itemProfile(
-                              context: context,
-                              onTap: () {
-                                Get.to(MySubSet());
-                              },
-                              title: "باشگاه های من"),
-                          itemProfile(
-                              context: context,
-                              onTap: () {
-                                scanbarcode();
-                              },
-                              title: "بررسی qrCode"),
+                          profile.userProfile.level != 1?Column(
+                            children: [
+                              itemProfile(
+                                  context: context,
+                                  onTap: () {
+                                    Get.to(AddArticlePage());
+                                  },
+                                  title: "افزودن مقاله"),
+                              itemProfile(
+                                  context: context,
+                                  onTap: () {
+                                    Get.to(MyArticle());
+                                  },
+                                  title: "مقاله های من"),
+                              itemProfile(
+                                  context: context,
+                                  onTap: () {
+                                    Get.to(AddPackagePage());
+                                  },
+                                  title: "افزودن پکیج"),
+                              itemProfile(
+                                  context: context,
+                                  onTap: () {
+                                    Get.to(MyPackage());
+                                  },
+                                  title: "پکیج های من"),
+                              itemProfile(
+                                  context: context,
+                                  onTap: () {
+                                    Get.to(MySubSet());
+                                  },
+                                  title: "درخواست ها"),
+
+                              itemProfile(
+                                  context: context,
+                                  onTap: () {
+                                    scanbarcode();
+                                  },
+                                  title: "بررسی qrCode"),
+                            ],
+                          ):Container() ,
+
                           SizedBox(
                             height: 20,
                           ),

@@ -6,8 +6,10 @@ import 'package:sportapplication/view/page/SplashPage.dart';
 
 //Color(0xfffbc02d)
 main() async {
+
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  systemOverlayStyle: SystemUiOverlayStyle(statusBarColor: Colors.white);
 
   //  show satus bar
   // SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
@@ -54,7 +56,6 @@ main() async {
           color: Colors.white,
         ),
         fontFamily: 'Yekan',
-
         buttonTheme: ButtonThemeData(
           buttonColor: Color(0xffE24A62),
           shape: RoundedRectangleBorder(

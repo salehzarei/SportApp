@@ -5,7 +5,7 @@ import 'package:sportapplication/Model/CategoryAccountTypeModel.dart';
 import 'package:sportapplication/controller/Functions/Controller.dart';
 import 'package:sportapplication/controller/util.dart';
 import 'package:sportapplication/view/component/Constans.dart';
-import 'package:sportapplication/view/lists/PackagesListItemDetail.dart';
+import 'package:sportapplication/view/page/packageDetail/PackagesListItemDetail.dart';
 
 // final Controller constant = Get.put(Controller());
 
@@ -91,7 +91,7 @@ itemPackageList({@required BuildContext context,@required int index}){
     margin: EdgeInsets.only(left: 6 , right: 6 , bottom: 10),
     child: InkWell(
       onTap: () {
-        Get.to(PackagesListItemDetail());
+        // Get.to(PackagesListItemDetail());
       },
       child:Column(
         mainAxisAlignment: MainAxisAlignment.start,

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sportapplication/controller/Functions/Controller.dart';
 
-import 'PackagesListItemDetail.dart';
+import '../page/packageDetail/PackagesListItemDetail.dart';
 
 class PackagesListItem extends StatelessWidget {
   final Controller off = Get.put(Controller());
@@ -21,7 +21,7 @@ class PackagesListItem extends StatelessWidget {
           itemBuilder: (context, index) {
             return GestureDetector(
               onTap: () {
-                Get.to(PackagesListItemDetail());
+                // Get.to(PackagesListItemDetail());
               },
               child: Container(
                 decoration: BoxDecoration(

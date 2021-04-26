@@ -9,6 +9,7 @@ class UserDataModel {
   int ostan;
   int city;
   String address;
+  String description;
   String lat;
   String lng;
   int level;
@@ -30,6 +31,7 @@ class UserDataModel {
       this.ostan,
       this.city,
       this.address,
+      this.description,
       this.lat,
       this.lng,
       this.level,
@@ -49,6 +51,7 @@ class UserDataModel {
     cell = json['cell'];
     email = json['email'];
     ostan = json['ostan'];
+    description = json['description'];
     city = json['city'];
     address = json['address'];
     lat = json['lat'];

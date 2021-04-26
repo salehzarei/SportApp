@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
-import 'package:sportapplication/controller/Functions/AddPackageFunction.dart';
+import 'package:sportapplication/controller/Functions/PackageFunction.dart';
 import 'package:sportapplication/controller/Functions/RegisterFunction.dart';
 import 'package:sportapplication/controller/util.dart';
 import 'package:sportapplication/view/component/Constans.dart';
@@ -16,7 +16,7 @@ class AddArticlePage extends StatefulWidget {
 class _AddAtrticlePageState extends State<AddArticlePage> {
 
   final RegisterFunction registerFunction = Get.put(RegisterFunction());
-  final AddPackageFunction addPackage = Get.put(AddPackageFunction());
+  final PackageFunction addPackage = Get.put(PackageFunction());
 
   FocusNode _titleFocus;
   TextEditingController _titleController;
@@ -81,6 +81,7 @@ class _AddAtrticlePageState extends State<AddArticlePage> {
     return Obx(() => Scaffold(
         appBar: AppBar(
           elevation: 2,
+          brightness: Brightness.dark,
           title: Text("افزودن مقاله",
               style: TextStyle(fontSize: 18, color: Colors.white)),
           leading: IconButton(

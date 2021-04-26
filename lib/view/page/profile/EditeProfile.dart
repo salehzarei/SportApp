@@ -59,6 +59,7 @@ class _EditeProfileState extends State<EditeProfile> {
         builder: (p) => Scaffold(
           appBar: AppBar(
             elevation: 2,
+            brightness: Brightness.dark,
             title: Text("ویرایش پروفایل",
                 style: TextStyle(fontSize: 18, color: Colors.white)),
             leading: IconButton(

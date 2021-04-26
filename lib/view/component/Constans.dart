@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
@@ -530,6 +532,48 @@ textSelected(
             color: selected ? Colors.black : Colors.black26,
           )
         ],
+      ),
+    ),
+  );
+}
+
+sliderWidget({
+  @required int length,
+  @required bool loading,
+  @required context,
+  @required  margin,
+  @required borderRadius,
+  @required fit,
+  @required list,
+  @required aspectRatio,
+
+}){
+  return  AspectRatio(
+    aspectRatio: aspectRatio,
+    child: Padding(
+      padding: EdgeInsets.all(4.0),
+      child: loading? Center(
+        child: SpinKitThreeBounce(
+          color: Theme.of(context).primaryColorDark,
+          size: 25.0,
+        ),
+      ):Swiper(
+        itemCount: length,
+        itemBuilder: (BuildContext context, int index) {
+          return imageShower(imageUrl: list[index].pic,
+              margin: margin,
+              borderRadius: borderRadius, fit: fit);
+        },
+        autoplay: true,
+        duration: 10,
+        pagination: SwiperPagination(
+            builder: DotSwiperPaginationBuilder(
+                size: 6.0, activeSize: 10.0, space: 4.0),
+            margin: EdgeInsets.only(bottom: 20)
+        ),
+
+        // viewportFraction: 0.8,
+        // scale: 0.9,
       ),
     ),
   );

@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:sportapplication/Model/MyPackageModel.dart';
-import 'package:sportapplication/controller/Functions/AddPackageFunction.dart';
+import 'package:sportapplication/controller/Functions/PackageFunction.dart';
 import 'package:sportapplication/controller/util.dart';
 import 'package:sportapplication/view/page/myInfo/subsetConstant.dart';
+import 'package:sportapplication/view/page/packageDetail/PackagesListItemDetail.dart';
 
 class MyPackage extends StatefulWidget {
   @override
@@ -13,7 +14,7 @@ class MyPackage extends StatefulWidget {
 
 class _MyPackageState extends State<MyPackage> {
 
-  final AddPackageFunction addPackage = Get.put(AddPackageFunction());
+  final PackageFunction addPackage = Get.put(PackageFunction());
   List<MyPackagePost> _myListPackage = [];
   bool _loaded = false;
   String _token;
@@ -39,6 +40,7 @@ class _MyPackageState extends State<MyPackage> {
     return Scaffold(
       appBar: AppBar(
         elevation: 2,
+        brightness: Brightness.dark,
         title: Text(
             "لیست پکیج های من",
             style: TextStyle(
@@ -66,11 +68,12 @@ class _MyPackageState extends State<MyPackage> {
             _removePackage(_myListPackage[index].id.toString());
           }, editPackage: (){
 
+          }, onTab: (){
+            Get.to(PackagesListItemDetail(_myListPackage[index].id.toString()));
           }),
         ):SpinKitThreeBounce(
             color: Theme.of(context).primaryColorDark,
-            size: 30.0,
-      ),
+            size: 30.0,),
       ),
     );
   }

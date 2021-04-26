@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:sportapplication/controller/Functions/Controller.dart';
 import 'package:sportapplication/view/component/appBarWidget.dart';
@@ -12,13 +13,16 @@ import 'package:sportapplication/view/page/profile/Profile.dart';
 class MainPage extends StatelessWidget {
   final Controller active = Get.put(Controller());
 
+
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Directionality(
-        textDirection: TextDirection.rtl,
-        child: Obx(
-          () => Scaffold(
+
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: Obx(
+        () => SafeArea(
+          child: Scaffold(
+
             bottomNavigationBar:NavigationBarWidget(controller: active),
             body: Column(
               children: [

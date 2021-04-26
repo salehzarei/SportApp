@@ -5,14 +5,18 @@ import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sportapplication/Model/MyPackageModel.dart';
+import 'package:sportapplication/Model/ShowPackageModel.dart';
 import 'package:sportapplication/controller/Service/Request.dart';
 
-class AddPackageFunction extends GetxController {
+class PackageFunction extends GetxController {
 
   final addPackageLoading = false.obs;
   final addPicLoading = false.obs;
   final picUrl = "0".obs;
   List errorMassages = [];
+  
+  ShowPackageModel showPackageModel;
+  final showPackageLoading = true.obs;
 
 
   Future<File> imagePicker({@required bool isCamera}) async {
@@ -283,6 +287,22 @@ class AddPackageFunction extends GetxController {
       return 400;
     }
   }
+
+  //////نمایش پکیح ها
+  Future showPackage(String token , String pId) async {
+    final response = await ApiService().showPackage(token,pId);
+    print("response.statusCode");
+    print(response.statusCode);
+
+    if (response.statusCode == 200) {
+      showPackageLoading.value = false;
+      showPackageModel = ShowPackageModel.fromJson(response.body);
+    } else {
+      showPackageLoading.value = false;
+    }
+    update();
+  }
+
 
 
 }

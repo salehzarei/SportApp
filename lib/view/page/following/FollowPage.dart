@@ -8,6 +8,7 @@ class FollowPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         elevation: 2,
+        brightness: Brightness.dark,
         title: Text(
             "دنبال کننده ها",
             style: TextStyle(

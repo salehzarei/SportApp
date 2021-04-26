@@ -113,7 +113,7 @@ class ApiService extends GetConnect {
 
 ////////ارسال لول و دریافت دسته بندی های هر عنوان شغلی
   Future<Response> removePackage(String token,String pId) =>
-      post(apiUrl + 'providerblog/delete?token=$token', FormData({
+      post(apiUrl + 'providerpackage/delete?token=$token', FormData({
         'proId': pId,
       }));
 
@@ -204,6 +204,38 @@ class ApiService extends GetConnect {
               filename: pic.path.split('/').last,
             ),
           }));
+
+ // لیست زیر مجموعه ها
+  Future<Response> subSet(
+          {@required String token,}) =>
+      post(apiUrl + 'profile/subset',
+          FormData({
+            'token': token,
+          }));
+
+ // حذف از زیر مجموعه ها
+  Future<Response> deleteSubset(
+          {@required String token,@required String id,}) =>
+      post(apiUrl + 'profile/deletesubset',
+          FormData({
+            'token': token,
+            'id': id,
+          }));
+
+// قبول از زیر مجموعه ها
+  Future<Response> acceptSubset( {@required String token,@required String id,}) =>
+      post(apiUrl + 'profile/acceptsubset',
+          FormData({
+            'token': token,
+            'id': id,
+          }));
+
+
+// قبول از زیر مجموعه ها
+  Future<Response> showPackage(String token, String id) =>
+      get(apiUrl + 'providerpackage/show?proId=$id&token=$token');
+
+
 
   ////  اسلایدر
   Future<Response> getSlider() => get(apiUrl + 'slider');

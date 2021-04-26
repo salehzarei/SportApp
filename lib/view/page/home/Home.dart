@@ -25,8 +25,6 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
      slider.getSlider().then((value) {
-       print("getslider");
-       print(value.length);
        if(mounted){
          setState(() {
            sliderList = value;
@@ -45,35 +43,12 @@ class _HomeState extends State<Home> {
         physics: BouncingScrollPhysics(),
         child: Column(
           children: [
-            AspectRatio(
-              aspectRatio: 16 / 7,
-              child: Padding(
-                padding: EdgeInsets.all(4.0),
-                child: _sliderLoading? Center(
-                  child: SpinKitThreeBounce(
-                    color: Theme.of(context).primaryColorDark,
-                    size: 25.0,
-                  ),
-                ):Swiper(
-                  itemCount: sliderList.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return imageShower(imageUrl: sliderList[index].pic,
-                        margin: EdgeInsets.all(10),
-                        borderRadius: BorderRadius.circular(10), fit: BoxFit.cover);
-                  },
-                  autoplay: true,
-                  duration: 10,
-                  pagination: SwiperPagination(
-                      builder: DotSwiperPaginationBuilder(
-                          size: 6.0, activeSize: 10.0, space: 4.0),
-                      margin: EdgeInsets.only(bottom: 20)
-                  ),
-
-                  // viewportFraction: 0.8,
-                  // scale: 0.9,
-                ),
-              ),
-            ),
+            sliderWidget(length: sliderList.length,
+              loading: _sliderLoading,
+              context: context,
+              list: sliderList,
+              margin: EdgeInsets.all(10),
+              borderRadius:  BorderRadius.circular(10), fit: BoxFit.cover, aspectRatio: 16 / 7),
             SizedBox(height: 6,),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,

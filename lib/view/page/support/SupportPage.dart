@@ -32,6 +32,7 @@ class _SupportPageState extends State<SupportPage> with SingleTickerProviderStat
     return Scaffold(
       appBar: AppBar(
         elevation: 2,
+        brightness: Brightness.dark,
         title: Text(
             "پشتیبانی و قوانین",
             style: TextStyle(

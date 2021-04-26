@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:sportapplication/view/page/favorite/ArticleFavoritePage.dart';
@@ -30,6 +31,7 @@ class _FavoritePageState extends State<FavoritePage> with SingleTickerProviderSt
     return Scaffold(
       appBar: AppBar(
         elevation: 2,
+        brightness: Brightness.dark, // status bar brightness
         title: Text(
           "علاقه مندی ها",
           style: TextStyle(

@@ -8,6 +8,7 @@ class MyArticle extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         elevation: 2,
+        brightness: Brightness.dark,
         title: Text(
             "لیست مقالات من",
             style: TextStyle(

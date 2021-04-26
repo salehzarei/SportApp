@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sportapplication/controller/util.dart';
 import 'package:sportapplication/view/component/Constans.dart';
-import 'package:sportapplication/view/lists/PackagesListItemDetail.dart';
+import 'package:sportapplication/view/page/packageDetail/PackagesListItemDetail.dart';
 import 'package:sportapplication/view/page/userInfo/DetailUserInfoPage.dart';
 
 itemPackageUserList({@required BuildContext context, @required int index}) {
@@ -23,7 +23,7 @@ itemPackageUserList({@required BuildContext context, @required int index}) {
     margin: EdgeInsets.only(left: 6, right: 6, bottom: 10),
     child: InkWell(
       onTap: () {
-        Get.to(PackagesListItemDetail());
+        // Get.to(PackagesListItemDetail());
       },
       child: IntrinsicHeight(
         child: Row(
@@ -145,7 +145,7 @@ itemArticleUserList({@required BuildContext context, @required int index}) {
     margin: EdgeInsets.only(left: 6, right: 6, bottom: 10),
     child: InkWell(
       onTap: () {
-        Get.to(PackagesListItemDetail());
+        // Get.to(PackagesListItemDetail());
       },
       child: IntrinsicHeight(
         child: Row(
