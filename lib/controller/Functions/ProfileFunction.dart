@@ -14,6 +14,10 @@ class ProfileFunction extends GetxController {
   Future loadingUserData({@required String tokens}) async {
     profileLoading.value = true;
     final response = await ApiService().profileUserData(token: tokens);
+
+    print('loadingUserData response.body');
+    print(response.body);
+
     if (response.statusCode == 200) {
       userProfile = UserDataModel.fromJson(response.body);
       print(response.body);

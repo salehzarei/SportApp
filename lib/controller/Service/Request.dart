@@ -81,6 +81,7 @@ class ApiService extends GetConnect {
             'activity_scope': json.encode(activityScope),
             'pic': pic,
           }));
+
 ////////چک کردن شماره همراه
   Future<Response> checkPhone(String mobile) =>
       post(apiUrl + 'user/checkmobile', FormData({'mobile': mobile}));
@@ -117,6 +118,13 @@ class ApiService extends GetConnect {
         'proId': pId,
       }));
 
+
+//حذف مقالات
+  Future<Response> removeArticle(String token,String pId) =>
+      post(apiUrl + 'providerblog/delete?token=$token', FormData({
+        'proId': pId,
+      }));
+
 ////////چک کردن لاگین بودن کاربر
   Future<Response> checkLogin({@required String token}) =>
       get(apiUrl + 'user/checkLogin?token=$token');
@@ -135,7 +143,7 @@ class ApiService extends GetConnect {
           @required String title,
           @required String description,
           @required String category,
-          @required List<String> pics,
+          @required List pics,
           @required String price,
           @required String discount,
           @required String discount_type,
@@ -147,7 +155,7 @@ class ApiService extends GetConnect {
             'title': title,
             'description': description,
             'category': category,
-            'pics': pics,
+            'pics': json.encode(pics),
             'price': price,
             'discount': discount,
             'discount_type': discount_type,
@@ -155,42 +163,36 @@ class ApiService extends GetConnect {
             'edate': edate,
           }));
 
-  Future<Response> postCases(
-      {@required String token,
-      @required String title,
-      @required String description,
-      @required String category,
-      @required List pics,
-      @required String price,
-      @required String discount,
-      @required String discount_type,
-      @required String sdate,
-      @required String edate}) {
-    print(pics);
-    final form = FormData({
-      'title': title,
-      'description': description,
-      'category': category,
-      'pics': json.encode(pics),
-      'price': price,
-      'discount': discount,
-      'discount_type': discount_type,
-      'sdate': sdate,
-      'edate': edate,
-    });
-    final bode = json.encode({
-      'title': title,
-      'description': description,
-      'category': category,
-      'pics': pics,
-      'price': price,
-      'discount': discount,
-      'discount_type': discount_type,
-      'sdate': sdate,
-      'edate': edate,
-    });
-    return post(apiUrl + 'providerpackage/add?token=$token', form);
-  }
+  ////اد کردن مقاله توسط کاربران مجاز
+  Future<Response> addArticle(
+          {@required String token,
+          @required String title,
+          @required String description,
+          @required String category,
+          @required List pics,
+          @required List tags,
+          @required String summary}) =>
+      post(
+          apiUrl + 'providerblog/add?token=$token',
+          FormData({
+            'title': title,
+            'description': description,
+            'category': category,
+            'pics': json.encode(pics),
+            'tags': json.encode(tags),
+            'summary': summary,
+          }));
+
+
+  //// مقالهای کاربران مجاز
+  Future<Response> articleList(
+          {@required String token,
+          @required String page,
+          @required String limit,
+          @required String catId,
+          @required String word}) =>
+      get(apiUrl + 'providerblog?token=$token&page=$page&limit=$limit&catId=$catId&word=$word',);
+
 
   ////آپلود عکس پکیج
   Future<Response> uploadProductPic(
@@ -235,6 +237,19 @@ class ApiService extends GetConnect {
   Future<Response> showPackage(String token, String id) =>
       get(apiUrl + 'providerpackage/show?proId=$id&token=$token');
 
+
+
+//لیست پروایدر ها
+  Future<Response> providers(String token, String level, String folowing, String special, String activity_scope) =>
+      get(apiUrl + 'providers?token=$token&word=&level=$level&following=$folowing&special=$special&activity_scope=$activity_scope');
+
+
+//انفالو پروایدر ها
+  Future<Response> unfollow(String token, String id) =>
+      post(apiUrl + 'providers/unfollow',FormData({
+        'token': token,
+        'id': id,
+      }));
 
 
   ////  اسلایدر

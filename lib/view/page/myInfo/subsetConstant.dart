@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:sportapplication/Model/ArticleModel.dart';
 import 'package:sportapplication/Model/MyPackageModel.dart';
 import 'package:sportapplication/Model/SubSetModel.dart';
 import 'package:sportapplication/controller/util.dart';
@@ -417,7 +418,7 @@ myPackageList(
   );
 }
 
-myArticleList({@required BuildContext context, @required int index}) {
+myArticleList({@required BuildContext context, @required int index, @required removeArticle, @required ArticleModelPost data}) {
   return Container(
     decoration: BoxDecoration(
         color: Colors.white,
@@ -434,6 +435,7 @@ myArticleList({@required BuildContext context, @required int index}) {
     margin: EdgeInsets.only(left: 6, right: 6, bottom: 10),
     child: InkWell(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           IntrinsicHeight(
             child: Row(
@@ -445,9 +447,7 @@ myArticleList({@required BuildContext context, @required int index}) {
                         child: Stack(
                           children: [
                             imageShower(
-                                imageUrl: index % 2 == 0
-                                    ? 'https://dkstatics-public.digikala.com/digikala-adservice-banners/956cd52f1f18f11284016c86561d53bcdcfdeedd_1612606849.jpg?x-oss-process=image/quality,q_80'
-                                    : "https://dkstatics-public.digikala.com/digikala-adservice-banners/bc928cad36c9cc9aed866ec4de30dfd9f5e50ec7_1607016116.jpg?x-oss-process=image/quality,q_80",
+                                imageUrl: data.pic,
                                 margin: EdgeInsets.only(left: 0, right: 0),
                                 fit: BoxFit.fill,
                                 borderRadius: BorderRadius.circular(8)),
@@ -485,7 +485,7 @@ myArticleList({@required BuildContext context, @required int index}) {
                           height: 6,
                         ),
                         Text(
-                          "بدنسازی مدرن در فوتسال",
+                         data.title,
                           maxLines: 1,
                           style: TextStyle(
                               fontSize: 15,
@@ -498,7 +498,7 @@ myArticleList({@required BuildContext context, @required int index}) {
                         Expanded(
                           child: SingleChildScrollView(
                             child: Text(
-                              "بدن سازی مدرن در فوتسال یکی از مهم ترین ویژگی های یک بدنسازی عالی میباشد که میتوانید از سایت سیاره فوتسال پیگیری کنید",
+                                data.summary,
                               style: TextStyle(
                                   fontSize: 12,
                                   fontWeight: FontWeight.w400,
@@ -514,6 +514,17 @@ myArticleList({@required BuildContext context, @required int index}) {
               ],
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.only(top: 15 , right: 6 , bottom: 8),
+            child: Text(
+              data.status_title,
+              maxLines: 1,
+              style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.grey[400]),
+            ),
+          ),
           Container(
             margin: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
             height: 1,
@@ -523,7 +534,7 @@ myArticleList({@required BuildContext context, @required int index}) {
             children: [
               Expanded(
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed:removeArticle,
                   style: ButtonStyle(
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(

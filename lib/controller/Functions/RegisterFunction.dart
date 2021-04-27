@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sportapplication/Model/CategoryAccountTypeModel.dart';
+import 'package:sportapplication/Model/providerModel.dart';
 import 'package:sportapplication/controller/Service/Request.dart';
 import 'package:sportapplication/controller/util.dart';
 
@@ -19,12 +20,17 @@ class RegisterFunction extends GetxController {
   final registerLoading = false.obs;
   final checkLoginLoading = false.obs;
   final loginLoading = false.obs;
+  final providerLoading = false.obs;
   final checkerror = false.obs;
   final verificationCode = ''.obs;
   final code = ''.obs;
   List<CategoryAccountTypeModel> categoryList = [];
   List<CategoryAccountTypeModel> interestList = [];
+
+  ProviderModel providerList ;
+
   List<dynamic> errorMassages = [];
+
   TextEditingController mobile = TextEditingController();
   TextEditingController name = TextEditingController();
   TextEditingController pass = TextEditingController();
@@ -267,4 +273,53 @@ class RegisterFunction extends GetxController {
     print('Category List account Type');
     print(interestList);
   }
+
+ // لیست پرووایدر ها
+  Future providers(
+      {@required String token,
+       @required String level,
+       @required String following,
+       @required String special,
+       @required String activity_scope,
+  }) async {
+    providerLoading.value = true;
+    final response = await ApiService().providers(token , level , following,special,activity_scope);
+
+    if (response.statusCode == 200) {
+      providerList = ProviderModel.fromJson(response.body);
+      providerLoading.value = false;
+      update();
+      notifyChildrens();
+    } else {
+      providerLoading.value = true;
+      update();
+      notifyChildrens();
+    }
+
+  }
+
+ // آنفالو کردن پروایدر
+  Future unFollow(String token , String id) async {
+    final response = await ApiService().unfollow(token , id );
+    if (response.statusCode == 200) {
+      checkerror.value = response.body['error'];
+      if( checkerror.value){
+        errorMassages = (response.body['error_msg'] is List)
+            ? response.body['error_msg']
+            : [response.body['error_msg']];
+      }else{
+        errorMassages = (response.body['report_msg'] is List)
+            ? response.body['report_msg']
+            : [response.body['report_msg']];
+      }
+      update();
+    } else {
+      checkerror.value  = true;
+      errorMassages = ["خطا در برقراری ارتباط با سرور"];
+      update();
+    }
+
+  }
+
+
 }

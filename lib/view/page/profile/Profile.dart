@@ -168,7 +168,7 @@ class _ProfileState extends State<Profile> {
                                           height: 6,
                                         ),
                                         Text(
-                                          profile.userProfile.user,
+                                          profile.userProfile.cell,
                                           style: TextStyle(
                                               fontSize: 14,
                                               fontWeight: FontWeight.w200,
@@ -190,7 +190,7 @@ class _ProfileState extends State<Profile> {
                                               width: 6,
                                             ),
                                             Text(
-                                              profile.userProfile.levelTitle,
+                                              profile.userProfile.level_title,
                                               style: TextStyle(
                                                   fontSize: 14,
                                                   fontWeight: FontWeight.w200,
@@ -201,18 +201,6 @@ class _ProfileState extends State<Profile> {
                                       ],
                                     ),
                                   )),
-                              // Expanded(flex: 1,
-                              //     child: AspectRatio(
-                              //       aspectRatio: 1,
-                              //       child: InkWell(onTap: () {
-                              //         dialogBase(context: context, child: _showQr("https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/QR_deWP.svg/1200px-QR_deWP.svg.png"));
-                              //       },
-                              //         child: imageShower(imageUrl:"https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/QR_deWP.svg/1200px-QR_deWP.svg.png",
-                              //             margin: EdgeInsets.all(6),
-                              //             fit: BoxFit.fill,
-                              //             borderRadius: BorderRadius.circular(8))
-                              //     ),
-                              //     )),
                             ],
                           ),
                         ),
@@ -227,7 +215,7 @@ class _ProfileState extends State<Profile> {
                               width: 8,
                             ),
                             Text(
-                              "پنج راه سناباد بین ابن سینای 16 و 18 پلاک 210",
+                              profile.userProfile.address,
                               style: TextStyle(
                                   fontSize: 13,
                                   fontWeight: FontWeight.w100,
@@ -238,7 +226,7 @@ class _ProfileState extends State<Profile> {
                         SizedBox(
                           height: 6,
                         ),
-                        Row(
+                        profile.userProfile.plan.isEmpty? Container(): Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Row(
@@ -249,7 +237,7 @@ class _ProfileState extends State<Profile> {
                                   width: 8,
                                 ),
                                 Text(
-                                  "روزهای مانده از بسته فعال:",
+                                  "تاریخ اتمام بسته",
                                   style: TextStyle(
                                       fontSize: 13,
                                       fontWeight: FontWeight.w100,
@@ -261,7 +249,7 @@ class _ProfileState extends State<Profile> {
                               width: 8,
                             ),
                             Text(
-                              "5 روز",
+                              profile.userProfile.plan[0].expire_date,
                               style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w800,
@@ -316,7 +304,7 @@ class _ProfileState extends State<Profile> {
                               itemProfile(
                                   context: context,
                                   onTap: () {
-                                    Get.to(AddArticlePage());
+                                    profile.userProfile.provider.active==1? Get.to(AddArticlePage(profile.userProfile.level)):errorSnackBar(text: "شما مجاز به استفاده از این قسمت از اپلیکیشن نیستید");
                                   },
                                   title: "افزودن مقاله"),
                               itemProfile(
@@ -328,7 +316,7 @@ class _ProfileState extends State<Profile> {
                               itemProfile(
                                   context: context,
                                   onTap: () {
-                                    Get.to(AddPackagePage());
+                                    profile.userProfile.provider.active==1? Get.to(AddPackagePage(profile.userProfile.level)):errorSnackBar(text: "شما مجاز به استفاده از این قسمت از اپلیکیشن نیستید");
                                   },
                                   title: "افزودن پکیج"),
                               itemProfile(
@@ -375,9 +363,18 @@ class _ProfileState extends State<Profile> {
                           itemProfile(
                               context: context,
                               onTap: () {
-                                saveShared('token', "null").then((value) {
-                                  Get.off(LoginPage());
-                                });
+                                importImageSelectBottomSheet(
+                                    context: context,
+                                    title: 'خروج از حساب',
+                                    title2: 'انصراف',
+                                    ontap: () {
+                                      saveShared('token', "null").then((value) {
+                                        Get.off(LoginPage());
+                                      });
+                                    },
+                                    ontap2: () {
+                                      Get.back();
+                                    });
                               },
                               title: "خروج از حساب کاربری"),
                         ],

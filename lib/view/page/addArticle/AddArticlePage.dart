@@ -3,12 +3,17 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
+import 'package:sportapplication/controller/Functions/ArticleFunction.dart';
 import 'package:sportapplication/controller/Functions/PackageFunction.dart';
 import 'package:sportapplication/controller/Functions/RegisterFunction.dart';
 import 'package:sportapplication/controller/util.dart';
 import 'package:sportapplication/view/component/Constans.dart';
 
 class AddArticlePage extends StatefulWidget {
+  int level_provider;
+
+  AddArticlePage(this.level_provider);
+
   @override
   _AddAtrticlePageState createState() => _AddAtrticlePageState();
 }
@@ -17,6 +22,7 @@ class _AddAtrticlePageState extends State<AddArticlePage> {
 
   final RegisterFunction registerFunction = Get.put(RegisterFunction());
   final PackageFunction addPackage = Get.put(PackageFunction());
+  final ArticleFunction articleFunction = Get.put(ArticleFunction());
 
   FocusNode _titleFocus;
   TextEditingController _titleController;
@@ -36,6 +42,7 @@ class _AddAtrticlePageState extends State<AddArticlePage> {
   String _titleCat = "0";
 
   int _selectImage = 0;
+  bool _loadToSend = false;
 
   List _bool=[
     false,
@@ -51,10 +58,8 @@ class _AddAtrticlePageState extends State<AddArticlePage> {
     false,
   ];
 
-  List _title = [
-    'تاریخ شروع',
-    'تاریخ پایان',
-  ];
+  String _token;
+  List _imageUrl = [];
 
   File fileOne;
   File fileTow;
@@ -65,7 +70,10 @@ class _AddAtrticlePageState extends State<AddArticlePage> {
 
   @override
   void initState() {
-    registerFunction.getProductCategories(0);
+    getShared('token').then((value){
+      _token = value;
+      registerFunction.getProductCategories(widget.level_provider);
+    });
     _initView();
     super.initState();
   }
@@ -405,13 +413,77 @@ class _AddAtrticlePageState extends State<AddArticlePage> {
                           keyboardType: TextInputType.multiline,
                           maxLength: 1000),
 
-
                       Container(
                         padding:EdgeInsets.only(bottom: 15,top: 15),
                         width: Get.width,
                         child: ElevatedButton(
                           onPressed: () {
+                            if(_titleController.text.isEmpty){
+                              if(mounted){
+                                setState(() {
+                                  errorSnackBar(text: "نام محصول را وارد نمایید");
+                                });
+                              }
+                              return;
+                            }
+                            if(_desController.text.isEmpty){
+                              if(mounted){
+                                setState(() {
+                                  errorSnackBar(text: "توضیح محصول را وارد نمایید");
+                                });
+                              }
+                              return;
+                            }
+                            if(_summaryController.text.isEmpty){
+                              if(mounted){
+                                setState(() {
+                                  errorSnackBar(text: "قیمت محصول را وارد نمایید");
+                                });
+                              }
+                              return;
+                            }
+                            if(_imageUrl.isEmpty){
+                              if(mounted){
+                                setState(() {
+                                  errorSnackBar(text: "عکس وارد نشده");
+                                });
+                              }
+                              return;
+                            }
+                            if(mounted){
+                              setState(() {
+                                _loadToSend = true;
+                              });
+                            }
 
+                            articleFunction.addArticle(token: _token,
+                                title: _titleController.text,
+                                description: _desController.text,
+                                category: _idCat.toString(),
+                                pics: _imageUrl,
+                                summary: _summaryController.text,
+                                tags: ["فوتسال"],).then((value){
+                              if(value == 200){
+                                if(mounted){
+                                  setState(() {
+                                    _loadToSend = false;
+                                    _titleController.text="";
+                                    _desController.text="";
+                                    _summaryController.text="";
+                                    _imageUrl.clear();
+                                    _bool.map((e) => e = false);
+                                  });
+                                }
+                                listSnackBar(list: articleFunction.errorMassages, err: false,);
+                              }else{
+                                if(mounted){
+                                  setState(() {
+                                    _loadToSend = false;
+                                  });
+                                }
+                                listSnackBar(list: articleFunction.errorMassages, err: true,);
+                              }
+                            });
                           },
                           style: ButtonStyle(
                               shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -422,10 +494,16 @@ class _AddAtrticlePageState extends State<AddArticlePage> {
                               ),
                               backgroundColor: MaterialStateProperty.all<Color>(
                                   Colors.red)),
-                          child: Text(
+                          child: _loadToSend ? Center(
+                            child: SpinKitThreeBounce(
+                              color: Theme.of(context).primaryColorDark,
+                              size: 25.0,
+                            ),
+                          ):Text(
                             "ثبت و ارسال",
                             style: TextStyle(fontSize: 14, color: Colors.white),
-                          ),),
+                          ),
+                        ),
                       ),
 
 
@@ -488,38 +566,51 @@ class _AddAtrticlePageState extends State<AddArticlePage> {
                                 ),
                                 onTap: (){
                                   addPackage.imagePicker(isCamera: true).then((value) {
-                                    if(mounted){
-                                      setState(() {
-                                        switch(from){
-                                          case 1:
-                                            fileOne = value;
-                                            _bool[0] = true;
-                                            break;
-                                          case 2:
-                                            fileTow = value;
-                                            _bool[1] = true;
-                                            break;
-                                          case 3:
-                                            fileTree = value;
-                                            _bool[2] = true;
-                                            break;
-                                          case 4:
-                                            fileFour = value;
-                                            _bool[3] = true;
-                                            break;
-                                          case 5:
-                                            fileFive = value;
-                                            _bool[4] = true;
-                                            break;
-                                          case 6:
-                                            fileSix = value;
-                                            _bool[5] = true;
-                                            break;
+                                    addPackage.uploadImage(token: _token, pic: value).then((uploadStatus) {
+                                      if(uploadStatus == 200){
+                                        if(mounted){
+                                          setState(() {
+                                            switch(from){
+                                              case 1:
+                                                fileOne = value;
+                                                _bool[0] = true;
+                                                _imageUrl.add(addPackage.picUrl.value);
+                                                break;
+                                              case 2:
+                                                fileTow = value;
+                                                _bool[1] = true;
+                                                _imageUrl.add(addPackage.picUrl.value);
+                                                break;
+                                              case 3:
+                                                fileTree = value;
+                                                _bool[2] = true;
+                                                _imageUrl.add(addPackage.picUrl.value);
+                                                break;
+                                              case 4:
+                                                fileFour = value;
+                                                _bool[3] = true;
+                                                _imageUrl.add(addPackage.picUrl.value);
+                                                break;
+                                              case 5:
+                                                fileFive = value;
+                                                _bool[4] = true;
+                                                _imageUrl.add(addPackage.picUrl.value);
+                                                break;
+                                              case 6:
+                                                fileSix = value;
+                                                _bool[5] = true;
+                                                _imageUrl.add(addPackage.picUrl.value);
+                                                break;
+                                            }
+                                          });
                                         }
                                         _selectImage = 1;
                                         Get.back();
-                                      });
-                                    }
+                                        listSnackBar(list: addPackage.errorMassages, err: false,);
+                                      }else{
+                                        listSnackBar(list: addPackage.errorMassages, err: true,);
+                                      }
+                                    });
                                   });
                                 }),
                             ListTile(
@@ -530,39 +621,53 @@ class _AddAtrticlePageState extends State<AddArticlePage> {
                                 style: TextStyle(color: Colors.white),
                               ),
                               onTap: (){
-                                addPackage.imagePicker(isCamera: false).then((value){
-                                  if(mounted){
-                                    setState(() {
-                                      switch(from){
-                                        case 1:
-                                          fileOne = value;
-                                          _bool[0] = true;
-                                          break;
-                                        case 2:
-                                          fileTow = value;
-                                          _bool[1] = true;
-                                          break;
-                                        case 3:
-                                          fileTree = value;
-                                          _bool[2] = true;
-                                          break;
-                                        case 4:
-                                          fileFour = value;
-                                          _bool[3] = true;
-                                          break;
-                                        case 5:
-                                          fileFive = value;
-                                          _bool[4] = true;
-                                          break;
-                                        case 6:
-                                          fileSix = value;
-                                          _bool[5] = true;
-                                          break;
+                                addPackage.imagePicker(isCamera: false).then((value) {
+                                  addPackage.uploadImage(token: _token, pic: value).then((uploadStatus) {
+                                    if(uploadStatus == 200){
+                                      if(mounted){
+                                        setState(() {
+                                          switch(from){
+                                            case 1:
+                                              fileOne = value;
+                                              _bool[0] = true;
+                                              _imageUrl.add(addPackage.picUrl.value);
+                                              break;
+                                            case 2:
+                                              fileTow = value;
+                                              _bool[1] = true;
+                                              _imageUrl.add(addPackage.picUrl.value);
+                                              break;
+                                            case 3:
+                                              fileTree = value;
+                                              _bool[2] = true;
+                                              _imageUrl.add(addPackage.picUrl.value);
+                                              break;
+                                            case 4:
+                                              fileFour = value;
+                                              _bool[3] = true;
+                                              _imageUrl.add(addPackage.picUrl.value);
+                                              break;
+                                            case 5:
+                                              fileFive = value;
+                                              _bool[4] = true;
+                                              _imageUrl.add(addPackage.picUrl.value);
+                                              break;
+                                            case 6:
+                                              fileSix = value;
+                                              _bool[5] = true;
+                                              _imageUrl.add(addPackage.picUrl.value);
+                                              break;
+                                          }
+                                        });
                                       }
                                       _selectImage = 1;
                                       Get.back();
-                                    });
-                                  }
+                                      listSnackBar(list: addPackage.errorMassages, err: false,);
+                                    }else{
+                                      listSnackBar(list: addPackage.errorMassages, err: true,);
+                                    }
+
+                                  });
                                 });
                               },
                             ),
@@ -651,6 +756,5 @@ class _AddAtrticlePageState extends State<AddArticlePage> {
     _titleController.dispose();
     _desController.dispose();
   }
-
 
 }

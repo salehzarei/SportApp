@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:sportapplication/Model/providerModel.dart';
 import 'package:sportapplication/view/component/Constans.dart';
 
-followListItem({@required BuildContext context, @required int index}) {
+followListItem({@required BuildContext context,@required int index,@required ProviderPost data,@required removeProvider}) {
   return Container(
     decoration: BoxDecoration(
         color: Colors.white,
@@ -28,9 +29,7 @@ followListItem({@required BuildContext context, @required int index}) {
                     child: AspectRatio(
                       aspectRatio: 2 / 2,
                       child: imageShower(
-                          imageUrl: index % 2 == 0
-                              ? 'https://dkstatics-public.digikala.com/digikala-adservice-banners/956cd52f1f18f11284016c86561d53bcdcfdeedd_1612606849.jpg?x-oss-process=image/quality,q_80'
-                              : "https://dkstatics-public.digikala.com/digikala-adservice-banners/bc928cad36c9cc9aed866ec4de30dfd9f5e50ec7_1607016116.jpg?x-oss-process=image/quality,q_80",
+                          imageUrl: data.pic,
                           margin: EdgeInsets.all(8),
                           fit: BoxFit.fill,
                           borderRadius: BorderRadius.circular(100)),
@@ -51,7 +50,7 @@ followListItem({@required BuildContext context, @required int index}) {
                           children: [
                             Expanded(
                               child: Text(
-                                "نام کاربری",
+                                data.title,
                                 style: TextStyle(
                                     fontSize: 15,
                                     fontWeight: FontWeight.w600,
@@ -59,9 +58,7 @@ followListItem({@required BuildContext context, @required int index}) {
                               ),
                             ),
                             ElevatedButton(
-                              onPressed: () {
-
-                              },
+                              onPressed: removeProvider,
                               style: ButtonStyle(
                                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                                       RoundedRectangleBorder(

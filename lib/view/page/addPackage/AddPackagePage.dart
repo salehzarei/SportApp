@@ -12,6 +12,11 @@ import  'package:persian_datetime_picker/persian_datetime_picker.dart';
 
 
 class AddPackagePage extends StatefulWidget {
+
+  int level_provider;
+
+  AddPackagePage(this.level_provider);
+
   @override
   _AddPackagePageState createState() => _AddPackagePageState();
 }
@@ -71,13 +76,8 @@ class _AddPackagePageState extends State<AddPackagePage> {
   @override
   void initState() {
     getShared('token').then((value){
-      if(mounted){
-        setState(() {
-          _token = value;
-          registerFunction.getProductCategories(0);
-        });
-      }
-
+      _token = value;
+      registerFunction.getProductCategories(widget.level_provider);
     });
 
     _initView();
@@ -396,7 +396,7 @@ class _AddPackagePageState extends State<AddPackagePage> {
                                         hint: " ",
                                         maxLine: 1,
                                         minLine: 1,
-                                        keyboardType: TextInputType.text,
+                                        keyboardType: TextInputType.number,
                                         maxLength: 7),
                                   )
                                 ),
@@ -482,7 +482,7 @@ class _AddPackagePageState extends State<AddPackagePage> {
                                         hint: " ",
                                         maxLine: 1,
                                         minLine: 1,
-                                        keyboardType: TextInputType.text,
+                                        keyboardType: TextInputType.number,
                                         maxLength: _bool[7] ?2:7)
                                 ),
                               ],
@@ -602,7 +602,7 @@ class _AddPackagePageState extends State<AddPackagePage> {
                                    _loadToSend = true;
                                  });
                                }
-                               addPackage.addPackage2(token: _token,
+                               addPackage.addPackage(token: _token,
                                    title: _titleController.text,
                                    description: _desController.text,
                                    category: _idCat.toString(),
@@ -652,7 +652,8 @@ class _AddPackagePageState extends State<AddPackagePage> {
                               ):Text(
                                 "ثبت و ارسال",
                                 style: TextStyle(fontSize: 14, color: Colors.white),
-                              ),),
+                              ),
+                            ),
                           ),
                           SizedBox(height: 20,),
                         ],

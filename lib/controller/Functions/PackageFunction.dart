@@ -147,7 +147,7 @@ class PackageFunction extends GetxController {
         @required String title,
         @required String description,
         @required String category,
-        @required List<String> pics,
+        @required List pics,
         @required String price,
         @required String discount,
         @required String discount_type,
@@ -169,59 +169,6 @@ class PackageFunction extends GetxController {
         description: description,
         price: price);
 
-    if (response.statusCode == 200) {
-      addPackageLoading.value = response.body['error'];
-      if(!addPackageLoading.value){
-        print("200");
-        errorMassages = (response.body['report_msg'] is List)
-            ? response.body['report_msg']
-            : [response.body['report_msg']];
-        return 200;
-      }else{
-        errorMassages = (response.body['error_msg'] is List)
-            ? response.body['error_msg']
-            : [response.body['error_msg']];
-        print("201");
-        return 201;
-      }
-    } else {
-      print("400");
-      errorMassages = ["خطا در برقراری ارتباط با سرور"];
-      return 400;
-    }
-
-  }
-
-  //////اد کردن پکیج توسط کاربران مجاز
-  Future<int> addPackage2(
-      {@required String token,
-        @required String title,
-        @required String description,
-        @required String category,
-        @required List pics,
-        @required String price,
-        @required String discount,
-        @required String discount_type,
-        @required String sdate,
-        @required String edate}) async {
-
-    addPackageLoading.value = true;
-    errorMassages.clear();
-
-    final response = await ApiService().postCases(
-        discount: discount,
-        sdate: sdate,
-        token: token,
-        pics: pics,
-        edate: edate,
-        title: title,
-        discount_type:discount_type,
-        category: category,
-        description: description,
-        price: price);
-    print("response");
-    print(pics);
-    print(response.statusCode);
     if (response.statusCode == 200) {
       addPackageLoading.value = response.body['error'];
       if(!addPackageLoading.value){
