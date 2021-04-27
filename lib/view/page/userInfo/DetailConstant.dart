@@ -232,7 +232,7 @@ itemSubsetUserList({@required BuildContext context, @required int index}) {
     margin: EdgeInsets.only(left: 6, right: 6, bottom: 10),
     child: InkWell(
       onTap: () {
-        Get.to(DetailUserInfoPage());
+        Get.to(DetailUserInfoPage("0"));
       },
       child: Column(
         children: [

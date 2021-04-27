@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sportapplication/Model/CategoryAccountTypeModel.dart';
+import 'package:sportapplication/Model/providerModel.dart';
 import 'package:sportapplication/controller/Functions/Controller.dart';
 import 'package:sportapplication/view/page/userInfo/DetailUserInfoPage.dart';
 
@@ -62,12 +63,18 @@ levelCategoryItem(
 userItem(
     {@required BuildContext context,
     @required int index,
+    @required ProviderPost data,
     @required Controller controller}) {
   return InkWell(
     onTap: () {
       // Get.to(NewDetailTab());
-      Get.to(DetailUserInfoPage());
+      Get.to(DetailUserInfoPage(data.id.toString()));
     },
+    focusColor: Colors.transparent,
+    hoverColor: Colors.transparent,
+    splashColor: Colors.transparent,
+    highlightColor: Colors.transparent,
+
     child: Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -77,8 +84,7 @@ userItem(
           width: 60,
           decoration: BoxDecoration(
               image: DecorationImage(
-                  image: NetworkImage(
-                      "https://assets1.risnews.com/styles/content_sm/s3/2019-09/Big_Lots_CliftonPlaza.jpg?itok=5K_InGyc"),
+                  image: NetworkImage(data.pic),
                   fit: BoxFit.fill),
               borderRadius: BorderRadius.circular(6)),
         ),
@@ -86,7 +92,7 @@ userItem(
           height: 10,
         ),
         Text(
-          'تور و سفر',
+          data.title,
           textAlign: TextAlign.center,
           maxLines: 2,
           style: TextStyle(

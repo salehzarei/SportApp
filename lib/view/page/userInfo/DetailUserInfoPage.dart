@@ -8,6 +8,11 @@ import 'package:sportapplication/view/page/userInfo/SubsetTab.dart';
 import 'package:sportapplication/view/page/userInfo/UserPackageTab.dart';
 
 class DetailUserInfoPage extends StatefulWidget {
+
+  String uId;
+
+  DetailUserInfoPage(this.uId);
+
   @override
   _DetailUserInfoPageState createState() => _DetailUserInfoPageState();
 }

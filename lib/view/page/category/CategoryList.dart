@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:sportapplication/controller/Functions/Controller.dart';
 import 'package:sportapplication/controller/Functions/RegisterFunction.dart';
@@ -26,11 +27,11 @@ class _CategoryListState extends State<CategoryList> {
 
   @override
   void initState() {
-    activ.catActive(0);
+    activ.catActive(-1);
     getShared('token').then((token) {
       _token = token;
       registerFunction.getProductCategories(widget.level).whenComplete(() {
-        registerFunction.providers( token: token, following: '', level: '', activity_scope: '', special: '',);
+        registerFunction.providers( token: token, following: '', level: '', activity_scope: '1', special: '',);
       });
     });
 
@@ -63,7 +64,14 @@ class _CategoryListState extends State<CategoryList> {
                                 context: context,
                                 index: index,
                                 controller: activ,
-                                model: registerFunction.categoryList[index], onTap:(){
+                                model: registerFunction.categoryList[index],
+                                onTap:(){
+                                  registerFunction.providers(token: _token,
+                                    following: '',
+                                    level: '',
+                                    activity_scope: registerFunction.categoryList[index].id.toString(),
+                                    special: '');
+                                  print(registerFunction.categoryList[index].id.toString());
                                  activ.catActive(index);
                             })),
                       ),
@@ -89,7 +97,14 @@ class _CategoryListState extends State<CategoryList> {
                                     color: Colors.black),
                               ),
                             ),
-                            GridView.builder(
+                            registerFunction.providerLoading.value? Expanded(
+                              child: Center(
+                                child: SpinKitThreeBounce(
+                                  color: Colors.red,
+                                  size: 25.0,
+                                ),
+                              ),
+                            ):  GridView.builder(
                                 shrinkWrap: true,
                                 padding: EdgeInsets.symmetric(horizontal: 10),
                                 gridDelegate:
@@ -99,9 +114,9 @@ class _CategoryListState extends State<CategoryList> {
                                   crossAxisSpacing: 4,
                                   mainAxisSpacing: 10
                                 ),
-                                itemCount: 6,
+                                itemCount: registerFunction.providerList.post.length,
                                 physics: BouncingScrollPhysics(),
-                                itemBuilder: (context, index) => userItem(context: context, index: index, controller: activ),)
+                                itemBuilder: (context, index) => userItem(context: context, index: index, controller: activ,data:registerFunction.providerList.post[index]),)
                           ],
                         )
                     )
