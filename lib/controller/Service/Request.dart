@@ -193,13 +193,40 @@ class ApiService extends GetConnect {
           @required String word}) =>
       get(apiUrl + 'providerblog?token=$token&page=$page&limit=$limit&catId=$catId&word=$word',);
 
+  Future<Response> userArticleList(
+          {@required String token,
+          @required String page,
+          @required String limit,
+          @required String catId,
+          @required String tag,
+          @required String uid,
+          @required String sort,
+          @required String folowing,
+          @required String order,
+          @required String interest,
+          @required String word}) =>
+      get(apiUrl + 'blog?catId=$catId&word=$word&tag=$tag&uid=$uid&sort=$sort&order=$order'
+          '&page=$page&limit=$limit&interest=$interest&token=$token&folowing=$folowing');
 
-  ////آپلود عکس پکیج
+
+  Future<Response> getPackage({
+    @required String token,
+    @required String catId,
+    @required String word,
+    @required String uid,
+    @required String sort,
+    @required String order,
+    @required String limit,
+    @required String interest,
+    @required String page,
+    @required String special,
+    @required String folowing,
+    @required String asc}) =>
+      get(apiUrl + 'package?catId=$catId&word=$word&uid=$uid&sort=$sort&asc=$asc&order=$order&page=$page&limit=$limit&interest=$interest&token=$token&special=$special&folowing=$folowing');
+
   Future<Response> uploadProductPic(
           {@required String token, @required File pic}) =>
-      post(
-          apiUrl + 'providerpackage/uplaodPic',
-          FormData({
+      post(apiUrl + 'providerpackage/uplaodPic',FormData({
             'token': token,
             'file': MultipartFile(
               pic,
@@ -207,35 +234,36 @@ class ApiService extends GetConnect {
             ),
           }));
 
- // لیست زیر مجموعه ها
   Future<Response> subSet(
           {@required String token,}) =>
-      post(apiUrl + 'profile/subset',
-          FormData({
+      post(apiUrl + 'profile/subset',FormData({
             'token': token,
           }));
 
- // حذف از زیر مجموعه ها
+  Future<Response> userSubSet({@required String token,
+                               @required String uId}) =>
+      get(apiUrl + 'providers/subset?token=$token&user_id=$uId');
+
   Future<Response> deleteSubset(
           {@required String token,@required String id,}) =>
-      post(apiUrl + 'profile/deletesubset',
-          FormData({
+      post(apiUrl + 'profile/deletesubset',FormData({
             'token': token,
             'id': id,
           }));
 
-// قبول از زیر مجموعه ها
   Future<Response> acceptSubset( {@required String token,@required String id,}) =>
-      post(apiUrl + 'profile/acceptsubset',
-          FormData({
+      post(apiUrl + 'profile/acceptsubset',FormData({
             'token': token,
             'id': id,
           }));
 
 
-// قبول از زیر مجموعه ها
   Future<Response> showPackage(String token, String id) =>
       get(apiUrl + 'providerpackage/show?proId=$id&token=$token');
+
+
+  Future<Response> showUserPackage(String token, String id) =>
+      get(apiUrl + 'package/show?bId=$id&token=$token');
 
 
 
@@ -244,11 +272,23 @@ class ApiService extends GetConnect {
       get(apiUrl + 'providers?token=$token&word=&level=$level&following=$folowing&special=$special&activity_scope=$activity_scope');
 
 
+//نمایش پروایدر ها
+  Future<Response> showProvider(String token, String bid) =>
+      get(apiUrl + 'providers/show?token=$token&bId=$bid');
+
+
 //انفالو پروایدر ها
   Future<Response> unfollow(String token, String id) =>
       post(apiUrl + 'providers/unfollow',FormData({
         'token': token,
         'id': id,
+      }));
+
+//فالو پروایدر ها
+  Future<Response> follow(String token, String user_id) =>
+      post(apiUrl + 'providers/follow',FormData({
+        'token': token,
+        'user_id': user_id,
       }));
 
 

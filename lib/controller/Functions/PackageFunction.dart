@@ -12,10 +12,15 @@ class PackageFunction extends GetxController {
 
   final addPackageLoading = false.obs;
   final addPicLoading = false.obs;
+
   final picUrl = "0".obs;
   List errorMassages = [];
   
   ShowPackageModel showPackageModel;
+
+  final userPackageLoading = true.obs;
+  MyPackageModel userPackageModel;
+
   final showPackageLoading = true.obs;
 
 
@@ -193,7 +198,7 @@ class PackageFunction extends GetxController {
   }
 
 
-  //////دریافت لیست پکیح ها
+  //////دریافت لیست پکیح ها پروایدر
   Future <List<MyPackagePost>> getMyPackageList({@required String token}) async {
     final response = await ApiService().getMyPackage(token: token);
     if (response.statusCode == 200) {
@@ -209,8 +214,47 @@ class PackageFunction extends GetxController {
 
   }
 
+  //////دریافت لیست پکیح ها پروایدر
+  Future  geUserPackageList({
+    @required String token,
+    @required String catId,
+    @required String word,
+    @required String uid,
+    @required String sort,
+    @required String order,
+    @required String limit,
+    @required String interest,
+    @required String page,
+    @required String special,
+    @required String folowing,
+    @required String asc
+  }) async {
+    userPackageLoading.value = true;
+    final response = await ApiService().getPackage(
+        token: token,
+        word: word,
+        catId: catId,
+        interest: interest,
+        uid: uid,
+        folowing: folowing,
+        order: order,
+        sort: sort,
+        special: special,
+        asc: asc,
+        limit: limit,
+        page: page);
+    if (response.statusCode == 200) {
+      userPackageLoading.value = false;
+      userPackageModel= MyPackageModel.fromJson(response.body);
+    } else {
+      userPackageLoading.value = true;
+    }
+    update();
 
-  //////حذف پکیح ها
+  }
+
+
+  //////حذف پکیح های پروایدر
   Future <int> removePackage(String token , String pId) async {
     final response = await ApiService().removePackage(token,pId);
     if (response.statusCode == 200) {
@@ -235,13 +279,27 @@ class PackageFunction extends GetxController {
     }
   }
 
-  //////نمایش پکیح ها
   Future showPackage(String token , String pId) async {
     final response = await ApiService().showPackage(token,pId);
     print("response.statusCode");
     print(response.statusCode);
 
     if (response.statusCode == 200) {
+      showPackageLoading.value = false;
+      showPackageModel = ShowPackageModel.fromJson(response.body);
+    } else {
+      showPackageLoading.value = false;
+    }
+    update();
+  }
+
+
+  Future showUserPackage(String token , String pId) async {
+    final response = await ApiService().showUserPackage(token,pId);
+
+    if (response.statusCode == 200) {
+      print('response.body');
+      print(response.body);
       showPackageLoading.value = false;
       showPackageModel = ShowPackageModel.fromJson(response.body);
     } else {

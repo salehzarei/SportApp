@@ -9,12 +9,12 @@ class ArticleFunction extends GetxController{
   final addArticleLoading = false.obs;
 
   final articleLoading = true.obs;
+  final userArticleLoading = true.obs;
 
   final removeArticleBool = true.obs;
   ArticleModel articleModel;
 
 
-  //////اد کردن مقاله توسط کاربران مجاز
   Future<int> addArticle(
       {@required String token,
       @required String title,
@@ -61,7 +61,6 @@ class ArticleFunction extends GetxController{
   }
 
 
-  //////اد کردن مقاله توسط کاربران مجاز
   Future articleList(
       {@required String token,
       @required String catId,
@@ -70,7 +69,7 @@ class ArticleFunction extends GetxController{
       @required String word}) async {
 
     articleLoading.value = true;
-
+    articleModel.post.clear();
     final response = await ApiService().articleList(
         catId:catId,
         limit: limit,
@@ -89,7 +88,43 @@ class ArticleFunction extends GetxController{
   }
 
 
-  //////حذف مقالات
+  Future userArticleList(
+      {@required String token,
+       @required String page,
+       @required String limit,
+       @required String catId,
+       @required String tag,
+       @required String uid,
+       @required String sort,
+       @required String folowing,
+       @required String order,
+       @required String interest,
+       @required String word}) async {
+
+    userArticleLoading.value = true;
+    final response = await ApiService().userArticleList(
+        catId:catId,
+        limit: limit,
+        page: page,
+        token: token,
+        word: word,
+        uid: uid,
+        interest: interest,
+        order: order,
+        sort: sort,
+        folowing: folowing,
+        tag: tag);
+
+    if (response.statusCode == 200) {
+      articleModel = ArticleModel.fromJson(response.body);
+      userArticleLoading.value = false;
+    } else {
+      userArticleLoading.value = true;
+    }
+    update();
+  }
+
+
   Future <int> removeArticle(String token , String pId) async {
     final response = await ApiService().removeArticle(token,pId);
     if (response.statusCode == 200) {

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
+import 'package:sportapplication/controller/Functions/RegisterFunction.dart';
+import 'package:sportapplication/controller/util.dart';
 import 'package:sportapplication/view/component/Constans.dart';
 import 'package:sportapplication/view/component/TabViewHeader.dart';
 import 'package:sportapplication/view/page/userInfo/ArticleTab.dart';
@@ -19,12 +22,24 @@ class DetailUserInfoPage extends StatefulWidget {
 
 class _DetailUserInfoPageState extends State<DetailUserInfoPage>
     with SingleTickerProviderStateMixin {
+
+  final RegisterFunction registerFunction = Get.put(RegisterFunction());
+
   TabController _tabController;
+
+  bool followLoading = false;
+
   int _select = 0;
+  String _token;
 
   @override
   void initState() {
     super.initState();
+    getShared("token").then((token) {
+      _token = token;
+      registerFunction.showProviderLoading.value= true;
+      registerFunction.showProvider(token: token, bId: widget.uId);
+    });
     _tabController = TabController(vsync: this, length: 3);
   }
 
@@ -36,63 +51,70 @@ class _DetailUserInfoPageState extends State<DetailUserInfoPage>
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    return Obx(()=>SafeArea(
       child: Scaffold(
-        body: CustomScrollView(
-          physics: PageScrollPhysics(),
-          slivers: <Widget>[
-            SliverAppBar(
-              leading: IconButton(
-                  color: Colors.white,
-                  iconSize: 20,
-                  icon: Icon(Icons.arrow_back_rounded),
-                  onPressed: () {
-                    Get.back();
-                  }),
-              elevation: 0.0,
-              // centerTitle: true,
-              // title: Text(
-              //   "عنوان کاربری",
-              //   style: TextStyle(color: Theme.of(context).accentColor),
-              // ),
-              floating: true,
-              backgroundColor: Colors.red,
-              flexibleSpace: _infoItem(),
-              expandedHeight: 220,
-            ),
-            SliverPersistentHeader(
-              pinned: true,
-              delegate: TabViewHeader(
-                  tabController: _tabController,
-                  onckick: (val) {
-                    if (mounted) {
-                      setState(() {
-                        _select = val;
-                      });
-                    }
-                  }),
-            ),
-            SliverList(
-              delegate: SliverChildListDelegate(
-                <Widget>[_viewPage()],
+        body: registerFunction.showProviderLoading.value ?
+            Center(
+              child: SpinKitThreeBounce(
+                color: Theme.of(context).primaryColorDark,
+                size: 30.0,
               ),
-            )
-          ],
-        ),
+            ):
+            CustomScrollView(
+              physics: PageScrollPhysics(),
+              slivers: <Widget>[
+                SliverAppBar(
+                  leading: IconButton(
+                      color: Colors.white,
+                      iconSize: 20,
+                      icon: Icon(Icons.arrow_back_rounded),
+                      onPressed: () {
+                        Get.back();
+                      }),
+                  elevation: 0.0,
+                  // centerTitle: true,
+                  // title: Text(
+                  //   "عنوان کاربری",
+                  //   style: TextStyle(color: Theme.of(context).accentColor),
+                  // ),
+                  floating: true,
+                  backgroundColor: Colors.red,
+                  flexibleSpace: _infoItem(),
+                  expandedHeight: 220,
+                ),
+                SliverPersistentHeader(
+                  pinned: true,
+                  delegate: TabViewHeader(
+                      tabController: _tabController,
+                      onckick: (val) {
+                        if (mounted) {
+                          setState(() {
+                            _select = val;
+                          });
+                        }
+                      }),
+                ),
+                SliverList(
+                  delegate: SliverChildListDelegate(
+                    <Widget>[_viewPage()],
+                  ),
+                )
+              ],
+            ),
       ),
-    );
+    ));
   }
 
   _viewPage() {
     switch (_select) {
       case 0:
-        return UserPackageTab();
+        return UserPackageTab(widget.uId);
         break;
       case 1:
-        return ArticleTab();
+        return ArticleTab(widget.uId);
         break;
       case 2:
-        return SubsetTab();
+        return SubsetTab(widget.uId);
         break;
     }
   }
@@ -123,8 +145,7 @@ class _DetailUserInfoPageState extends State<DetailUserInfoPage>
                               child: AspectRatio(
                                 aspectRatio: 2 / 2,
                                 child: imageShower(
-                                    imageUrl:
-                                        "https://dkstatics-public.digikala.com/digikala-adservice-banners/bc928cad36c9cc9aed866ec4de30dfd9f5e50ec7_1607016116.jpg?x-oss-process=image/quality,q_80",
+                                    imageUrl:registerFunction.showProviderModel.info.pic,
                                     margin: EdgeInsets.all(8),
                                     fit: BoxFit.fill,
                                     borderRadius: BorderRadius.circular(100)),
@@ -142,7 +163,7 @@ class _DetailUserInfoPageState extends State<DetailUserInfoPage>
                                     height: 6,
                                   ),
                                   Text(
-                                    "نام کاربری",
+                                    registerFunction.showProviderModel.info.title,
                                     style: TextStyle(
                                         fontSize: 15,
                                         fontWeight: FontWeight.w600,
@@ -163,7 +184,7 @@ class _DetailUserInfoPageState extends State<DetailUserInfoPage>
                                         width: 8,
                                       ),
                                       Text(
-                                        "09333333333",
+                                        registerFunction.showProviderModel.info.cell,
                                         style: TextStyle(
                                             fontSize: 12,
                                             fontWeight: FontWeight.w600,
@@ -190,7 +211,7 @@ class _DetailUserInfoPageState extends State<DetailUserInfoPage>
                             width: 8,
                           ),
                           Text(
-                            "آدرس ابن سینا بین ابن سینا 16 و 18",
+                            registerFunction.showProviderModel.info.address,
                             style: TextStyle(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w600,
@@ -201,7 +222,6 @@ class _DetailUserInfoPageState extends State<DetailUserInfoPage>
                       SizedBox(
                         height: 20,
                       ),
-
                     ],
                   ),
                 ),
@@ -234,7 +254,45 @@ class _DetailUserInfoPageState extends State<DetailUserInfoPage>
                   ),
                   Expanded(
                     child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          registerFunction.showProviderModel.info.following ==0?
+                              registerFunction.follow(_token,  registerFunction.showProviderModel.info.id.toString()).whenComplete((){
+                                listSnackBar(list: registerFunction.errorMassages, err: registerFunction.checkerror.value);
+                                if(!registerFunction.checkerror.value){
+                                  if(mounted){
+                                    setState(() {
+                                      followLoading = true;
+                                    });
+                                  }
+                                  // registerFunction.showProviderLoading.value= true;
+                                  registerFunction.showProvider(token: _token, bId: widget.uId).whenComplete((){
+                                    if(mounted){
+                                      setState(() {
+                                        followLoading = false;
+                                      });
+                                    }
+                                  });
+                                }
+                              })
+                              :registerFunction.unFollow(_token, registerFunction.showProviderModel.info.following.toString()).whenComplete((){
+                                listSnackBar(list: registerFunction.errorMassages, err: registerFunction.checkerror.value);
+                                if(!registerFunction.checkerror.value){
+                                  // registerFunction.showProviderLoading.value= true;
+                                  if(mounted){
+                                    setState(() {
+                                      followLoading = true;
+                                    });
+                                  }
+                                  registerFunction.showProvider(token: _token, bId: widget.uId).whenComplete((){
+                                    if(mounted){
+                                      setState(() {
+                                        followLoading = false;
+                                      });
+                                    }
+                                  });
+                                }
+                              });
+                        },
                         style: ButtonStyle(
                             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                                 RoundedRectangleBorder(
@@ -244,8 +302,13 @@ class _DetailUserInfoPageState extends State<DetailUserInfoPage>
                             ),
                             backgroundColor: MaterialStateProperty.all<Color>(
                                 Colors.white)),
-                        child: Text(
-                          "دنبال کردن",
+                        child:   followLoading ? Center(
+                          child: SpinKitThreeBounce(
+                            color: Theme.of(context).primaryColorDark,
+                            size: 20.0,
+                          ),
+                        ):Text(
+                         registerFunction.showProviderModel.info.following ==0? "دنبال کردن":"حذف از دنبال کردن",
                           style: TextStyle(fontSize: 14, color: Colors.red),
                         )),
                   ),
@@ -351,17 +414,7 @@ class _DetailUserInfoPageState extends State<DetailUserInfoPage>
                                       border:
                                           Border.all(color: Colors.grey[400]),
                                       borderRadius: BorderRadius.circular(8)),
-                                        child: Text("توضیحات کامل راجع به این کاربر یا یوز کاربری که در چه زمینه ای فعالیت دارد و چه کار هایی انجام میدهد را میتوان از این قسمت نمایش داد"
-                                                     "توضیحات کامل راجع به این کاربر یا یوز کاربری که در چه زمینه ای فعالیت دارد و چه کار هایی انجام میدهد را میتوان از این قسمت نمایش داد"
-                                                     "توضیحات کامل راجع به این کاربر یا یوز کاربری که در چه زمینه ای فعالیت دارد و چه کار هایی انجام میدهد را میتوان از این قسمت نمایش داد"
-                                                     "توضیحات کامل راجع به این کاربر یا یوز کاربری که در چه زمینه ای فعالیت دارد و چه کار هایی انجام میدهد را میتوان از این قسمت نمایش داد"
-                                                     "توضیحات کامل راجع به این کاربر یا یوز کاربری که در چه زمینه ای فعالیت دارد و چه کار هایی انجام میدهد را میتوان از این قسمت نمایش داد"
-                                                     "توضیحات کامل راجع به این کاربر یا یوز کاربری که در چه زمینه ای فعالیت دارد و چه کار هایی انجام میدهد را میتوان از این قسمت نمایش داد"
-                                                     "توضیحات کامل راجع به این کاربر یا یوز کاربری که در چه زمینه ای فعالیت دارد و چه کار هایی انجام میدهد را میتوان از این قسمت نمایش داد"
-                                                     "توضیحات کامل راجع به این کاربر یا یوز کاربری که در چه زمینه ای فعالیت دارد و چه کار هایی انجام میدهد را میتوان از این قسمت نمایش داد"
-                                                     "توضیحات کامل راجع به این کاربر یا یوز کاربری که در چه زمینه ای فعالیت دارد و چه کار هایی انجام میدهد را میتوان از این قسمت نمایش داد"
-                                                     "توضیحات کامل راجع به این کاربر یا یوز کاربری که در چه زمینه ای فعالیت دارد و چه کار هایی انجام میدهد را میتوان از این قسمت نمایش داد"
-                                                     "توضیحات کامل راجع به این کاربر یا یوز کاربری که در چه زمینه ای فعالیت دارد و چه کار هایی انجام میدهد را میتوان از این قسمت نمایش داد",
+                                        child: Text(registerFunction.showProviderModel.info.description,
                                                     textAlign: TextAlign.justify,
 
                                                    textDirection: TextDirection.rtl,
@@ -385,7 +438,7 @@ class _DetailUserInfoPageState extends State<DetailUserInfoPage>
                                         border:
                                         Border.all(color: Colors.grey[400]),
                                         borderRadius: BorderRadius.circular(8)),
-                                    child: Text("مربی",
+                                    child: Text(registerFunction.showProviderModel.info.level_title,
                                       textAlign: TextAlign.justify,
                                       textDirection: TextDirection.rtl,
                                       style: TextStyle(
@@ -410,10 +463,10 @@ class _DetailUserInfoPageState extends State<DetailUserInfoPage>
                                         borderRadius: BorderRadius.circular(8)),
                                     child: ListView.builder(
                                       scrollDirection: Axis.vertical,
-                                      itemCount: 5,
+                                      itemCount: registerFunction.showProviderModel.info.activity_scope.length,
                                       shrinkWrap: true,
                                       physics: NeverScrollableScrollPhysics(),
-                                      itemBuilder: (context, index) => itemHoze(context: context, index: index),
+                                      itemBuilder: (context, index) => itemHoze(context: context, index: index,data:registerFunction.showProviderModel.info.activity_scope[index]),
                                     )
                                 ),
                               ],
@@ -429,4 +482,5 @@ class _DetailUserInfoPageState extends State<DetailUserInfoPage>
       ],
     );
   }
+
 }

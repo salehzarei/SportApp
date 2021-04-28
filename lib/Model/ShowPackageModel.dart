@@ -1,11 +1,11 @@
 class ShowPackageModel {
-    Data data;
+    ShowPackageData data;
 
     ShowPackageModel({this.data});
 
     factory ShowPackageModel.fromJson(Map<String, dynamic> json) {
         return ShowPackageModel(
-            data: json['data'] != null ? Data.fromJson(json['data']) : null,
+            data: json['data'] != null ? ShowPackageData.fromJson(json['data']) : null,
         );
     }
 
@@ -18,36 +18,48 @@ class ShowPackageModel {
     }
 }
 
-class Data {
+class ShowPackageData {
     int category;
     String category_title;
     String description;
     int discount;
     int discount_type;
     String edate;
+    int final_price;
     List<Gallery> gallery;
+    int hits;
     int id;
-    String reason;
+    String owner;
+    String owner_address;
+    String owner_cell;
+    String owner_pic;
+    int price;
+    String qrcode;
     String sdate;
-    int status;
     String title;
     int uid;
 
-    Data({this.category, this.category_title, this.description, this.discount, this.discount_type, this.edate, this.gallery, this.id, this.reason, this.sdate, this.status, this.title, this.uid});
+    ShowPackageData({this.category, this.category_title, this.description, this.discount, this.discount_type, this.edate, this.final_price, this.gallery, this.hits, this.id, this.owner, this.owner_address, this.owner_cell, this.owner_pic, this.price, this.qrcode, this.sdate, this.title, this.uid});
 
-    factory Data.fromJson(Map<String, dynamic> json) {
-        return Data(
+    factory ShowPackageData.fromJson(Map<String, dynamic> json) {
+        return ShowPackageData(
             category: json['category'], 
             category_title: json['category_title'], 
             description: json['description'], 
             discount: json['discount'], 
             discount_type: json['discount_type'], 
             edate: json['edate'], 
+            final_price: json['final_price'], 
             gallery: json['gallery'] != null ? (json['gallery'] as List).map((i) => Gallery.fromJson(i)).toList() : null, 
+            hits: json['hits'], 
             id: json['id'], 
-            reason: json['reason'], 
+            owner: json['owner'], 
+            owner_address: json['owner_address'], 
+            owner_cell: json['owner_cell'], 
+            owner_pic: json['owner_pic'], 
+            price: json['price'], 
+            qrcode: json['qrcode'], 
             sdate: json['sdate'], 
-            status: json['status'], 
             title: json['title'], 
             uid: json['uid'], 
         );
@@ -61,10 +73,16 @@ class Data {
         data['discount'] = this.discount;
         data['discount_type'] = this.discount_type;
         data['edate'] = this.edate;
+        data['final_price'] = this.final_price;
+        data['hits'] = this.hits;
         data['id'] = this.id;
-        data['reason'] = this.reason;
+        data['owner'] = this.owner;
+        data['owner_address'] = this.owner_address;
+        data['owner_cell'] = this.owner_cell;
+        data['owner_pic'] = this.owner_pic;
+        data['price'] = this.price;
+        data['qrcode'] = this.qrcode;
         data['sdate'] = this.sdate;
-        data['status'] = this.status;
         data['title'] = this.title;
         data['uid'] = this.uid;
         if (this.gallery != null) {

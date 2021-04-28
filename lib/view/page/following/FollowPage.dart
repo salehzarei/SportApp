@@ -61,8 +61,7 @@ class _FollowPageState extends State<FollowPage> {
           itemBuilder: (context, index) => followListItem(context: context, index: index,data:registerFunction.providerList.post[index], removeProvider: (){
             registerFunction.unFollow(_token, registerFunction.providerList.post[index].following.toString()).whenComplete((){
               listSnackBar(list: registerFunction.errorMassages, err: registerFunction.checkerror.value);
-              print(!registerFunction.checkerror.value);
-              if(registerFunction.checkerror.value){
+              if(!registerFunction.checkerror.value){
                 registerFunction.providerLoading.value = true;
                 registerFunction.providers( token: _token, following: '1', level: '', activity_scope: '', special: '',);
               }

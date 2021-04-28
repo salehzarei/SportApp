@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:sportapplication/Model/SubSetModel.dart';
 import 'package:sportapplication/controller/Service/Request.dart';
@@ -6,10 +7,10 @@ class SubSetFunction extends GetxController{
 
   SubSetModel subSetModel;
   final loading = true.obs;
+  final userSubsetLoading = true.obs;
   final deleteError = false.obs;
   List<dynamic> errorMassages = [];
 
- // لیست زیر مجموعه ها
   Future  getSubset(String token) async {
     loading.value = true;
     final response = await ApiService().subSet(token: token);
@@ -29,7 +30,19 @@ class SubSetFunction extends GetxController{
     }
   }
 
- // حذف زیر مجموعه ها
+  Future  getUserSubset({@required String token,@required String uId}) async {
+    userSubsetLoading.value = true;
+    final response = await ApiService().userSubSet(token: token, uId: uId);
+    if (response.statusCode == 200) {
+      subSetModel =SubSetModel.fromJson(response.body);
+      userSubsetLoading.value = false;
+    } else {
+      userSubsetLoading.value = true;
+    }
+    update();
+    notifyChildrens();
+  }
+
   Future  deleteSubset(String token,String id) async {
     deleteError.value = false;
     final response = await ApiService().deleteSubset(token: token, id: id);
@@ -57,7 +70,6 @@ class SubSetFunction extends GetxController{
     }
   }
 
- // قبول زیر مجموعه ها
   Future  acceptSubset(String token,String id) async {
     deleteError.value = false;
     final response = await ApiService().acceptSubset(token: token, id: id);

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sportapplication/Model/CategoryAccountTypeModel.dart';
 import 'package:sportapplication/Model/providerModel.dart';
+import 'package:sportapplication/Model/showProviderModel.dart';
 import 'package:sportapplication/controller/Service/Request.dart';
 import 'package:sportapplication/controller/util.dart';
 
@@ -16,11 +17,13 @@ class RegisterFunction extends GetxController {
   final ostanLoding = false.obs;
   final categoryLoading = false.obs;
 
+  final showProviderLoading = true.obs;
+
   final cityLoding = false.obs;
   final registerLoading = false.obs;
   final checkLoginLoading = false.obs;
   final loginLoading = false.obs;
-  final providerLoading = false.obs;
+  final providerLoading = true.obs;
   final checkerror = false.obs;
   final verificationCode = ''.obs;
   final code = ''.obs;
@@ -28,6 +31,7 @@ class RegisterFunction extends GetxController {
   List<CategoryAccountTypeModel> interestList = [];
 
   ProviderModel providerList ;
+  ShowProviderModel showProviderModel ;
 
   List<dynamic> errorMassages = [];
 
@@ -297,10 +301,51 @@ class RegisterFunction extends GetxController {
     }
 
   }
+// نمایش پرووایدر ها
+  Future showProvider(
+      {@required String token,
+       @required String bId }) async {
+    // showProviderLoading.value = true;
+    final response = await ApiService().showProvider(token , bId);
+    if (response.statusCode == 200) {
+      print(response.body);
+      showProviderModel = ShowProviderModel.fromJson(response.body);
+      showProviderLoading.value = false;
+      update();
+      notifyChildrens();
+    } else {
+      showProviderLoading.value = true;
+      update();
+      notifyChildrens();
+    }
+  }
 
  // آنفالو کردن پروایدر
   Future unFollow(String token , String id) async {
     final response = await ApiService().unfollow(token , id );
+    if (response.statusCode == 200) {
+      checkerror.value = response.body['error'];
+      if( checkerror.value){
+        errorMassages = (response.body['error_msg'] is List)
+            ? response.body['error_msg']
+            : [response.body['error_msg']];
+      }else{
+        errorMassages = (response.body['report_msg'] is List)
+            ? response.body['report_msg']
+            : [response.body['report_msg']];
+      }
+      update();
+    } else {
+      checkerror.value  = true;
+      errorMassages = ["خطا در برقراری ارتباط با سرور"];
+      update();
+    }
+
+  }
+
+ // فالو کردن پروایدر
+  Future follow(String token , String id) async {
+    final response = await ApiService().follow(token , id );
     if (response.statusCode == 200) {
       checkerror.value = response.body['error'];
       if( checkerror.value){
