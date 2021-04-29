@@ -4,10 +4,11 @@ import 'package:get/get.dart';
 import 'package:sportapplication/controller/Functions/PackageFunction.dart';
 import 'package:sportapplication/controller/util.dart';
 import 'package:sportapplication/view/component/Constans.dart';
+import 'package:syncfusion_flutter_barcodes/barcodes.dart';
 
 class PackagesListItemDetail extends StatefulWidget {
-  String id;
 
+  String id;
   PackagesListItemDetail(this.id);
 
   @override
@@ -108,18 +109,17 @@ class _PackagesListItemDetailState extends State<PackagesListItemDetail> {
                                     ],)),
                                     InkWell(
                                       onTap: () {
-                                        Get.dialog(_showQr("url"));
+                                        Get.dialog(_showQr());
                                       },
                                       child: Container(
                                         width: 50,
                                         height: 50,
                                         decoration: BoxDecoration(
                                             borderRadius: BorderRadius.circular(10)),
-                                        child:imageShower(
-                                            imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/QR_deWP.svg/1200px-QR_deWP.svg.png",
-                                            margin: EdgeInsets.all(0),
-                                            fit: BoxFit.fill,
-                                            borderRadius: BorderRadius.circular(4))
+                                        child: SfBarcodeGenerator(
+                                        value:  packageFunction.showPackageModel.data.qrcode,
+                                        symbology: QRCode(),
+                                      ),
                                       ),
                                     )
                                   ],
@@ -356,7 +356,7 @@ class _PackagesListItemDetailState extends State<PackagesListItemDetail> {
         ));
   }
 
-  _showQr(String url) {
+  _showQr() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -375,8 +375,10 @@ class _PackagesListItemDetailState extends State<PackagesListItemDetail> {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10.0),
                         border: Border.all(color: Colors.grey[800], width: 1)),
-                    child: Image.network(
-                        "https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/QR_deWP.svg/1200px-QR_deWP.svg.png")),
+                    child: SfBarcodeGenerator(
+                      value:  packageFunction.showPackageModel.data.qrcode,
+                      symbology: QRCode(),
+                    )),
               ),
             ),
           ),
@@ -384,4 +386,5 @@ class _PackagesListItemDetailState extends State<PackagesListItemDetail> {
       ],
     );
   }
+
 }

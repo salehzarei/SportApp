@@ -3,6 +3,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:sportapplication/controller/Functions/PlanFunction.dart';
 import 'package:sportapplication/controller/util.dart';
+import 'package:sportapplication/view/component/Constans.dart';
 import 'package:sportapplication/view/page/plan/packageConstant.dart';
 
 class MyBoxPage extends StatefulWidget {
@@ -39,15 +40,10 @@ class _MyBoxPageState extends State<MyBoxPage> {
           body: Directionality(
             textDirection: TextDirection.rtl,
             child: pack.mypackLoading.value
-                ? Center(
-                    child: SpinKitThreeBounce(
-                      color: Colors.white,
-                      size: 30.0,
-                    ),
-                  )
+                ? loading()
                 : Directionality(
                     textDirection: TextDirection.rtl,
-                    child: ListView.builder(
+                    child:pack.myPackagesList.isEmpty ? noItem(): ListView.builder(
                       itemCount: pack.myPackagesList.length,
                       padding: EdgeInsets.only(top: 10),
                       shrinkWrap: true,

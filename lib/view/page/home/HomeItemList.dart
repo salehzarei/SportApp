@@ -3,11 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:sportapplication/Model/ArticleModel.dart';
+import 'package:sportapplication/Model/MyPackageModel.dart';
+import 'package:sportapplication/Model/providerModel.dart';
 import 'package:sportapplication/controller/util.dart';
 import 'package:sportapplication/view/component/Constans.dart';
+import 'package:sportapplication/view/page/blog/BlogDetailPage.dart';
 import 'package:sportapplication/view/page/packageDetail/PackagesListItemDetail.dart';
 
-specialList({@required context,@required controller,}){
+specialList({@required context,@required controller,@required MyPackagePost data}){
   return GestureDetector(
     onTap: () {
       // Get.to(PackagesListItemDetail());
@@ -28,12 +32,15 @@ specialList({@required context,@required controller,}){
                   aspectRatio: 4/2,
                   child: Container(
                     width: double.infinity,
-                    child:imageShower(margin: EdgeInsets.all(0), borderRadius:  BorderRadius.only(
+                    child:imageShower(margin: EdgeInsets.all(0),
+                        borderRadius:  BorderRadius.only(
                         topLeft: Radius.circular(6),
-                        topRight: Radius.circular(6)), imageUrl: "https://assets1.risnews.com/styles/content_sm/s3/2019-09/Big_Lots_CliftonPlaza.jpg?itok=5K_InGyc", fit: BoxFit.fill),
+                        topRight: Radius.circular(6)),
+                        imageUrl: data.pic,
+                        fit: BoxFit.fill),
                   ),
                 ),
-                Container(
+               data.discount==0?SizedBox():Container(
                   decoration: BoxDecoration(
                       color: Theme.of(context).primaryColorDark,
                       borderRadius: BorderRadius.only(
@@ -41,7 +48,7 @@ specialList({@required context,@required controller,}){
                           bottomLeft: Radius.circular(6))),
                   padding: EdgeInsets.all(8),
                   child: Text(
-                    '30%',
+                    data.discount_type==1?'${data.discount}%':data.discount,
                     style: TextStyle(color: Colors.white),
                   ),
                 ),
@@ -55,7 +62,7 @@ specialList({@required context,@required controller,}){
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'هیومن پارک تهران',
+                       data.title,
                         maxLines: 1,
                         style: TextStyle(
                             color: Colors.black ,
@@ -73,14 +80,14 @@ specialList({@required context,@required controller,}){
                               color: Colors.red[300],
                             ),
                             SizedBox(width: 6,),
-                            Expanded(child: Text('سیاره فوتسال',style: TextStyle(color: Colors.black , fontWeight: FontWeight.w100 , fontSize: 12),)),
+                            Expanded(child: Text( data.owner,style: TextStyle(color: Colors.black , fontWeight: FontWeight.w100 , fontSize: 12),)),
                           ],
                         ),
                       ),
                       Row(
                         children: [
-                          Text(
-                            maskedText('75000'),
+                          data.discount == 0?SizedBox():Text(
+                            maskedText(data.price.toString()),
                             style: TextStyle(
                                 decoration: TextDecoration.lineThrough,
                                 decorationColor: Colors.red[800],
@@ -91,10 +98,10 @@ specialList({@required context,@required controller,}){
                                 fontSize: 13),
                           ),
                           SizedBox(
-                            width: 5,
+                            width:  data.discount == 0?5:0,
                           ),
                           Text(
-                            '${maskedText('50000')} تومان ',
+                            '${maskedText(data.final_price.toString())} تومان ',
                             style: TextStyle(
                                 color: Colors.green,
                                 fontWeight: FontWeight.w100,
@@ -116,24 +123,24 @@ specialList({@required context,@required controller,}){
                                 color: Colors.grey,
                               ),
                               Text(
-                                '1,204 مرتبه',
+                                '${data.hits} مرتبه',
                                 style: TextStyle(color: Colors.grey[600],fontSize: 12),
                               )
                             ],
                           ),
-                          Row(
-                            children: [
-                              Icon(
-                                Icons.star,
-                                color: Colors.yellow,
-                                size: 15,
-                              ),
-                              Text(
-                                '2.6',
-                                style: TextStyle(color: Colors.grey),
-                              )
-                            ],
-                          )
+                          // Row(
+                          //   children: [
+                          //     Icon(
+                          //       Icons.star,
+                          //       color: Colors.yellow,
+                          //       size: 15,
+                          //     ),
+                          //     Text(
+                          //       '2.6',
+                          //       style: TextStyle(color: Colors.grey),
+                          //     )
+                          //   ],
+                          // )
                         ],
                       )
                     ],
@@ -148,8 +155,11 @@ specialList({@required context,@required controller,}){
   );
 }
 
-newArticleItemList({@required context}){
+newArticleItemList({@required context,@required ArticleModelPost data}){
   return GestureDetector(
+    onTap: () {
+      Get.to(BlogDetailPage(data.id.toString()));
+    },
       child: Container(
         margin: EdgeInsets.only(left: 6),
         width: Get.width*.5,
@@ -168,7 +178,10 @@ newArticleItemList({@required context}){
                       Container(
                         margin: EdgeInsets.only(bottom: 25),
                         alignment: Alignment.bottomLeft,
-                        child: imageShower(margin: EdgeInsets.all(0), borderRadius:  BorderRadius.circular(15), imageUrl: "https://assets1.risnews.com/styles/content_sm/s3/2019-09/Big_Lots_CliftonPlaza.jpg?itok=5K_InGyc", fit: BoxFit.fill),
+                        child: imageShower(margin: EdgeInsets.all(0),
+                            borderRadius:  BorderRadius.circular(15),
+                            imageUrl: data.pic,
+                            fit: BoxFit.fill),
                         decoration: BoxDecoration(
                           // color: Colors.grey,
                           borderRadius: BorderRadius.circular(15),
@@ -185,7 +198,7 @@ newArticleItemList({@required context}){
                                 padding: EdgeInsets.symmetric(
                                     horizontal: 25, vertical: 6),
                                 child: Text(
-                                  "نویسنده",
+                                  data.owner,
                                   overflow: TextOverflow.clip,
                                   maxLines: 1,
                                   style: TextStyle(
@@ -205,7 +218,7 @@ newArticleItemList({@required context}){
                                   color: Colors.blueGrey,
                                   image: DecorationImage(
                                       image: NetworkImage(
-                                          "https://randomuser.me/api/portraits/men/43.jpg")),
+                                          data.owner_pic)),
                                   borderRadius:
                                   BorderRadiusDirectional.circular(60)),
                             ),
@@ -225,7 +238,7 @@ newArticleItemList({@required context}){
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'اخبار جدید درباره فوتسال',
+                          data.title,
                           overflow: TextOverflow.clip,
                           maxLines: 1,
                           style: TextStyle(
@@ -233,7 +246,7 @@ newArticleItemList({@required context}){
                         ),
                         SizedBox(height: 10),
                         Text(
-                          "خلاصه قوانین داوری فوتبال\nقانون اول:\nزمین مسابقه : طول نباید بیشتر از ۱۲۰ متر و کمتر از ۹۰ متر و عرض آن بیش از ۹۰ متر\nو کمتر از ۴۵ متر باشد. در مسابقات بین المللی طول زمین مسابقه نباید \nبیش از ۱۱۰ متر و کمتر از ۱۰۰ متر و عرض آن بیش از ۷۵ متر و کمتر از ۶۴ متر باشد.\nنکات مهم:\nارتفاع میله پرچم نقطه کرنر حداقل ۱۵۰ سانتیمتر",
+                          data.summary,
                           overflow: TextOverflow.clip,
                           style: TextStyle(
                               fontWeight: FontWeight.w200, fontSize: 12,color: Colors.black),
@@ -244,7 +257,7 @@ newArticleItemList({@required context}){
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                               '#فوتسال',
+                            data.tages.isEmpty?"#":data.tages[0],
                               textAlign: TextAlign.right,
                               maxLines: 1,
                               overflow: TextOverflow.clip,
@@ -270,7 +283,7 @@ newArticleItemList({@required context}){
   );
 }
 
-packageMe({@required context,@required controller}){
+packageMe({@required context,@required controller,@required MyPackagePost data}){
   return GestureDetector(
     onTap: () {
       // Get.to(PackagesListItemDetail());
@@ -297,10 +310,12 @@ packageMe({@required context,@required controller}){
                     width: double.infinity,
                     child:imageShower(margin: EdgeInsets.all(0), borderRadius:  BorderRadius.only(
                         topLeft: Radius.circular(6),
-                        topRight: Radius.circular(6)), imageUrl: "https://assets1.risnews.com/styles/content_sm/s3/2019-09/Big_Lots_CliftonPlaza.jpg?itok=5K_InGyc", fit: BoxFit.fill),
+                        topRight: Radius.circular(6)),
+                        imageUrl: data.pic,
+                        fit: BoxFit.fill),
                   ),
                 ),
-                Container(
+                data.discount==0?SizedBox():Container(
                   decoration: BoxDecoration(
                       color: Theme.of(context).primaryColorDark,
                       borderRadius: BorderRadius.only(
@@ -308,7 +323,7 @@ packageMe({@required context,@required controller}){
                           bottomLeft: Radius.circular(6))),
                   padding: EdgeInsets.all(8),
                   child: Text(
-                    '30%',
+                    data.discount_type==1?'${data.discount}%':data.discount,
                     style: TextStyle(color: Colors.white),
                   ),
                 ),
@@ -322,7 +337,7 @@ packageMe({@required context,@required controller}){
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'هیومن پارک تهران',
+                        data.title,
                         style: TextStyle(
                             color: Colors.black ,
                             fontWeight: FontWeight.w500,
@@ -345,8 +360,8 @@ packageMe({@required context,@required controller}){
                       ),
                       Row(
                         children: [
-                          Text(
-                            maskedText('75000'),
+                          data.discount == 0?SizedBox():Text(
+                            maskedText(data.price.toString()),
                             style: TextStyle(
                                 decoration: TextDecoration.lineThrough,
                                 decorationColor: Colors.red[800],
@@ -357,10 +372,10 @@ packageMe({@required context,@required controller}){
                                 fontSize: 13),
                           ),
                           SizedBox(
-                            width: 5,
+                            width:  data.discount == 0?5:0,
                           ),
                           Text(
-                            '${maskedText('50000')} تومان ',
+                            '${maskedText(data.final_price.toString())} تومان ',
                             style: TextStyle(
                                 color: Colors.green,
                                 fontWeight: FontWeight.w100,
@@ -382,24 +397,24 @@ packageMe({@required context,@required controller}){
                                 color: Colors.grey,
                               ),
                               Text(
-                                '1,204 مرتبه',
+                                '${data.hits} مرتبه',
                                 style: TextStyle(color: Colors.grey[600],fontSize: 12),
                               )
                             ],
                           ),
-                          Row(
-                            children: [
-                              Icon(
-                                Icons.star,
-                                color: Colors.yellow,
-                                size: 15,
-                              ),
-                              Text(
-                                '2.6',
-                                style: TextStyle(color: Colors.grey),
-                              )
-                            ],
-                          )
+                          // Row(
+                          //   children: [
+                          //     Icon(
+                          //       Icons.star,
+                          //       color: Colors.yellow,
+                          //       size: 15,
+                          //     ),
+                          //     Text(
+                          //       '2.6',
+                          //       style: TextStyle(color: Colors.grey),
+                          //     )
+                          //   ],
+                          // )
                         ],
                       )
                     ],
@@ -414,8 +429,11 @@ packageMe({@required context,@required controller}){
   );
 }
 
-articleMe({@required context}){
+articleMe({@required context,@required ArticleModelPost data}){
  return GestureDetector(
+     onTap: () {
+       Get.to(BlogDetailPage(data.id.toString()));
+   },
      child: Container(
        margin: EdgeInsets.only(left: 6),
        width: Get.width*.5,
@@ -435,7 +453,7 @@ articleMe({@required context}){
                      alignment: Alignment.bottomLeft,
                      child: imageShower(margin: EdgeInsets.all(0),
                          borderRadius:  BorderRadius.only(topLeft: Radius.circular(15),topRight: Radius.circular(15)),
-                         imageUrl: "https://assets1.risnews.com/styles/content_sm/s3/2019-09/Big_Lots_CliftonPlaza.jpg?itok=5K_InGyc",
+                         imageUrl: data.pic,
                          fit: BoxFit.fill),
                      decoration: BoxDecoration(
                        // color: Colors.grey,
@@ -454,7 +472,7 @@ articleMe({@required context}){
                        ),
                        child: Center(
                          child: Text(
-                           "نویسنده",
+                         data.owner,
                            overflow: TextOverflow.clip,
                            maxLines: 1,
                            style: TextStyle(
@@ -474,7 +492,7 @@ articleMe({@required context}){
                      crossAxisAlignment: CrossAxisAlignment.start,
                      children: [
                        Text(
-                         'اخبار جدید درباره فوتسال',
+                        data.title,
                          overflow: TextOverflow.clip,
                          maxLines: 1,
                          style: TextStyle(
@@ -482,14 +500,14 @@ articleMe({@required context}){
                        ),
                        SizedBox(height: 10),
                        Text(
-                         "خلاصه قوانین داوری فوتبال\nقانون اول:\nزمین مسابقه : طول نباید بیشتر از ۱۲۰ متر و کمتر از ۹۰ متر و عرض آن بیش از ۹۰ متر\nو کمتر از ۴۵ متر باشد. در مسابقات بین المللی طول زمین مسابقه نباید \nبیش از ۱۱۰ متر و کمتر از ۱۰۰ متر و عرض آن بیش از ۷۵ متر و کمتر از ۶۴ متر باشد.\nنکات مهم:\nارتفاع میله پرچم نقطه کرنر حداقل ۱۵۰ سانتیمتر",
+                         data.summary,
                          overflow: TextOverflow.clip,
                          style: TextStyle(fontSize: 12),
                          maxLines: 2,
                        ),
                        SizedBox(height: 4),
                        Text(
-                         '#فوتسال',
+                         data.tages.isEmpty?"#":data.tages[0],
                          textAlign: TextAlign.right,
                          maxLines: 1,
                          overflow: TextOverflow.clip,
@@ -507,7 +525,7 @@ articleMe({@required context}){
      ));
 }
 
-followingItem(){
+followingItem({@required ProviderPost data}){
   return GestureDetector(
       child: Transform.translate(
         offset: Offset(0,-40),
@@ -526,7 +544,7 @@ followingItem(){
                         borderRadius: BorderRadius.circular(8)
                     ),
                     child: Center( child:Text(
-                      "نام فالو شونده",
+                      data.title,
                       overflow: TextOverflow.clip,
                       textAlign: TextAlign.center,
                       maxLines: 1,
@@ -548,7 +566,7 @@ followingItem(){
                 margin: EdgeInsets.only(bottom: 6),
                 child: CachedNetworkImage(
                   fit: BoxFit.cover,
-                  imageUrl: "https://randomuser.me/api/portraits/men/43.jpg",
+                  imageUrl: data.pic,
                   imageBuilder: (context, imageProvider) => Container(
                     margin: EdgeInsets.all(0.5),
                     decoration: BoxDecoration(
@@ -581,7 +599,7 @@ followingItem(){
       ));
 }
 
-suggestedUser({@required context}){
+suggestedUser({@required context,@required ProviderPost data}){
   double _width = Get.width * 0.50;
   return GestureDetector(
     child: Container(
@@ -612,7 +630,7 @@ suggestedUser({@required context}){
                         ),
                         Expanded(child: Center(
                           child:  Text(
-                            "نوع کاربری",
+                            data.title,
                             maxLines: 1,
                             overflow: TextOverflow.clip,
                             style: TextStyle(
@@ -652,7 +670,7 @@ suggestedUser({@required context}){
                     child: Column(
                       children: [
                         CachedNetworkImage(
-                          imageUrl:"https://randomuser.me/api/portraits/men/43.jpg",
+                          imageUrl:data.pic,
                           imageBuilder: (context, imageProvider) =>
                               Container(
                                 width: _width * 0.46,
@@ -701,7 +719,7 @@ suggestedUser({@required context}){
                                 BorderRadiusDirectional
                                     .circular(40)),
                             child: Text(
-                             "نام کاربری",
+                             data.level_title,
                               maxLines: 1,
                               overflow: TextOverflow.clip,
                               style: TextStyle(color: Colors.white),

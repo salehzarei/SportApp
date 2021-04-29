@@ -36,12 +36,14 @@ class MyPackagePost {
     String sdate;
     int status;
     String status_title;
+    String owner;
+    String owner_pic;
     String title;
     int hasOff;
     int final_price;
     int uid;
 
-    MyPackagePost({this.category, this.category_title,this.final_price, this.hasOff, this.description, this.discount, this.discount_type, this.edate, this.hits, this.id, this.pic, this.price, this.reason, this.sdate, this.status, this.status_title, this.title, this.uid});
+    MyPackagePost({this.category, this.category_title,this.owner, this.owner_pic,this.final_price, this.hasOff, this.description, this.discount, this.discount_type, this.edate, this.hits, this.id, this.pic, this.price, this.reason, this.sdate, this.status, this.status_title, this.title, this.uid});
 
     factory MyPackagePost.fromJson(Map<String, dynamic> json) {
         return MyPackagePost(
@@ -53,8 +55,10 @@ class MyPackagePost {
             edate: json['edate'], 
             hits: json['hits'], 
             id: json['id'], 
-            pic: json['pic'], 
-            price: json['price'], 
+            pic: json['pic'],
+            owner_pic: json['owner_pic'],
+            owner: json['owner'],
+            price: json['price'],
             reason: json['reason'], 
             sdate: json['sdate'], 
             status: json['status'],

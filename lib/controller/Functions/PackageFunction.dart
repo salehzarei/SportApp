@@ -106,7 +106,6 @@ class PackageFunction extends GetxController {
     // }
   }
 
-  //////اد کردن پکیج توسط کاربران مجاز
   Future<int> uploadImage(
       {@required String token,
       @required File pic}) async {
@@ -146,7 +145,6 @@ class PackageFunction extends GetxController {
   }
 
 
-  //////اد کردن پکیج توسط کاربران مجاز
   Future<int> addPackage(
       {@required String token,
         @required String title,
@@ -198,7 +196,6 @@ class PackageFunction extends GetxController {
   }
 
 
-  //////دریافت لیست پکیح ها پروایدر
   Future <List<MyPackagePost>> getMyPackageList({@required String token}) async {
     final response = await ApiService().getMyPackage(token: token);
     if (response.statusCode == 200) {
@@ -214,20 +211,19 @@ class PackageFunction extends GetxController {
 
   }
 
-  //////دریافت لیست پکیح ها پروایدر
   Future  geUserPackageList({
     @required String token,
-    @required String catId,
-    @required String word,
-    @required String uid,
-    @required String sort,
-    @required String order,
-    @required String limit,
-    @required String interest,
-    @required String page,
-    @required String special,
-    @required String folowing,
-    @required String asc
+    String catId,
+    String word,
+    String uid,
+    String sort,
+    String order,
+    String limit,
+    String interest,
+    String page,
+    String special,
+    String folowing,
+    String asc
   }) async {
     userPackageLoading.value = true;
     final response = await ApiService().getPackage(
@@ -254,7 +250,6 @@ class PackageFunction extends GetxController {
   }
 
 
-  //////حذف پکیح های پروایدر
   Future <int> removePackage(String token , String pId) async {
     final response = await ApiService().removePackage(token,pId);
     if (response.statusCode == 200) {

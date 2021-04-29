@@ -30,20 +30,22 @@ class ProviderPost {
     int following;
     int id;
     String lat;
+    String level_title;
     int level;
     String lng;
     String pic;
     String title;
 
-    ProviderPost({this.address, this.cell, this.description, this.email, this.expire, this.following, this.id, this.lat, this.level, this.lng, this.pic, this.title});
+    ProviderPost({this.address, this.cell, this.level_title, this.description, this.email, this.expire, this.following, this.id, this.lat, this.level, this.lng, this.pic, this.title});
 
     factory ProviderPost.fromJson(Map<String, dynamic> json) {
         return ProviderPost(
             address: json['address'], 
             cell: json['cell'], 
             description: json['description'], 
-            email: json['email'], 
-            expire: json['expire'], 
+            email: json['email'],
+            level_title: json['level_title'],
+            expire: json['expire'],
             following: json['following'], 
             id: json['id'], 
             lat: json['lat'], 

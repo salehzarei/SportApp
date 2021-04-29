@@ -253,6 +253,21 @@ checkBoxItem(
   );
 }
 
+noItem(){
+  return Center(
+      child:Image(image: AssetImage('assets/image/empty.png'),width: 90,height: 50,)
+  );
+}
+
+loading({@required color}){
+  return Center(
+    child: SpinKitThreeBounce(
+      color:color,
+      size: 30.0,
+    ),
+  );
+}
+
 errorSnackBar({@required String text}) {
   return Get.snackbar('', '',
       titleText: Text(''),
@@ -545,7 +560,9 @@ sliderWidget({
   @required borderRadius,
   @required fit,
   @required list,
+  @required bool lisString,
   @required aspectRatio,
+
 
 }){
   return  AspectRatio(
@@ -560,7 +577,7 @@ sliderWidget({
       ):Swiper(
         itemCount: length,
         itemBuilder: (BuildContext context, int index) {
-          return imageShower(imageUrl: list[index].pic,
+          return imageShower(imageUrl:lisString?list[index] : list[index].pic,
               margin: margin,
               borderRadius: borderRadius, fit: fit);
         },

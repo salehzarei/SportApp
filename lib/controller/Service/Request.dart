@@ -163,7 +163,6 @@ class ApiService extends GetConnect {
             'edate': edate,
           }));
 
-  ////اد کردن مقاله توسط کاربران مجاز
   Future<Response> addArticle(
           {@required String token,
           @required String title,
@@ -184,7 +183,6 @@ class ApiService extends GetConnect {
           }));
 
 
-  //// مقالهای کاربران مجاز
   Future<Response> articleList(
           {@required String token,
           @required String page,
@@ -192,6 +190,11 @@ class ApiService extends GetConnect {
           @required String catId,
           @required String word}) =>
       get(apiUrl + 'providerblog?token=$token&page=$page&limit=$limit&catId=$catId&word=$word',);
+
+  Future<Response> showBlog(
+          {@required String token,
+           @required String bId}) =>
+      get(apiUrl + 'blog/show?bId=$bId&token=$token');
 
   Future<Response> userArticleList(
           {@required String token,
@@ -223,6 +226,21 @@ class ApiService extends GetConnect {
     @required String folowing,
     @required String asc}) =>
       get(apiUrl + 'package?catId=$catId&word=$word&uid=$uid&sort=$sort&asc=$asc&order=$order&page=$page&limit=$limit&interest=$interest&token=$token&special=$special&folowing=$folowing');
+
+  Future<Response> getBlog({
+    @required String token,
+    @required String catId,
+    @required String word,
+    @required String uid,
+    @required String sort,
+    @required String order,
+    @required String limit,
+    @required String interest,
+    @required String page,
+    @required String tag,
+    @required String folowing,
+    @required String asc}) =>
+      get(apiUrl + 'blog?catId=$catId&word$word&tag$tag&uid$uid&sort$sort&order$order&page$page&limit$limit&interest=$interest&token=$token&folowing=$folowing');
 
   Future<Response> uploadProductPic(
           {@required String token, @required File pic}) =>
@@ -266,32 +284,31 @@ class ApiService extends GetConnect {
       get(apiUrl + 'package/show?bId=$id&token=$token');
 
 
-
-//لیست پروایدر ها
   Future<Response> providers(String token, String level, String folowing, String special, String activity_scope) =>
       get(apiUrl + 'providers?token=$token&word=&level=$level&following=$folowing&special=$special&activity_scope=$activity_scope');
 
-
-//نمایش پروایدر ها
   Future<Response> showProvider(String token, String bid) =>
       get(apiUrl + 'providers/show?token=$token&bId=$bid');
 
-
-//انفالو پروایدر ها
   Future<Response> unfollow(String token, String id) =>
       post(apiUrl + 'providers/unfollow',FormData({
         'token': token,
         'id': id,
       }));
 
-//فالو پروایدر ها
   Future<Response> follow(String token, String user_id) =>
       post(apiUrl + 'providers/follow',FormData({
         'token': token,
         'user_id': user_id,
       }));
 
+  Future<Response> buyPlan({@required String token, @required String plan_id,@required String paymentType,@required String coupon}) =>
+      post(apiUrl + 'plans/order',FormData({
+        'token': token,
+        'plan_id': plan_id,
+        'paymentType': paymentType,
+        'coupon': coupon,
+      }));
 
-  ////  اسلایدر
   Future<Response> getSlider() => get(apiUrl + 'slider');
 }

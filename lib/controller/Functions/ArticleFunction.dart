@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sportapplication/Model/ArticleModel.dart';
+import 'package:sportapplication/Model/ShowBlogModel.dart';
 import 'package:sportapplication/controller/Service/Request.dart';
 
 class ArticleFunction extends GetxController{
@@ -9,10 +10,17 @@ class ArticleFunction extends GetxController{
   final addArticleLoading = false.obs;
 
   final articleLoading = true.obs;
+
+  final blogLoading = true.obs;
+  ArticleModel blogModel;
+
   final userArticleLoading = true.obs;
 
   final removeArticleBool = true.obs;
   ArticleModel articleModel;
+
+  final showBlogLoading = true.obs;
+  ShowModel showBlogModel;
 
 
   Future<int> addArticle(
@@ -83,6 +91,66 @@ class ArticleFunction extends GetxController{
       articleLoading.value = false;
     } else {
       articleLoading.value = true;
+    }
+    update();
+  }
+
+
+  Future showBlog(
+      {@required String token,
+       @required String bId}) async {
+
+    showBlogLoading.value = true;
+    final response = await ApiService().showBlog(
+        token: token,
+        bId: bId,
+      );
+
+    if (response.statusCode == 200) {
+      showBlogModel = ShowModel.fromJson(response.body);
+      showBlogLoading.value = false;
+    } else {
+      showBlogLoading.value = true;
+    }
+    update();
+  }
+
+
+  Future blogList({
+        @required String token,
+        String catId,
+        String word,
+        String uid,
+        String sort,
+        String order,
+        String limit,
+        String interest,
+        String page,
+        String tag,
+        String folowing,
+        String asc}) async {
+
+    blogLoading.value = true;
+    final response = await ApiService().getBlog(
+        folowing: folowing,
+        catId: catId,
+        token: token,
+        word: word,
+        uid: uid,
+        interest: interest,
+        tag: tag,
+        limit: limit,
+        page: page,
+        asc: asc,
+        order: order,
+        sort: sort);
+    if (response.statusCode == 200) {
+      print("bloggggg");
+      print(response.body);
+      blogModel = ArticleModel.fromJson(response.body);
+      blogLoading.value = false;
+    } else {
+      blogLoading.value = true;
     }
     update();
   }

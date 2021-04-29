@@ -25,7 +25,7 @@ class TabViewHeader extends SliverPersistentHeaderDelegate {
           ),
           tabs: <Widget>[
             Tab(
-                text: "پکیج های ارائه شده",
+                text: "پکیج ها",
                 icon: SvgPicture.asset(
                   "assets/svg/shop.svg",
                   width: 18,
@@ -34,7 +34,7 @@ class TabViewHeader extends SliverPersistentHeaderDelegate {
                 )
             ),
             Tab(
-                text: "مقالات ثبت شده",
+                text: "مقالات",
                 icon: SvgPicture.asset(
                   "assets/svg/gym.svg",
                   width: 18,
@@ -43,7 +43,7 @@ class TabViewHeader extends SliverPersistentHeaderDelegate {
                 )
             ),
             Tab(
-                text: "مربی های زیرمجموعه",
+                text: "زیرمجموعه",
                 icon: SvgPicture.asset(
                   "assets/svg/doctor.svg",
                   width: 18,

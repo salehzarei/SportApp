@@ -278,13 +278,12 @@ class RegisterFunction extends GetxController {
     print(interestList);
   }
 
- // لیست پرووایدر ها
   Future providers(
       {@required String token,
-       @required String level,
-       @required String following,
-       @required String special,
-       @required String activity_scope,
+       String level,
+       String following,
+       String special,
+       String activity_scope,
   }) async {
     providerLoading.value = true;
     final response = await ApiService().providers(token , level , following,special,activity_scope);

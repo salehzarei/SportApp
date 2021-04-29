@@ -3,6 +3,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:sportapplication/controller/Functions/RegisterFunction.dart';
 import 'package:sportapplication/controller/util.dart';
+import 'package:sportapplication/view/component/Constans.dart';
 import 'package:sportapplication/view/page/following/followConstant.dart';
 
 class FollowPage extends StatefulWidget {
@@ -49,12 +50,7 @@ class _FollowPageState extends State<FollowPage> {
       ),
       body:Directionality(
         textDirection: TextDirection.rtl,
-        child: registerFunction.providerLoading.value?Center(
-          child: SpinKitThreeBounce(
-            color: Colors.white,
-            size: 30.0,
-          ),
-        ):ListView.builder(
+        child: registerFunction.providerLoading.value?loading(): registerFunction.providerList.post.isEmpty?noItem():ListView.builder(
           padding: EdgeInsets.only(top: 10),
           itemCount: registerFunction.providerList.post.length,
           shrinkWrap: true,
