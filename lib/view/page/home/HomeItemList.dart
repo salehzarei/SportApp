@@ -10,11 +10,12 @@ import 'package:sportapplication/controller/util.dart';
 import 'package:sportapplication/view/component/Constans.dart';
 import 'package:sportapplication/view/page/blog/BlogDetailPage.dart';
 import 'package:sportapplication/view/page/packageDetail/PackagesListItemDetail.dart';
+import 'package:sportapplication/view/page/userInfo/DetailUserInfoPage.dart';
 
 specialList({@required context,@required controller,@required MyPackagePost data}){
   return GestureDetector(
     onTap: () {
-      // Get.to(PackagesListItemDetail());
+      Get.to(PackagesListItemDetail(data.id.toString()));
     },
     child: Container(
       margin: EdgeInsets.only(left: 6),
@@ -230,49 +231,50 @@ newArticleItemList({@required context,@required ArticleModelPost data}){
                 ),
               ),
               Expanded(
-                child: SingleChildScrollView(
-                  child: Container(
-                    padding: EdgeInsets.all(10),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          data.title,
-                          overflow: TextOverflow.clip,
-                          maxLines: 1,
-                          style: TextStyle(
-                              fontWeight: FontWeight.w500, fontSize: 16,color: Colors.black),
+                child: Container(
+                  padding: EdgeInsets.all(10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        data.title,
+                        overflow: TextOverflow.clip,
+                        maxLines: 1,
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500, fontSize: 16,color: Colors.black),
+                      ),
+                      SizedBox(height: 10),
+                      Expanded(
+                        child: SingleChildScrollView(
+                          child: Text(
+                            data.summary,
+                            overflow: TextOverflow.clip,
+                            style: TextStyle(
+                                fontWeight: FontWeight.w200, fontSize: 12,color: Colors.black),
+                            maxLines: 2,
+                          ),
                         ),
-                        SizedBox(height: 10),
-                        Text(
-                          data.summary,
-                          overflow: TextOverflow.clip,
-                          style: TextStyle(
-                              fontWeight: FontWeight.w200, fontSize: 12,color: Colors.black),
-                          maxLines: 2,
-                        ),
-                        SizedBox(height: 10),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                            data.tages.isEmpty?"#":data.tages[0],
-                              textAlign: TextAlign.right,
-                              maxLines: 1,
-                              overflow: TextOverflow.clip,
-                              style:
-                              TextStyle(color: Colors.red, fontSize: 12),
-                            ),
-                            Text(
-                              'اطلاعات بیشتر',
-                              style: TextStyle(
-                                  color: Colors.blue[900], fontSize: 12),
-                            )
-                          ],
-                        )
-                      ],
-                    ),
+                      ),
+                      SizedBox(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                          data.tages.isEmpty?"#":data.tages[0],
+                            textAlign: TextAlign.right,
+                            maxLines: 1,
+                            overflow: TextOverflow.clip,
+                            style:
+                            TextStyle(color: Colors.red, fontSize: 12),
+                          ),
+                          Text(
+                            'اطلاعات بیشتر',
+                            style: TextStyle(
+                                color: Colors.blue[900], fontSize: 12),
+                          )
+                        ],
+                      )
+                    ],
                   ),
                 ),
               )
@@ -286,7 +288,7 @@ newArticleItemList({@required context,@required ArticleModelPost data}){
 packageMe({@required context,@required controller,@required MyPackagePost data}){
   return GestureDetector(
     onTap: () {
-      // Get.to(PackagesListItemDetail());
+      Get.to(PackagesListItemDetail(data.id.toString()));
     },
     child: Container(
       // decoration: BoxDecoration(
@@ -527,6 +529,9 @@ articleMe({@required context,@required ArticleModelPost data}){
 
 followingItem({@required ProviderPost data}){
   return GestureDetector(
+      onTap: () {
+        Get.to(DetailUserInfoPage(data.id.toString()));
+      },
       child: Transform.translate(
         offset: Offset(0,-40),
         child: Container(
@@ -602,6 +607,9 @@ followingItem({@required ProviderPost data}){
 suggestedUser({@required context,@required ProviderPost data}){
   double _width = Get.width * 0.50;
   return GestureDetector(
+    onTap: () {
+      Get.to(DetailUserInfoPage(data.id.toString()));
+    },
     child: Container(
       margin: EdgeInsets.only(left: 10,top:_width * 0.30 ),
       child: Column(

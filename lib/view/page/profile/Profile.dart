@@ -17,7 +17,7 @@ import 'package:sportapplication/view/page/myInfo/MyArticle.dart';
 import 'package:sportapplication/view/page/myInfo/MyPackage.dart';
 import 'package:sportapplication/view/page/myInfo/MySubSet.dart';
 import 'package:sportapplication/view/page/plan/MyBoxPage.dart';
-import 'package:sportapplication/view/page/plan/PackageListPage.dart';
+import 'package:sportapplication/view/page/plan/PlanListPage.dart';
 import 'package:sportapplication/view/page/profile/profileConstance.dart';
 import 'package:sportapplication/view/page/support/SupportPage.dart';
 

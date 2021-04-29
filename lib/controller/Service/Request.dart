@@ -191,6 +191,12 @@ class ApiService extends GetConnect {
           @required String word}) =>
       get(apiUrl + 'providerblog?token=$token&page=$page&limit=$limit&catId=$catId&word=$word',);
 
+  Future<Response> checkCoupon({
+           @required String token,
+           @required String plan_id,
+           @required String coupon
+          }) =>post(apiUrl + 'plans/checkCoupon?token=$token', FormData({'plan_id': plan_id,'coupon': coupon,}));
+
   Future<Response> showBlog(
           {@required String token,
            @required String bId}) =>

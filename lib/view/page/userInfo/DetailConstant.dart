@@ -6,6 +6,7 @@ import 'package:sportapplication/Model/SubSetModel.dart';
 import 'package:sportapplication/Model/showProviderModel.dart';
 import 'package:sportapplication/controller/util.dart';
 import 'package:sportapplication/view/component/Constans.dart';
+import 'package:sportapplication/view/page/blog/BlogDetailPage.dart';
 import 'package:sportapplication/view/page/packageDetail/PackagesListItemDetail.dart';
 import 'package:sportapplication/view/page/userInfo/DetailUserInfoPage.dart';
 
@@ -198,7 +199,7 @@ itemArticleUserList({@required BuildContext context, @required int index,@requir
     margin: EdgeInsets.only(left: 6, right: 6, bottom: 10),
     child: InkWell(
       onTap: () {
-        // Get.to(PackagesListItemDetail());
+        Get.to(BlogDetailPage(data.id.toString()));
       },
       child: IntrinsicHeight(
         child: Row(

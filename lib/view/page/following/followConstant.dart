@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sportapplication/Model/providerModel.dart';
 import 'package:sportapplication/view/component/Constans.dart';
+import 'package:sportapplication/view/page/userInfo/DetailUserInfoPage.dart';
 
 followListItem({@required BuildContext context,@required int index,@required ProviderPost data,@required removeProvider}) {
   return Container(
@@ -18,7 +20,9 @@ followListItem({@required BuildContext context,@required int index,@required Pro
     padding: EdgeInsets.symmetric(horizontal: 6, vertical: 8),
     margin: EdgeInsets.only(left: 6, right: 6, bottom: 10),
     child: InkWell(
-      onTap: () {},
+      onTap: () {
+        Get.to(DetailUserInfoPage(data.id.toString()));
+      },
       child: Column(
         children: [
           IntrinsicHeight(

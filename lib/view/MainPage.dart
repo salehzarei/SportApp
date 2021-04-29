@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -7,7 +9,7 @@ import 'package:sportapplication/view/component/navigationBarWidget.dart';
 import 'package:sportapplication/view/page/category/CategoriesPage.dart';
 import 'package:sportapplication/view/page/home/Home.dart';
 import 'package:sportapplication/view/page/map/AroundTab.dart';
-import 'package:sportapplication/view/page/plan/PackagePage.dart';
+import 'package:sportapplication/view/page/plan/PlanPage.dart';
 import 'package:sportapplication/view/page/profile/Profile.dart';
 
 class MainPage extends StatelessWidget {
@@ -20,18 +22,21 @@ class MainPage extends StatelessWidget {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Obx(
-        () => SafeArea(
-          child: Scaffold(
+        () => WillPopScope(
+          onWillPop:() => _onBackPressed(),
+          child: SafeArea(
+            child: Scaffold(
 
-            bottomNavigationBar:NavigationBarWidget(controller: active),
-            body: Column(
-              children: [
-                active.activclick.value != 4
-                    ? AppBarWidget(from: 0, onBackPressed: () {  }, onShopPressed: () {  },)
-                    : Container(),
-                _pageView(),
+              bottomNavigationBar:NavigationBarWidget(controller: active),
+              body: Column(
+                children: [
+                  active.activclick.value != 4
+                      ? AppBarWidget(from: 0, onBackPressed: () {  }, onShopPressed: () {  },)
+                      : Container(),
+                  _pageView(),
 
-              ],
+                ],
+              ),
             ),
           ),
         ),
@@ -39,6 +44,13 @@ class MainPage extends StatelessWidget {
     );
   }
 
+  Future<bool> _onBackPressed() async {
+    if( active.activclick.value  == 0){
+      exit(1);
+    } else {
+      active.activclick(0);
+    }
+  }
   _pageView() {
     switch (active.activclick.value) {
       case 0:

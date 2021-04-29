@@ -13,11 +13,27 @@ class PackagePage extends StatefulWidget {
 class _PackagePageState extends State<PackagePage> {
 
   final PlanFunction planFunction = Get.put(PlanFunction());
+  TextEditingController _discountController;
+  FocusNode _discountFocus;
+  String _token;
 
   @override
   void initState() {
-    planFunction.getPlanList(token: "");
+    getShared('token').then((token) {
+      _token=token;
+      planFunction.getPlanList(token: _token);
+    });
+
+    _discountController = TextEditingController();
+    _discountFocus = FocusNode();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _discountController.dispose();
+    _discountFocus.dispose();
+    super.dispose();
   }
 
   @override
@@ -78,7 +94,31 @@ class _PackagePageState extends State<PackagePage> {
               itemCount:planFunction.planList.length,
               padding: EdgeInsets.symmetric(vertical: 10),
               shrinkWrap: true,
-              itemBuilder: (context, index) => itemPackage(context: context, model: planFunction.planList[index]),
+              itemBuilder: (context, index) => itemPackage(context: context, model: planFunction.planList[index], onTab:(){
+                _discountController.text="";
+                showBtn(planList: planFunction.planList[index],context: context, focusNode: _discountFocus,controller: _discountController, payClick: (){
+                  planFunction.buyPlan(token: _token, plan_id:  planFunction.planList[index].id.toString(), paymentType: "7").then((value) {
+                    if(value == 200){
+                      launchURL(planFunction.url);
+                    }else{
+                      listSnackBar(list:planFunction.errorMassages ,  err: true);
+                    }
+                  });
+                }, checkCouponClick: (){
+                  if(_discountController.text.isNotEmpty){
+                    planFunction.checkCoupon(token: _token,
+                        plan_id: planFunction.planList[index].id.toString(),
+                        coupon: _discountController.text).then((value){
+                      if(value == 200){
+                        listSnackBar(list:planFunction.errorMassages , err:false);
+                      }else{
+                        listSnackBar(list:planFunction.errorMassages ,  err: true);
+                      }
+
+                    });
+                  }
+                });
+              }),
             ),
           )
         ],

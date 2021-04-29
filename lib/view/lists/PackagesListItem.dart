@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sportapplication/controller/Functions/Controller.dart';
 
-import '../page/packageDetail/PackagesListItemDetail.dart';
-
 class PackagesListItem extends StatelessWidget {
   final Controller off = Get.put(Controller());
 
