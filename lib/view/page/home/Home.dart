@@ -53,7 +53,7 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     getShared("token").then((token) {
-      articleFunction.blogList(token: token).whenComplete((){
+      articleFunction.blogList(token: token, folowing: '', interest: '', uid: '', page: '', order: '', catId: '', favorite: '', word: '', tag: '', limit: '', sort: '', asc: '').whenComplete((){
         if(!articleFunction.blogLoading.value){
           if(mounted){
             setState(() {
@@ -64,7 +64,7 @@ class _HomeState extends State<Home> {
               print(_newBlogModel.post.length);
             });
           }
-          articleFunction.blogList(token: token,interest: '1').whenComplete((){
+          articleFunction.blogList(token: token, folowing: '', interest: '1', uid: '', page: '', order: '', catId: '', favorite: '', word: '', tag: '', limit: '', sort: '', asc: '').whenComplete((){
             if(!articleFunction.blogLoading.value){
               if(mounted){
                 setState(() {
@@ -78,8 +78,19 @@ class _HomeState extends State<Home> {
       });
       packageFunction
           .geUserPackageList(
-              token: token,
-              special: "1")
+          token: token,
+          favorite: '',
+          word: '',
+          uid: '',
+          interest: '',
+          folowing: '',
+          catId: '',
+          asc: '',
+          special: '1',
+          order: '',
+          sort: '',
+          limit: '',
+          page: '')
           .whenComplete(() {
         if (!packageFunction.userPackageLoading.value) {
           if (mounted) {
@@ -90,8 +101,19 @@ class _HomeState extends State<Home> {
           }
           packageFunction
               .geUserPackageList(
-                  token: token,
-                  interest: "1")
+              token: token,
+              favorite: '',
+              word: '',
+              uid: '',
+              interest: '1',
+              folowing: '',
+              catId: '',
+              asc: '',
+              special: '',
+              order: '',
+              sort: '',
+              limit: '',
+              page: '')
               .whenComplete(() {
             if (!packageFunction.userPackageLoading.value) {
               if (mounted) {

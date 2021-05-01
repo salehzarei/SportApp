@@ -124,7 +124,7 @@ specialList({@required context,@required controller,@required MyPackagePost data
                                 color: Colors.grey,
                               ),
                               Text(
-                                '${data.hits} مرتبه',
+                                '${data.hits} بازدید ',
                                 style: TextStyle(color: Colors.grey[600],fontSize: 12),
                               )
                             ],

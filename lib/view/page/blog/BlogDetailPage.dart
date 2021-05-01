@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sportapplication/controller/Functions/ArticleFunction.dart';
-import 'package:sportapplication/controller/Functions/FavoriteFunction.dart';
 import 'package:sportapplication/controller/util.dart';
 import 'package:sportapplication/view/component/Constans.dart';
 
@@ -18,18 +17,28 @@ class BlogDetailPage extends StatefulWidget {
 class _BlogDetailPageState extends State<BlogDetailPage> {
 
   final ArticleFunction articleFunction = Get.put(ArticleFunction());
-  final FavoriteFunction favoriteFunction = Get.put(FavoriteFunction());
   String _token;
+  int fav= 0;
 
   @override
   void initState() {
-    getShared("token").then((token){
-      _token = token;
-      articleFunction.showBlog(token: token, bId: widget.blogId);
+    getShared("token").then((token) {
+      fetchItem(token);
     });
     super.initState();
   }
 
+  fetchItem(String token){
+    articleFunction.showBlog(token: token, bId: widget.blogId).whenComplete(() {
+      if(mounted){
+        setState(() {
+          fav = articleFunction.showBlogModel.data.favorit;
+          _token = token;
+        });
+      }
+    });
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,21 +63,21 @@ class _BlogDetailPageState extends State<BlogDetailPage> {
               icon:articleFunction.showBlogModel.data.favorit==0? Icon(Icons.star_outline):Icon(Icons.star),
               onPressed: () {
                 if(articleFunction.showBlogModel.data.favorit==0){
-                  favoriteFunction.addFavorite(token: _token, proId: widget.blogId).then((value) {
+                  articleFunction.addFavorite(token: _token, proId: widget.blogId).then((value) {
                     if(value == 200){
-                      articleFunction.showBlogModel.data.favorit=favoriteFunction.id;
-                      listSnackBar(list:favoriteFunction.errorMassages , err:false );
+                      listSnackBar(list:articleFunction.errorMassages , err:false );
+                      fetchItem(_token);
                     }else{
-                      listSnackBar(list:favoriteFunction.errorMassages , err:true );
+                      listSnackBar(list:articleFunction.errorMassages , err:true );
                     }
                   });
                 }else{
-                  favoriteFunction.removeFav(token: _token, proId: articleFunction.showBlogModel.data.favorit.toString()).then((value) {
+                  articleFunction.removeFav(token: _token, proId: articleFunction.showBlogModel.data.favorit.toString()).then((value) {
                     if(value == 200){
-                      articleFunction.showBlogModel.data.favorit=0;
-                      listSnackBar(list:favoriteFunction.errorMassages , err:false );
+                      listSnackBar(list:articleFunction.errorMassages , err:false );
+                      fetchItem(_token);
                     }else{
-                      listSnackBar(list:favoriteFunction.errorMassages , err:true );
+                      listSnackBar(list:articleFunction.errorMassages , err:true );
                     }
                   });
                 }
@@ -220,4 +229,5 @@ class _BlogDetailPageState extends State<BlogDetailPage> {
           : loading(color: Theme.of(context).primaryColorDark),
     ));
   }
+
 }

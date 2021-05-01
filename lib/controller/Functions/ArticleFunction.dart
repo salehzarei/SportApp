@@ -14,6 +14,7 @@ class ArticleFunction extends GetxController{
   final blogLoading = true.obs;
   ArticleModel blogModel;
 
+  int id;
   final userArticleLoading = true.obs;
 
   final removeArticleBool = true.obs;
@@ -95,6 +96,71 @@ class ArticleFunction extends GetxController{
     update();
   }
 
+  Future addFavorite(
+      {@required String token,
+        @required String proId}) async {
+
+    errorMassages.clear();
+    final response = await ApiService().addFavBlog(
+      token: token, proId: proId,
+    );
+
+    if (response.statusCode == 200) {
+      bool error = response.body['error'];
+      if(!error){
+        print("200");
+        errorMassages = (response.body['report_msg'] is List)
+            ? response.body['report_msg']
+            : [response.body['report_msg']];
+        id = response.body['id'];
+        return 200;
+      }else{
+        errorMassages = (response.body['error_msg'] is List)
+            ? response.body['error_msg']
+            : [response.body['error_msg']];
+        print("201");
+        return 201;
+      }
+    } else {
+      print("400");
+      errorMassages = ["خطا در برقراری ارتباط با سرور"];
+      return 400;
+    }
+    update();
+  }
+
+
+  Future removeFav(
+      { @required String token,
+        @required String proId}) async {
+
+    errorMassages.clear();
+    final response = await ApiService().removeFavBlog(
+      token: token, proId: proId,
+    );
+
+    if (response.statusCode == 200) {
+      bool error = response.body['error'];
+      if(!error){
+        print("200");
+        errorMassages = (response.body['report_msg'] is List)
+            ? response.body['report_msg']
+            : [response.body['report_msg']];
+        return 200;
+      }else{
+        errorMassages = (response.body['error_msg'] is List)
+            ? response.body['error_msg']
+            : [response.body['error_msg']];
+        print("201");
+        return 201;
+      }
+    } else {
+      print("400");
+      errorMassages = ["خطا در برقراری ارتباط با سرور"];
+      return 400;
+    }
+    update();
+  }
 
   Future showBlog(
       {@required String token,
@@ -118,17 +184,18 @@ class ArticleFunction extends GetxController{
 
   Future blogList({
         @required String token,
-        String catId,
-        String word,
-        String uid,
-        String sort,
-        String order,
-        String limit,
-        String interest,
-        String page,
-        String tag,
-        String folowing,
-        String asc}) async {
+      @required String catId,
+      @required String word,
+      @required String uid,
+      @required String sort,
+      @required String order,
+      @required String limit,
+      @required String interest,
+      @required String page,
+      @required String tag,
+      @required String favorite,
+      @required String folowing,
+      @required String asc}) async {
 
     blogLoading.value = true;
     final response = await ApiService().getBlog(
@@ -143,10 +210,8 @@ class ArticleFunction extends GetxController{
         page: page,
         asc: asc,
         order: order,
-        sort: sort);
+        sort: sort, favorite: favorite);
     if (response.statusCode == 200) {
-      print("bloggggg");
-      print(response.body);
       blogModel = ArticleModel.fromJson(response.body);
       blogLoading.value = false;
     } else {

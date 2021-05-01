@@ -1,10 +1,15 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:sportapplication/Model/ArticleModel.dart';
+import 'package:sportapplication/Model/MyPackageModel.dart';
 import 'package:sportapplication/controller/util.dart';
 import 'package:sportapplication/view/component/Constans.dart';
+import 'package:sportapplication/view/page/blog/BlogDetailPage.dart';
+import 'package:sportapplication/view/page/packageDetail/PackagesListItemDetail.dart';
 
-itemPackageFav({@required BuildContext context,@required int index}){
+itemPackageFav({@required BuildContext context,@required int index,@required MyPackagePost data,@required onTap}){
   return Container(
     decoration: BoxDecoration(
         color: Colors.white,
@@ -22,7 +27,7 @@ itemPackageFav({@required BuildContext context,@required int index}){
     margin: EdgeInsets.only(left: 6 , right: 6 , bottom: 10),
     child: InkWell(
       onTap: () {
-
+        Get.to(PackagesListItemDetail(data.id.toString()));
       },
       child:Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -30,18 +35,27 @@ itemPackageFav({@required BuildContext context,@required int index}){
         children: [
           Container(
             padding:EdgeInsets.only(right: 8 , top: 6 , bottom: 10),
-            child: Text("سیاره فوتسال",
-              style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.black
-              ),),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(data.owner,
+                  style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.black
+                  ),),
+                InkWell(
+                  onTap: onTap,
+                    child: Icon(Icons.favorite,color: Colors.red,size: 22,)
+                )
+              ],
+            ),
           ),
           Row(
             children: [
               Icon(Icons.location_on_outlined,size: 18 ,color: Colors.grey[600]),
               SizedBox(width: 8,),
-              Text("پنج راه سناباد بین ابن سینای 16 و 18 پلاک 210",
+              Text(data.owner,
                 style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.w100,
@@ -61,9 +75,7 @@ itemPackageFav({@required BuildContext context,@required int index}){
               children: [
                 Expanded(
                     flex:2,
-                    child:  AspectRatio(aspectRatio: 2/2,child: imageShower(imageUrl: index%2 == 0?
-                    'https://dkstatics-public.digikala.com/digikala-adservice-banners/956cd52f1f18f11284016c86561d53bcdcfdeedd_1612606849.jpg?x-oss-process=image/quality,q_80':
-                    "https://dkstatics-public.digikala.com/digikala-adservice-banners/bc928cad36c9cc9aed866ec4de30dfd9f5e50ec7_1607016116.jpg?x-oss-process=image/quality,q_80",
+                    child:  AspectRatio(aspectRatio: 2/2,child: imageShower(imageUrl:data.pic,
                         margin: EdgeInsets.only(left: 0,right: 0), fit: BoxFit.fill, borderRadius: BorderRadius.circular(8)),)),
                 SizedBox(
                   width: 8,),
@@ -74,29 +86,39 @@ itemPackageFav({@required BuildContext context,@required int index}){
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SizedBox(height: 6,),
-                        Text("دوره تاکتیک در فوتسال",
+                        Text(data.title,
                           style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w400,
                               color: Colors.black
                           ),),
                         SizedBox(height: 8,),
-                        Text("25 خرید",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.grey[400]
-                          ),),
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.visibility,
+                              size: 15,
+                              color: Colors.grey,
+                            ),
+                            Text(
+                              '${ data.hits } بازدید',
+                              style: TextStyle(color: Colors.grey[600],fontSize: 12),
+                            )
+                          ],
+                        ),
                         SizedBox(height: 8,),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Row(
                               children: [
-                                Text(
-                                  maskedText('75000'),
+                                data.discount == 0
+                                    ? Container()
+                                    : Text(
+                                  maskedText(data.price.toString()),
                                   style: TextStyle(
-                                      decoration: TextDecoration.lineThrough,
+                                      decoration:
+                                      TextDecoration.lineThrough,
                                       decorationColor: Colors.red[800],
                                       // decorationStyle: TextDecorationStyle.double,
                                       decorationThickness: 1.5,
@@ -104,11 +126,13 @@ itemPackageFav({@required BuildContext context,@required int index}){
                                       fontWeight: FontWeight.w600,
                                       fontSize: 13),
                                 ),
-                                SizedBox(
+                                data.discount == 0
+                                    ? Container()
+                                    : SizedBox(
                                   width: 5,
                                 ),
                                 Text(
-                                  '${maskedText('50000')} تومان ',
+                                  '${maskedText(data.final_price.toString())} تومان ',
                                   style: TextStyle(
                                       color: Colors.green,
                                       fontWeight: FontWeight.bold,
@@ -116,10 +140,27 @@ itemPackageFav({@required BuildContext context,@required int index}){
                                 ),
                               ],
                             ),
-                            IconButton(onPressed: () {
-
-                            }, icon: Icon(Icons.favorite,color: Colors.red,size: 22,)),
-                          ],),
+                            data.discount == 0
+                                ? Container()
+                                : Container(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 4),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(6),
+                                  color:
+                                  Theme.of(context).primaryColorDark),
+                              child: Center(
+                                child: Text(
+                                  data.discount_type == 2
+                                      ? '${data.discount} %'
+                                      : data.discount.toString(),
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 13),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
                         SizedBox(height: 6,),
                       ],
                     ))
@@ -132,7 +173,7 @@ itemPackageFav({@required BuildContext context,@required int index}){
   );
 }
 
-itemArticleFav({@required BuildContext context,@required int index}){
+itemArticleFav({@required BuildContext context,@required int index,@required ArticleModelPost data,@required onTap}){
   return Container(
     decoration: BoxDecoration(
         color: Colors.white,
@@ -150,7 +191,7 @@ itemArticleFav({@required BuildContext context,@required int index}){
     margin: EdgeInsets.only(left: 6, right: 6, bottom: 10),
     child: InkWell(
       onTap: () {
-
+        Get.to(BlogDetailPage(data.id.toString()));
       },
       child: IntrinsicHeight(
         child: Row(
@@ -158,9 +199,7 @@ itemArticleFav({@required BuildContext context,@required int index}){
             Expanded(flex: 2,
                 child: AspectRatio(aspectRatio: 2 / 2, child: Stack(
                   children: [
-                    imageShower(imageUrl: index % 2 == 0
-                        ?'https://dkstatics-public.digikala.com/digikala-adservice-banners/956cd52f1f18f11284016c86561d53bcdcfdeedd_1612606849.jpg?x-oss-process=image/quality,q_80'
-                        :"https://dkstatics-public.digikala.com/digikala-adservice-banners/bc928cad36c9cc9aed866ec4de30dfd9f5e50ec7_1607016116.jpg?x-oss-process=image/quality,q_80",
+                    imageShower(imageUrl: data.pic,
                         margin: EdgeInsets.only(left: 0, right: 0),
                         fit: BoxFit.fill,
                         borderRadius: BorderRadius.circular(8)),
@@ -177,7 +216,7 @@ itemArticleFav({@required BuildContext context,@required int index}){
                             )
                         ),
                         padding: EdgeInsets.symmetric(horizontal: 4 , vertical: 6),
-                        child: Text("#فوتسال" ,maxLines: 1, style: TextStyle(
+                        child: Text(data.tages.isEmpty?"#":data.tages[0] ,maxLines: 1, style: TextStyle(
                             color: Colors.white,
                             fontSize: 12
                         ),),
@@ -197,7 +236,7 @@ itemArticleFav({@required BuildContext context,@required int index}){
                 Row(
                   children: [
                     Expanded(
-                      child: Text("بدنسازی مدرن در فوتسال",
+                      child: Text(data.title,
                         maxLines: 1,
                         style: TextStyle(
                             fontSize: 15,
@@ -206,13 +245,16 @@ itemArticleFav({@required BuildContext context,@required int index}){
                         ),),
                     ),
                     SizedBox(width: 4,),
-                    Icon(Icons.favorite,color: Colors.red,size: 22,),
+                    InkWell(
+                        onTap:onTap,
+                        child: Icon(Icons.favorite,color: Colors.red,size: 22,)
+                    ),
                   ],
                 ),
                 SizedBox(height: 8,),
                 Expanded(
                   child: SingleChildScrollView(
-                    child: Text("بدن سازی مدرن در فوتسال یکی از مهم ترین ویژگی های یک بدنسازی عالی میباشد که میتوانید از سایت سیاره فوتسال پیگیری کنید",
+                    child: Text(data.summary,
                       style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w400,

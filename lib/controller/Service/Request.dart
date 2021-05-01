@@ -197,15 +197,25 @@ class ApiService extends GetConnect {
            @required String coupon
           }) =>post(apiUrl + 'plans/checkCoupon?token=$token', FormData({'plan_id': plan_id,'coupon': coupon,}));
 
-  Future<Response> addFav({
+  Future<Response> addFavPackage({
            @required String token,
            @required String proId
-          }) =>post(apiUrl + 'favorit/add', FormData({'token': token,'proId': proId,}));
+          }) =>post(apiUrl + 'package/favorit', FormData({'token': token,'id': proId,}));
 
-  Future<Response> removeFav({
+  Future<Response> removeFavPackage({
            @required String token,
            @required String proId
-          }) =>post(apiUrl + 'favorit/delete', FormData({'token': token,'proId': proId,}));
+          }) =>post(apiUrl + 'package/unfavorit', FormData({'token': token,'id': proId,}));
+
+  Future<Response> addFavBlog({
+           @required String token,
+           @required String proId
+          }) =>post(apiUrl + 'blog/favorit', FormData({'token': token,'id': proId,}));
+
+  Future<Response> removeFavBlog({
+           @required String token,
+           @required String proId
+          }) =>post(apiUrl + 'blog/unfavorit', FormData({'token': token,'id': proId,}));
 
   Future<Response> showBlog(
           {@required String token,
@@ -240,8 +250,9 @@ class ApiService extends GetConnect {
     @required String page,
     @required String special,
     @required String folowing,
+    @required String favorite,
     @required String asc}) =>
-      get(apiUrl + 'package?catId=$catId&word=$word&uid=$uid&sort=$sort&asc=$asc&order=$order&page=$page&limit=$limit&interest=$interest&token=$token&special=$special&folowing=$folowing');
+      get(apiUrl + 'package?catId=$catId&word=$word&uid=$uid&sort=$sort&asc=$asc&order=$order&page=$page&limit=$limit&interest=$interest&token=$token&special=$special&folowing=$folowing&favorit=$favorite');
 
   Future<Response> getBlog({
     @required String token,
@@ -255,8 +266,9 @@ class ApiService extends GetConnect {
     @required String page,
     @required String tag,
     @required String folowing,
+    @required String favorite,
     @required String asc}) =>
-      get(apiUrl + 'blog?catId=$catId&word$word&tag$tag&uid$uid&sort$sort&order$order&page$page&limit$limit&interest=$interest&token=$token&folowing=$folowing');
+      get(apiUrl + 'blog?catId=$catId&word$word&tag$tag&uid$uid&sort$sort&order$order&page$page&limit$limit&interest=$interest&token=$token&folowing=$folowing&favorit=$favorite');
 
   Future<Response> uploadProductPic(
           {@required String token, @required File pic}) =>

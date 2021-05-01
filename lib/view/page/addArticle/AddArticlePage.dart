@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
+import 'package:material_tag_editor/tag_editor.dart';
 import 'package:sportapplication/controller/Functions/ArticleFunction.dart';
 import 'package:sportapplication/controller/Functions/PackageFunction.dart';
 import 'package:sportapplication/controller/Functions/RegisterFunction.dart';
@@ -60,6 +61,7 @@ class _AddAtrticlePageState extends State<AddArticlePage> {
 
   String _token;
   List _imageUrl = [];
+  List<String> _values = [];
 
   File fileOne;
   File fileTow;
@@ -76,6 +78,12 @@ class _AddAtrticlePageState extends State<AddArticlePage> {
     });
     _initView();
     super.initState();
+  }
+
+  _onDelete(index) {
+    setState(() {
+      _values.removeAt(index);
+    });
   }
 
   @override
@@ -403,15 +411,34 @@ class _AddAtrticlePageState extends State<AddArticlePage> {
                               color: Colors.black
                           ),),
                       ),
-                      textFormFieldHintWidget(
-                          context: context,
-                          focus: _tagFocus,
-                          controller: _tagController,
-                          hint: " ",
-                          maxLine: 10,
-                          minLine: 1,
-                          keyboardType: TextInputType.multiline,
-                          maxLength: 1000),
+                      TagEditor(
+                        length: _values.length,
+                        delimiters: [',', ' '],
+                        hasAddButton: true,
+                        inputDecoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'عنوان تگ',
+                        ),
+                        onTagChanged: (newValue) {
+                          setState(() {
+                            _values.add(newValue);
+                          });
+                        },
+                        tagBuilder: (context, index) => _Chip(
+                          index: index,
+                          label: _values[index],
+                          onDeleted: _onDelete,
+                        ),
+                      ),
+                      // textFormFieldHintWidget(
+                      //     context: context,
+                      //     focus: _tagFocus,
+                      //     controller: _tagController,
+                      //     hint: "",
+                      //     maxLine: 10,
+                      //     minLine: 1,
+                      //     keyboardType: TextInputType.multiline,
+                      //     maxLength: 1000),
 
                       Container(
                         padding:EdgeInsets.only(bottom: 15,top: 15),
@@ -462,7 +489,7 @@ class _AddAtrticlePageState extends State<AddArticlePage> {
                                 category: _idCat.toString(),
                                 pics: _imageUrl,
                                 summary: _summaryController.text,
-                                tags: ["فوتسال"],).then((value){
+                                tags: _values,).then((value){
                               if(value == 200){
                                 if(mounted){
                                   setState(() {
@@ -757,4 +784,30 @@ class _AddAtrticlePageState extends State<AddArticlePage> {
     _desController.dispose();
   }
 
+}
+class _Chip extends StatelessWidget {
+  const _Chip({
+    @required this.label,
+    @required this.onDeleted,
+    @required this.index,
+  });
+
+  final String label;
+  final ValueChanged<int> onDeleted;
+  final int index;
+
+  @override
+  Widget build(BuildContext context) {
+    return Chip(
+      labelPadding: const EdgeInsets.only(left: 8.0),
+      label: Text(label),
+      deleteIcon: Icon(
+        Icons.close,
+        size: 18,
+      ),
+      onDeleted: () {
+        onDeleted(index);
+      },
+    );
+  }
 }

@@ -15,7 +15,7 @@ class PackageFunction extends GetxController {
 
   final picUrl = "0".obs;
   List errorMassages = [];
-  
+  int id;
   ShowPackageModel showPackageModel;
 
   final userPackageLoading = true.obs;
@@ -195,6 +195,74 @@ class PackageFunction extends GetxController {
 
   }
 
+  Future addFavorite(
+      {@required String token,
+        @required String proId}) async {
+
+    errorMassages.clear();
+    final response = await ApiService().addFavPackage(
+      token: token, proId: proId,
+    );
+
+    if (response.statusCode == 200) {
+      bool error = response.body['error'];
+      if(!error){
+        print("200");
+        errorMassages = (response.body['report_msg'] is List)
+            ? response.body['report_msg']
+            : [response.body['report_msg']];
+        id = response.body['id'];
+        return 200;
+      }else{
+        errorMassages = (response.body['error_msg'] is List)
+            ? response.body['error_msg']
+            : [response.body['error_msg']];
+        print("201");
+        return 201;
+      }
+    } else {
+      print("400");
+      errorMassages = ["خطا در برقراری ارتباط با سرور"];
+      return 400;
+    }
+    update();
+  }
+
+
+
+
+  Future removeFav(
+      { @required String token,
+        @required String proId}) async {
+
+    errorMassages.clear();
+    final response = await ApiService().removeFavPackage(
+      token: token, proId: proId,
+    );
+
+    if (response.statusCode == 200) {
+      bool error = response.body['error'];
+      if(!error){
+        print("200");
+        errorMassages = (response.body['report_msg'] is List)
+            ? response.body['report_msg']
+            : [response.body['report_msg']];
+        return 200;
+      }else{
+        errorMassages = (response.body['error_msg'] is List)
+            ? response.body['error_msg']
+            : [response.body['error_msg']];
+        print("201");
+        return 201;
+      }
+    } else {
+      print("400");
+      errorMassages = ["خطا در برقراری ارتباط با سرور"];
+      return 400;
+    }
+    update();
+  }
+
 
   Future <List<MyPackagePost>> getMyPackageList({@required String token}) async {
     final response = await ApiService().getMyPackage(token: token);
@@ -213,17 +281,18 @@ class PackageFunction extends GetxController {
 
   Future  geUserPackageList({
     @required String token,
-    String catId,
-    String word,
-    String uid,
-    String sort,
-    String order,
-    String limit,
-    String interest,
-    String page,
-    String special,
-    String folowing,
-    String asc
+   @required String catId,
+   @required String word,
+   @required String uid,
+   @required String sort,
+   @required String order,
+   @required String limit,
+   @required String interest,
+   @required String page,
+   @required String special,
+   @required String folowing,
+   @required String favorite,
+   @required String asc
   }) async {
     userPackageLoading.value = true;
     final response = await ApiService().getPackage(
@@ -237,11 +306,15 @@ class PackageFunction extends GetxController {
         sort: sort,
         special: special,
         asc: asc,
+        favorite: favorite,
         limit: limit,
         page: page);
     if (response.statusCode == 200) {
+      print('response.body');
+      print(response.body);
       userPackageLoading.value = false;
       userPackageModel= MyPackageModel.fromJson(response.body);
+      print(userPackageModel.post.length);
     } else {
       userPackageLoading.value = true;
     }
