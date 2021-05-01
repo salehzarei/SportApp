@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sportapplication/controller/Functions/ArticleFunction.dart';
+import 'package:sportapplication/controller/Functions/FavoriteFunction.dart';
 import 'package:sportapplication/controller/util.dart';
 import 'package:sportapplication/view/component/Constans.dart';
 
@@ -17,10 +18,13 @@ class BlogDetailPage extends StatefulWidget {
 class _BlogDetailPageState extends State<BlogDetailPage> {
 
   final ArticleFunction articleFunction = Get.put(ArticleFunction());
+  final FavoriteFunction favoriteFunction = Get.put(FavoriteFunction());
+  String _token;
 
   @override
   void initState() {
     getShared("token").then((token){
+      _token = token;
       articleFunction.showBlog(token: token, bId: widget.blogId);
     });
     super.initState();
@@ -42,6 +46,34 @@ class _BlogDetailPageState extends State<BlogDetailPage> {
             onPressed: () {
               Get.back();
             }),
+        actions: [
+          !articleFunction.showBlogLoading.value?
+          IconButton(
+              color: Colors.white,
+              iconSize: 20,
+              icon:articleFunction.showBlogModel.data.favorit==0? Icon(Icons.star_outline):Icon(Icons.star),
+              onPressed: () {
+                if(articleFunction.showBlogModel.data.favorit==0){
+                  favoriteFunction.addFavorite(token: _token, proId: widget.blogId).then((value) {
+                    if(value == 200){
+                      articleFunction.showBlogModel.data.favorit=favoriteFunction.id;
+                      listSnackBar(list:favoriteFunction.errorMassages , err:false );
+                    }else{
+                      listSnackBar(list:favoriteFunction.errorMassages , err:true );
+                    }
+                  });
+                }else{
+                  favoriteFunction.removeFav(token: _token, proId: articleFunction.showBlogModel.data.favorit.toString()).then((value) {
+                    if(value == 200){
+                      articleFunction.showBlogModel.data.favorit=0;
+                      listSnackBar(list:favoriteFunction.errorMassages , err:false );
+                    }else{
+                      listSnackBar(list:favoriteFunction.errorMassages , err:true );
+                    }
+                  });
+                }
+              }):SizedBox(),
+        ],
         centerTitle: true,
         backgroundColor: Theme.of(context).primaryColorDark,
       ),

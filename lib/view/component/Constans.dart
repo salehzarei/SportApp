@@ -563,8 +563,6 @@ sliderWidget({
   @required list,
   @required bool lisString,
   @required aspectRatio,
-
-
 }){
   return  AspectRatio(
     aspectRatio: aspectRatio,

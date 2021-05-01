@@ -197,6 +197,16 @@ class ApiService extends GetConnect {
            @required String coupon
           }) =>post(apiUrl + 'plans/checkCoupon?token=$token', FormData({'plan_id': plan_id,'coupon': coupon,}));
 
+  Future<Response> addFav({
+           @required String token,
+           @required String proId
+          }) =>post(apiUrl + 'favorit/add', FormData({'token': token,'proId': proId,}));
+
+  Future<Response> removeFav({
+           @required String token,
+           @required String proId
+          }) =>post(apiUrl + 'favorit/delete', FormData({'token': token,'proId': proId,}));
+
   Future<Response> showBlog(
           {@required String token,
            @required String bId}) =>

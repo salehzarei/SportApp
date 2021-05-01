@@ -28,6 +28,7 @@ class ShowPackageData {
     int final_price;
     List<Gallery> gallery;
     int hits;
+    int favorit;
     int id;
     String owner;
     String owner_address;
@@ -39,7 +40,7 @@ class ShowPackageData {
     String title;
     int uid;
 
-    ShowPackageData({this.category, this.category_title, this.description, this.discount, this.discount_type, this.edate, this.final_price, this.gallery, this.hits, this.id, this.owner, this.owner_address, this.owner_cell, this.owner_pic, this.price, this.qrcode, this.sdate, this.title, this.uid});
+    ShowPackageData({this.category, this.category_title, this.favorit, this.description, this.discount, this.discount_type, this.edate, this.final_price, this.gallery, this.hits, this.id, this.owner, this.owner_address, this.owner_cell, this.owner_pic, this.price, this.qrcode, this.sdate, this.title, this.uid});
 
     factory ShowPackageData.fromJson(Map<String, dynamic> json) {
         return ShowPackageData(
@@ -48,7 +49,8 @@ class ShowPackageData {
             description: json['description'], 
             discount: json['discount'], 
             discount_type: json['discount_type'], 
-            edate: json['edate'], 
+            edate: json['edate'],
+            favorit: json['favorit'],
             final_price: json['final_price'], 
             gallery: json['gallery'] != null ? (json['gallery'] as List).map((i) => Gallery.fromJson(i)).toList() : null, 
             hits: json['hits'], 

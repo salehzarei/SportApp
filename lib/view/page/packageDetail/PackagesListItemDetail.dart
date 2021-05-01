@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
+import 'package:sportapplication/controller/Functions/FavoriteFunction.dart';
 import 'package:sportapplication/controller/Functions/PackageFunction.dart';
 import 'package:sportapplication/controller/util.dart';
 import 'package:sportapplication/view/component/Constans.dart';
@@ -17,11 +18,14 @@ class PackagesListItemDetail extends StatefulWidget {
 
 class _PackagesListItemDetailState extends State<PackagesListItemDetail> {
   final PackageFunction packageFunction = Get.put(PackageFunction());
+  final FavoriteFunction favoriteFunction = Get.put(FavoriteFunction());
+  String _token;
 
   @override
   void initState() {
     getShared("token").then((token) {
       packageFunction.showUserPackage(token, widget.id);
+      _token = token;
     });
     super.initState();
   }
@@ -41,6 +45,34 @@ class _PackagesListItemDetailState extends State<PackagesListItemDetail> {
                 onPressed: () {
                   Get.back();
                 }),
+            actions: [
+              !packageFunction.showPackageLoading.value?
+              IconButton(
+                  color: Colors.white,
+                  iconSize: 20,
+                  icon:packageFunction.showPackageModel.data.favorit==0? Icon(Icons.star_outline):Icon(Icons.star),
+                  onPressed: () {
+                    if(packageFunction.showPackageModel.data.favorit==0){
+                      favoriteFunction.addFavorite(token: _token, proId: widget.id).then((value) {
+                        if(value == 200){
+                          packageFunction.showPackageModel.data.favorit=favoriteFunction.id;
+                          listSnackBar(list:favoriteFunction.errorMassages , err:false );
+                        }else{
+                          listSnackBar(list:favoriteFunction.errorMassages , err:true );
+                        }
+                      });
+                    }else{
+                      favoriteFunction.removeFav(token: _token, proId: packageFunction.showPackageModel.data.favorit.toString()).then((value) {
+                        if(value == 200){
+                          packageFunction.showPackageModel.data.favorit=0;
+                          listSnackBar(list:favoriteFunction.errorMassages , err:false );
+                        }else{
+                          listSnackBar(list:favoriteFunction.errorMassages , err:true );
+                        }
+                      });
+                    }
+                  }):SizedBox(),
+            ],
             centerTitle: true,
             backgroundColor: Theme.of(context).primaryColorDark,
           ),
@@ -66,7 +98,7 @@ class _PackagesListItemDetailState extends State<PackagesListItemDetail> {
                               borderRadius: BorderRadius.circular(0),
                               fit: BoxFit.fill,
                               margin: EdgeInsets.all(0),
-                              aspectRatio: 4 / 3),
+                              aspectRatio: 4 / 3, lisString: false),
                           Container(
                             padding: EdgeInsets.all(10),
                             child: Column(
