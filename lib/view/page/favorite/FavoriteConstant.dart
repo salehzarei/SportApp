@@ -9,7 +9,7 @@ import 'package:sportapplication/view/component/Constans.dart';
 import 'package:sportapplication/view/page/blog/BlogDetailPage.dart';
 import 'package:sportapplication/view/page/packageDetail/PackagesListItemDetail.dart';
 
-itemPackageFav({@required BuildContext context,@required int index,@required MyPackagePost data,@required onTap}){
+itemPackageFav({@required BuildContext context,@required int index,@required MyPackagePost data,@required onTap,@required bool fav}){
   return Container(
     decoration: BoxDecoration(
         color: Colors.white,
@@ -44,10 +44,10 @@ itemPackageFav({@required BuildContext context,@required int index,@required MyP
                       fontWeight: FontWeight.w600,
                       color: Colors.black
                   ),),
-                InkWell(
+                fav?InkWell(
                   onTap: onTap,
                     child: Icon(Icons.favorite,color: Colors.red,size: 22,)
-                )
+                ):SizedBox()
               ],
             ),
           ),
@@ -173,7 +173,7 @@ itemPackageFav({@required BuildContext context,@required int index,@required MyP
   );
 }
 
-itemArticleFav({@required BuildContext context,@required int index,@required ArticleModelPost data,@required onTap}){
+itemArticleFav({@required BuildContext context,@required int index,@required ArticleModelPost data,@required onTap,@required bool fav}){
   return Container(
     decoration: BoxDecoration(
         color: Colors.white,
@@ -245,10 +245,10 @@ itemArticleFav({@required BuildContext context,@required int index,@required Art
                         ),),
                     ),
                     SizedBox(width: 4,),
-                    InkWell(
+                    fav?InkWell(
                         onTap:onTap,
                         child: Icon(Icons.favorite,color: Colors.red,size: 22,)
-                    ),
+                    ):SizedBox(),
                   ],
                 ),
                 SizedBox(height: 8,),

@@ -280,15 +280,18 @@ class RegisterFunction extends GetxController {
 
   Future providers(
       {@required String token,
-       String level,
-       String following,
-       String special,
-       String activity_scope,
+       @required String level,
+       @required String following,
+       @required String special,
+       @required String activity_scope,
   }) async {
     providerLoading.value = true;
     final response = await ApiService().providers(token , level , following,special,activity_scope);
 
     if (response.statusCode == 200) {
+      print("count of list");
+      print(response.body);
+
       providerList = ProviderModel.fromJson(response.body);
       providerLoading.value = false;
       update();

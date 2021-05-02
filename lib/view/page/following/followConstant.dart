@@ -4,7 +4,7 @@ import 'package:sportapplication/Model/providerModel.dart';
 import 'package:sportapplication/view/component/Constans.dart';
 import 'package:sportapplication/view/page/userInfo/DetailUserInfoPage.dart';
 
-followListItem({@required BuildContext context,@required int index,@required ProviderPost data,@required removeProvider}) {
+followListItem({@required BuildContext context,@required ProviderPost data,@required removeProvider,@required bool follow}) {
   return Container(
     decoration: BoxDecoration(
         color: Colors.white,
@@ -61,7 +61,7 @@ followListItem({@required BuildContext context,@required int index,@required Pro
                                     color: Colors.black),
                               ),
                             ),
-                            ElevatedButton(
+                           follow ? ElevatedButton(
                               onPressed: removeProvider,
                               style: ButtonStyle(
                                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -75,7 +75,7 @@ followListItem({@required BuildContext context,@required int index,@required Pro
                               child: Text(
                                 "حذف از دنبال کننده ها",
                                 style: TextStyle(fontSize: 13, color: Colors.white),
-                              ),),
+                              ),):SizedBox(),
                           ],
                         ),
 

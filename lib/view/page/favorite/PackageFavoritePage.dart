@@ -61,7 +61,7 @@ class _PackageFavoritePageState extends State<PackageFavoritePage> {
                       listSnackBar(list:packageFunction.errorMassages , err:true );
                     }
                   });
-                }),
+                }, fav: true),
               )
             : loading(color: Theme.of(context).primaryColorDark),
       ),

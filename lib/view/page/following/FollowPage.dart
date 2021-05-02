@@ -54,7 +54,7 @@ class _FollowPageState extends State<FollowPage> {
           padding: EdgeInsets.only(top: 10),
           itemCount: registerFunction.providerList.post.length,
           shrinkWrap: true,
-          itemBuilder: (context, index) => followListItem(context: context, index: index,data:registerFunction.providerList.post[index], removeProvider: (){
+          itemBuilder: (context, index) => followListItem(context: context, data:registerFunction.providerList.post[index], removeProvider: (){
             registerFunction.unFollow(_token, registerFunction.providerList.post[index].following.toString()).whenComplete((){
               listSnackBar(list: registerFunction.errorMassages, err: registerFunction.checkerror.value);
               if(!registerFunction.checkerror.value){
@@ -62,7 +62,7 @@ class _FollowPageState extends State<FollowPage> {
                 registerFunction.providers( token: _token, following: '1', level: '', activity_scope: '', special: '',);
               }
             });
-          }),),
+          }, follow: true),),
       ),
     ));
   }

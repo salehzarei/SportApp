@@ -256,7 +256,7 @@ checkBoxItem(
 
 noItem(){
   return Center(
-      child:Image(image: AssetImage('assets/image/empty.png'),width: 90,height: 50,)
+      child:Image(image: AssetImage('assets/image/empty.png'),width: 150,height: 120,)
   );
 }
 

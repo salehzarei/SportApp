@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:sportapplication/controller/Functions/Controller.dart';
 import 'package:sportapplication/controller/Functions/RegisterFunction.dart';
 import 'package:sportapplication/controller/util.dart';
+import 'package:sportapplication/view/component/Constans.dart';
 import 'package:sportapplication/view/component/appBarWidget.dart';
 import 'package:sportapplication/view/page/category/CategoryItemList.dart';
 
@@ -31,7 +32,7 @@ class _CategoryListState extends State<CategoryList> {
     getShared('token').then((token) {
       _token = token;
       registerFunction.getProductCategories(widget.level).whenComplete(() {
-        registerFunction.providers( token: token, following: '', level: '', activity_scope: '1', special: '',);
+        registerFunction.providers( token: token, following: '', level: widget.level.toString(), activity_scope: '', special: '',);
       });
     });
 
@@ -104,7 +105,13 @@ class _CategoryListState extends State<CategoryList> {
                                   size: 25.0,
                                 ),
                               ),
-                            ):  GridView.builder(
+                            ): registerFunction.providerList.post.isEmpty?
+                            Expanded(
+                              child: Center(
+                                child: noItem(),
+                              ),
+                            ):
+                            GridView.builder(
                                 shrinkWrap: true,
                                 padding: EdgeInsets.symmetric(horizontal: 10),
                                 gridDelegate:

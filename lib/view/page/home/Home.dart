@@ -13,6 +13,7 @@ import 'package:sportapplication/controller/Functions/SliderFunction.dart';
 import 'package:sportapplication/controller/util.dart';
 import 'package:sportapplication/view/component/Constans.dart';
 import 'package:sportapplication/view/page/home/HomeItemList.dart';
+import 'package:sportapplication/view/page/viewAll/ViewAllPage.dart';
 
 import '../category/CategoryList.dart';
 
@@ -89,8 +90,8 @@ class _HomeState extends State<Home> {
           special: '1',
           order: '',
           sort: '',
-          limit: '',
-          page: '')
+          limit: '10',
+          page: '1')
           .whenComplete(() {
         if (!packageFunction.userPackageLoading.value) {
           if (mounted) {
@@ -112,8 +113,8 @@ class _HomeState extends State<Home> {
               special: '',
               order: '',
               sort: '',
-              limit: '',
-              page: '')
+              limit: '10',
+              page: '1')
               .whenComplete(() {
             if (!packageFunction.userPackageLoading.value) {
               if (mounted) {
@@ -129,7 +130,7 @@ class _HomeState extends State<Home> {
       registerFunction
           .providers(
         token: token,
-        following: '1',
+        following: '1', activity_scope: '', special: '', level: '',
       ).whenComplete(() {
         if (mounted) {
           setState(() {
@@ -207,7 +208,9 @@ class _HomeState extends State<Home> {
             SizedBox(
               height: 13,
             ),
-            divider(title: 'پکیج های پیشنهادی', callback: () {}),
+            divider(title: 'پکیج های پیشنهادی', callback: () {
+              Get.to(ViewAllPage(1));
+            }),
             SizedBox(
               height: 13,
             ),
@@ -226,7 +229,9 @@ class _HomeState extends State<Home> {
                           data: _specialPackage.post[index]))
                   : loading(color: Theme.of(context).primaryColorDark),
             ),
-            divider(title: 'جدید ترین مقالات', callback: () {}),
+            divider(title: 'جدید ترین مقالات', callback: () {
+              Get.to(ViewAllPage(3));
+            }),
             Container(
               height: Get.width * .65,
               child:_newBlogLoading? loading(color: Theme.of(context).primaryColorDark): ListView.builder(
@@ -275,7 +280,9 @@ class _HomeState extends State<Home> {
                 )
               ],
             ),
-            divider(title: 'پکیج های مرتبط', callback: () {}),
+            divider(title: 'پکیج های مرتبط', callback: () {
+              Get.to(ViewAllPage(2));
+            }),
             Container(
               height: Get.width * .53,
               child: !_interestPackageLoading
@@ -291,7 +298,9 @@ class _HomeState extends State<Home> {
                           data: _interestPackage.post[index]))
                   : loading(color: Theme.of(context).primaryColorDark),
             ),
-            divider(title: 'مقالات مرتبط', callback: () {}),
+            divider(title: 'مقالات مرتبط', callback: () {
+              Get.to(ViewAllPage(4));
+            }),
             Container(
               height: Get.width * .53,
               child: _interestBlogLoading? loading(color: Theme.of(context).primaryColorDark):ListView.builder(
@@ -351,7 +360,9 @@ class _HomeState extends State<Home> {
             SizedBox(
               height: 4,
             ),
-            divider(title: 'پیشنهادات اسپورت پلاس', callback: () {}),
+            divider(title: 'پیشنهادات اسپورت پلاس', callback: () {
+              Get.to(ViewAllPage(5));
+            }),
             Container(
               height: Get.width * 0.5,
               child: _specialProviderLoading
@@ -366,7 +377,9 @@ class _HomeState extends State<Home> {
                           context: context,
                           data: _specialProviderModel.post[index])),
             ),
-            divider(title: 'دنبال شونده ها', callback: () {}),
+            divider(title: 'دنبال شونده ها', callback: () {
+              Get.to(ViewAllPage(6));
+            }),
             Container(
               margin: EdgeInsets.only(bottom: 8),
               height: Get.width * .4,
