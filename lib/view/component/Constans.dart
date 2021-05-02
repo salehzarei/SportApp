@@ -204,6 +204,8 @@ textFormFieldHintWidget(
       textDirection: TextDirection.rtl,
       style: TextStyle(fontSize: 14, height: 1.2, color: Color(0xff3D4152)),
       decoration: InputDecoration(
+        filled: true,
+        fillColor: Colors.white,
         contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 12),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(6.0),

@@ -23,8 +23,16 @@ class CheckPhonePage extends StatelessWidget {
             ),
           ),
           body: Obx(
-            () => Padding(
-              padding: const EdgeInsets.all(15),
+            () => Container(
+              padding: EdgeInsets.all(15),
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage(
+                          'assets/image/back.png'
+                      ),
+                      fit: BoxFit.fill
+                  )
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [

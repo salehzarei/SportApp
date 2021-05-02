@@ -45,7 +45,7 @@ class _PackageFavoritePageState extends State<PackageFavoritePage> {
       () => Directionality(
         textDirection: TextDirection.rtl,
         child: !packageFunction.userPackageLoading.value
-            ? ListView.builder(
+            ? packageFunction.userPackageModel.post.isEmpty? noItem() :ListView.builder(
                 itemCount: packageFunction.userPackageModel.post.length,
                 shrinkWrap: true,
                 padding: EdgeInsets.only(top: 10),

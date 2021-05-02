@@ -52,6 +52,14 @@ class _LoginPageState extends State<LoginPage> {
           body: Container(
             margin: EdgeInsets.only(top: 20),
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage(
+                      'assets/image/back.png'
+                  ),
+                  fit: BoxFit.fill
+              )
+            ),
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,

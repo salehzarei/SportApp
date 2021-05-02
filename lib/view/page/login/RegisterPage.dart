@@ -8,6 +8,9 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:grouped_buttons/grouped_buttons.dart';
 import 'package:sportapplication/controller/Functions/Controller.dart';
 import 'package:sportapplication/controller/Functions/RegisterFunction.dart';
+import 'package:sportapplication/controller/Functions/SliderFunction.dart';
+import 'package:sportapplication/controller/Functions/SliderFunction.dart';
+import 'package:sportapplication/controller/Functions/SliderFunction.dart';
 import 'package:sportapplication/controller/util.dart';
 import 'package:sportapplication/view/component/Constans.dart';
 
@@ -21,13 +24,12 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  // final RegisterFunction place = Get.put(RegisterFunction());
-  // TextEditingController _mobile = TextEditingController();
-  // TextEditingController _mobile = TextEditingController();
-  // TextEditingController _mobile = TextEditingController();
-  // TextEditingController _mobile = TextEditingController();
+
+  TextEditingController _addressController ;
+  FocusNode _addressFocus;
 
   final Controller step = Get.put(Controller());
+  final SliderFunction sliderFunction = Get.put(SliderFunction());
   Completer<GoogleMapController> controllerr = Completer();
   static const LatLng _center = const LatLng(0, 0);
 
@@ -70,11 +72,7 @@ class _RegisterPageState extends State<RegisterPage> {
     }
   }
 
-  void _onCameraMove(CameraPosition position) {
-    _lastMapPosition = position.target;
-  }
-
-  Future<Position> displayCurrentLocation() async {
+    Future<Position> displayCurrentLocation() async {
     Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
     return position;
@@ -90,8 +88,13 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   List<String> accountList = ['کاربر', 'باشگاه', 'مربی', 'دکتر', 'فروشگاه'];
+
   @override
   void initState() {
+
+    _addressController = TextEditingController();
+    _addressFocus = FocusNode();
+    step.stepPlus(0);
     widget.place.getPlaceData().then((v) {
       widget.place.ostanLoding.value = false;
       if (step.ostanSelected > 0) {
@@ -467,8 +470,23 @@ class _RegisterPageState extends State<RegisterPage> {
                                               zoom: 15.0,
                                             ),
                                             mapType: MapType.normal,
-                                            // markers: _markers,
-                                            onCameraMove: _onCameraMove,
+                                            onCameraMove: (position) {
+                                              _lastMapPosition = position.target;
+                                            },
+                                            onCameraIdle: () {
+                                              sliderFunction.getAddress(
+                                                  lat: _lastMapPosition.latitude.toString(),
+                                                  lng: _lastMapPosition.longitude.toString()).then((value) {
+                                                 if(mounted){
+                                                   setState(() {
+                                                     _addressController.text = value;
+                                                     print(value);
+                                                     print(_lastMapPosition.latitude.toString());
+                                                     print(_lastMapPosition.longitude.toString());
+                                                   });
+                                                 }
+                                              });
+                                            },
                                             zoomControlsEnabled: false,
                                             myLocationEnabled: false,
                                             zoomGesturesEnabled: false,
@@ -487,14 +505,20 @@ class _RegisterPageState extends State<RegisterPage> {
                                             alignment: Alignment.center,
                                           ),
                                         ),
-                                        Container(
-                                          // height: 400,
+                                        Padding(
+                                          padding:EdgeInsets.only(bottom: 25 , right: 20),
                                           child: Align(
                                             alignment: Alignment.bottomRight,
-                                            child: Padding(
-                                              padding: const EdgeInsets.all(20),
-                                              child: InkWell(
-                                                onTap: () {
+                                            child: Container(
+                                              width: 40,
+                                              height: 40,
+                                              decoration: BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  color: Colors.white,
+                                                  border: Border.all(color: Colors.grey[400] , width: 1)
+                                              ),
+                                              child: Center(
+                                                child: IconButton(onPressed: () {
                                                   displayCurrentLocation()
                                                       .then((value) {
                                                     // _location = value;
@@ -503,43 +527,26 @@ class _RegisterPageState extends State<RegisterPage> {
                                                             value.longitude),
                                                         15.0);
                                                   });
-                                                },
-                                                child: Container(
-                                                  // width: Get.width,
-                                                  padding: EdgeInsets.all(5),
-                                                  decoration: BoxDecoration(
-                                                      color: Colors.white,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              50)),
-                                                  child: Icon(
-                                                    Icons.location_searching,
-                                                    size: 30,
-                                                    color: Colors.red,
-                                                  ),
-                                                ),
+                                                },icon:Icon( Icons.my_location , size: 20 , color: Colors.black,)),
                                               ),
-                                              // child: IconButton(
-                                              //     icon: Icon(
-                                              //       Icons.location_searching,
-                                              //       size: 40,
-                                              //       color: Colors.red,
-                                              //     ),
-                                              //     onPressed: () {
-                                              //       submit.displayCurrentLocation()
-                                              //           .then((value) {
-                                              //         // _location = value;
-                                              //         submit.currentLocation(
-                                              //             LatLng(
-                                              //                 value.latitude,
-                                              //                 value
-                                              //                     .longitude),
-                                              //             15.0);
-                                              //       });
-                                              //     }),
                                             ),
                                           ),
                                         ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Align(
+                                            alignment: Alignment.topCenter,
+                                            child: textFormFieldHintWidget(
+                                                context: context,
+                                                focus: _addressFocus,
+                                                controller: _addressController,
+                                                hint: " ",
+                                                maxLine: 1,
+                                                minLine: 1,
+                                                keyboardType: TextInputType.text,
+                                                maxLength: 1000),
+                                          ),
+                                        )
                                       ],
                                     ),
                                   ),
@@ -777,6 +784,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                                               .value,
                                                           pass: widget
                                                               .place.pass.text,
+                                                          address: _addressController.text+" ",
                                                           lat: _lastMapPosition.latitude
                                                               .toString(),
                                                           long: _lastMapPosition
@@ -801,7 +809,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                                             .value ==
                                                         false) {
                                                       Future.delayed(Duration(
-                                                              seconds: 2))
+                                                              seconds: 1))
                                                           .whenComplete(() =>
                                                               Get.offAll(
                                                                   MainPage()));
@@ -843,6 +851,12 @@ class _RegisterPageState extends State<RegisterPage> {
           // height: 80,
           padding: EdgeInsets.only(right: 10),
           decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage(
+                      'assets/image/back.png'
+                  ),
+                  fit: BoxFit.fill
+              ),
               borderRadius: BorderRadius.circular(10),
               border: Border.all(
                   width: 2,
@@ -1043,4 +1057,6 @@ class _RegisterPageState extends State<RegisterPage> {
       ),
     );
   }
+
+
 }

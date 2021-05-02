@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:sportapplication/Model/ProfileModel.dart';
@@ -28,23 +30,22 @@ class ProfileFunction extends GetxController {
     // profileLoading.value = false;
   }
 
-  /////////ویرایش پروفایل
   Future sendEditeProfileData({
-    String token,
-    String name,
-    String tell,
-    String email,
-    String ostan,
-    String city,
-    int lat,
-    int lng,
-    List interest,
-    List activityScope,
-    String pic,
+   @required String token,
+   @required String name,
+   @required String tell,
+   @required String email,
+   @required String ostan,
+   @required String city,
+   @required int lat,
+   @required int lng,
+   @required List interest,
+   @required List activityScope,
+   @required String pic,
   }) async {
     errorMassages = [];
     editeProfileLoading.value = true;
-    final response = await ApiService().editeProfileUser();
+    final response = await ApiService().editeProfileUser(lng: lng, name: '', tell: '', email: '', interest: [], token: '', pic: null, lat: null, city: '', activityScope: [], ostan: '');
     checkerror.value = response.body['error'];
     if (response.statusCode == 200 && !checkerror.value) {
       errorMassages = response.body['report_msg'];
@@ -53,7 +54,7 @@ class ProfileFunction extends GetxController {
           ? response.body['error_msg']
           : [response.body['error_msg']];
     }
-
     editeProfileLoading.value = false;
   }
+
 }

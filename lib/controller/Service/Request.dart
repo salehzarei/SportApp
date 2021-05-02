@@ -22,6 +22,7 @@ class ApiService extends GetConnect {
           String email,
           String code,
           String pass,
+          String address,
           String verificationToken,
           int ostan,
           int city,
@@ -32,18 +33,17 @@ class ApiService extends GetConnect {
           List interest,
           List acivityScope,
           String inviteCode) =>
-      post(
-          apiUrl + 'user/register',
-          FormData({
+      post( apiUrl + 'user/register', FormData({
             'name': name,
             'mobile': mobile,
             'email': email,
             'code': code,
             'pass': pass,
+            'address': address,
             'verification_token': verificationToken,
             'ostan': ostan,
             'city': city,
-            'sysApp': sysApp,
+            'sysApp': 'android',
             'lat': lat,
             'lng': long,
             'level': level,
@@ -52,23 +52,20 @@ class ApiService extends GetConnect {
             'invite_code': inviteCode,
           }));
 
-  ////////ارسال اطلاعات ویرایش پروفایل
+
   Future<Response> editeProfileUser({
-    String token,
-    String name,
-    String tell,
-    String email,
-    String ostan,
-    String city,
-    int lat,
-    int lng,
-    List interest,
-    List activityScope,
-    String pic,
-  }) =>
-      post(
-          apiUrl + 'profile/edit',
-          FormData({
+    @required String token,
+    @required String name,
+    @required String tell,
+    @required String email,
+    @required String ostan,
+    @required String city,
+    @required int lat,
+    @required int lng,
+    @required List interest,
+    @required List activityScope,
+    @required String pic,
+  }) =>post(apiUrl + 'profile/edit',FormData({
             'token': token,
             'name': name,
             'tell': tell,
@@ -82,7 +79,6 @@ class ApiService extends GetConnect {
             'pic': pic,
           }));
 
-////////چک کردن شماره همراه
   Future<Response> checkPhone(String mobile) =>
       post(apiUrl + 'user/checkmobile', FormData({'mobile': mobile}));
 
@@ -345,4 +341,10 @@ class ApiService extends GetConnect {
       }));
 
   Future<Response> getSlider() => get(apiUrl + 'slider');
+
+
+  Future<Response> getAddress(String lat, String lng) => get("https://map.ir/fast-reverse?lat=$lat&lon=$lng",headers: {
+    "x-api-key":
+    "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjY2N2RlYTRiMDc1Njg4MzI1YTg4YWZlYjFkYzdhZTU5MWM1MGFmMDYyNjM1NDY2ZTY1MGNmNTdlOTE4OWE0ZGMyNWQ5NWYzMDc5NGNhZTg0In0.eyJhdWQiOiIxMDM2NSIsImp0aSI6IjY2N2RlYTRiMDc1Njg4MzI1YTg4YWZlYjFkYzdhZTU5MWM1MGFmMDYyNjM1NDY2ZTY1MGNmNTdlOTE4OWE0ZGMyNWQ5NWYzMDc5NGNhZTg0IiwiaWF0IjoxNTk2NjMzMDUzLCJuYmYiOjE1OTY2MzMwNTMsImV4cCI6MTU5OTIyNTA1Mywic3ViIjoiIiwic2NvcGVzIjpbImJhc2ljIl19.mdfSgceSTVLsq_lK2bryUH1nmh9xa29Oww1L52DX9G2BYcpKKem2QEIAf_qSCOI0YzNMs8J1GDZubK9Go5p9DFfwDAidEKvtv5l6ISnSkZh9qLuaF41_V0clYOxo6uhj-LrjORMUx1t6kmTulhU1Ho7HJdWv1Cgz58RH-MbdRLgZvurw8mzONlylil4RHCDtfy02IjMx4EUAFWMMb9PMNbRHBP3eRLzdFLvD2bc0sdtxnLoKoFZeMMCH3WY4H2MTjtrAInN5-4H44aU_qGmp17k4leecwBYXoO1Q-8DCUV-krGCS9SSZ9laCofp1_UzlNssS4MBlprRchCkwA47Gqw"
+  } );
 }

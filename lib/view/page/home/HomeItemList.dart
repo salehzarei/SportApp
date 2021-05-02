@@ -325,7 +325,7 @@ packageMe({@required context,@required controller,@required MyPackagePost data})
                           bottomLeft: Radius.circular(6))),
                   padding: EdgeInsets.all(8),
                   child: Text(
-                    data.discount_type==1?'${data.discount}%':data.discount,
+                    data.discount_type==1?data.discount.toString():'${data.discount}%',
                     style: TextStyle(color: Colors.white),
                   ),
                 ),
@@ -356,7 +356,7 @@ packageMe({@required context,@required controller,@required MyPackagePost data})
                               color: Colors.red[300],
                             ),
                             SizedBox(width: 6,),
-                            Expanded(child: Text('سیاره فوتسال',style: TextStyle(color: Colors.black , fontWeight: FontWeight.w200 , fontSize: 12),)),
+                            Expanded(child: Text(data.owner,style: TextStyle(color: Colors.black , fontWeight: FontWeight.w200 , fontSize: 12),)),
                           ],
                         ),
                       ),

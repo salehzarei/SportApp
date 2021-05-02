@@ -51,7 +51,7 @@ class _ArticleFavoritePageState extends State<ArticleFavoritePage> {
           textDirection: TextDirection.rtl,
           child: articleFunction.blogLoading.value
               ? loading(color: Theme.of(context).primaryColorDark)
-              : ListView.builder(
+              : articleFunction.blogModel.post.isEmpty? noItem():ListView.builder(
                   itemCount: articleFunction.blogModel.post.length,
                   shrinkWrap: true,
                   padding: EdgeInsets.only(top: 10),

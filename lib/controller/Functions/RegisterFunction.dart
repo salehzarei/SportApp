@@ -72,11 +72,11 @@ class RegisterFunction extends GetxController {
     }
   }
 
-  /////////ارسال اطلاعات کاربر برای ثبت نام
   Future sendRegisterData(
       {String name,
       String mobile,
       String email,
+      String address,
       String code,
       String pass,
       String verificationToken,
@@ -97,6 +97,7 @@ class RegisterFunction extends GetxController {
         email,
         code,
         pass,
+        address,
         verificationToken,
         ostan,
         city,
@@ -367,6 +368,5 @@ class RegisterFunction extends GetxController {
     }
 
   }
-
 
 }
