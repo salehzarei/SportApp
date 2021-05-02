@@ -10,7 +10,6 @@ class ProfileFunction extends GetxController {
   final checkerror = false.obs;
   List<dynamic> errorMassages = [];
 
-  ////////// ارسال توکن و دریافت اطلاعات پروفایل کاربر
   Future loadingUserData({@required String tokens}) async {
     profileLoading.value = true;
     final response = await ApiService().profileUserData(token: tokens);
@@ -26,7 +25,7 @@ class ProfileFunction extends GetxController {
     } else {
       // Constans().dialogboxCheckInternet(response.statusCode);
     }
-    profileLoading.value = false;
+    // profileLoading.value = false;
   }
 
   /////////ویرایش پروفایل

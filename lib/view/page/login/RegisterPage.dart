@@ -394,39 +394,27 @@ class _RegisterPageState extends State<RegisterPage> {
                                     ElevatedButton(
                                       onPressed: () {
                                         if (widget.place.name.text.isEmpty) {
-                                          errorSnackBar(
-                                              text:
-                                                  'نام و نام خانوادگی نمی تواند خالی باشد');
+                                          errorSnackBar(text:'نام و نام خانوادگی نمی تواند خالی باشد', error: true,context: context);
                                         } else if (step.accountTypeId.value ==
                                             0) {
-                                          errorSnackBar(
-                                              text:
-                                                  'انتخاب نوع کاربری اجباری می باشد');
+                                          errorSnackBar(text:'انتخاب نوع کاربری اجباری می باشد', error: true,context: context);
                                         } else if (step.ostanSelected.value ==
                                             0) {
-                                          errorSnackBar(
-                                              text:
-                                                  'انتخاب استان اجباری می باشد');
+                                          errorSnackBar( text:'انتخاب استان اجباری می باشد', error: true,context: context);
                                         } else if (step.citySelected.value ==
                                             0) {
-                                          errorSnackBar(
-                                              text:
-                                                  'انتخاب شهرستان اجباری می باشد');
+                                          errorSnackBar(text:'انتخاب شهرستان اجباری می باشد', error: true,context: context);
                                         } else if (widget
                                                 .place.pass.text.isEmpty ||
                                             widget.place.pass.text.length <=
                                                 5) {
-                                          errorSnackBar(
-                                              text: 'رمز عبور را وارد کنید');
+                                          errorSnackBar( text: 'رمز عبور را وارد کنید', error: true,context: context);
                                         } else if (widget
                                             .place.repass.text.isEmpty) {
-                                          errorSnackBar(
-                                              text:
-                                                  'تکرار رمز عبور را وارد کنید');
+                                          errorSnackBar(text:'تکرار رمز عبور را وارد کنید', error: true,context: context);
                                         } else if (widget.place.pass.text !=
                                             widget.place.repass.text) {
-                                          errorSnackBar(
-                                              text: 'رمز عبور همخوانی ندارد');
+                                          errorSnackBar(text: 'رمز عبور همخوانی ندارد', error: true,context: context);
                                         } else {
                                           step.name.value =
                                               widget.place.name.text;
@@ -738,16 +726,12 @@ class _RegisterPageState extends State<RegisterPage> {
                                                 if (step.activityScope.length ==
                                                         0 ||
                                                     step.activityScope == []) {
-                                                  errorSnackBar(
-                                                      text:
-                                                          'انتخاب حداقل یک حوزه فعالیت اجباری است');
+                                                  errorSnackBar( text:'انتخاب حداقل یک حوزه فعالیت اجباری است', error: true,context: context);
                                                 } else if (step
                                                             .interest.length ==
                                                         0 ||
                                                     step.interest == []) {
-                                                  errorSnackBar(
-                                                      text:
-                                                          'انتخاب حداقل یک علاقه مندی اجباری است');
+                                                  errorSnackBar( text:'انتخاب حداقل یک علاقه مندی اجباری است', error: true,context: context);
                                                 } else {
                                                   step.activeStepcomplete
                                                       .value = 1;

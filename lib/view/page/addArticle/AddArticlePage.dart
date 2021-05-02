@@ -448,7 +448,7 @@ class _AddAtrticlePageState extends State<AddArticlePage> {
                             if(_titleController.text.isEmpty){
                               if(mounted){
                                 setState(() {
-                                  errorSnackBar(text: "نام محصول را وارد نمایید");
+                                  errorSnackBar(text: "نام محصول را وارد نمایید", error: true,context: context);
                                 });
                               }
                               return;
@@ -456,7 +456,7 @@ class _AddAtrticlePageState extends State<AddArticlePage> {
                             if(_desController.text.isEmpty){
                               if(mounted){
                                 setState(() {
-                                  errorSnackBar(text: "توضیح محصول را وارد نمایید");
+                                  errorSnackBar(text: "توضیح محصول را وارد نمایید", error: true,context: context);
                                 });
                               }
                               return;
@@ -464,7 +464,7 @@ class _AddAtrticlePageState extends State<AddArticlePage> {
                             if(_summaryController.text.isEmpty){
                               if(mounted){
                                 setState(() {
-                                  errorSnackBar(text: "قیمت محصول را وارد نمایید");
+                                  errorSnackBar(text: "قیمت محصول را وارد نمایید", error: true,context: context);
                                 });
                               }
                               return;
@@ -472,7 +472,7 @@ class _AddAtrticlePageState extends State<AddArticlePage> {
                             if(_imageUrl.isEmpty){
                               if(mounted){
                                 setState(() {
-                                  errorSnackBar(text: "عکس وارد نشده");
+                                  errorSnackBar(text: "عکس وارد نشده", error: true,context: context);
                                 });
                               }
                               return;

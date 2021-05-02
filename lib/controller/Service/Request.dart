@@ -330,6 +330,12 @@ class ApiService extends GetConnect {
         'user_id': user_id,
       }));
 
+  Future<Response> checkpackage(String token, String code) =>
+      post(apiUrl + 'package/checkpackage',FormData({
+        'token': token,
+        'code': code,
+      }));
+
   Future<Response> buyPlan({@required String token, @required String plan_id,@required String paymentType,@required String coupon}) =>
       post(apiUrl + 'plans/order',FormData({
         'token': token,

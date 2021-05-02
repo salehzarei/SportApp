@@ -5,6 +5,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:sportapplication/controller/Functions/Controller.dart';
+import 'package:sportapplication/controller/Functions/PackageFunction.dart';
 import 'package:sportapplication/controller/Functions/ProfileFunction.dart';
 import 'package:sportapplication/controller/util.dart';
 import 'package:sportapplication/view/component/Constans.dart';
@@ -31,25 +32,48 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   final Controller bar = Get.put(Controller());
   final ProfileFunction profile = Get.put(ProfileFunction());
+  final PackageFunction packageFunction = Get.put(PackageFunction());
+  String _token;
+
 
   Future scanbarcode() async {
     try {
       String barcode = await BarcodeScanner.scan();
-      setState(() => this.bar.barcode.value = barcode);
+      // setState(() => this.bar.barcode.value = barcode);
+
+      profile.profileLoading.value = true;
+      packageFunction.checkpackage(token: _token, code: barcode).then((value) {
+        if(value == 200){
+          profile.profileLoading.value = false;
+          listSnackBar(list: packageFunction.errorMassages , err: false);
+        }else{
+          profile.profileLoading.value = false;
+          listSnackBar(list: packageFunction.errorMassages , err: true);
+        }
+      });
+
+      print(barcode);
     } on PlatformException catch (e) {
       if (e.code == BarcodeScanner.CameraAccessDenied) {
-        setState(() {
-          this.bar.barcode.value =
-              'The user did not grant the camera permission!';
-        });
+        errorSnackBar(text: "خطای عدم دسترسی به دوربین", error: true,context: context);
+        // setState(() {
+        //   this.bar.barcode.value =
+        //       'The user did not grant the camera permission!';
+        //   print(bar.barcode.value );
+        // });
       } else {
-        setState(() => this.bar.barcode.value = 'Unknown error: $e');
+        errorSnackBar(text: "خطای خواندنن اطلاعات بارکد", error: true,context: context);
+        // setState(() => this.bar.barcode.value = 'Unknown error: $e');
+        // print(bar.barcode.value );
       }
     } on FormatException {
-      setState(() => this.bar.barcode.value =
-          'null (User returned using the "back"-button before scanning anything. Result)');
+      // errorSnackBar(text: "خطای خواندنن اطلاعات بارکد", error: true,context: context);
+      // setState(() => this.bar.barcode.value =
+      //     'null (User returned using the "back"-button before scanning anything. Result)');
+      // print(bar.barcode.value );
     } catch (e) {
-      setState(() => this.bar.barcode.value = 'Unknown error: $e');
+      // setState(() => this.bar.barcode.value = 'Unknown error: $e');
+      print('Unknown error: $e' );
     }
   }
 
@@ -57,8 +81,8 @@ class _ProfileState extends State<Profile> {
   void initState() {
     getShared("token")
         .then((va){
+      _token= va;
       profile.loadingUserData(tokens: va);
-      print(va);
     });
     super.initState();
   }
@@ -304,7 +328,7 @@ class _ProfileState extends State<Profile> {
                               itemProfile(
                                   context: context,
                                   onTap: () {
-                                    profile.userProfile.provider.active==1? Get.to(AddArticlePage(profile.userProfile.level)):errorSnackBar(text: "شما مجاز به استفاده از این قسمت از اپلیکیشن نیستید");
+                                    profile.userProfile.provider.active==1? Get.to(AddArticlePage(profile.userProfile.level)):errorSnackBar(text: "شما مجاز به استفاده از این قسمت از اپلیکیشن نیستید", error: true,context: context);
                                   },
                                   title: "افزودن مقاله"),
                               itemProfile(
@@ -316,7 +340,7 @@ class _ProfileState extends State<Profile> {
                               itemProfile(
                                   context: context,
                                   onTap: () {
-                                    profile.userProfile.provider.active==1? Get.to(AddPackagePage(profile.userProfile.level)):errorSnackBar(text: "شما مجاز به استفاده از این قسمت از اپلیکیشن نیستید");
+                                    profile.userProfile.provider.active==1? Get.to(AddPackagePage(profile.userProfile.level)):errorSnackBar(text: "شما مجاز به استفاده از این قسمت از اپلیکیشن نیستید", error: true,context: context);
                                   },
                                   title: "افزودن پکیج"),
                               itemProfile(
@@ -384,35 +408,6 @@ class _ProfileState extends State<Profile> {
                 ],
               ),
             ),
-    );
-  }
-
-  _showQr(String url) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Dialog(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(10),
-            child: Directionality(
-              textDirection: TextDirection.rtl,
-              child: AspectRatio(
-                aspectRatio: 1,
-                child: Container(
-                    width: Get.width,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10.0),
-                        border: Border.all(color: Colors.grey[800], width: 1)),
-                    child: Image.network(
-                        "https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/QR_deWP.svg/1200px-QR_deWP.svg.png")),
-              ),
-            ),
-          ),
-        ),
-      ],
     );
   }
 

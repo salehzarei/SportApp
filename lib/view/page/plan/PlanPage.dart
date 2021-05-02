@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:sportapplication/controller/Functions/PlanFunction.dart';
+import 'package:sportapplication/controller/Functions/ProfileFunction.dart';
 import 'package:sportapplication/controller/util.dart';
+import 'package:sportapplication/view/component/Constans.dart';
 import 'package:sportapplication/view/page/plan/packageConstant.dart';
 
 class PackagePage extends StatefulWidget {
@@ -13,6 +15,7 @@ class PackagePage extends StatefulWidget {
 class _PackagePageState extends State<PackagePage> {
 
   final PlanFunction planFunction = Get.put(PlanFunction());
+  final ProfileFunction profileFunction = Get.put(ProfileFunction());
   TextEditingController _discountController;
   FocusNode _discountFocus;
   String _token;
@@ -22,6 +25,7 @@ class _PackagePageState extends State<PackagePage> {
     getShared('token').then((token) {
       _token=token;
       planFunction.getPlanList(token: _token);
+      profileFunction.loadingUserData(tokens: _token);
     });
 
     _discountController = TextEditingController();
@@ -41,6 +45,13 @@ class _PackagePageState extends State<PackagePage> {
     return Obx(()=>Expanded(
       child: Column(
         children: [
+          !profileFunction.profileLoading.value?
+              profileFunction.userProfile.plan.isEmpty?Container(
+                padding: EdgeInsets.only(right: 15 , left: 15,top: 15),
+                child: Center(
+                  child: Text( "هیچ پلن فعالی ندارید", style: TextStyle(fontSize: 14 , color: Theme.of(context).primaryColorDark),),
+                ),
+              ) :
           Container(
             padding: EdgeInsets.only(right: 15 , left: 15,top: 15),
             child: Column(
@@ -53,7 +64,8 @@ class _PackagePageState extends State<PackagePage> {
                           color: Colors.black,
                           fontSize: 14
                       ),),
-                    Text("یک ماهه",
+                    Text(
+                      profileFunction.userProfile.plan[0].title,
                       style: TextStyle(
                           color: Colors.green,
                           fontSize: 14
@@ -64,12 +76,12 @@ class _PackagePageState extends State<PackagePage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("تاریخ شروع",
+                    Text("تاریخ اتمام",
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: 14
                       ),),
-                    Text("1400/01/22",
+                    Text(profileFunction.userProfile.plan[0].expire_date,
                       style: TextStyle(
                           color: Colors.green,
                           fontSize: 14
@@ -83,7 +95,10 @@ class _PackagePageState extends State<PackagePage> {
                 ),
               ],
             ),
-          ),
+          ):
+              Padding(padding: EdgeInsets.symmetric(vertical: 20),
+              child:loading(color: Theme.of(context).primaryColorDark),),
+
           Expanded(
             child: planFunction.planLoading.value?Center(
               child: SpinKitThreeBounce(

@@ -542,7 +542,7 @@ class _AddPackagePageState extends State<AddPackagePage> {
                                if(_titleController.text.isEmpty){
                                  if(mounted){
                                    setState(() {
-                                     errorSnackBar(text: "نام محصول را وارد نمایید");
+                                     errorSnackBar(text: "نام محصول را وارد نمایید", error: true,context: context);
                                    });
                                  }
                                  return;
@@ -550,7 +550,7 @@ class _AddPackagePageState extends State<AddPackagePage> {
                                if(_desController.text.isEmpty){
                                  if(mounted){
                                    setState(() {
-                                     errorSnackBar(text: "توضیح محصول را وارد نمایید");
+                                     errorSnackBar(text: "توضیح محصول را وارد نمایید", error: true,context: context);
                                    });
                                  }
                                  return;
@@ -558,7 +558,7 @@ class _AddPackagePageState extends State<AddPackagePage> {
                                if(_priceController.text.isEmpty){
                                  if(mounted){
                                    setState(() {
-                                     errorSnackBar(text: "قیمت محصول را وارد نمایید");
+                                     errorSnackBar(text: "قیمت محصول را وارد نمایید", error: true,context: context);
                                    });
                                  }
                                  return;
@@ -567,7 +567,7 @@ class _AddPackagePageState extends State<AddPackagePage> {
                                  if(_title[0] == "تاریخ شروع"){
                                    if(mounted){
                                      setState(() {
-                                       errorSnackBar(text: "تاریخ شروع را وارد نمایید");
+                                       errorSnackBar(text: "تاریخ شروع را وارد نمایید", error: true,context: context);
                                      });
                                    }
                                    return;
@@ -575,7 +575,7 @@ class _AddPackagePageState extends State<AddPackagePage> {
                                  if(_title[1] == "تاریخ پایان"){
                                    if(mounted){
                                      setState(() {
-                                       errorSnackBar(text: "تاریخ پایان را وارد نمایید");
+                                       errorSnackBar(text: "تاریخ پایان را وارد نمایید", error: true,context: context);
                                      });
                                    }
                                    return;
@@ -583,7 +583,7 @@ class _AddPackagePageState extends State<AddPackagePage> {
                                  if(_discountController.text.isEmpty){
                                    if(mounted){
                                      setState(() {
-                                       errorSnackBar(text: "تخفیف را وارد نمایید");
+                                       errorSnackBar(text: "تخفیف را وارد نمایید", error: true,context: context);
                                      });
                                    }
                                    return;
@@ -592,7 +592,7 @@ class _AddPackagePageState extends State<AddPackagePage> {
                                if(_imageUrl.isEmpty){
                                  if(mounted){
                                    setState(() {
-                                     errorSnackBar(text: "عکس وارد نشده");
+                                     errorSnackBar(text: "عکس وارد نشده", error: true,context: context);
                                    });
                                  }
                                  return;

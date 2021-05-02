@@ -40,7 +40,7 @@ class _MyBoxPageState extends State<MyBoxPage> {
           body: Directionality(
             textDirection: TextDirection.rtl,
             child: pack.mypackLoading.value
-                ? loading()
+                ? loading(color: Theme.of(context).primaryColorDark)
                 : Directionality(
                     textDirection: TextDirection.rtl,
                     child:pack.myPackagesList.isEmpty ? noItem(): ListView.builder(

@@ -269,7 +269,7 @@ loading({@required color}){
   );
 }
 
-errorSnackBar({@required String text}) {
+errorSnackBar({@required String text,@required bool error,@required BuildContext context}) {
   return Get.snackbar('', '',
       titleText: Text(''),
       messageText: Text(
@@ -277,10 +277,10 @@ errorSnackBar({@required String text}) {
         textDirection: TextDirection.rtl,
         style: TextStyle(color: Colors.white, fontSize: 18),
       ),
-      backgroundColor: Colors.red,
+      backgroundColor:error?Theme.of(context).primaryColorDark:Colors.green,
       colorText: Colors.white,
       icon: Icon(
-        Icons.error,
+        error?Icons.error:Icons.check,
         color: Colors.white,
         size: 40,
       ));

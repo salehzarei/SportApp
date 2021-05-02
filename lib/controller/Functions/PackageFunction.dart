@@ -230,6 +230,41 @@ class PackageFunction extends GetxController {
 
 
 
+  Future checkpackage(
+      {@required String token,
+        @required String code}) async {
+
+    errorMassages.clear();
+    final response = await ApiService().checkpackage(
+      token,code,
+    );
+
+    if (response.statusCode == 200) {
+      bool error = response.body['error'];
+      if(!error){
+        print("200");
+        errorMassages = (response.body['report_msg'] is List)
+            ? response.body['report_msg']
+            : [response.body['report_msg']];
+        id = response.body['id'];
+        return 200;
+      }else{
+        errorMassages = (response.body['error_msg'] is List)
+            ? response.body['error_msg']
+            : [response.body['error_msg']];
+        print("201");
+        return 201;
+      }
+    } else {
+      print("400");
+      errorMassages = ["خطا در برقراری ارتباط با سرور"];
+      return 400;
+    }
+    update();
+  }
+
+
+
 
   Future removeFav(
       { @required String token,

@@ -111,7 +111,7 @@ class _LoginPageState extends State<LoginPage> {
                             if (_mobController.text.isEmpty) {
                               if (mounted) {
                                 setState(() {
-                                  errorSnackBar(text: 'موبایل را وارد کنید');
+                                  errorSnackBar(text: 'موبایل را وارد کنید', error: true,context: context);
                                 });
                                 return;
                               }
@@ -119,8 +119,7 @@ class _LoginPageState extends State<LoginPage> {
                             if (_mobController.text.length < 11) {
                               if (mounted) {
                                 setState(() {
-                                  errorSnackBar(
-                                      text: 'موبایل را کامل وارد کنید');
+                                  errorSnackBar(text: 'موبایل را کامل وارد کنید', error: true,context: context);
                                 });
                                 return;
                               }
@@ -128,7 +127,7 @@ class _LoginPageState extends State<LoginPage> {
                             if (_passController.text.isEmpty) {
                               if (mounted) {
                                 setState(() {
-                                  errorSnackBar(text: 'رمز عبور را وارد کنید');
+                                  errorSnackBar(text: 'رمز عبور را وارد کنید', error: true,context: context);
                                 });
                                 return;
                               }
