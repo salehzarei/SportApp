@@ -33,15 +33,12 @@ class PackageFunction extends GetxController {
         compressFormat: ImageCompressFormat.jpg,
         aspectRatio: CropAspectRatio(ratioX: 800, ratioY: 800),
         maxWidth: 800,
-        maxHeight: 800,
+        maxHeight: 600,
         androidUiSettings: AndroidUiSettings(
           toolbarTitle: '',
           showCropGrid: false,
           hideBottomControls: true,
         ));
-
-    print('croppedFile');
-    print(croppedFile);
 
     return croppedFile;
 

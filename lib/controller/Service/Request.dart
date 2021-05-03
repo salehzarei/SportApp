@@ -60,11 +60,11 @@ class ApiService extends GetConnect {
     @required String email,
     @required String ostan,
     @required String city,
-    @required int lat,
-    @required int lng,
+    @required String lat,
+    @required String lng,
     @required List interest,
     @required List activityScope,
-    @required String pic,
+    @required File pic,
   }) =>post(apiUrl + 'profile/edit',FormData({
             'token': token,
             'name': name,
@@ -76,7 +76,10 @@ class ApiService extends GetConnect {
             'lng': lng,
             'interest': json.encode(interest),
             'activity_scope': json.encode(activityScope),
-            'pic': pic,
+            'pic':  MultipartFile(
+                pic,
+                filename: pic.path.split('/').last,
+                ),
           }));
 
   Future<Response> checkPhone(String mobile) =>
@@ -341,6 +344,8 @@ class ApiService extends GetConnect {
       }));
 
   Future<Response> getSlider() => get(apiUrl + 'slider');
+
+  Future<Response> getDivider() => get(apiUrl + 'app/banners');
 
 
   Future<Response> getAddress(String lat, String lng) => get("https://map.ir/fast-reverse?lat=$lat&lon=$lng",headers: {

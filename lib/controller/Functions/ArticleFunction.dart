@@ -78,7 +78,6 @@ class ArticleFunction extends GetxController{
       @required String word}) async {
 
     articleLoading.value = true;
-    articleModel.post.clear();
     final response = await ApiService().articleList(
         catId:catId,
         limit: limit,
@@ -86,6 +85,9 @@ class ArticleFunction extends GetxController{
         token: token,
         word: word
       );
+
+    print("response.body");
+    print(response.body);
 
     if (response.statusCode == 200) {
       articleModel = ArticleModel.fromJson(response.body);

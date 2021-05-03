@@ -1,3 +1,6 @@
+import 'dart:io';
+import 'dart:math';
+
 import 'package:barcode_scan_fix/barcode_scan.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -30,11 +33,19 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+
   final Controller bar = Get.put(Controller());
   final ProfileFunction profile = Get.put(ProfileFunction());
   final PackageFunction packageFunction = Get.put(PackageFunction());
+  final PackageFunction addPackage = Get.put(PackageFunction());
+
   String _token;
 
+  List intrest=[];
+  List activity_scope=[];
+
+  bool imageChange= false;
+  File imageFile;
 
   Future scanbarcode() async {
     try {
@@ -43,26 +54,28 @@ class _ProfileState extends State<Profile> {
 
       profile.profileLoading.value = true;
       packageFunction.checkpackage(token: _token, code: barcode).then((value) {
-        if(value == 200){
+        if (value == 200) {
           profile.profileLoading.value = false;
-          listSnackBar(list: packageFunction.errorMassages , err: false);
-        }else{
+          listSnackBar(list: packageFunction.errorMassages, err: false);
+        } else {
           profile.profileLoading.value = false;
-          listSnackBar(list: packageFunction.errorMassages , err: true);
+          listSnackBar(list: packageFunction.errorMassages, err: true);
         }
       });
 
       print(barcode);
     } on PlatformException catch (e) {
       if (e.code == BarcodeScanner.CameraAccessDenied) {
-        errorSnackBar(text: "خطای عدم دسترسی به دوربین", error: true,context: context);
+        errorSnackBar(
+            text: "خطای عدم دسترسی به دوربین", error: true, context: context);
         // setState(() {
         //   this.bar.barcode.value =
         //       'The user did not grant the camera permission!';
         //   print(bar.barcode.value );
         // });
       } else {
-        errorSnackBar(text: "خطای خواندنن اطلاعات بارکد", error: true,context: context);
+        errorSnackBar(
+            text: "خطای خواندنن اطلاعات بارکد", error: true, context: context);
         // setState(() => this.bar.barcode.value = 'Unknown error: $e');
         // print(bar.barcode.value );
       }
@@ -73,24 +86,37 @@ class _ProfileState extends State<Profile> {
       // print(bar.barcode.value );
     } catch (e) {
       // setState(() => this.bar.barcode.value = 'Unknown error: $e');
-      print('Unknown error: $e' );
+      print('Unknown error: $e');
     }
   }
 
   @override
   void initState() {
-    getShared("token")
-        .then((va){
-      _token= va;
-      profile.loadingUserData(tokens: va);
+    getShared("token").then((va) {
+      _token = va;
+      getUserInfo(va);
+      print('new Random().nextInt(100)');
+      print(new Random().nextInt(100));
     });
     super.initState();
   }
 
+  getUserInfo(String token){
+
+    profile.loadingUserData(tokens: token).whenComplete(() {
+      profile.userProfile.interest.forEach((e){
+        intrest.add(e.id.toString());
+      });
+      profile.userProfile.activity_scope.forEach((e){
+        activity_scope.add(e.id.toString());
+      });
+      profile.update();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => profile.profileLoading.value
+    return Obx(() => profile.profileLoading.value
           ? Expanded(
               child: Center(
               child: SpinKitThreeBounce(
@@ -98,7 +124,7 @@ class _ProfileState extends State<Profile> {
                 size: 30.0,
               ),
             ))
-          : Expanded(
+          : Expanded (
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -128,13 +154,21 @@ class _ProfileState extends State<Profile> {
                                     children: [
                                       AspectRatio(
                                         aspectRatio: 2 / 2,
+                                        // child:Container(
+                                        //   margin: EdgeInsets.all(6),
+                                        //   decoration: BoxDecoration(
+                                        //     image: DecorationImage(
+                                        //         fit: BoxFit.fill, image: imageChange ? FileImage(imageFile):NetworkImage(profile.userProfile.pic)),
+                                        //       borderRadius:
+                                        //       BorderRadius.circular(8)),
+                                        //
+                                        //   ),
                                         child: imageShower(
-                                            imageUrl:
-                                            profile.userProfile.pic,
+                                            imageUrl:'${profile.userProfile.pic}?id=${new Random().nextInt(100)}',
                                             margin: EdgeInsets.all(6),
                                             fit: BoxFit.fill,
-                                            borderRadius:
-                                                BorderRadius.circular(8)),
+                                            borderRadius:BorderRadius.circular(8)
+                                        ),
                                       ),
                                       GestureDetector(
                                         onTap: () =>
@@ -147,6 +181,16 @@ class _ProfileState extends State<Profile> {
                                                 },
                                                 ontap2: () {
                                                   importImageSelectBottomSheet(
+                                                      ontap: () {
+                                                        addPackage.imagePicker(isCamera: true).then((value) {
+                                                          editPro(value);
+                                                        });
+                                                      },
+                                                      ontap2: () {
+                                                        addPackage.imagePicker(isCamera: false).then((value) {
+                                                          editPro(value);
+                                                        });
+                                                      },
                                                       context: context,
                                                       title: 'عکس از دوربین',
                                                       title2: 'عکس از گالری');
@@ -250,37 +294,40 @@ class _ProfileState extends State<Profile> {
                         SizedBox(
                           height: 6,
                         ),
-                        profile.userProfile.plan.isEmpty? Container(): Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              children: [
-                                Icon(Icons.all_inbox_outlined,
-                                    size: 18, color: Colors.white),
-                                SizedBox(
-                                  width: 8,
-                                ),
-                                Text(
-                                  "تاریخ اتمام بسته",
-                                  style: TextStyle(
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.w100,
-                                      color: Colors.white),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              width: 8,
-                            ),
-                            Text(
-                              profile.userProfile.plan[0].expire_date,
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w800,
-                                  color: Colors.black),
-                            ),
-                          ],
-                        ),
+                        profile.userProfile.plan.isEmpty
+                            ? Container()
+                            : Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Icon(Icons.all_inbox_outlined,
+                                          size: 18, color: Colors.white),
+                                      SizedBox(
+                                        width: 8,
+                                      ),
+                                      Text(
+                                        "تاریخ اتمام بسته",
+                                        style: TextStyle(
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.w100,
+                                            color: Colors.white),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    width: 8,
+                                  ),
+                                  Text(
+                                    profile.userProfile.plan[0].expire_date,
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w800,
+                                        color: Colors.black),
+                                  ),
+                                ],
+                              ),
                       ],
                     ),
                   ),
@@ -323,48 +370,66 @@ class _ProfileState extends State<Profile> {
                           SizedBox(
                             height: 20,
                           ),
-                          profile.userProfile.level != 1?Column(
-                            children: [
-                              itemProfile(
-                                  context: context,
-                                  onTap: () {
-                                    profile.userProfile.provider.active==1? Get.to(AddArticlePage(profile.userProfile.level)):errorSnackBar(text: "شما مجاز به استفاده از این قسمت از اپلیکیشن نیستید", error: true,context: context);
-                                  },
-                                  title: "افزودن مقاله"),
-                              itemProfile(
-                                  context: context,
-                                  onTap: () {
-                                    Get.to(MyArticle());
-                                  },
-                                  title: "مقاله های من"),
-                              itemProfile(
-                                  context: context,
-                                  onTap: () {
-                                    profile.userProfile.provider.active==1? Get.to(AddPackagePage(profile.userProfile.level)):errorSnackBar(text: "شما مجاز به استفاده از این قسمت از اپلیکیشن نیستید", error: true,context: context);
-                                  },
-                                  title: "افزودن پکیج"),
-                              itemProfile(
-                                  context: context,
-                                  onTap: () {
-                                    Get.to(MyPackage());
-                                  },
-                                  title: "پکیج های من"),
-                              itemProfile(
-                                  context: context,
-                                  onTap: () {
-                                    Get.to(MySubSet());
-                                  },
-                                  title: "درخواست ها"),
-
-                              itemProfile(
-                                  context: context,
-                                  onTap: () {
-                                    scanbarcode();
-                                  },
-                                  title: "بررسی qrCode"),
-                            ],
-                          ):Container() ,
-
+                          profile.userProfile.level != 1
+                              ? Column(
+                                  children: [
+                                    itemProfile(
+                                        context: context,
+                                        onTap: () {
+                                          profile.userProfile.provider
+                                                      .active ==
+                                                  1
+                                              ? Get.to(AddArticlePage(
+                                                  profile.userProfile.level))
+                                              : errorSnackBar(
+                                                  text:
+                                                      "شما مجاز به استفاده از این قسمت از اپلیکیشن نیستید",
+                                                  error: true,
+                                                  context: context);
+                                        },
+                                        title: "افزودن مقاله"),
+                                    itemProfile(
+                                        context: context,
+                                        onTap: () {
+                                          Get.to(MyArticle());
+                                        },
+                                        title: "مقاله های من"),
+                                    itemProfile(
+                                        context: context,
+                                        onTap: () {
+                                          profile.userProfile.provider
+                                                      .active ==
+                                                  1
+                                              ? Get.to(AddPackagePage(
+                                                  profile.userProfile.level))
+                                              : errorSnackBar(
+                                                  text:
+                                                      "شما مجاز به استفاده از این قسمت از اپلیکیشن نیستید",
+                                                  error: true,
+                                                  context: context);
+                                        },
+                                        title: "افزودن پکیج"),
+                                    itemProfile(
+                                        context: context,
+                                        onTap: () {
+                                          Get.to(MyPackage());
+                                        },
+                                        title: "پکیج های من"),
+                                    itemProfile(
+                                        context: context,
+                                        onTap: () {
+                                          Get.to(MySubSet());
+                                        },
+                                        title: "درخواست ها"),
+                                    itemProfile(
+                                        context: context,
+                                        onTap: () {
+                                          scanbarcode();
+                                        },
+                                        title: "بررسی qrCode"),
+                                  ],
+                                )
+                              : Container(),
                           SizedBox(
                             height: 20,
                           ),
@@ -489,5 +554,37 @@ class _ProfileState extends State<Profile> {
             ),
           ),
         ));
+  }
+
+  void editPro(File value) {
+    profile.sendEditProfileData(
+        token: _token,
+        name: profile.userProfile.name,
+        tell: profile.userProfile.tell,
+        email: profile.userProfile.email,
+        ostan: profile.userProfile.ostan.toString(),
+        city: profile.userProfile.city.toString(),
+        lat: profile.userProfile.lat,
+        lng: profile.userProfile.lng,
+        interest: intrest,
+        activityScope: activity_scope,
+        pic: value).then((status){
+          if(status == 200){
+            Get.back();
+            Get.back();
+            listSnackBar(list: profile.errorMassages , err: false);
+            profile.profileLoading(true);
+            getUserInfo(_token);
+
+            if(mounted){
+              setState(() {
+                imageFile = value;
+                imageChange = true;
+              });
+            }
+          }else{
+            listSnackBar(list: profile.errorMassages , err: true);
+          }
+    });
   }
 }

@@ -46,7 +46,7 @@ class CheckPhonePage extends StatelessWidget {
                       controllers: check.mobile,
                       labeltext: 'شماره همراه',
                       obscureText: false,
-                      textInputType: TextInputType.text,
+                      textInputType: TextInputType.phone,
                       icons: null),
                   SizedBox(
                     height: 15,

@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:sportapplication/Model/MyPackageModel.dart';
 import 'package:sportapplication/controller/Functions/PackageFunction.dart';
 import 'package:sportapplication/controller/util.dart';
+import 'package:sportapplication/view/component/Constans.dart';
 import 'package:sportapplication/view/page/myInfo/subsetConstant.dart';
 import 'package:sportapplication/view/page/packageDetail/PackagesListItemDetail.dart';
 
@@ -60,7 +61,8 @@ class _MyPackageState extends State<MyPackage> {
       ),
       body:Directionality(
         textDirection: TextDirection.rtl,
-        child: _loaded ?ListView.builder(
+        child: _loaded ?
+        _myListPackage.isEmpty ?noItem() :ListView.builder(
           itemCount: _myListPackage.length,
           padding: EdgeInsets.only(top: 10),
           shrinkWrap: true,

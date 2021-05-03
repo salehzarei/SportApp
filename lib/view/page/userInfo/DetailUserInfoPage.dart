@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
@@ -145,7 +147,7 @@ class _DetailUserInfoPageState extends State<DetailUserInfoPage>
                               child: AspectRatio(
                                 aspectRatio: 2 / 2,
                                 child: imageShower(
-                                    imageUrl:registerFunction.showProviderModel.info.pic,
+                                    imageUrl:'${registerFunction.showProviderModel.info.pic}?id=${new Random().nextInt(100)}',
                                     margin: EdgeInsets.all(8),
                                     fit: BoxFit.fill,
                                     borderRadius: BorderRadius.circular(100)),

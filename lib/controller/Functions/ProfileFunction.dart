@@ -14,47 +14,72 @@ class ProfileFunction extends GetxController {
 
   Future loadingUserData({@required String tokens}) async {
     profileLoading.value = true;
+    userProfile = null;
     final response = await ApiService().profileUserData(token: tokens);
-
-    print('loadingUserData response.body');
-    print(response.body);
 
     if (response.statusCode == 200) {
       userProfile = UserDataModel.fromJson(response.body);
-      print(response.body);
-      update();
+
       profileLoading.value = false;
     } else {
       // Constans().dialogboxCheckInternet(response.statusCode);
     }
+    update();
+    notifyChildrens();
     // profileLoading.value = false;
   }
 
-  Future sendEditeProfileData({
-   @required String token,
-   @required String name,
-   @required String tell,
-   @required String email,
-   @required String ostan,
-   @required String city,
-   @required int lat,
-   @required int lng,
-   @required List interest,
-   @required List activityScope,
-   @required String pic,
+  Future sendEditProfileData({
+     @required String token,
+     @required String name,
+     @required String tell,
+     @required String email,
+     @required String ostan,
+     @required String city,
+     @required String lat,
+     @required String lng,
+     @required List interest,
+     @required List activityScope,
+     @required File pic,
   }) async {
     errorMassages = [];
     editeProfileLoading.value = true;
-    final response = await ApiService().editeProfileUser(lng: lng, name: '', tell: '', email: '', interest: [], token: '', pic: null, lat: null, city: '', activityScope: [], ostan: '');
-    checkerror.value = response.body['error'];
-    if (response.statusCode == 200 && !checkerror.value) {
-      errorMassages = response.body['report_msg'];
+    final response = await ApiService().editeProfileUser(
+        lng: lng,
+        name: name,
+        tell: tell,
+        email: email,
+        interest: interest,
+        token: token,
+        pic: pic,
+        lat: lat,
+        city: city,
+        activityScope:activityScope,
+        ostan: ostan);
+    if (response.statusCode == 200) {
+      editeProfileLoading.value = false;
+      bool error = response.body['error'];
+      if(!error){
+        print("200");
+        print("200");
+        errorMassages = (response.body['report_msg'] is List)
+            ? response.body['report_msg']
+            : [response.body['report_msg']];
+        return 200;
+      }else{
+        editeProfileLoading.value = false;
+        errorMassages = (response.body['error_msg'] is List)
+            ? response.body['error_msg']
+            : [response.body['error_msg']];
+        print("201");
+        return 201;
+      }
     } else {
-      errorMassages = (response.body['error_msg'] is List)
-          ? response.body['error_msg']
-          : [response.body['error_msg']];
+      editeProfileLoading.value = false;
+      print("400");
+      errorMassages = ["خطا در برقراری ارتباط با سرور"];
+      return 400;
     }
-    editeProfileLoading.value = false;
   }
 
 }

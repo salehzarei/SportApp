@@ -3,6 +3,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:sportapplication/controller/Functions/ArticleFunction.dart';
 import 'package:sportapplication/controller/util.dart';
+import 'package:sportapplication/view/component/Constans.dart';
 import 'package:sportapplication/view/page/myInfo/subsetConstant.dart';
 
 class MyArticle extends StatefulWidget {
@@ -52,7 +53,7 @@ class _MyArticleState extends State<MyArticle> {
         SpinKitThreeBounce(
           color: Theme.of(context).primaryColorDark,
           size: 30.0,):
-        ListView.builder(
+        articleFunction.articleModel.post.isEmpty ? noItem():ListView.builder(
           itemCount: articleFunction.articleModel.post.length,
           padding: EdgeInsets.only(top: 10),
           shrinkWrap: true,
