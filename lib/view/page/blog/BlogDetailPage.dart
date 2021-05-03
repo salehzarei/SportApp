@@ -214,7 +214,7 @@ class _BlogDetailPageState extends State<BlogDetailPage> {
                             children: [
                               Icon(Icons.location_on_outlined),
                               Text(
-                                  'مشهد , ابن سینا , بین ابن سینا ۱۸ و ۱۶ , پلاک ۲۷')
+                                'articleFunction.showBlogModel.data')
                             ],
                           )
                         ],

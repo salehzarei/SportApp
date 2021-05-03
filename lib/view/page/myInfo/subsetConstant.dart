@@ -4,7 +4,9 @@ import 'package:sportapplication/Model/ArticleModel.dart';
 import 'package:sportapplication/Model/MyPackageModel.dart';
 import 'package:sportapplication/Model/SubSetModel.dart';
 import 'package:sportapplication/controller/util.dart';
+import 'package:get/get.dart';
 import 'package:sportapplication/view/component/Constans.dart';
+import 'package:sportapplication/view/page/blog/BlogDetailPage.dart';
 
 subsetItemList(
     {@required BuildContext context,
@@ -434,6 +436,9 @@ myArticleList({@required BuildContext context, @required int index, @required re
     padding: EdgeInsets.symmetric(horizontal: 6, vertical: 8),
     margin: EdgeInsets.only(left: 6, right: 6, bottom: 10),
     child: InkWell(
+      onTap: () {
+        Get.to(BlogDetailPage(data.id.toString()));
+      },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -456,6 +461,7 @@ myArticleList({@required BuildContext context, @required int index, @required re
                               child: Container(
                                 width: double.infinity,
                                 decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
                                     gradient: LinearGradient(colors: [
                                   Colors.black26,
                                   Colors.grey[800],

@@ -55,7 +55,7 @@ itemPackageFav({@required BuildContext context,@required int index,@required MyP
             children: [
               Icon(Icons.location_on_outlined,size: 18 ,color: Colors.grey[600]),
               SizedBox(width: 8,),
-              Text(data.owner,
+              Text(data.address,
                 style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.w100,

@@ -112,7 +112,7 @@ class _ViewAllPageState extends State<ViewAllPage> {
               page: '',
               order: '',
               catId: '',
-              favorite: '1',
+              favorite: '',
               word: '',
               tag: '',
               limit: '',

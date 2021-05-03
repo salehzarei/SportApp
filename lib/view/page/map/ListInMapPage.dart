@@ -5,6 +5,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:sportapplication/controller/Functions/RegisterFunction.dart';
+import 'package:sportapplication/controller/util.dart';
 import 'package:sportapplication/view/page/map/MapConstant.dart';
 
 class ListInMapPage extends StatefulWidget {
@@ -18,52 +19,25 @@ class _ListInMapPageState extends State<ListInMapPage> {
   Completer<GoogleMapController> _controller = Completer();
   final RegisterFunction registerFunction = Get.put(RegisterFunction());
   int indexItem = 0;
+  List<String> accountList = [ 'باشگاه', 'مربی', 'دکتر', 'فروشگاه'];
+  String _token;
 
   @override
   void initState() {
-    _determinePosition().then((value) {
-      print("asfsd");
-      print("asfsd${value.longitude} + ${value.latitude}");
-      _currentLocation(LatLng(value.latitude,value.longitude), 17.0);
+    getProvider("2");
+    getShared("token").then((token){
+      _token = token;
     });
-
-    registerFunction.getProductCategories(0);
-
-    _markers.add(Marker(
-      position: LatLng(36.3000493,59.5866227),
-      markerId: MarkerId("1"),
-     ));
-    _markers.add(Marker(
-      position: LatLng(36.299742, 59.589348),
-      markerId: MarkerId("2"),
-    ));
-    _markers.add(Marker(
-      position: LatLng(36.299984, 59.582911),
-      markerId: MarkerId("3"),
-    ));
-    _markers.add(Marker(
-      position: LatLng(36.301281, 59.580808),
-      markerId: MarkerId("4"),
-    ));
-    _markers.add(Marker(
-      position: LatLng(36.303551, 59.587170),
-      markerId: MarkerId("5"),
-    ));
-    _markers.add(Marker(
-      position: LatLng(36.310349, 59.580848),
-      markerId: MarkerId("6"),
-    ));
-    _markers.add(Marker(
-      position: LatLng(36.313166, 59.556338),
-      markerId: MarkerId("7"),
-    ));
+    _determinePosition().then((value) {
+      currentLocation(LatLng(value.latitude,value.longitude), 17.0);
+    });
 
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Obx(()=>Scaffold(
+    return Scaffold(
       body: Directionality(
         textDirection: TextDirection.rtl,
         child: Stack(
@@ -91,10 +65,25 @@ class _ListInMapPageState extends State<ListInMapPage> {
                 padding: EdgeInsets.only(right: 10),
                 scrollDirection: Axis.horizontal,
                 shrinkWrap: true,
-                itemCount: registerFunction.categoryLoading.value?0:registerFunction.categoryList.length,
-                itemBuilder:(context, index) => categoryItemList(model: registerFunction.categoryList[index],onTab:(){
+                itemCount: accountList.length,
+                itemBuilder:(context, index) => categoryItemList1(title:accountList[index],onTab:(){
                     if(mounted){
                       setState(() {
+                        switch(index){
+                          case 0:
+                            getProvider("2");
+                            break;
+                          case 1:
+                            getProvider("3");
+                            break;
+                              case 2:
+                                getProvider("4");
+                            break;
+                          case 3:
+                            getProvider("5");
+                            break;
+
+                        }
                         indexItem = index;
                       });
                     }
@@ -115,11 +104,13 @@ class _ListInMapPageState extends State<ListInMapPage> {
                   ),
                   child: Center(
                     child: IconButton(onPressed: () {
-                      print("Location");
-                      _displayCurrentLocation().then((value) {
-                        print("Location");
-                        print("Location is : ${value.longitude} + ${value.latitude}");
-                        _currentLocation(LatLng(value.latitude,value.longitude), 17.0);
+                      displayCurrentLocation()
+                          .then((value) {
+                        // _location = value;
+                        currentLocation(
+                            LatLng(value.latitude,
+                                value.longitude),
+                            15.0);
                       });
                     },icon:Icon( Icons.my_location , size: 20 , color: Colors.black,)),
                   ),
@@ -129,18 +120,34 @@ class _ListInMapPageState extends State<ListInMapPage> {
           ],
         ),
       ),
-    ));
-  }
-
-  void _currentLocation(LatLng latlong, zoom) async {
-    print("sdfsdf  asdfsdf ${latlong.latitude}   asdfsdf ${latlong.longitude}");
-    final GoogleMapController controller = await _controller.future;
-    controller.animateCamera(
-      CameraUpdate.newCameraPosition(
-        CameraPosition(target: latlong, zoom: zoom),
-      ),
     );
   }
+
+  getProvider(String level){
+    registerFunction.providers( token: _token, following: '', level: level, activity_scope: '', special: '',).whenComplete(() {
+      if(!registerFunction.providerLoading.value){
+        _markers.clear();
+        print("ok");
+        print("registerFunction.providerList.post");
+        print(registerFunction.providerList.post.length);
+        print('_markers');
+        print(_markers.length);
+        registerFunction.providerList.post.forEach((element) {
+          _markers.add(Marker(
+            position: LatLng(double.parse(element.lat) , double.parse(element.lng)),
+            markerId: MarkerId(element.id.toString()),
+          ));
+        });
+        if(mounted){
+          setState(() {
+            print('_markers');
+            print(_markers.length);
+          });
+        }
+      }
+    });
+  }
+
 
   Future<Position> _determinePosition() async {
     bool serviceEnabled;
@@ -170,8 +177,20 @@ class _ListInMapPageState extends State<ListInMapPage> {
     return await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
   }
 
-  Future<Position> _displayCurrentLocation() async {
-    return await Geolocator.getCurrentPosition(
+
+  Future<Position> displayCurrentLocation() async {
+    Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
+    return position;
   }
+
+  void currentLocation(LatLng latlong, zoom) async {
+    final GoogleMapController controller = await _controller.future;
+    controller.animateCamera(
+      CameraUpdate.newCameraPosition(
+        CameraPosition(target: latlong, zoom: zoom),
+      ),
+    );
+  }
+
 }

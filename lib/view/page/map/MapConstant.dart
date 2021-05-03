@@ -40,6 +40,31 @@ categoryItemList({@required CategoryAccountTypeModel model,@required BuildContex
   );
 }
 
+
+categoryItemList1({@required String title,@required BuildContext context,@required onTab,@required int index,@required int indexItem }){
+  return InkWell(
+    onTap: onTab,
+    focusColor: Colors.transparent,
+    hoverColor: Colors.transparent,
+    splashColor: Colors.transparent,
+    highlightColor: Colors.transparent,
+    child: Container(
+      margin: EdgeInsets.only(left: 10),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(6),
+        color: indexItem == index?Theme.of(context).primaryColorDark:Colors.white,
+        border: Border.all(color:indexItem == index?Theme.of(context).primaryColorDark:Colors.grey[300] , width: 1),
+      ),
+      padding: EdgeInsets.symmetric(horizontal: 20 ),
+      child: Center(
+        child: Text(title, style: TextStyle(
+            fontSize: 15 , color:indexItem == index?Colors.white: Colors.grey[600]
+        ),),
+      ),
+    ),
+  );
+}
+
 viewBellowButton({@required String title,@required IconData icon,@required  onTap}){
   return Container(
     decoration: BoxDecoration(

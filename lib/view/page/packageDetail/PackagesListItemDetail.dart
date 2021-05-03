@@ -356,15 +356,20 @@ class _PackagesListItemDetailState extends State<PackagesListItemDetail> {
                                             ],
                                           ),
                                         ),
-                                        Container(
-                                          padding: EdgeInsets.all(10),
-                                          decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(10),
-                                              border:
-                                              Border.all(width: 1, color: Colors.blue)),
-                                          child: Icon(
-                                            Icons.call,
-                                            color: Colors.blue,
+                                        InkWell(
+                                          onTap: () {
+                                            launchURL('tel:${ packageFunction.showPackageModel.data.owner_cell}');
+                                          },
+                                          child: Container(
+                                            padding: EdgeInsets.all(10),
+                                            decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(10),
+                                                border:
+                                                Border.all(width: 1, color: Colors.blue)),
+                                            child: Icon(
+                                              Icons.call,
+                                              color: Colors.blue,
+                                            ),
                                           ),
                                         )
                                       ],
@@ -377,7 +382,7 @@ class _PackagesListItemDetailState extends State<PackagesListItemDetail> {
                                     children: [
                                       Icon(Icons.location_on_outlined),
                                       Text(
-                                          'مشهد , ابن سینا , بین ابن سینا ۱۸ و ۱۶ , پلاک ۲۷')
+                                        packageFunction.showPackageModel.data.owner_address,)
                                     ],
                                   )
                                 ],

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -37,7 +39,7 @@ specialList({@required context,@required controller,@required MyPackagePost data
                         borderRadius:  BorderRadius.only(
                         topLeft: Radius.circular(6),
                         topRight: Radius.circular(6)),
-                        imageUrl: data.pic,
+                        imageUrl: '${data.pic}?id=${new Random().nextInt(100)}',
                         fit: BoxFit.fill),
                   ),
                 ),
@@ -181,7 +183,7 @@ newArticleItemList({@required context,@required ArticleModelPost data}){
                         alignment: Alignment.bottomLeft,
                         child: imageShower(margin: EdgeInsets.all(0),
                             borderRadius:  BorderRadius.circular(15),
-                            imageUrl: data.pic,
+                            imageUrl:'${data.pic}?id=${new Random().nextInt(100)}',
                             fit: BoxFit.fill),
                         decoration: BoxDecoration(
                           // color: Colors.grey,
@@ -219,7 +221,7 @@ newArticleItemList({@required context,@required ArticleModelPost data}){
                                   color: Colors.blueGrey,
                                   image: DecorationImage(
                                       image: NetworkImage(
-                                          data.owner_pic)),
+                                          '${data.owner_pic}?id=${new Random().nextInt(100)}')),
                                   borderRadius:
                                   BorderRadiusDirectional.circular(60)),
                             ),
@@ -260,7 +262,7 @@ newArticleItemList({@required context,@required ArticleModelPost data}){
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                          data.tages.isEmpty?"#":data.tages[0],
+                          data.tages.isEmpty?"#":'# ${data.tages[0]}',
                             textAlign: TextAlign.right,
                             maxLines: 1,
                             overflow: TextOverflow.clip,
@@ -313,7 +315,7 @@ packageMe({@required context,@required controller,@required MyPackagePost data})
                     child:imageShower(margin: EdgeInsets.all(0), borderRadius:  BorderRadius.only(
                         topLeft: Radius.circular(6),
                         topRight: Radius.circular(6)),
-                        imageUrl: data.pic,
+                        imageUrl: '${data.pic}?id=${new Random().nextInt(100)}',
                         fit: BoxFit.fill),
                   ),
                 ),
@@ -455,7 +457,7 @@ articleMe({@required context,@required ArticleModelPost data}){
                      alignment: Alignment.bottomLeft,
                      child: imageShower(margin: EdgeInsets.all(0),
                          borderRadius:  BorderRadius.only(topLeft: Radius.circular(15),topRight: Radius.circular(15)),
-                         imageUrl: data.pic,
+                         imageUrl: '${data.pic}?id=${new Random().nextInt(100)}',
                          fit: BoxFit.fill),
                      decoration: BoxDecoration(
                        // color: Colors.grey,
@@ -509,7 +511,7 @@ articleMe({@required context,@required ArticleModelPost data}){
                        ),
                        SizedBox(height: 4),
                        Text(
-                         data.tages.isEmpty?"#":data.tages[0],
+                         data.tages.isEmpty?"#":'# ${data.tages[0]}',
                          textAlign: TextAlign.right,
                          maxLines: 1,
                          overflow: TextOverflow.clip,
@@ -571,7 +573,7 @@ followingItem({@required ProviderPost data}){
                 margin: EdgeInsets.only(bottom: 6),
                 child: CachedNetworkImage(
                   fit: BoxFit.cover,
-                  imageUrl: data.pic,
+                  imageUrl:'${data.pic}?id=${new Random().nextInt(100)}',
                   imageBuilder: (context, imageProvider) => Container(
                     margin: EdgeInsets.all(0.5),
                     decoration: BoxDecoration(
@@ -678,7 +680,7 @@ suggestedUser({@required context,@required ProviderPost data}){
                     child: Column(
                       children: [
                         CachedNetworkImage(
-                          imageUrl:data.pic,
+                          imageUrl:'${data.pic}?id=${new Random().nextInt(100)}',
                           imageBuilder: (context, imageProvider) =>
                               Container(
                                 width: _width * 0.46,

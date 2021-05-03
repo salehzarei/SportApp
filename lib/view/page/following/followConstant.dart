@@ -100,7 +100,7 @@ followListItem({@required BuildContext context,@required ProviderPost data,@requ
                 width: 8,
               ),
               Text(
-                "پنج راه سناباد بین ابن سینای 16 و 18 پلاک 210",
+                data.address,
                 style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.w100,

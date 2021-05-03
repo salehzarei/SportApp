@@ -71,7 +71,10 @@ class _MyPackageState extends State<MyPackage> {
           }, editPackage: (){
 
           }, onTab: (){
-            Get.to(PackagesListItemDetail(_myListPackage[index].id.toString()));
+            if(_myListPackage[index].status != 1){
+              Get.to(PackagesListItemDetail(_myListPackage[index].id.toString()));
+            }
+
           }),
         ):SpinKitThreeBounce(
             color: Theme.of(context).primaryColorDark,
