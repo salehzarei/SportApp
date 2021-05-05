@@ -31,11 +31,13 @@ class Info {
     String lat;
     String level_title;
     int level;
+    int blog_count;
+    int package_count;
     String lng;
     String pic;
     String title;
 
-    Info({this.activity_scope, this.address,this.level_title, this.cell, this.description, this.email, this.expire, this.following, this.id, this.interest, this.lat, this.level, this.lng, this.pic, this.title});
+    Info({this.activity_scope, this.address,this.level_title, this.cell,this.blog_count,this.package_count, this.description, this.email, this.expire, this.following, this.id, this.interest, this.lat, this.level, this.lng, this.pic, this.title});
 
     factory Info.fromJson(Map<String, dynamic> json) {
         return Info(
@@ -50,8 +52,10 @@ class Info {
             id: json['id'], 
             interest: json['interest'] != null ? (json['interest'] as List).map((i) => Interest.fromJson(i)).toList() : null, 
             lat: json['lat'], 
-            level: json['level'], 
-            lng: json['lng'], 
+            level: json['level'],
+            package_count: json['package_count'],
+            blog_count: json['blog_count'],
+            lng: json['lng'],
             pic: json['pic'], 
             title: json['title'], 
         );

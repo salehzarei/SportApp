@@ -133,7 +133,7 @@ itemPackageUserList({@required BuildContext context, @required int index, @requi
                 Row(
                   children: [
                     Text(
-                      "تاریخ شروع:",
+                      "تاریخ شروع : ",
                       style: TextStyle(fontSize: 14, color: Colors.black),
                     ),
                     Text(
@@ -147,7 +147,7 @@ itemPackageUserList({@required BuildContext context, @required int index, @requi
                 Row(
                   children: [
                     Text(
-                      "تاریخ پایان:",
+                      "تاریخ پایان : ",
                       style: TextStyle(fontSize: 14, color: Colors.black),
                     ),
                     Text(

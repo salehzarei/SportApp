@@ -1,16 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sportapplication/controller/Functions/Controller.dart';
+import 'package:sportapplication/controller/Functions/PackageFunction.dart';
+import 'package:sportapplication/controller/util.dart';
 import 'package:sportapplication/view/component/Constans.dart';
+import 'package:sportapplication/view/page/map/MapConstant.dart';
 
-class SearchPage extends StatelessWidget {
+class SearchPage extends StatefulWidget {
+
+  @override
+  _SearchPageState createState() => _SearchPageState();
+}
+
+class _SearchPageState extends State<SearchPage> {
   final Controller active = Get.put(Controller());
+
   FocusNode _searchFocus = FocusNode();
+
   TextEditingController _searchController = TextEditingController();
+
+  final PackageFunction packageFunction = Get.put(PackageFunction());
+  String _token;
+
+  @override
+  void initState() {
+    getShared('token').then((value) {
+      _token = value;
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    return Obx(()=>SafeArea(
       child: Scaffold(
         body: Column(
           children: [
@@ -35,23 +57,42 @@ class SearchPage extends StatelessWidget {
                             hint: "متن جستجو",
                             maxLine: 1,
                             keyboardType: TextInputType.text,
-                            maxLength: 1000))
+                            maxLength: 1000, onPressed: (){
+                              if(_searchController.text.isNotEmpty){
+                                packageFunction.geUserPackageList(token: _token,
+                                    catId: "",
+                                    word:_searchController.text.trim(),
+                                    uid: '',
+                                    sort: "",
+                                    order: "",
+                                    limit: "",
+                                    interest: "",
+                                    page: "",
+                                    special: "",
+                                    folowing: "",
+                                    level: '',
+                                    asc: "",
+                                    favorite: '');
+                              }
+                            }
+                        )
+                    )
                   ],
                 ),
               ),
             ),
             Expanded(
-                child: ListView.builder(
+                child:packageFunction.userPackageLoading.value?SizedBox():Directionality(
+                  textDirection: TextDirection.rtl,
+                  child: ListView.builder(
                     shrinkWrap: true,
-                    itemCount: 10,
-                    itemBuilder: (context, index) {
-                      return Container(
-
-                      );
-                    },))
+                    padding: EdgeInsets.symmetric(vertical: 20),
+                    itemCount:  packageFunction.userPackageModel.post.length,
+                    itemBuilder:(context, index) => itemPackageList(context: context, index: index,data:packageFunction.userPackageModel.post[index]),),
+                ))
           ],
         ),
       ),
-    );
+    ));
   }
 }

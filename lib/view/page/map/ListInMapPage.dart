@@ -119,7 +119,7 @@ class _ListInMapPageState extends State<ListInMapPage> {
               ),
             ),
             showUser? Padding(
-              padding: EdgeInsets.only(left: 6 , right: 6 , bottom: 20),
+              padding: EdgeInsets.only(left: 6 , right: 6 , bottom: 60),
               child: Align(child: itemSubsetUserList(context: context, data: registerFunction.showProviderModel, onPressed: (){
                 if(mounted){
                   setState(() {

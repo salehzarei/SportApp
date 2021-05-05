@@ -193,15 +193,20 @@ class _BlogDetailPageState extends State<BlogDetailPage> {
                                     ],
                                   ),
                                 ),
-                                Container(
-                                  padding: EdgeInsets.all(10),
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      border:
-                                      Border.all(width: 1, color: Colors.blue)),
-                                  child: Icon(
-                                    Icons.call,
-                                    color: Colors.blue,
+                                InkWell(
+                                  onTap: () {
+                                    launchURL('tel:${ articleFunction.showBlogModel.data.owner_cell}');
+                                  },
+                                  child: Container(
+                                    padding: EdgeInsets.all(10),
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        border:
+                                        Border.all(width: 1, color: Colors.blue)),
+                                    child: Icon(
+                                      Icons.call,
+                                      color: Colors.blue,
+                                    ),
                                   ),
                                 )
                               ],
@@ -214,7 +219,7 @@ class _BlogDetailPageState extends State<BlogDetailPage> {
                             children: [
                               Icon(Icons.location_on_outlined),
                               Text(
-                                'articleFunction.showBlogModel.data')
+                                articleFunction.showBlogModel.data.owner_address)
                             ],
                           )
                         ],

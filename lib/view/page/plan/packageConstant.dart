@@ -112,7 +112,7 @@ itemMyBox({@required BuildContext context, @required MypackagesModel lists}) {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text("تاریخ خرید:",
+              Text("تاریخ خرید : ",
                   style: TextStyle(fontSize: 14, color: Colors.black)),
               Text(
                 '1400/01/20',

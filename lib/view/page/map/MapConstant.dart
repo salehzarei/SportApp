@@ -43,7 +43,6 @@ categoryItemList({@required CategoryAccountTypeModel model,@required BuildContex
   );
 }
 
-
 categoryItemList1({@required String title,@required BuildContext context,@required onTab,@required int index,@required int indexItem }){
   return InkWell(
     onTap: onTab,
@@ -257,7 +256,7 @@ itemPackageList({@required BuildContext context,@required int index,@required My
                 Row(
                   children: [
                     Text(
-                      "تاریخ شروع:",
+                      "تاریخ شروع : ",
                       style: TextStyle(fontSize: 14, color: Colors.black),
                     ),
                     Text(
@@ -271,7 +270,7 @@ itemPackageList({@required BuildContext context,@required int index,@required My
                 Row(
                   children: [
                     Text(
-                      "تاریخ پایان:",
+                      "تاریخ پایان : ",
                       style: TextStyle(fontSize: 14, color: Colors.black),
                     ),
                     Text(
@@ -291,7 +290,6 @@ itemPackageList({@required BuildContext context,@required int index,@required My
     ),
   );
 }
-
 
 itemSubsetUserList({@required BuildContext context, @required ShowProviderModel data, @required onPressed}) {
   return Container(
@@ -354,7 +352,7 @@ itemSubsetUserList({@required BuildContext context, @required ShowProviderModel 
                               color: Colors.black
                           ),),
                         SizedBox(width: 8,),
-                        Text("${0} پکیج",
+                        Text("${data.info.package_count} پکیج ",
                           style: TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.w600,
@@ -373,7 +371,7 @@ itemSubsetUserList({@required BuildContext context, @required ShowProviderModel 
                               color: Colors.black
                           ),),
                         SizedBox(width: 8,),
-                        Text("${0} مقاله",
+                        Text("${data.info.blog_count} مقاله ",
                           style: TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.w600,

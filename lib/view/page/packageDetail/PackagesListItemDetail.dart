@@ -283,7 +283,7 @@ class _PackagesListItemDetailState extends State<PackagesListItemDetail> {
                                     Row(
                                       children: [
                                         Text(
-                                          "تاریخ شروع:",
+                                          "تاریخ شروع : ",
                                           style: TextStyle(
                                               fontSize: 15,
                                               color: Colors.black),
@@ -301,7 +301,7 @@ class _PackagesListItemDetailState extends State<PackagesListItemDetail> {
                                     Row(
                                       children: [
                                         Text(
-                                          "تاریخ پایان:",
+                                          "تاریخ پایان : ",
                                           style: TextStyle(
                                               fontSize: 15,
                                               color: Colors.black),

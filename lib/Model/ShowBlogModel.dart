@@ -28,12 +28,14 @@ class ShowModelData {
     int id;
     String owner;
     String owner_pic;
+    String owner_cell;
+    String owner_address;
     String summary;
     List<Object> tages;
     String title;
     int uid;
 
-    ShowModelData({this.category, this.category_title, this.description, this.favorit, this.gallery, this.hits, this.id, this.owner, this.owner_pic, this.summary, this.tages, this.title, this.uid});
+    ShowModelData({this.category, this.category_title, this.description, this.owner_address, this.owner_cell, this.favorit, this.gallery, this.hits, this.id, this.owner, this.owner_pic, this.summary, this.tages, this.title, this.uid});
 
     factory ShowModelData.fromJson(Map<String, dynamic> json) {
         return ShowModelData(
@@ -44,6 +46,8 @@ class ShowModelData {
             hits: json['hits'], 
             id: json['id'],
             favorit: json['favorit'],
+            owner_address: json['owner_address'],
+            owner_cell: json['owner_cell'],
             owner: json['owner'],
             owner_pic: json['owner_pic'], 
             summary: json['summary'], 
