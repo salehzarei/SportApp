@@ -24,7 +24,6 @@ class SearchPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     IconButton(onPressed: () => Get.back(), icon: Icon(Icons.arrow_back_rounded, size: 20, color: Colors.grey[600]),),
-
                     SizedBox(
                       width: 10,
                     ),

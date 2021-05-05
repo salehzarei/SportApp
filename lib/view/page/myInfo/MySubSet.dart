@@ -3,6 +3,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:sportapplication/controller/Functions/SubSetFunctoin.dart';
 import 'package:sportapplication/controller/util.dart';
+import 'package:sportapplication/view/component/Constans.dart';
 import 'package:sportapplication/view/page/myInfo/subsetConstant.dart';
 
 class MySubSet extends StatefulWidget {
@@ -47,12 +48,14 @@ class _MySubSetState extends State<MySubSet> {
           ),
           body:Directionality(
             textDirection: TextDirection.rtl,
-            child: subSetFunction.loading.value?Center(
+            child: subSetFunction.loading.value?
+            Center(
               child: SpinKitThreeBounce(
                 color: Theme.of(context).primaryColorDark,
                 size: 30.0,
               ),
-            ):ListView.builder(
+            ):
+            subSetFunction.subSetModel.post.isEmpty ? noItem() : ListView.builder(
               itemCount: subSetFunction.subSetModel.post.length,
               padding: EdgeInsets.only(top: 10),
               shrinkWrap: true,

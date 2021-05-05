@@ -96,7 +96,8 @@ class _HomeState extends State<Home> {
           order: '',
           sort: '',
           limit: '10',
-          page: '1')
+          page: '1',
+          level: '')
           .whenComplete(() {
         if (!packageFunction.userPackageLoading.value) {
           if (mounted) {
@@ -119,7 +120,8 @@ class _HomeState extends State<Home> {
               order: '',
               sort: '',
               limit: '10',
-              page: '1')
+              page: '1',
+              level: '')
               .whenComplete(() {
             if (!packageFunction.userPackageLoading.value) {
               if (mounted) {

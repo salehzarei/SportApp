@@ -130,6 +130,7 @@ textFormFieldSearchHintWidget(
     @required hint,
     @required maxLine,
     @required keyboardType,
+    @required onPressed,
     @required maxLength}) {
   return Directionality(
     textDirection: TextDirection.rtl,
@@ -163,10 +164,13 @@ textFormFieldSearchHintWidget(
           ),
         ),
         hintText: hint,
-        prefixIcon: Icon(
-          Icons.search,
-          color: Colors.grey[600],
-          size: 25,
+        prefixIcon: IconButton(
+          onPressed: onPressed,
+          icon: Icon(
+            Icons.search,
+            color: Colors.grey[600],
+            size: 25,
+          ),
         ),
         labelStyle: TextStyle(
             fontSize: 12,

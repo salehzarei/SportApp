@@ -21,12 +21,13 @@ class _ListInMapPageState extends State<ListInMapPage> {
   int indexItem = 0;
   List<String> accountList = [ 'باشگاه', 'مربی', 'دکتر', 'فروشگاه'];
   String _token;
+  bool showUser = false;
 
   @override
   void initState() {
-    getProvider("2");
     getShared("token").then((token){
       _token = token;
+      getProvider("2");
     });
     _determinePosition().then((value) {
       currentLocation(LatLng(value.latitude,value.longitude), 17.0);
@@ -116,7 +117,17 @@ class _ListInMapPageState extends State<ListInMapPage> {
                   ),
                 ),
               ),
-            )
+            ),
+            showUser? Padding(
+              padding: EdgeInsets.only(left: 6 , right: 6 , bottom: 20),
+              child: Align(child: itemSubsetUserList(context: context, data: registerFunction.showProviderModel, onPressed: (){
+                if(mounted){
+                  setState(() {
+                    showUser = false;
+                  });
+                }
+              }),alignment: Alignment.bottomCenter,),
+            ):Container()
           ],
         ),
       ),
@@ -127,15 +138,21 @@ class _ListInMapPageState extends State<ListInMapPage> {
     registerFunction.providers( token: _token, following: '', level: level, activity_scope: '', special: '',).whenComplete(() {
       if(!registerFunction.providerLoading.value){
         _markers.clear();
-        print("ok");
-        print("registerFunction.providerList.post");
-        print(registerFunction.providerList.post.length);
-        print('_markers');
-        print(_markers.length);
         registerFunction.providerList.post.forEach((element) {
           _markers.add(Marker(
             position: LatLng(double.parse(element.lat) , double.parse(element.lng)),
             markerId: MarkerId(element.id.toString()),
+            onTap: () {
+              registerFunction.showProvider(token: _token, bId: element.id.toString()).whenComplete(() {
+                if(!registerFunction.showProviderLoading.value){
+                  if(mounted){
+                    setState(() {
+                      showUser = true;
+                    });
+                  }
+                }
+              });
+            },
           ));
         });
         if(mounted){
@@ -147,7 +164,6 @@ class _ListInMapPageState extends State<ListInMapPage> {
       }
     });
   }
-
 
   Future<Position> _determinePosition() async {
     bool serviceEnabled;
@@ -176,7 +192,6 @@ class _ListInMapPageState extends State<ListInMapPage> {
     print("Location services are OK.");
     return await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
   }
-
 
   Future<Position> displayCurrentLocation() async {
     Position position = await Geolocator.getCurrentPosition(

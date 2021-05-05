@@ -246,12 +246,13 @@ class ApiService extends GetConnect {
     @required String order,
     @required String limit,
     @required String interest,
+    @required String level,
     @required String page,
     @required String special,
     @required String folowing,
     @required String favorite,
     @required String asc}) =>
-      get(apiUrl + 'package?catId=$catId&word=$word&uid=$uid&sort=$sort&asc=$asc&order=$order&page=$page&limit=$limit&interest=$interest&token=$token&special=$special&folowing=$folowing&favorit=$favorite');
+      get(apiUrl + 'package?catId=$catId&word=$word&uid=$uid&sort=$sort&asc=$asc&order=$order&page=$page&limit=$limit&interest=$interest&token=$token&special=$special&folowing=$folowing&favorit=$favorite&level=$level');
 
   Future<Response> getBlog({
     @required String token,

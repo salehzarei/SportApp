@@ -37,7 +37,8 @@ class _PackageFavoritePageState extends State<PackageFavoritePage> {
         order: '',
         sort: '',
         limit: '',
-        page: '');
+        page: '',
+        level: '');
   }
   @override
   Widget build(BuildContext context) {

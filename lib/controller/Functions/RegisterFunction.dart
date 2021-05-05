@@ -308,7 +308,7 @@ class RegisterFunction extends GetxController {
   Future showProvider(
       {@required String token,
        @required String bId }) async {
-    // showProviderLoading.value = true;
+    showProviderLoading.value = true;
     final response = await ApiService().showProvider(token , bId);
     if (response.statusCode == 200) {
       print(response.body);

@@ -2,10 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sportapplication/Model/CategoryAccountTypeModel.dart';
+import 'package:sportapplication/Model/MyPackageModel.dart';
+import 'package:sportapplication/Model/showProviderModel.dart';
 import 'package:sportapplication/controller/Functions/Controller.dart';
 import 'package:sportapplication/controller/util.dart';
 import 'package:sportapplication/view/component/Constans.dart';
 import 'package:sportapplication/view/page/packageDetail/PackagesListItemDetail.dart';
+import 'package:sportapplication/view/page/userInfo/DetailUserInfoPage.dart';
 
 // final Controller constant = Get.put(Controller());
 
@@ -98,7 +101,7 @@ viewBellowButton({@required String title,@required IconData icon,@required  onTa
   );
 }
 
-itemPackageList({@required BuildContext context,@required int index}){
+itemPackageList({@required BuildContext context,@required int index,@required MyPackagePost data}){
   return Container(
     decoration: BoxDecoration(
         color: Colors.white,
@@ -116,7 +119,7 @@ itemPackageList({@required BuildContext context,@required int index}){
     margin: EdgeInsets.only(left: 6 , right: 6 , bottom: 10),
     child: InkWell(
       onTap: () {
-        // Get.to(PackagesListItemDetail());
+        Get.to(PackagesListItemDetail(data.id.toString()));
       },
       child:Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -124,7 +127,7 @@ itemPackageList({@required BuildContext context,@required int index}){
         children: [
           Container(
             padding:EdgeInsets.only(right: 8 , top: 6 , bottom: 10),
-            child: Text("سیاره فوتسال",
+            child: Text(data.owner,
             style: TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.w600,
@@ -135,7 +138,7 @@ itemPackageList({@required BuildContext context,@required int index}){
             children: [
               Icon(Icons.location_on_outlined,size: 18 ,color: Colors.grey[600]),
               SizedBox(width: 8,),
-              Text("پنج راه سناباد بین ابن سینای 16 و 18 پلاک 210",
+              Text(data.address,
                 style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.w100,
@@ -143,19 +146,8 @@ itemPackageList({@required BuildContext context,@required int index}){
                 ),),
             ],
           ),
-          SizedBox(height: 6,),
-          Row(
-            children: [
-              Icon(Icons.location_on_outlined,size: 18 ,color: Colors.grey[600]),
-              SizedBox(width: 8,),
-              Text("3.1 کیلومتر فاصله",
-                style: TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w100,
-                    color: Colors.grey[800]
-                ),),
-            ],
-          ),
+          SizedBox(
+            height: 6,),
           Container(
             margin: EdgeInsets.symmetric(horizontal: 10 , vertical: 8),
             height: 1,
@@ -164,9 +156,7 @@ itemPackageList({@required BuildContext context,@required int index}){
           IntrinsicHeight(
             child: Row(
               children: [
-                Expanded(flex:2,child:  AspectRatio(aspectRatio: 2/2,child: imageShower(imageUrl: index%2 == 0?
-                'https://dkstatics-public.digikala.com/digikala-adservice-banners/956cd52f1f18f11284016c86561d53bcdcfdeedd_1612606849.jpg?x-oss-process=image/quality,q_80':
-                    "https://dkstatics-public.digikala.com/digikala-adservice-banners/bc928cad36c9cc9aed866ec4de30dfd9f5e50ec7_1607016116.jpg?x-oss-process=image/quality,q_80",
+                Expanded(flex:2,child:  AspectRatio(aspectRatio: 2/2,child: imageShower(imageUrl: data.pic,
                     margin: EdgeInsets.only(left: 0,right: 0), fit: BoxFit.fill, borderRadius: BorderRadius.circular(8)),)),
                 SizedBox(width: 8,),
                 Expanded(flex:5,child: Column(
@@ -174,71 +164,250 @@ itemPackageList({@required BuildContext context,@required int index}){
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(height: 6,),
-                    Text("دوره تاکتیک در فوتسال",
+                    Text(data.title,
                       style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w400,
                           color: Colors.black
                       ),),
                     SizedBox(height: 8,),
-                    Text("25 خرید",
-                      style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.grey[400]
-                      ),),
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.visibility,
+                          size: 15,
+                          color: Colors.grey,
+                        ),
+                        Text(
+                          '${ data.hits } بازدید',
+                          style: TextStyle(color: Colors.grey[600],fontSize: 12),
+                        )
+                      ],
+                    ),
                     SizedBox(height: 8,),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                      Row(
-                        children: [
-                          Text(
-                            maskedText('75000'),
-                            style: TextStyle(
-                                decoration: TextDecoration.lineThrough,
-                                decorationColor: Colors.red[800],
-                                // decorationStyle: TextDecorationStyle.double,
-                                decorationThickness: 1.5,
-                                color: Colors.grey[500],
-                                fontWeight: FontWeight.w600,
-                                fontSize: 13),
-                          ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Text(
-                            '${maskedText('50000')} تومان ',
-                            style: TextStyle(
-                                color: Colors.green,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 14),
-                          ),
-                        ],
-                      ),
-                        Container(
-                          padding: EdgeInsets.symmetric(horizontal: 10,vertical: 4),
+                        Row(
+                          children: [
+                            data.discount == 0
+                                ? Container()
+                                : Text(
+                              maskedText(data.price.toString()),
+                              style: TextStyle(
+                                  decoration:
+                                  TextDecoration.lineThrough,
+                                  decorationColor: Colors.red[800],
+                                  // decorationStyle: TextDecorationStyle.double,
+                                  decorationThickness: 1.5,
+                                  color: Colors.grey[500],
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 13),
+                            ),
+                            data.discount == 0
+                                ? Container()
+                                : SizedBox(
+                              width: 5,
+                            ),
+                            Text(
+                              '${maskedText(data.final_price.toString())} تومان ',
+                              style: TextStyle(
+                                  color: Colors.green,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14),
+                            ),
+                          ],
+                        ),
+                        data.discount == 0
+                            ? Container()
+                            : Container(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 4),
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(6),
-                            color: Theme.of(context).primaryColorDark
-                          ),
+                              borderRadius: BorderRadius.circular(6),
+                              color:
+                              Theme.of(context).primaryColorDark),
                           child: Center(
-                            child: Text("٪15",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 13
-                            ),),
+                            child: Text(
+                              data.discount_type == 2
+                                  ? '${data.discount} %'
+                                  : data.discount.toString(),
+                              style: TextStyle(
+                                  color: Colors.white, fontSize: 13),
+                            ),
                           ),
                         )
-                    ],),
+                      ],
+                    ),
                     SizedBox(height: 6,),
+
                   ],
                 ))
               ],
             ),
-          )
+          ),
+          data.discount == 0
+              ? Container()
+              : Padding(
+            padding:
+            EdgeInsets.only(top: 15, left: 15, right: 15, bottom: 6),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Text(
+                      "تاریخ شروع:",
+                      style: TextStyle(fontSize: 14, color: Colors.black),
+                    ),
+                    Text(
+                      data.sdate,
+                      style: TextStyle(
+                          fontSize: 14,
+                          color: Theme.of(context).primaryColorDark),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Text(
+                      "تاریخ پایان:",
+                      style: TextStyle(fontSize: 14, color: Colors.black),
+                    ),
+                    Text(
+                      data.edate,
+                      style: TextStyle(
+                          fontSize: 14,
+                          color: Theme.of(context).primaryColorDark),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 6,),
         ],
       ) ,
     ),
   );
 }
+
+
+itemSubsetUserList({@required BuildContext context, @required ShowProviderModel data, @required onPressed}) {
+  return Container(
+    decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Colors.grey[300], width: 1),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey[300],
+            offset: Offset(0, 3),
+            blurRadius: 12,
+          )
+        ]
+    ),
+    padding: EdgeInsets.symmetric(horizontal: 6, vertical: 8),
+    margin: EdgeInsets.only(left: 6, right: 6, bottom: 10),
+    child: InkWell(
+      onTap: () {
+        Get.to(DetailUserInfoPage(data.info.id.toString()));
+      },
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          IntrinsicHeight(
+            child: Row(
+              children: [
+                Expanded(flex: 2,
+                    child: AspectRatio(aspectRatio: 2 / 2,
+                      child: imageShower(imageUrl: data.info.pic,
+                          margin: EdgeInsets.all(8),
+                          fit: BoxFit.fill,
+                          borderRadius: BorderRadius.circular(100)),)),
+                SizedBox(width: 8,),
+                Expanded(flex: 5, child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 6,),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(data.info.title,
+                          style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black
+                          ),),
+                        IconButton(icon: Icon(Icons.close , size: 20,), onPressed: onPressed)
+                      ],
+                    ),
+                    SizedBox(height: 8,),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text("تعداد پکیج های ارايه شده: ",
+                          style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black
+                          ),),
+                        SizedBox(width: 8,),
+                        Text("${0} پکیج",
+                          style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.green[400]
+                          ),),
+                      ],
+                    ),
+                    SizedBox(height: 8,),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text("تعداد مقالات ارايه شده: ",
+                          style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black
+                          ),),
+                        SizedBox(width: 8,),
+                        Text("${0} مقاله",
+                          style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.red[400]
+                          ),),
+                      ],
+                    ),
+                    SizedBox(height: 6,),
+                  ],
+                ))
+              ],
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+            height: 1,
+            color: Colors.grey[300],
+          ),
+          Row(
+            children: [
+              Icon(Icons.location_on_outlined, size: 18,
+                  color: Colors.grey[600]),
+              SizedBox(width: 8,),
+              Text(data.info.address,
+                style: TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w100,
+                    color: Colors.grey[800]
+                ),),
+            ],
+          ),
+        ],
+      ),
+    ),
+  );
+}
+

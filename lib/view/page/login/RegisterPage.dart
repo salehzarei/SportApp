@@ -31,7 +31,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final Controller step = Get.put(Controller());
   final SliderFunction sliderFunction = Get.put(SliderFunction());
   Completer<GoogleMapController> controllerr = Completer();
-  static const LatLng _center = const LatLng(0, 0);
+  static const LatLng _center = const LatLng(36.30, 59.58);
 
   LatLng _lastMapPosition = _center;
   void findPersonActivityScopeWhere(List<dynamic> active, int ids) {

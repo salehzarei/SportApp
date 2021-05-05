@@ -32,7 +32,9 @@ class _UserPackageTabState extends State<UserPackageTab> {
           page: "",
           special: "",
           folowing: "",
-          asc: "");
+          asc: "",
+          favorite: '',
+          level: '');
     });
     super.initState();
   }

@@ -52,7 +52,8 @@ class _ViewAllPageState extends State<ViewAllPage> {
               order: '',
               sort: '',
               limit: '',
-              page: '');
+              page: '',
+              level: '');
           break;
         case 2:
           if (mounted) {
@@ -73,7 +74,8 @@ class _ViewAllPageState extends State<ViewAllPage> {
               order: '',
               sort: '',
               limit: '',
-              page: '');
+              page: '',
+              level: '');
           break;
 
         case 3:

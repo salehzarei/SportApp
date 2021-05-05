@@ -206,7 +206,7 @@ class _PackagesListItemDetailState extends State<PackagesListItemDetail> {
                                               maskedText(packageFunction
                                                   .showPackageModel
                                                   .data
-                                                  .discount
+                                                  .price
                                                   .toString()),
                                               style: TextStyle(
                                                   decoration: TextDecoration

@@ -9,7 +9,6 @@ import 'package:sportapplication/Model/ShowPackageModel.dart';
 import 'package:sportapplication/controller/Service/Request.dart';
 
 class PackageFunction extends GetxController {
-
   final addPackageLoading = false.obs;
   final addPicLoading = false.obs;
 
@@ -22,7 +21,6 @@ class PackageFunction extends GetxController {
   MyPackageModel userPackageModel;
 
   final showPackageLoading = true.obs;
-
 
   Future<File> imagePicker({@required bool isCamera}) async {
     var pic = await ImagePicker.pickImage(
@@ -103,22 +101,18 @@ class PackageFunction extends GetxController {
     // }
   }
 
-  Future<int> uploadImage(
-      {@required String token,
-      @required File pic}) async {
-
+  Future<int> uploadImage({@required String token, @required File pic}) async {
     addPicLoading.value = true;
     errorMassages.clear();
 
-    final response = await ApiService().uploadProductPic(
-        token: token,
-        pic: pic);
+    final response =
+        await ApiService().uploadProductPic(token: token, pic: pic);
 
     print('uploadImage');
 
     if (response.statusCode == 200) {
       bool err = response.body['error'];
-      if(!err){
+      if (!err) {
         errorMassages = (response.body['report_msg'] is List)
             ? response.body['report_msg']
             : [response.body['report_msg']];
@@ -126,7 +120,7 @@ class PackageFunction extends GetxController {
         picUrl(response.body['file'].toString());
         addPicLoading.value = false;
         return 200;
-      }else{
+      } else {
         errorMassages = (response.body['error_msg'] is List)
             ? response.body['error_msg']
             : [response.body['error_msg']];
@@ -138,22 +132,19 @@ class PackageFunction extends GetxController {
       errorMassages = ["خطا در برقراری ارتباط با سرور"];
       return 400;
     }
-
   }
-
 
   Future<int> addPackage(
       {@required String token,
-        @required String title,
-        @required String description,
-        @required String category,
-        @required List pics,
-        @required String price,
-        @required String discount,
-        @required String discount_type,
-        @required String sdate,
-        @required String edate}) async {
-
+      @required String title,
+      @required String description,
+      @required String category,
+      @required List pics,
+      @required String price,
+      @required String discount,
+      @required String discount_type,
+      @required String sdate,
+      @required String edate}) async {
     addPackageLoading.value = true;
     errorMassages.clear();
 
@@ -164,20 +155,20 @@ class PackageFunction extends GetxController {
         pics: pics,
         edate: edate,
         title: title,
-        discount_type:discount_type,
+        discount_type: discount_type,
         category: category,
         description: description,
         price: price);
 
     if (response.statusCode == 200) {
       addPackageLoading.value = response.body['error'];
-      if(!addPackageLoading.value){
+      if (!addPackageLoading.value) {
         print("200");
         errorMassages = (response.body['report_msg'] is List)
             ? response.body['report_msg']
             : [response.body['report_msg']];
         return 200;
-      }else{
+      } else {
         errorMassages = (response.body['error_msg'] is List)
             ? response.body['error_msg']
             : [response.body['error_msg']];
@@ -189,28 +180,25 @@ class PackageFunction extends GetxController {
       errorMassages = ["خطا در برقراری ارتباط با سرور"];
       return 400;
     }
-
   }
 
-  Future addFavorite(
-      {@required String token,
-        @required String proId}) async {
-
+  Future addFavorite({@required String token, @required String proId}) async {
     errorMassages.clear();
     final response = await ApiService().addFavPackage(
-      token: token, proId: proId,
+      token: token,
+      proId: proId,
     );
 
     if (response.statusCode == 200) {
       bool error = response.body['error'];
-      if(!error){
+      if (!error) {
         print("200");
         errorMassages = (response.body['report_msg'] is List)
             ? response.body['report_msg']
             : [response.body['report_msg']];
         id = response.body['id'];
         return 200;
-      }else{
+      } else {
         errorMassages = (response.body['error_msg'] is List)
             ? response.body['error_msg']
             : [response.body['error_msg']];
@@ -225,27 +213,23 @@ class PackageFunction extends GetxController {
     update();
   }
 
-
-
-  Future checkpackage(
-      {@required String token,
-        @required String code}) async {
-
+  Future checkpackage({@required String token, @required String code}) async {
     errorMassages.clear();
     final response = await ApiService().checkpackage(
-      token,code,
+      token,
+      code,
     );
 
     if (response.statusCode == 200) {
       bool error = response.body['error'];
-      if(!error){
+      if (!error) {
         print("200");
         errorMassages = (response.body['report_msg'] is List)
             ? response.body['report_msg']
             : [response.body['report_msg']];
         id = response.body['id'];
         return 200;
-      }else{
+      } else {
         errorMassages = (response.body['error_msg'] is List)
             ? response.body['error_msg']
             : [response.body['error_msg']];
@@ -260,27 +244,22 @@ class PackageFunction extends GetxController {
     update();
   }
 
-
-
-
-  Future removeFav(
-      { @required String token,
-        @required String proId}) async {
-
+  Future removeFav({@required String token, @required String proId}) async {
     errorMassages.clear();
     final response = await ApiService().removeFavPackage(
-      token: token, proId: proId,
+      token: token,
+      proId: proId,
     );
 
     if (response.statusCode == 200) {
       bool error = response.body['error'];
-      if(!error){
+      if (!error) {
         print("200");
         errorMassages = (response.body['report_msg'] is List)
             ? response.body['report_msg']
             : [response.body['report_msg']];
         return 200;
-      }else{
+      } else {
         errorMassages = (response.body['error_msg'] is List)
             ? response.body['error_msg']
             : [response.body['error_msg']];
@@ -295,37 +274,33 @@ class PackageFunction extends GetxController {
     update();
   }
 
-
-  Future <List<MyPackagePost>> getMyPackageList({@required String token}) async {
+  Future<List<MyPackagePost>> getMyPackageList({@required String token}) async {
     final response = await ApiService().getMyPackage(token: token);
     if (response.statusCode == 200) {
       final List<dynamic> responseData = response.body['post'];
-      List<MyPackagePost> pln = (responseData)
-          .map((i) => MyPackagePost.fromJson(i))
-          .toList();
+      List<MyPackagePost> pln =
+          (responseData).map((i) => MyPackagePost.fromJson(i)).toList();
       return pln;
-
     } else {
       return [];
     }
-
   }
 
-  Future  geUserPackageList({
-    @required String token,
-   @required String catId,
-   @required String word,
-   @required String uid,
-   @required String sort,
-   @required String order,
-   @required String limit,
-   @required String interest,
-   @required String page,
-   @required String special,
-   @required String folowing,
-   @required String favorite,
-   @required String asc
-  }) async {
+  Future geUserPackageList(
+      {@required String token,
+      @required String catId,
+      @required String word,
+      @required String uid,
+      @required String sort,
+      @required String order,
+      @required String limit,
+      @required String interest,
+      @required String level,
+      @required String page,
+      @required String special,
+      @required String folowing,
+      @required String favorite,
+      @required String asc}) async {
     userPackageLoading.value = true;
     final response = await ApiService().getPackage(
         token: token,
@@ -337,6 +312,7 @@ class PackageFunction extends GetxController {
         order: order,
         sort: sort,
         special: special,
+        level: level,
         asc: asc,
         favorite: favorite,
         limit: limit,
@@ -345,27 +321,25 @@ class PackageFunction extends GetxController {
       print('response.body');
       print(response.body);
       userPackageLoading.value = false;
-      userPackageModel= MyPackageModel.fromJson(response.body);
+      userPackageModel = MyPackageModel.fromJson(response.body);
       print(userPackageModel.post.length);
     } else {
       userPackageLoading.value = true;
     }
     update();
-
   }
 
-
-  Future <int> removePackage(String token , String pId) async {
-    final response = await ApiService().removePackage(token,pId);
+  Future<int> removePackage(String token, String pId) async {
+    final response = await ApiService().removePackage(token, pId);
     if (response.statusCode == 200) {
       addPackageLoading.value = response.body['error'];
-      if(!addPackageLoading.value){
+      if (!addPackageLoading.value) {
         print("200");
         errorMassages = (response.body['report_msg'] is List)
             ? response.body['report_msg']
             : [response.body['report_msg']];
         return 200;
-      }else{
+      } else {
         errorMassages = (response.body['error_msg'] is List)
             ? response.body['error_msg']
             : [response.body['error_msg']];
@@ -379,8 +353,8 @@ class PackageFunction extends GetxController {
     }
   }
 
-  Future showPackage(String token , String pId) async {
-    final response = await ApiService().showPackage(token,pId);
+  Future showPackage(String token, String pId) async {
+    final response = await ApiService().showPackage(token, pId);
     print("response.statusCode");
     print(response.statusCode);
 
@@ -393,9 +367,8 @@ class PackageFunction extends GetxController {
     update();
   }
 
-
-  Future showUserPackage(String token , String pId) async {
-    final response = await ApiService().showUserPackage(token,pId);
+  Future showUserPackage(String token, String pId) async {
+    final response = await ApiService().showUserPackage(token, pId);
 
     if (response.statusCode == 200) {
       print('response.body');
@@ -407,7 +380,4 @@ class PackageFunction extends GetxController {
     }
     update();
   }
-
-
-
 }
