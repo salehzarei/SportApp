@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sportapplication/Model/MyPlanListModel.dart';
 import 'package:sportapplication/Model/PlanModel.dart';
 import 'package:sportapplication/controller/Service/Request.dart';
 
@@ -11,7 +12,8 @@ class PlanFunction extends GetxController {
 
   List errorMassages = [];
   List<PlanData> planList = [];
-  List<MypackagesModel> myPackagesList = [];
+
+  MyPlanListModel planModel;
 
   Future getPlanList({@required String token}) async {
     planLoading.value = true;
@@ -35,20 +37,13 @@ class PlanFunction extends GetxController {
 
   Future getMyPackagesList({@required String token}) async {
     mypackLoading.value = true;
-    myPackagesList.clear();
-    final response = await ApiService().getPlan(token: token);
+    final response = await ApiService().myPlans(token: token);
     if (response.statusCode == 200) {
-      final List<dynamic> responseData = response.body['data'];
-      List<MypackagesModel> pln =
-          (responseData).map((i) => MypackagesModel.fromJson(i)).toList();
-      myPackagesList = pln;
-      update();
+      print(response.body);
+      planModel = MyPlanListModel.fromJson(response.body);
       mypackLoading.value = false;
-    } else {
-      // Constans().dialogboxCheckInternet(response.statusCode);
     }
     update();
-    mypackLoading.value = false;
   }
 
   Future checkCoupon({

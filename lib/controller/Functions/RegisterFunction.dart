@@ -25,6 +25,7 @@ class RegisterFunction extends GetxController {
   final loginLoading = false.obs;
   final providerLoading = true.obs;
   final checkerror = false.obs;
+  final resetPassLoading = false.obs;
   final verificationCode = ''.obs;
   final code = ''.obs;
   List<CategoryAccountTypeModel> categoryList = [];
@@ -246,6 +247,36 @@ class RegisterFunction extends GetxController {
           : [response.body['error_msg']];
     }
     checkLoginLoading.value = false;
+  }
+
+  Future resetPass({@required String mobile, @required String code,@required String pass,@required String verification_token})async {
+
+    resetPassLoading.value = true;
+    errorMassages.clear();
+
+    final response = await ApiService().resetPass(verification_token: verification_token,code: code,mobile: mobile,pass: pass);
+
+    if (response.statusCode == 200) {
+      bool err = response.body['error'];
+      if(!err){
+        print("200");
+        errorMassages = (response.body['report_msg'] is List)
+            ? response.body['report_msg']
+            : [response.body['report_msg']];
+        return 200;
+      }else{
+        errorMassages = (response.body['error_msg'] is List)
+            ? response.body['error_msg']
+            : [response.body['error_msg']];
+        print("201");
+        return 201;
+      }
+    } else {
+      print("400");
+      errorMassages = ["خطا در برقراری ارتباط با سرور"];
+      return 400;
+    }
+
   }
 
   //////دریافت لیست دسته بندی ها

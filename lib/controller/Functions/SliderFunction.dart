@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sportapplication/Model/AboutModel.dart';
 import 'package:sportapplication/Model/SliderModel.dart';
 import 'package:sportapplication/controller/Service/Request.dart';
 
 class SliderFunction extends GetxController {
 
   List<SliderModel> sliderList = [];
+
+  final aboutLoading = true.obs;
+  AboutModel aboutModel;
+
+  final rulesLoading = true.obs;
+  AboutModel rulesModel;
 
   //////دریافت اسلایدر
   Future <List<SliderModel>> getSlider() async {
@@ -25,6 +32,28 @@ class SliderFunction extends GetxController {
       update();
       return sliderList;
     }
+  }
+
+  Future  about() async {
+    aboutLoading.value = true;
+    final response = await ApiService().about();
+    if (response.statusCode == 200) {
+      print(response.body);
+      aboutModel = AboutModel.fromJson(response.body);
+      aboutLoading.value = false;
+    }
+    update();
+  }
+
+  Future  rules() async {
+    rulesLoading.value = true;
+    final response = await ApiService().rules();
+    if (response.statusCode == 200) {
+      print(response.body);
+      rulesModel = AboutModel.fromJson(response.body);
+      rulesLoading.value = false;
+    }
+    update();
   }
 
   Future <String> getAddress({@required String lat ,@required String lng }) async {

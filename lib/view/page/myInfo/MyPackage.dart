@@ -71,7 +71,7 @@ class _MyPackageState extends State<MyPackage> {
           }, editPackage: (){
 
           }, onTab: (){
-            if(_myListPackage[index].status != 1){
+            if(_myListPackage[index].status == 1){
               Get.to(PackagesListItemDetail(_myListPackage[index].id.toString()));
             }
 

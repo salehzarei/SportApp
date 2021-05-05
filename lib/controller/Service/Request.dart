@@ -132,6 +132,9 @@ class ApiService extends GetConnect {
   Future<Response> getPlan({@required String token}) =>
       get(apiUrl + 'plans?token=$token');
 
+  Future<Response> myPlans({@required String token}) =>
+      get(apiUrl + 'plans/myPlans?token=$token');
+
   //////دریافت لیست پکیح های من
   Future<Response> getMyPackage({@required String token}) =>
       get(apiUrl + 'providerpackage?token=$token&page=&limit=&catId=&word');
@@ -344,7 +347,19 @@ class ApiService extends GetConnect {
         'coupon': coupon,
       }));
 
+  Future<Response> resetPass({@required String mobile, @required String code,@required String pass,@required String verification_token}) =>
+      post(apiUrl + 'user/comfirm',FormData({
+        'mobile': mobile,
+        'code': code,
+        'pass': pass,
+        'verification_token': verification_token,
+      }));
+
   Future<Response> getSlider() => get(apiUrl + 'slider');
+
+  Future<Response> about() => get(apiUrl + 'about');
+
+  Future<Response> rules() => get(apiUrl + 'rules');
 
   Future<Response> getDivider() => get(apiUrl + 'app/banners');
 

@@ -18,7 +18,7 @@ class _SupportPageState extends State<SupportPage> with SingleTickerProviderStat
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(vsync: this, length: 3);
+    _tabController = TabController(vsync: this, length: 2);
   }
 
   @override
@@ -60,15 +60,15 @@ class _SupportPageState extends State<SupportPage> with SingleTickerProviderStat
                   color: Colors.white,
                 )
             ),
-            Tab(
-                text: "تماس با ما ",
-                icon: SvgPicture.asset(
-                  "assets/svg/gym.svg",
-                  width: 18,
-                  height: 18,
-                  color: Colors.white,
-                )
-            ),
+            // Tab(
+            //     text: "تماس با ما ",
+            //     icon: SvgPicture.asset(
+            //       "assets/svg/gym.svg",
+            //       width: 18,
+            //       height: 18,
+            //       color: Colors.white,
+            //     )
+            // ),
             Tab(
                 text: "در باره ما ",
                 icon: SvgPicture.asset(
@@ -84,9 +84,10 @@ class _SupportPageState extends State<SupportPage> with SingleTickerProviderStat
       ),
       body: TabBarView(
         children: <Widget>[
-          AboutUsPage(),
-          CallUsPage(),
           RulesPage(),
+          AboutUsPage(),
+          // CallUsPage(),
+
         ],
         controller: _tabController,
       ),

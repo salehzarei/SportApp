@@ -600,3 +600,217 @@ sliderWidget({
     ),
   );
 }
+
+
+
+botSheet({
+  @required BuildContext context ,
+  @required TextEditingController controller ,
+  @required TextEditingController codeController ,
+  @required FocusNode focusNode,
+  @required FocusNode codeFocus,
+  @required changePass} ) {
+  showModalBottomSheet(context: context,
+      // backgroundColor: Theme.of(context).primaryColorDark,
+      backgroundColor: Colors.white,
+      isScrollControlled: true,
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20), topRight: Radius.circular(20))),
+      builder: (context) => Directionality(
+        textDirection: TextDirection.rtl,
+        child: Container(
+          padding:EdgeInsets.all(15),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  height: 5,
+                  width: 50,
+                  margin: EdgeInsets.only(bottom: 15),
+                  decoration: BoxDecoration(
+                      color:Theme.of(context).primaryColorDark,
+                      borderRadius: BorderRadius.circular(20)),
+                ),
+                textFormFieldHintWidget(
+                    context: context,
+                    focus: codeFocus,
+                    controller: codeController,
+                    hint: "کد ارسال شده",
+                    maxLine: 1,
+                    minLine: 1,
+                    keyboardType: TextInputType.number,
+                    maxLength: 1000),
+
+                SizedBox(height: 15,),
+
+                textFormFieldHintWidget(
+                    context: context,
+                    focus: focusNode,
+                    controller: controller,
+                    hint: "رمز  عبور جدید",
+                    maxLine: 1,
+                    minLine: 1,
+                    keyboardType: TextInputType.text,
+                    maxLength: 1000),
+
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //   children: [
+                //     Text("مشخصات پلن:",style: TextStyle(
+                //         fontSize: 14,
+                //         color: Colors.black
+                //     ),),
+                //     Text(planList.title ,style: TextStyle(
+                //         fontSize: 14,
+                //         color: Colors.black87
+                //     ),)
+                //   ],
+                // ),
+                // Padding(
+                //   padding: EdgeInsets.symmetric(vertical: 15),
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //     children: [
+                //       Text(
+                //         "قیمت:",
+                //         style: TextStyle(fontSize: 15, color: Colors.black),
+                //       ),
+                //       Row(
+                //         children: [
+                //           planList.off == 0
+                //               ? Container()
+                //               : Text(
+                //             maskedText(planList.price.toString()),
+                //             style: TextStyle(
+                //                 decoration: TextDecoration.lineThrough,
+                //                 decorationColor: Colors.red[800],
+                //                 // decorationStyle: TextDecorationStyle.double,
+                //                 decorationThickness: 1.5,
+                //                 color: Colors.grey[500],
+                //                 fontWeight: FontWeight.w600,
+                //                 fontSize: 13),
+                //           ),
+                //           SizedBox(
+                //             width: 5,
+                //           ),
+                //           Text(
+                //             '${maskedText(( planList.price - planList.off).toString())} تومان ',
+                //             style: TextStyle(
+                //                 color: Colors.green,
+                //                 fontWeight: FontWeight.bold,
+                //                 fontSize: 15),
+                //           ),
+                //         ],
+                //       )
+                //     ],
+                //   ),
+                // ),
+                // IntrinsicHeight(
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //     children: [
+                //       Expanded(
+                //         child: textFormFieldHintWidget(
+                //             context: context,
+                //             focus: focusNode,
+                //             controller: controller,
+                //             hint: "کد تخفیف",
+                //             maxLine: 1,
+                //             minLine: 1,
+                //             keyboardType: TextInputType.text,
+                //             maxLength: 1000),
+                //       ),
+                //       SizedBox(width: 10,),
+                //       ElevatedButton(
+                //         onPressed: checkCouponClick,
+                //         style: ButtonStyle(
+                //             shape: MaterialStateProperty.all<
+                //                 RoundedRectangleBorder>(
+                //                 RoundedRectangleBorder(
+                //                     borderRadius: BorderRadius.circular(8.0),
+                //                     side: BorderSide(color: Colors.white))),
+                //             backgroundColor:
+                //             MaterialStateProperty.all<Color>(Colors.red)),
+                //         child: Text(
+                //           "ثبت",
+                //           style: TextStyle(fontSize: 12, color: Colors.white),
+                //         ),
+                //       ),
+                //     ],
+                //   ),
+                // ),
+                // SizedBox(height: 15,),
+                // Divider(height: 1,color: Colors.grey[300],),
+                // SizedBox(height: 6,),
+                // Padding(
+                //   padding: EdgeInsets.symmetric(vertical: 15),
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //     children: [
+                //       Text(
+                //         "قیمت نهایی:",
+                //         style: TextStyle(fontSize: 15, color: Colors.black),
+                //       ),
+                //       Text(
+                //         '${maskedText(( planList.price - planList.off).toString())} تومان ',
+                //         style: TextStyle(
+                //             color: Colors.green,
+                //             fontWeight: FontWeight.bold,
+                //             fontSize: 15),
+                //       ),
+                //     ],
+                //   ),
+                // ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child:ElevatedButton(
+                        onPressed: changePass,
+                        style: ButtonStyle(
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                    side: BorderSide(color: Colors.red))),
+                            backgroundColor:
+                            MaterialStateProperty.all<Color>(Colors.white)),
+                        child: Text(
+                          "ثبت",
+                          style: TextStyle(fontSize: 12, color: Colors.red),
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 10,),
+                    Expanded(
+                      flex: 1,
+                      child:ElevatedButton(
+                        onPressed: () {
+                          Get.back();
+                        },
+                        style: ButtonStyle(
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                    side: BorderSide(color: Colors.white))),
+                            backgroundColor:
+                            MaterialStateProperty.all<Color>(Colors.red)),
+                        child: Text(
+                          "انصراف",
+                          style: TextStyle(fontSize: 12, color: Colors.white),
+                        ),
+                      ),
+                    ),
+
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ));
+}

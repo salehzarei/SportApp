@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
@@ -32,6 +33,7 @@ class _ListInMapPageState extends State<ListInMapPage> {
     _determinePosition().then((value) {
       currentLocation(LatLng(value.latitude,value.longitude), 17.0);
     });
+
 
     super.initState();
   }
@@ -70,8 +72,10 @@ class _ListInMapPageState extends State<ListInMapPage> {
                 itemBuilder:(context, index) => categoryItemList1(title:accountList[index],onTab:(){
                     if(mounted){
                       setState(() {
+                        showUser = false;
                         switch(index){
                           case 0:
+
                             getProvider("2");
                             break;
                           case 1:
@@ -134,13 +138,15 @@ class _ListInMapPageState extends State<ListInMapPage> {
     );
   }
 
-  getProvider(String level){
+  getProvider(String level)async{
+    final Uint8List markerIcod = await getBytesFromAsset('assets/image/icon.png', 120);
     registerFunction.providers( token: _token, following: '', level: level, activity_scope: '', special: '',).whenComplete(() {
       if(!registerFunction.providerLoading.value){
         _markers.clear();
         registerFunction.providerList.post.forEach((element) {
           _markers.add(Marker(
-            position: LatLng(double.parse(element.lat) , double.parse(element.lng)),
+            icon:BitmapDescriptor.fromBytes(markerIcod) ,
+            position: LatLng(double.parse(element.lat),double.parse(element.lng)),
             markerId: MarkerId(element.id.toString()),
             onTap: () {
               registerFunction.showProvider(token: _token, bId: element.id.toString()).whenComplete(() {

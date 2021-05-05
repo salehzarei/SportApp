@@ -15,7 +15,10 @@ class _MyBoxPageState extends State<MyBoxPage> {
   final PlanFunction pack = Get.put(PlanFunction());
   @override
   void initState() {
-    getShared('token').then((t) => pack.getMyPackagesList(token: t));
+    getShared('token').then((t){
+      print(t);
+      pack.getMyPackagesList(token: t);
+    });
     super.initState();
   }
 
@@ -43,12 +46,12 @@ class _MyBoxPageState extends State<MyBoxPage> {
                 ? loading(color: Theme.of(context).primaryColorDark)
                 : Directionality(
                     textDirection: TextDirection.rtl,
-                    child:pack.myPackagesList.isEmpty ? noItem(): ListView.builder(
-                      itemCount: pack.myPackagesList.length,
+                    child:pack.planModel.data.isEmpty ? noItem(): ListView.builder(
+                      itemCount: pack.planModel.data.length,
                       padding: EdgeInsets.only(top: 10),
                       shrinkWrap: true,
                       itemBuilder: (context, index) => itemMyBox(
-                          context: context, lists: pack.myPackagesList[index]),
+                          context: context, lists: pack.planModel.data[index]),
                     ),
                   ),
           ),

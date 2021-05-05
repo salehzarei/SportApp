@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sportapplication/Model/MyPlanListModel.dart';
 import 'package:sportapplication/Model/PlanModel.dart';
 import 'package:sportapplication/controller/util.dart';
 
@@ -80,7 +81,7 @@ itemPackage({@required BuildContext context, @required PlanData model, @required
   );
 }
 
-itemMyBox({@required BuildContext context, @required MypackagesModel lists}) {
+itemMyBox({@required BuildContext context, @required MyPlanListData lists}) {
   return Card(
     elevation: 3,
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
@@ -96,9 +97,24 @@ itemMyBox({@required BuildContext context, @required MypackagesModel lists}) {
               Text(lists.title,
                   style: TextStyle(fontSize: 14, color: Colors.black)),
               Text(
-                '${maskedText('50000')} تومان ',
+                '${maskedText(lists.amount.toString())} تومان ',
                 style: TextStyle(
                     color: Colors.green,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15),
+              ),
+            ],
+          ),
+          SizedBox(height: 10,),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text("تاریخ خرید : ",
+                  style: TextStyle(fontSize: 14, color: Colors.black)),
+              Text(
+                lists.expire_date,
+                style: TextStyle(
+                    color: Colors.red,
                     fontWeight: FontWeight.bold,
                     fontSize: 15),
               ),
@@ -112,17 +128,18 @@ itemMyBox({@required BuildContext context, @required MypackagesModel lists}) {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text("تاریخ خرید : ",
+              Text('وضعیت',
                   style: TextStyle(fontSize: 14, color: Colors.black)),
               Text(
-                '1400/01/20',
+                '${lists.status} ',
                 style: TextStyle(
-                    color: Colors.red,
+                    color:lists.active ==1? Colors.green:Colors.red,
                     fontWeight: FontWeight.bold,
                     fontSize: 15),
               ),
             ],
           ),
+
         ],
       ),
     ),

@@ -174,7 +174,7 @@ class _ProfileState extends State<Profile> {
                                         onTap: () =>
                                             importImageSelectBottomSheet(
                                                 context: context,
-                                                title: 'ویرایش پروفایل',
+                                                title: 'ویرایش عکس پروفایل',
                                                 title2: 'انتخاب عکس',
                                                 ontap: () {
                                                   Get.to(EditeProfile());
@@ -182,9 +182,9 @@ class _ProfileState extends State<Profile> {
                                                 ontap2: () {
                                                   importImageSelectBottomSheet(
                                                       ontap: () {
-                                                        addPackage.imagePicker(isCamera: true).then((value) {
-                                                          editPro(value);
-                                                        });
+                                                        // addPackage.imagePicker(isCamera: true).then((value) {
+                                                        //   editPro(value);
+                                                        // });
                                                       },
                                                       ontap2: () {
                                                         addPackage.imagePicker(isCamera: false).then((value) {
@@ -458,7 +458,7 @@ class _ProfileState extends State<Profile> {
                                     title2: 'انصراف',
                                     ontap: () {
                                       saveShared('token', "null").then((value) {
-                                        Get.off(LoginPage());
+                                        Get.offAll(LoginPage());
                                       });
                                     },
                                     ontap2: () {

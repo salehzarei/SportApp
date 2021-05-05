@@ -16,6 +16,13 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   TextEditingController _mobController;
   TextEditingController _passController;
+
+  TextEditingController _codeController;
+  TextEditingController _newPassController;
+
+  FocusNode _codeFocus;
+  FocusNode _newPassFocus;
+
   final RegisterFunction check = Get.put(RegisterFunction());
   bool _clicked = false;
 
@@ -23,13 +30,27 @@ class _LoginPageState extends State<LoginPage> {
   void initState() {
     _mobController = TextEditingController();
     _passController = TextEditingController();
+
+    _codeController = TextEditingController();
+    _newPassController = TextEditingController();
+
+    _codeFocus = FocusNode();
+    _newPassFocus = FocusNode();
+
     super.initState();
   }
 
   @override
   void dispose() {
+
     _mobController.dispose();
     _passController.dispose();
+
+    _codeController.dispose();
+    _newPassController.dispose();
+    _codeFocus.dispose();
+    _newPassFocus.dispose();
+
     super.dispose();
   }
 
@@ -40,6 +61,7 @@ class _LoginPageState extends State<LoginPage> {
         textDirection: TextDirection.rtl,
         child: Scaffold(
           appBar: AppBar(
+            leading:  Icon(Icons.arrow_back_rounded,size: 0,),
             title: Padding(
               padding: const EdgeInsets.only(right: 30),
               child: Text(
@@ -96,7 +118,45 @@ class _LoginPageState extends State<LoginPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            if(_mobController.text.isEmpty){
+                              errorSnackBar(context: context,text: 'شماره موبایل را وارد نمایید',error: true);
+                            }else{
+                              check
+                                  .getVerificationCode(_mobController.text)
+                                  .whenComplete(() {
+                                if (check.checkerror.value == true) {
+                                  listSnackBar(list: check.errorMassages, err: true);
+                                } else {
+
+                                  _codeController.text = '';
+                                  _newPassController.text = '';
+
+                                  botSheet(context: context,
+                                      controller: _newPassController,
+                                      codeController: _codeController,
+                                      focusNode: _newPassFocus,
+                                      codeFocus: _codeFocus,
+                                      changePass: (){
+                                    check.resetPass(
+                                        mobile: _mobController.text,
+                                        code: _codeController.text,
+                                        pass: _newPassController.text,
+                                        verification_token: check.verificationCode.value).then((value){
+                                          if(value == 200){
+                                            Get.back();
+                                            listSnackBar(list: check.errorMassages, err: false);
+                                          }else{
+                                            listSnackBar(list: check.errorMassages, err: true);
+                                          }
+                                       });
+                                      });
+                               }
+                              });
+
+
+                            }
+                          },
                           child: Container(
                               decoration: BoxDecoration(
                                   border: Border(
