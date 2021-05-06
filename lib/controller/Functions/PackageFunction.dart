@@ -9,18 +9,22 @@ import 'package:sportapplication/Model/ShowPackageModel.dart';
 import 'package:sportapplication/controller/Service/Request.dart';
 
 class PackageFunction extends GetxController {
+  final editPackageLoading = false.obs;
+
   final addPackageLoading = false.obs;
   final addPicLoading = false.obs;
 
   final picUrl = "0".obs;
   List errorMassages = [];
   int id;
+
+  final showPackageLoading = true.obs;
   ShowPackageModel showPackageModel;
 
   final userPackageLoading = true.obs;
   MyPackageModel userPackageModel;
 
-  final showPackageLoading = true.obs;
+
 
   Future<File> imagePicker({@required bool isCamera}) async {
     var pic = await ImagePicker.pickImage(
@@ -180,6 +184,59 @@ class PackageFunction extends GetxController {
       errorMassages = ["خطا در برقراری ارتباط با سرور"];
       return 400;
     }
+  }
+
+
+  Future<int> editPackage(
+      {@required String token,
+      @required String proId,
+      @required String title,
+      @required String description,
+      @required String category,
+      @required List pics,
+      @required String price,
+      @required String discount,
+      @required String discount_type,
+      @required String sdate,
+      @required String edate}) async {
+
+    editPackageLoading.value = true;
+    errorMassages.clear();
+
+    final response = await ApiService().editPackage(
+        discount: discount,
+        sdate: sdate,
+        token: token,
+        pics: pics,
+        edate: edate,
+        title: title,
+        discount_type: discount_type,
+        category: category,
+        description: description,
+        price: price,
+        proId: proId);
+
+    if (response.statusCode == 200) {
+      editPackageLoading.value = response.body['error'];
+      if (!editPackageLoading.value) {
+        print("200");
+        errorMassages = (response.body['report_msg'] is List)
+            ? response.body['report_msg']
+            : [response.body['report_msg']];
+        return 200;
+      } else {
+        errorMassages = (response.body['error_msg'] is List)
+            ? response.body['error_msg']
+            : [response.body['error_msg']];
+        print("201");
+        return 201;
+      }
+    } else {
+      print("400");
+      errorMassages = ["خطا در برقراری ارتباط با سرور"];
+      return 400;
+    }
+
   }
 
   Future addFavorite({@required String token, @required String proId}) async {
@@ -354,6 +411,7 @@ class PackageFunction extends GetxController {
   }
 
   Future showPackage(String token, String pId) async {
+    showPackageLoading.value = true;
     final response = await ApiService().showPackage(token, pId);
     print("response.statusCode");
     print(response.statusCode);
@@ -361,8 +419,6 @@ class PackageFunction extends GetxController {
     if (response.statusCode == 200) {
       showPackageLoading.value = false;
       showPackageModel = ShowPackageModel.fromJson(response.body);
-    } else {
-      showPackageLoading.value = false;
     }
     update();
   }

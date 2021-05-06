@@ -5,6 +5,7 @@ import 'package:sportapplication/Model/MyPackageModel.dart';
 import 'package:sportapplication/controller/Functions/PackageFunction.dart';
 import 'package:sportapplication/controller/util.dart';
 import 'package:sportapplication/view/component/Constans.dart';
+import 'package:sportapplication/view/page/addPackage/EditProviderPackage.dart';
 import 'package:sportapplication/view/page/myInfo/subsetConstant.dart';
 import 'package:sportapplication/view/page/packageDetail/PackagesListItemDetail.dart';
 
@@ -69,7 +70,7 @@ class _MyPackageState extends State<MyPackage> {
           itemBuilder: (context, index) => myPackageList(context: context, index: index,data:_myListPackage[index], removePackage: (){
             _removePackage(_myListPackage[index].id.toString());
           }, editPackage: (){
-
+            Get.to(EditProviderPackage(_myListPackage[index].id.toString()));
           }, onTab: (){
             if(_myListPackage[index].status == 1){
               Get.to(PackagesListItemDetail(_myListPackage[index].id.toString()));

@@ -139,7 +139,6 @@ class ApiService extends GetConnect {
   Future<Response> getMyPackage({@required String token}) =>
       get(apiUrl + 'providerpackage?token=$token&page=&limit=&catId=&word');
 
-  ////اد کردن پکیج توسط کاربران مجاز
   Future<Response> addPackage(
           {@required String token,
           @required String title,
@@ -164,6 +163,35 @@ class ApiService extends GetConnect {
             'sdate': sdate,
             'edate': edate,
           }));
+
+
+  Future<Response> editPackage(
+      {@required String token,
+        @required String title,
+        @required String proId,
+        @required String description,
+        @required String category,
+        @required List pics,
+        @required String price,
+        @required String discount,
+        @required String discount_type,
+        @required String sdate,
+        @required String edate}) =>
+      post(
+          apiUrl + 'providerpackage/edit?token=$token',
+          FormData({
+            'proId': proId,
+            'title': title,
+            'description': description,
+            'category': category,
+            'pics': json.encode(pics),
+            'price': price,
+            'discount': discount,
+            'discount_type': discount_type,
+            'sdate': sdate,
+            'edate': edate,
+          }));
+
 
   Future<Response> addArticle(
           {@required String token,
