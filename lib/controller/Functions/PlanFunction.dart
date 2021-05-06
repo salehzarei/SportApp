@@ -9,6 +9,7 @@ class PlanFunction extends GetxController {
   final mypackLoading = false.obs;
 
   String url="";
+  String couponDiscount="";
 
   List errorMassages = [];
   List<PlanData> planList = [];

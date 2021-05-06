@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:sportapplication/controller/Functions/Controller.dart';
 import 'package:sportapplication/view/component/appBarWidget.dart';
@@ -15,10 +14,8 @@ import 'package:sportapplication/view/page/profile/Profile.dart';
 class MainPage extends StatelessWidget {
   final Controller active = Get.put(Controller());
 
-
   @override
   Widget build(BuildContext context) {
-
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Obx(
@@ -51,6 +48,7 @@ class MainPage extends StatelessWidget {
       active.activclick(0);
     }
   }
+
   _pageView() {
     switch (active.activclick.value) {
       case 0:
@@ -70,4 +68,5 @@ class MainPage extends StatelessWidget {
         break;
     }
   }
+
 }

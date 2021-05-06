@@ -290,7 +290,7 @@ class _AddAtrticlePageState extends State<AddArticlePage> {
                             child:itemImageAdd(
                                 context: context,
                                 onTap: (){
-                                  _importImageSelectBottomSheet(context,1);
+                                  _importImageSelectBottomSheet(context,4);
                                 },
                                 loaded: _bool[3],
                                 imageUri: fileFour,
@@ -307,7 +307,7 @@ class _AddAtrticlePageState extends State<AddArticlePage> {
                             child:itemImageAdd(
                                 context: context,
                                 onTap: (){
-                                  _importImageSelectBottomSheet(context, 2);
+                                  _importImageSelectBottomSheet(context, 5);
                                 },
                                 loaded: _bool[4],
                                 imageUri: fileFive,
@@ -324,7 +324,7 @@ class _AddAtrticlePageState extends State<AddArticlePage> {
                             child:itemImageAdd(
                                 context: context,
                                 onTap: (){
-                                  _importImageSelectBottomSheet(context,3);
+                                  _importImageSelectBottomSheet(context,6);
                                 },
                                 loaded: _bool[5],
                                 imageUri: fileSix,

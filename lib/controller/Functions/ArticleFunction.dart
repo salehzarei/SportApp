@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sportapplication/Model/ArticleModel.dart';
+import 'package:sportapplication/Model/ProviderBlogModel.dart';
 import 'package:sportapplication/Model/ShowBlogModel.dart';
 import 'package:sportapplication/controller/Service/Request.dart';
 
@@ -22,6 +23,9 @@ class ArticleFunction extends GetxController{
 
   final showBlogLoading = true.obs;
   ShowModel showBlogModel;
+
+  final showPBlogLoading = true.obs;
+  ProviderBlogModel showPBlogModel;
 
 
   Future<int> addArticle(
@@ -46,6 +50,54 @@ class ArticleFunction extends GetxController{
         tags:tags
       );
 
+    if (response.statusCode == 200) {
+      addArticleLoading.value = response.body['error'];
+      if(!addArticleLoading.value){
+        print("200");
+        errorMassages = (response.body['report_msg'] is List)
+            ? response.body['report_msg']
+            : [response.body['report_msg']];
+        return 200;
+      }else{
+        errorMassages = (response.body['error_msg'] is List)
+            ? response.body['error_msg']
+            : [response.body['error_msg']];
+        print("201");
+        return 201;
+      }
+    } else {
+      print("400");
+      errorMassages = ["خطا در برقراری ارتباط با سرور"];
+      return 400;
+    }
+
+  }
+
+  Future<int> editArticle(
+      {@required String token,
+      @required String title,
+      @required String description,
+      @required String proId,
+      @required String category,
+      @required List pics,
+      @required List tags,
+      @required String summary}) async {
+
+    addArticleLoading.value = true;
+    errorMassages.clear();
+
+    final response = await ApiService().editArticle(
+        pics: pics,
+        token: token,
+        category: category,
+        description: description,
+        title: title,
+        summary: summary,
+        tags:tags,
+        proId:proId
+      );
+    print("response");
+    print(response.body);
     if (response.statusCode == 200) {
       addArticleLoading.value = response.body['error'];
       if(!addArticleLoading.value){
@@ -175,10 +227,34 @@ class ArticleFunction extends GetxController{
       );
 
     if (response.statusCode == 200) {
+
       showBlogModel = ShowModel.fromJson(response.body);
       showBlogLoading.value = false;
+
     } else {
       showBlogLoading.value = true;
+    }
+    update();
+  }
+
+
+  Future showPBlog(
+      {@required String token,
+       @required String bId}) async {
+
+    showPBlogLoading.value = true;
+    final response = await ApiService().showPBlog(
+        token: token,
+        bId: bId,
+      );
+
+    print(response.body);
+
+    if (response.statusCode == 200) {
+      showPBlogModel = ProviderBlogModel.fromJson(response.body);
+      showPBlogLoading.value = false;
+    } else {
+      showPBlogLoading.value = true;
     }
     update();
   }

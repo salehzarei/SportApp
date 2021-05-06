@@ -50,7 +50,7 @@ itemPackage({@required BuildContext context, @required PlanData model, @required
                       width: 5,
                     ),
                     Text(
-                      '${maskedText((model.price - model.off).toString())} تومان ',
+                        model.off == 0?'${maskedText((model.price ).toString())} تومان ' :'${maskedText((model.off).toString())} تومان ',
                       style: TextStyle(
                           color: Colors.green,
                           fontWeight: FontWeight.bold,

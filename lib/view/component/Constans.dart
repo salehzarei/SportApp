@@ -484,7 +484,8 @@ itemImageAdd(
                                           size: 23, color: Colors.white),
                                     ),
                                   ),
-                                )),
+                                )
+                            ),
                           ),
                           borderRadius: BorderRadius.circular(10),
                         ))
@@ -514,6 +515,95 @@ itemImageAdd(
                       ),
                     ],
                   )),
+      ),
+    ),
+  );
+}
+
+itemImageloaded({@required context,
+  @required onTap,
+  @required loaded,
+  @required imageUri,
+  @required title,
+  @required onDelPressed,
+  @required onPressed}) {
+  return InkWell(
+    onTap: onTap,
+    child: DottedBorder(
+      dashPattern: [4, 2],
+      strokeWidth: 1,
+      strokeCap: StrokeCap.round,
+      borderType: BorderType.RRect,
+      radius: Radius.circular(12),
+      padding: EdgeInsets.all(4),
+      child: AspectRatio(
+        aspectRatio: 1,
+        child: Container(
+            decoration: BoxDecoration(
+                color: Colors.grey[200],
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(
+                    style: BorderStyle.solid, color: Colors.grey[300], width: 1)),
+            child: Container(
+                width: double.infinity,
+                height: double.infinity,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(color: Colors.grey[300], width: 1)),
+                child: Stack(
+                  children: [
+                    ClipRRect(
+                      child: Container(
+                        width: double.infinity,
+                        height: double.infinity,
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: NetworkImage(imageUri),
+                              fit: BoxFit.fill,
+                            )),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                                begin: Alignment.bottomLeft,
+                                colors: [
+                                  Colors.black12.withOpacity(.3),
+                                  Colors.black12.withOpacity(.3),
+                                  Colors.black12.withOpacity(.3),
+                                ]),
+                          ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Align(
+                                  alignment: Alignment.topRight,
+                                  child: InkWell(
+                                    onTap: onPressed,
+                                    child: Padding(
+                                      padding: EdgeInsets.all(4),
+                                      child: Icon(Icons.zoom_in_sharp,
+                                          size: 23, color: Colors.white),
+                                    ),
+                                  ),
+                                ),
+                                Align(
+                                  alignment: Alignment.topLeft,
+                                  child: InkWell(
+                                    onTap: onDelPressed,
+                                    child: Padding(
+                                      padding: EdgeInsets.all(4),
+                                      child: Icon(Icons.delete,
+                                          size: 23, color: Colors.white),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            )
+                        ),
+                      ),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ],
+                ))),
       ),
     ),
   );

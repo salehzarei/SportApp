@@ -29,6 +29,7 @@ class ArticleModelPost {
     int hits;
     int favorit;
     int id;
+    int status;
     String owner;
     String owner_pic;
     String pic;
@@ -38,7 +39,7 @@ class ArticleModelPost {
     String title;
     int uid;
 
-    ArticleModelPost({this.category, this.category_title, this.favorit, this.status_title, this.description, this.film, this.hits, this.id, this.owner, this.owner_pic, this.pic, this.summary, this.tages, this.title, this.uid});
+    ArticleModelPost({this.category, this.category_title, this.favorit,this.status, this.status_title, this.description, this.film, this.hits, this.id, this.owner, this.owner_pic, this.pic, this.summary, this.tages, this.title, this.uid});
 
     factory ArticleModelPost.fromJson(Map<String, dynamic> json) {
         return ArticleModelPost(
@@ -50,7 +51,8 @@ class ArticleModelPost {
             hits: json['hits'],
             favorit: json['favorit'],
             id: json['id'],
-            owner: json['owner'], 
+            status: json['status'],
+            owner: json['owner'],
             owner_pic: json['owner_pic'], 
             pic: json['pic'], 
             summary: json['summary'], 

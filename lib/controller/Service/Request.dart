@@ -184,6 +184,27 @@ class ApiService extends GetConnect {
             'summary': summary,
           }));
 
+  Future<Response> editArticle(
+      {@required String token,
+        @required String proId,
+        @required String title,
+        @required String description,
+        @required String category,
+        @required List pics,
+        @required List tags,
+        @required String summary}) =>
+      post(
+          apiUrl + 'providerblog/edit?token=$token',
+          FormData({
+            'proId': proId,
+            'title': title,
+            'description': description,
+            'category': category,
+            'pics': json.encode(pics),
+            'tags': json.encode(tags),
+            'summary': summary,
+          }));
+
 
   Future<Response> articleList(
           {@required String token,
@@ -223,6 +244,11 @@ class ApiService extends GetConnect {
           {@required String token,
            @required String bId}) =>
       get(apiUrl + 'blog/show?bId=$bId&token=$token');
+
+  Future<Response> showPBlog(
+          {@required String token,
+           @required String bId}) =>
+      get(apiUrl + 'providerblog/show?proId=$bId&token=$token');
 
   Future<Response> userArticleList(
           {@required String token,

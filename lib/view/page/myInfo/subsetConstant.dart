@@ -6,6 +6,7 @@ import 'package:sportapplication/Model/SubSetModel.dart';
 import 'package:sportapplication/controller/util.dart';
 import 'package:get/get.dart';
 import 'package:sportapplication/view/component/Constans.dart';
+import 'package:sportapplication/view/page/Article/EditArticlePage.dart';
 import 'package:sportapplication/view/page/blog/BlogDetailPage.dart';
 
 subsetItemList(
@@ -437,7 +438,9 @@ myArticleList({@required BuildContext context, @required int index, @required re
     margin: EdgeInsets.only(left: 6, right: 6, bottom: 10),
     child: InkWell(
       onTap: () {
-        Get.to(BlogDetailPage(data.id.toString()));
+        if(data.status == 1){
+          Get.to(BlogDetailPage(data.id.toString()));
+        }
       },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -559,7 +562,7 @@ myArticleList({@required BuildContext context, @required int index, @required re
               ),
               Expanded(
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {Get.to(EditArticlePage(bId: data.id.toString()));},
                   style: ButtonStyle(
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(

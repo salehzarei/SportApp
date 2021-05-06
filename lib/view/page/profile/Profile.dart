@@ -12,7 +12,7 @@ import 'package:sportapplication/controller/Functions/PackageFunction.dart';
 import 'package:sportapplication/controller/Functions/ProfileFunction.dart';
 import 'package:sportapplication/controller/util.dart';
 import 'package:sportapplication/view/component/Constans.dart';
-import 'package:sportapplication/view/page/addArticle/AddArticlePage.dart';
+import 'package:sportapplication/view/page/Article/AddArticlePage.dart';
 import 'package:sportapplication/view/page/addPackage/AddPackagePage.dart';
 import 'package:sportapplication/view/page/favorite/FavoritePage.dart';
 import 'package:sportapplication/view/page/following/FollowPage.dart';
@@ -173,28 +173,42 @@ class _ProfileState extends State<Profile> {
                                       GestureDetector(
                                         onTap: () =>
                                             importImageSelectBottomSheet(
-                                                context: context,
-                                                title: 'ویرایش عکس پروفایل',
-                                                title2: 'انتخاب عکس',
                                                 ontap: () {
-                                                  Get.to(EditeProfile());
+                                                  // addPackage.imagePicker(isCamera: true).then((value) {
+                                                  //   editPro(value);
+                                                  // });
                                                 },
                                                 ontap2: () {
-                                                  importImageSelectBottomSheet(
-                                                      ontap: () {
-                                                        // addPackage.imagePicker(isCamera: true).then((value) {
-                                                        //   editPro(value);
-                                                        // });
-                                                      },
-                                                      ontap2: () {
-                                                        addPackage.imagePicker(isCamera: false).then((value) {
-                                                          editPro(value);
-                                                        });
-                                                      },
-                                                      context: context,
-                                                      title: 'عکس از دوربین',
-                                                      title2: 'عکس از گالری');
-                                                }),
+                                                  addPackage.imagePicker(isCamera: false).then((value) {
+                                                    editPro(value);
+                                                  });
+                                                },
+                                                context: context,
+                                                title: 'عکس از دوربین',
+                                                title2: 'عکس از گالری'),
+                                            // importImageSelectBottomSheet(
+                                            //     context: context,
+                                            //     title: 'ویرایش عکس پروفایل',
+                                            //     title2: 'انتخاب عکس',
+                                            //     ontap: () {
+                                            //       Get.to(EditeProfile());
+                                            //     },
+                                            //     ontap2: () {
+                                            //       importImageSelectBottomSheet(
+                                            //           ontap: () {
+                                            //             // addPackage.imagePicker(isCamera: true).then((value) {
+                                            //             //   editPro(value);
+                                            //             // });
+                                            //           },
+                                            //           ontap2: () {
+                                            //             addPackage.imagePicker(isCamera: false).then((value) {
+                                            //               editPro(value);
+                                            //             });
+                                            //           },
+                                            //           context: context,
+                                            //           title: 'عکس از دوربین',
+                                            //           title2: 'عکس از گالری');
+                                            //     }),
                                         child: Container(
                                           margin: EdgeInsets.all(6),
                                           decoration: BoxDecoration(
