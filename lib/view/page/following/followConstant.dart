@@ -73,7 +73,7 @@ followListItem({@required BuildContext context,@required ProviderPost data,@requ
                                   backgroundColor: MaterialStateProperty.all<Color>(
                                       Colors.red)),
                               child: Text(
-                                "حذف از دنبال کننده ها",
+                                "حذف از دنبال شونده ها",
                                 style: TextStyle(fontSize: 13, color: Colors.white),
                               ),):SizedBox(),
                           ],

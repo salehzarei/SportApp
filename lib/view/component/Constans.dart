@@ -1,28 +1,42 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:dotted_border/dotted_border.dart';
 
 divider({
   @required String title,
   @required callback,
 }) {
   return Container(
-    margin: EdgeInsets.only(left: 4, right: 16, top: 8, bottom: 8),
+    margin: EdgeInsets.only(left: 4,  top: 8, bottom: 8),
     child: IntrinsicHeight(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text(
-            title,
-            style: TextStyle(
-                fontSize: 14, fontWeight: FontWeight.w100, color: Colors.black),
+          IntrinsicHeight(
+            child: Row(
+              children: [
+                Container(
+                  width: 15,
+                  padding: EdgeInsets.symmetric(vertical: 10),
+                  margin: EdgeInsets.only(left: 6),
+                  decoration: BoxDecoration(
+                    color: Colors.red[900],
+                    borderRadius: BorderRadius.only(topLeft: Radius.circular(10),bottomLeft: Radius.circular(10))
+                  ),
+                ),
+                Text(
+                  title,
+                  style: TextStyle(
+                      fontSize: 14, fontWeight: FontWeight.w100, color: Colors.black87),
+                ),
+              ],
+            ),
           ),
           InkWell(
             onTap: callback,
@@ -36,7 +50,7 @@ divider({
                     style: TextStyle(
                         fontWeight: FontWeight.w100,
                         fontSize: 14,
-                        color: Colors.black),
+                        color: Colors.black87),
                   ),
                   SizedBox(
                     width: 8,
@@ -44,7 +58,7 @@ divider({
                   Icon(
                     Icons.arrow_forward_ios,
                     size: 18,
-                    color: Colors.black,
+                    color: Colors.black87,
                   )
                 ],
               ),

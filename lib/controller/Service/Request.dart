@@ -361,6 +361,13 @@ class ApiService extends GetConnect {
           }));
 
 
+  Future<Response> addSubset( {@required String token,@required String id,}) =>
+      post(apiUrl + 'profile/addsubset',FormData({
+            'token': token,
+            'user_id': id,
+          }));
+
+
   Future<Response> showPackage(String token, String id) =>
       get(apiUrl + 'providerpackage/show?proId=$id&token=$token');
 

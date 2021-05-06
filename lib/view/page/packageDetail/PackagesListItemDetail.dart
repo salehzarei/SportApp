@@ -60,7 +60,7 @@ class _PackagesListItemDetailState extends State<PackagesListItemDetail> {
               IconButton(
                   color: Colors.white,
                   iconSize: 20,
-                  icon:packageFunction.showPackageModel.data.favorit==0? Icon(Icons.star_outline):Icon(Icons.star),
+                  icon:packageFunction.showPackageModel.data.favorit==0? Icon(Icons.favorite_border):Icon(Icons.favorite),
                   onPressed: () {
                     if(packageFunction.showPackageModel.data.favorit==0){
                       packageFunction.addFavorite(token: _token, proId: widget.id).then((value) {

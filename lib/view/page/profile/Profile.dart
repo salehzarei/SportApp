@@ -380,7 +380,7 @@ class _ProfileState extends State<Profile> {
                               onTap: () {
                                 Get.to(FollowPage());
                               },
-                              title: "دنبال کننده ها"),
+                              title: "دنبال شونده ها"),
                           SizedBox(
                             height: 20,
                           ),

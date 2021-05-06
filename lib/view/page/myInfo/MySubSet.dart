@@ -5,6 +5,7 @@ import 'package:sportapplication/controller/Functions/SubSetFunctoin.dart';
 import 'package:sportapplication/controller/util.dart';
 import 'package:sportapplication/view/component/Constans.dart';
 import 'package:sportapplication/view/page/myInfo/subsetConstant.dart';
+import 'package:sportapplication/view/page/userInfo/DetailUserInfoPage.dart';
 
 class MySubSet extends StatefulWidget {
   @override
@@ -14,6 +15,7 @@ class MySubSet extends StatefulWidget {
 class _MySubSetState extends State<MySubSet> {
   final SubSetFunction subSetFunction = Get.put(SubSetFunction());
   String _token;
+
   @override
   void initState() {
     getShared("token").then((token) {
@@ -22,6 +24,7 @@ class _MySubSetState extends State<MySubSet> {
     });
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Obx(()=>
@@ -61,7 +64,7 @@ class _MySubSetState extends State<MySubSet> {
               shrinkWrap: true,
               itemBuilder: (context, index) => subsetItemList(context: context, index: index,data:subSetFunction.subSetModel.post[index],
                   onTap: (){
-
+                    Get.to(DetailUserInfoPage(subSetFunction.subSetModel.post[index].user_id.toString()));
                   },
                   removeClick: (){
                     subSetFunction.deleteSubset(_token , subSetFunction.subSetModel.post[index].id.toString()).whenComplete(() =>  subSetFunction.getSubset(_token));
@@ -78,8 +81,6 @@ class _MySubSetState extends State<MySubSet> {
             ),
           ),
         )
-
-
     );
   }
 

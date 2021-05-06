@@ -32,7 +32,7 @@ class _FollowPageState extends State<FollowPage> {
         elevation: 2,
         brightness: Brightness.dark,
         title: Text(
-            "دنبال کننده ها",
+            "دنبال شونده ها",
             style: TextStyle(
                 fontSize: 18,
                 color: Colors.white

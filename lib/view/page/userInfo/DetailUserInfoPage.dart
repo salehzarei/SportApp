@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:sportapplication/controller/Functions/RegisterFunction.dart';
+import 'package:sportapplication/controller/Functions/SubSetFunctoin.dart';
 import 'package:sportapplication/controller/util.dart';
 import 'package:sportapplication/view/component/Constans.dart';
 import 'package:sportapplication/view/component/TabViewHeader.dart';
@@ -26,10 +27,12 @@ class _DetailUserInfoPageState extends State<DetailUserInfoPage>
     with SingleTickerProviderStateMixin {
 
   final RegisterFunction registerFunction = Get.put(RegisterFunction());
+  final SubSetFunction subSetFunction = Get.put(SubSetFunction());
 
   TabController _tabController;
 
   bool followLoading = false;
+  bool subsetLoading = false;
 
   int _select = 0;
   String _token;
@@ -80,7 +83,6 @@ class _DetailUserInfoPageState extends State<DetailUserInfoPage>
                   //   style: TextStyle(color: Theme.of(context).accentColor),
                   // ),
                   floating: true,
-                  backgroundColor: Colors.red,
                   flexibleSpace: _infoItem(),
                   expandedHeight: 220,
                 ),
@@ -126,9 +128,18 @@ class _DetailUserInfoPageState extends State<DetailUserInfoPage>
       background: Directionality(
         textDirection: TextDirection.rtl,
         child: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+
+                begin: Alignment.topRight,
+                colors: [
+                  Colors.grey[800],
+                  Colors.grey[700],
+                  Colors.grey[600],
+                ]),
+          ),
           height: 220,
           padding: EdgeInsets.symmetric(horizontal: 10),
-          color: Colors.red,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -330,8 +341,7 @@ class _DetailUserInfoPageState extends State<DetailUserInfoPage>
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Dialog(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+          shape:RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(10),
             child: Directionality(
@@ -471,6 +481,42 @@ class _DetailUserInfoPageState extends State<DetailUserInfoPage>
                                       itemBuilder: (context, index) => itemHoze(context: context, index: index,data:registerFunction.showProviderModel.info.activity_scope[index]),
                                     )
                                 ),
+                                Container(
+                                  width: double.infinity,
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      if(mounted){
+                                        setState(() {
+                                          subsetLoading = true;
+                                        });
+                                      }
+                                    subSetFunction.addSubset(_token, registerFunction.showProviderModel.info.id.toString()).then((value) {
+                                      if(mounted){
+                                        setState(() {
+                                          subsetLoading = false;
+                                        });
+                                      }
+                                      if(value == 200){
+                                        listSnackBar(list: subSetFunction.errorMassages, err: false);
+                                      }else{
+                                        listSnackBar(list: subSetFunction.errorMassages, err: true);
+                                      }
+                                    });
+                                    },
+                                    style: ButtonStyle(
+                                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                            RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.circular(8.0),
+                                                side: BorderSide(color: Colors.white)
+                                            )
+                                        ),
+                                        backgroundColor: MaterialStateProperty.all<Color>(
+                                            Colors.red)),
+                                    child: Text(
+                                      "درخواست عضویت",
+                                      style: TextStyle(fontSize: 14, color: Colors.white),
+                                    )),
+                                )
                               ],
                             ),
                           ),

@@ -8,6 +8,9 @@ class SubSetFunction extends GetxController{
   SubSetModel subSetModel;
   final loading = true.obs;
   final userSubsetLoading = true.obs;
+
+  final addSubsetLoading = true.obs;
+
   final deleteError = false.obs;
   List<dynamic> errorMassages = [];
 
@@ -95,6 +98,32 @@ class SubSetFunction extends GetxController{
       print("400");
       errorMassages = ["خطا در برقراری ارتباط با سرور"];
     }
+  }
+
+  Future  addSubset(String token,String id) async {
+    addSubsetLoading.value = true;
+    final response = await ApiService().addSubset(token: token, id: id);
+    if (response.statusCode == 200) {
+      bool err = response.body['error'];
+      if(!err){
+        print("200");
+        errorMassages = (response.body['report_msg'] is List)
+            ? response.body['report_msg']
+            : [response.body['report_msg']];
+        return 200;
+      }else{
+        errorMassages = (response.body['error_msg'] is List)
+            ? response.body['error_msg']
+            : [response.body['error_msg']];
+        print("201");
+        return 201;
+      }
+    } else {
+      print("400");
+      errorMassages = ["خطا در برقراری ارتباط با سرور"];
+      return 400;
+    }
+
   }
 
 

@@ -299,7 +299,7 @@ class _HomeState extends State<Home> {
                   ? ListView.builder(
                       padding: EdgeInsets.symmetric(horizontal: 10),
                       itemCount: _interestPackage.post.length,
-                      shrinkWrap: true,
+                      shrinkWrap: false,
                       physics: BouncingScrollPhysics(),
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) => packageMe(
@@ -428,6 +428,8 @@ class _HomeState extends State<Home> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          // #F47651
+          // #E8374C
           SvgPicture.asset(
             image,
             width: 38,
