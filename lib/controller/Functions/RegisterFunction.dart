@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sportapplication/Model/CategoryAccountTypeModel.dart';
+import 'package:sportapplication/Model/UpdateModel.dart';
 import 'package:sportapplication/Model/providerModel.dart';
 import 'package:sportapplication/Model/showProviderModel.dart';
 import 'package:sportapplication/controller/Service/Request.dart';
@@ -33,6 +34,7 @@ class RegisterFunction extends GetxController {
 
   ProviderModel providerList ;
   ShowProviderModel showProviderModel ;
+  UpdateModel updateModel ;
 
   List<dynamic> errorMassages = [];
 
@@ -172,16 +174,29 @@ class RegisterFunction extends GetxController {
     }
   }
 
+  Future<UpdateModel> checkUpdate() async {
+    final response = await ApiService().checkUpdate();
+    if (response.statusCode == 200 ) {
+      updateModel = UpdateModel.fromJson(response.body);
+      return updateModel;
+    } else {
+      checkLoginLoading.value = false;
+      return null;
+    }
+  }
+
+
 ////////ارسال شماره و کد احراز هویت برای درست یا نادرست بودن کد احراز
   Future checkVerificationCodes(String mobile, String code) async {
     // checkLoginLoading.value = true;
     errorMassages = [];
     final response = await ApiService()
         .checkVerificationCode(mobile, code, verificationCode.value);
-    checkerror.value = response.body['error'];
+
     // print('chekerror');
     // print(checkerror);
-    if (response.statusCode == 200 && !checkerror.value) {
+    if (response.statusCode == 200 ) {
+      checkerror.value = response.body['error'];
       // verificationCode.value = response.body['verification_token'];
       // checkregister.value = response.body['register'];
       // setRegisterCode(checkregister.value);

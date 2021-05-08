@@ -9,7 +9,7 @@ class PlanFunction extends GetxController {
   final mypackLoading = false.obs;
 
   String url="";
-  String couponDiscount="";
+  int couponDiscount=0;
 
   List errorMassages = [];
   List<PlanData> planList = [];
@@ -60,6 +60,10 @@ class PlanFunction extends GetxController {
         errorMassages = (response.body['report_msg'] is List)
             ? response.body['report_msg']
             : [response.body['report_msg']];
+        print("sdf");
+        print(response.body['coupon']);
+        print(response.body['coupon']['discount']);
+        couponDiscount = response.body['coupon']['discount'];
         return 200;
       }else{
         errorMassages = (response.body['error_msg'] is List)

@@ -33,8 +33,7 @@ dependencies:
   barcode_scan_fix: ^1.0.2
   syncfusion_flutter_barcodes: ^19.1.58
   material_tag_editor: ^0.1.1
-
-
+  package_info: ^2.0.0
 
 dev_dependencies:
   flutter_test:

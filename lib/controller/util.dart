@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_masked_text/flutter_masked_text.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:get/get.dart';
+import 'package:package_info/package_info.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sportapplication/Model/PlanModel.dart';
 import 'package:sportapplication/view/component/Constans.dart';
@@ -75,7 +76,11 @@ showBtn({
   @required TextEditingController controller ,
   @required FocusNode focusNode,
   @required checkCouponClick,
+  @required int discountPrice,
+  @required showBtnState,
   @required payClick} ) {
+  print('discountPrice');
+  print(discountPrice);
   showModalBottomSheet(context: context,
       // backgroundColor: Theme.of(context).primaryColorDark,
       backgroundColor: Colors.white,
@@ -83,179 +88,181 @@ showBtn({
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(20), topRight: Radius.circular(20))),
-      builder: (context) => Directionality(
-        textDirection: TextDirection.rtl,
-        child: Container(
-          padding:EdgeInsets.all(15),
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  height: 5,
-                  width: 50,
-                  margin: EdgeInsets.only(bottom: 15),
-                  decoration: BoxDecoration(
-                      color:Theme.of(context).primaryColorDark,
-                      borderRadius: BorderRadius.circular(20)),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      builder: (context) => StatefulBuilder(
+          builder: (context, showBtnStateFull) =>Directionality(
+            textDirection: TextDirection.rtl,
+            child: Container(
+              padding:EdgeInsets.all(15),
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text("مشخصات پلن:",style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.black
-                    ),),
-                    Text(planList.title ,style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.black87
-                    ),)
-                  ],
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: 15),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "قیمت:",
-                        style: TextStyle(fontSize: 15, color: Colors.black),
-                      ),
-                      Row(
+                    Container(
+                      height: 5,
+                      width: 50,
+                      margin: EdgeInsets.only(bottom: 15),
+                      decoration: BoxDecoration(
+                          color:Theme.of(context).primaryColorDark,
+                          borderRadius: BorderRadius.circular(20)),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("مشخصات پلن:",style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.black
+                        ),),
+                        Text(planList.title ,style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.black87
+                        ),)
+                      ],
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 15),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          planList.off == 0
-                              ? Container()
-                              : Text(
-                            maskedText(planList.price.toString()),
-                            style: TextStyle(
-                                decoration: TextDecoration.lineThrough,
-                                decorationColor: Colors.red[800],
-                                // decorationStyle: TextDecorationStyle.double,
-                                decorationThickness: 1.5,
-                                color: Colors.grey[500],
-                                fontWeight: FontWeight.w600,
-                                fontSize: 13),
+                          Text(
+                            "قیمت:",
+                            style: TextStyle(fontSize: 15, color: Colors.black),
                           ),
-                          SizedBox(
-                            width: 5,
+                          Row(
+                            children: [
+                              planList.off == 0
+                                  ? Container()
+                                  : Text(
+                                maskedText(planList.price.toString()),
+                                style: TextStyle(
+                                    decoration: TextDecoration.lineThrough,
+                                    decorationColor: Colors.red[800],
+                                    // decorationStyle: TextDecorationStyle.double,
+                                    decorationThickness: 1.5,
+                                    color: Colors.grey[500],
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 13),
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Text(
+                                '${maskedText(( planList.price - planList.off).toString())} تومان ',
+                                style: TextStyle(
+                                    color: Colors.green,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                    IntrinsicHeight(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: textFormFieldHintWidget(
+                                context: context,
+                                focus: focusNode,
+                                controller: controller,
+                                hint: "کد تخفیف",
+                                maxLine: 1,
+                                minLine: 1,
+                                keyboardType: TextInputType.text,
+                                maxLength: 1000),
+                          ),
+                          SizedBox(width: 10,),
+                          ElevatedButton(
+                            onPressed: checkCouponClick,
+                            style: ButtonStyle(
+                                shape: MaterialStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(8.0),
+                                        side: BorderSide(color: Colors.white))),
+                                backgroundColor:
+                                MaterialStateProperty.all<Color>(Colors.red)),
+                            child: Text(
+                              "ثبت",
+                              style: TextStyle(fontSize: 12, color: Colors.white),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 15,),
+                    Divider(height: 1,color: Colors.grey[300],),
+                    SizedBox(height: 6,),
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 15),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "قیمت نهایی:",
+                            style: TextStyle(fontSize: 15, color: Colors.black),
                           ),
                           Text(
-                            '${maskedText(( planList.price - planList.off).toString())} تومان ',
+                            '${maskedText((planList.price - planList.off - discountPrice).toString())} تومان ',
                             style: TextStyle(
                                 color: Colors.green,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 15),
                           ),
                         ],
-                      )
-                    ],
-                  ),
-                ),
-                IntrinsicHeight(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: textFormFieldHintWidget(
-                            context: context,
-                            focus: focusNode,
-                            controller: controller,
-                            hint: "کد تخفیف",
-                            maxLine: 1,
-                            minLine: 1,
-                            keyboardType: TextInputType.text,
-                            maxLength: 1000),
-                      ),
-                      SizedBox(width: 10,),
-                      ElevatedButton(
-                        onPressed: checkCouponClick,
-                        style: ButtonStyle(
-                            shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8.0),
-                                    side: BorderSide(color: Colors.white))),
-                            backgroundColor:
-                            MaterialStateProperty.all<Color>(Colors.red)),
-                        child: Text(
-                          "ثبت",
-                          style: TextStyle(fontSize: 12, color: Colors.white),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 15,),
-                Divider(height: 1,color: Colors.grey[300],),
-                SizedBox(height: 6,),
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: 15),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "قیمت نهایی:",
-                        style: TextStyle(fontSize: 15, color: Colors.black),
-                      ),
-                      Text(
-                        '${maskedText(( planList.price - planList.off).toString())} تومان ',
-                        style: TextStyle(
-                            color: Colors.green,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15),
-                      ),
-                    ],
-                  ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      flex: 1,
-                      child:ElevatedButton(
-                        onPressed: payClick,
-                        style: ButtonStyle(
-                            shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8.0),
-                                    side: BorderSide(color: Colors.red))),
-                            backgroundColor:
-                            MaterialStateProperty.all<Color>(Colors.white)),
-                        child: Text(
-                          "ثبت",
-                          style: TextStyle(fontSize: 12, color: Colors.red),
-                        ),
                       ),
                     ),
-                    SizedBox(width: 10,),
-                    Expanded(
-                      flex: 1,
-                      child:ElevatedButton(
-                        onPressed: () {
-                          Get.back();
-                        },
-                        style: ButtonStyle(
-                            shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8.0),
-                                    side: BorderSide(color: Colors.white))),
-                            backgroundColor:
-                            MaterialStateProperty.all<Color>(Colors.red)),
-                        child: Text(
-                          "انصراف",
-                          style: TextStyle(fontSize: 12, color: Colors.white),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child:ElevatedButton(
+                            onPressed: payClick,
+                            style: ButtonStyle(
+                                shape: MaterialStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(8.0),
+                                        side: BorderSide(color: Colors.red))),
+                                backgroundColor:
+                                MaterialStateProperty.all<Color>(Colors.white)),
+                            child: Text(
+                              "ثبت",
+                              style: TextStyle(fontSize: 12, color: Colors.red),
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
+                        SizedBox(width: 10,),
+                        Expanded(
+                          flex: 1,
+                          child:ElevatedButton(
+                            onPressed: () {
+                              Get.back();
+                            },
+                            style: ButtonStyle(
+                                shape: MaterialStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(8.0),
+                                        side: BorderSide(color: Colors.white))),
+                                backgroundColor:
+                                MaterialStateProperty.all<Color>(Colors.red)),
+                            child: Text(
+                              "انصراف",
+                              style: TextStyle(fontSize: 12, color: Colors.white),
+                            ),
+                          ),
+                        ),
 
+                      ],
+                    ),
                   ],
                 ),
-              ],
+              ),
             ),
-          ),
-        ),
+          )
       ));
 }
 
@@ -265,4 +272,11 @@ Future<Uint8List> getBytesFromAsset(String path, int width) async {
   ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(), targetWidth: width);
   ui.FrameInfo fi = await codec.getNextFrame();
   return (await fi.image.toByteData(format: ui.ImageByteFormat.png)).buffer.asUint8List();
+}
+
+
+Future<String> getVersion() async {
+  PackageInfo packageInfo = await PackageInfo.fromPlatform();
+  return packageInfo.version;
+
 }

@@ -60,7 +60,7 @@ class _BlogDetailPageState extends State<BlogDetailPage> {
           IconButton(
               color: Colors.white,
               iconSize: 20,
-              icon:articleFunction.showBlogModel.data.favorit==0? Icon(Icons.star_outline):Icon(Icons.star),
+              icon:articleFunction.showBlogModel.data.favorit==0? Icon(Icons.favorite_border):Icon(Icons.favorite),
               onPressed: () {
                 if(articleFunction.showBlogModel.data.favorit==0){
                   articleFunction.addFavorite(token: _token, proId: widget.blogId).then((value) {

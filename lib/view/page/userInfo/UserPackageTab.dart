@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:sportapplication/controller/Functions/PackageFunction.dart';
-import 'package:sportapplication/controller/Functions/RegisterFunction.dart';
 import 'package:sportapplication/controller/util.dart';
 import 'package:sportapplication/view/page/userInfo/DetailConstant.dart';
 

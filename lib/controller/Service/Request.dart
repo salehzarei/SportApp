@@ -128,6 +128,9 @@ class ApiService extends GetConnect {
   Future<Response> checkLogin({@required String token}) =>
       get(apiUrl + 'user/checkLogin?token=$token');
 
+  Future<Response> checkUpdate() =>
+      get(apiUrl + 'app/update');
+
   //////دریافت لیست پلن ها
   Future<Response> getPlan({@required String token}) =>
       get(apiUrl + 'plans?token=$token');
