@@ -61,7 +61,7 @@ class _PackagePageState extends State<PackagePage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("پکیج فعال",
+                    Text("طرح فعال",
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: 14
@@ -216,7 +216,7 @@ class _PackagePageState extends State<PackagePage> {
                                   width: 5,
                                 ),
                                 Text(
-                                  '${maskedText(( planList.off).toString())} تومان ',
+                                  planList.off == 0?'${maskedText((planList.price ).toString())} تومان ' :'${maskedText((planList.off).toString())} تومان ',
                                   style: TextStyle(
                                       color: Colors.green,
                                       fontWeight: FontWeight.bold,
@@ -313,7 +313,8 @@ class _PackagePageState extends State<PackagePage> {
                                   style: TextStyle(fontSize: 15, color: Colors.black),
                                 ),
                                 Text(
-                                  '${maskedText((planList.off - discountCoupon).toString())} تومان ',
+                                  planList.off == 0?'${maskedText((planList.price -discountCoupon).toString())} تومان ' :'${maskedText((planList.off-discountCoupon).toString())} تومان ',
+                              // '${maskedText((planList.off - discountCoupon).toString())} تومان ',
                                   style: TextStyle(
                                       color: Colors.green,
                                       fontWeight: FontWeight.bold,

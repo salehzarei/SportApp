@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:sportapplication/Model/PlanModel.dart';
 import 'package:sportapplication/controller/Functions/PlanFunction.dart';
@@ -171,7 +170,7 @@ class _PackageListPageState extends State<PackageListPage> {
                                   width: 5,
                                 ),
                                 Text(
-                                  '${maskedText(( planList.off).toString())} تومان ',
+                                  planList.off == 0?'${maskedText((planList.price ).toString())} تومان ' :'${maskedText((planList.off).toString())} تومان ',
                                   style: TextStyle(
                                       color: Colors.green,
                                       fontWeight: FontWeight.bold,
@@ -268,7 +267,7 @@ class _PackageListPageState extends State<PackageListPage> {
                                   style: TextStyle(fontSize: 15, color: Colors.black),
                                 ),
                                 Text(
-                                  '${maskedText((planList.off - discountCoupon).toString())} تومان ',
+                                  planList.off == 0?'${maskedText((planList.price -discountCoupon).toString())} تومان ' :'${maskedText((planList.off-discountCoupon).toString())} تومان ',
                                   style: TextStyle(
                                       color: Colors.green,
                                       fontWeight: FontWeight.bold,
@@ -349,5 +348,4 @@ class _PackageListPageState extends State<PackageListPage> {
   }
 
 }
-
 
