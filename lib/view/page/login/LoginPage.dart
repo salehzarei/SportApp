@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
@@ -24,6 +25,7 @@ class _LoginPageState extends State<LoginPage> {
   FocusNode _newPassFocus;
 
   final RegisterFunction check = Get.put(RegisterFunction());
+  final FirebaseMessaging _firebaseToken = FirebaseMessaging();
   bool _clicked = false;
 
   @override
@@ -205,22 +207,27 @@ class _LoginPageState extends State<LoginPage> {
                                 _clicked = true;
                               });
                             }
-                            check
-                                .login(
-                                    mobile: _mobController.text,
-                                    pass: _passController.text)
-                                .then((value) {
-                              if (value == 200) {
-                                Get.off(MainPage());
-                              } else {
-                                if (mounted) {
-                                  setState(() {
-                                    _clicked = false;
-                                    listSnackBar(list: check.errorMassages, err: true);
-                                  });
+                            _firebaseToken.getToken().then((pushToken) {
+                              print('pushToken');
+                              print(pushToken);
+                              check
+                                  .login(
+                                  mobile: _mobController.text,
+                                  pass: _passController.text, firebase_token: pushToken)
+                                  .then((value) {
+                                if (value == 200) {
+                                  Get.off(MainPage());
+                                } else {
+                                  if (mounted) {
+                                    setState(() {
+                                      _clicked = false;
+                                      listSnackBar(list: check.errorMassages, err: true);
+                                    });
+                                  }
                                 }
-                              }
+                              });
                             });
+
                           },
                           child:_clicked? Center(
                             child: SpinKitThreeBounce(

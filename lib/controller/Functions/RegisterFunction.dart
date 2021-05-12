@@ -90,6 +90,7 @@ class RegisterFunction extends GetxController {
       String long,
       int level,
       List interest,
+        String firebase_token,
       List acivityScope,
       String inviteCode}) async {
     errorMassages = [];
@@ -109,6 +110,7 @@ class RegisterFunction extends GetxController {
         long,
         level,
         interest,
+        firebase_token,
         acivityScope,
         inviteCode);
     checkerror.value = response.body['error'];
@@ -131,7 +133,6 @@ class RegisterFunction extends GetxController {
     registerLoading.value = false;
   }
 
-  /////////چک کردن شماره همراه
   Future checkMobile(String m) async {
     checkLoginLoading.value = true;
     errorMassages = [];
@@ -155,7 +156,6 @@ class RegisterFunction extends GetxController {
     checkLoginLoading.value = false;
   }
 
-  /////////چک کردن لاگین بودن
   Future<int> checkLogin({@required String token}) async {
     checkLoginLoading.value = true;
     final response = await ApiService().checkLogin(token: token);
@@ -185,8 +185,6 @@ class RegisterFunction extends GetxController {
     }
   }
 
-
-////////ارسال شماره و کد احراز هویت برای درست یا نادرست بودن کد احراز
   Future checkVerificationCodes(String mobile, String code) async {
     // checkLoginLoading.value = true;
     errorMassages = [];
@@ -212,11 +210,10 @@ class RegisterFunction extends GetxController {
     // checkLoginLoading.value = false;
   }
 
-////////ارسال شماره و کد احراز هویت برای درست یا نادرست بودن کد احراز
-  Future<int> login({@required String mobile, @required String pass}) async {
+  Future<int> login({@required String mobile, @required String pass, @required String firebase_token}) async {
     loginLoading.value = true;
     errorMassages = [];
-    final response = await ApiService().login(pass: pass, mobile: mobile);
+    final response = await ApiService().login(pass: pass, mobile: mobile, firebase_token: firebase_token);
     if (response.statusCode == 200) {
       checkerror.value = response.body['error'];
       if (!checkerror.value) {
@@ -239,7 +236,6 @@ class RegisterFunction extends GetxController {
     // checkLoginLoading.value = false;
   }
 
-////////ارسال شماره و دریافت کد احراز هویت
   Future getVerificationCode(String m) async {
     checkLoginLoading.value = true;
     errorMassages = [];
@@ -294,7 +290,6 @@ class RegisterFunction extends GetxController {
 
   }
 
-  //////دریافت لیست دسته بندی ها
   Future getProductCategories(int level) async {
     categoryLoading.value = true;
     categoryList.clear();
@@ -350,7 +345,7 @@ class RegisterFunction extends GetxController {
     }
 
   }
-// نمایش پرووایدر ها
+
   Future showProvider(
       {@required String token,
        @required String bId }) async {

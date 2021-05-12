@@ -1,0 +1,126 @@
+{
+  "project_info": {
+    "project_number": "1083511788264",
+    "project_id": "flutterproject-33fbb",
+    "storage_bucket": "flutterproject-33fbb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1083511788264:android:3490ef964c9a591aa5ef5d",
+        "android_client_info": {
+          "package_name": "pdf.co.ir.malayerapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1083511788264-jm4u3vhqdqst3915srn21u5btd59vrbi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3ZwKYKg0HXp4aeETiCk-X7rhE_onzq1w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1083511788264-jm4u3vhqdqst3915srn21u5btd59vrbi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1083511788264:android:8359153be76311d7a5ef5d",
+        "android_client_info": {
+          "package_name": "pdf.co.ir.sportapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1083511788264-jm4u3vhqdqst3915srn21u5btd59vrbi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3ZwKYKg0HXp4aeETiCk-X7rhE_onzq1w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1083511788264-jm4u3vhqdqst3915srn21u5btd59vrbi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1083511788264:android:b18f78c7c805485ba5ef5d",
+        "android_client_info": {
+          "package_name": "pdf.co.ir.vegakalanewui"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1083511788264-jm4u3vhqdqst3915srn21u5btd59vrbi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3ZwKYKg0HXp4aeETiCk-X7rhE_onzq1w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1083511788264-jm4u3vhqdqst3915srn21u5btd59vrbi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1083511788264:android:35afd644d58c12b8a5ef5d",
+        "android_client_info": {
+          "package_name": "pdfco.ir.ecukit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1083511788264-jm4u3vhqdqst3915srn21u5btd59vrbi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3ZwKYKg0HXp4aeETiCk-X7rhE_onzq1w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1083511788264-jm4u3vhqdqst3915srn21u5btd59vrbi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

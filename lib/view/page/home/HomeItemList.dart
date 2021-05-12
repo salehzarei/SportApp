@@ -51,7 +51,7 @@ specialList({@required context,@required controller,@required MyPackagePost data
                           bottomLeft: Radius.circular(6))),
                   padding: EdgeInsets.all(8),
                   child: Text(
-                    data.discount_type==1?'${data.discount}%':data.discount,
+                    data.discount_type==1?'${data.discount}%':data.discount.toString(),
                     style: TextStyle(color: Colors.white),
                   ),
                 ),

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:geolocator/geolocator.dart';
@@ -30,6 +31,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   final Controller step = Get.put(Controller());
   final SliderFunction sliderFunction = Get.put(SliderFunction());
+  final FirebaseMessaging _firebaseToken = FirebaseMessaging();
   Completer<GoogleMapController> controllerr = Completer();
   static const LatLng _center = const LatLng(36.30, 59.58);
 
@@ -743,78 +745,58 @@ class _RegisterPageState extends State<RegisterPage> {
                                                   step.activeStepcomplete
                                                       .value = 1;
                                                   step.stepPlus.value = 2;
-                                                  print(
-                                                    widget.place.name.text,
-                                                  );
-                                                  print(
-                                                      step.accountTypeId.value);
-                                                  print(
-                                                      widget.place.mobile.text);
-                                                  print(
-                                                      step.ostanSelected.value);
-                                                  print(
-                                                      step.citySelected.value);
-                                                  print(widget.place.pass.text);
-                                                  print(_lastMapPosition
-                                                      .latitude
-                                                      .toString());
-                                                  print(_lastMapPosition
-                                                      .longitude
-                                                      .toString());
-                                                  print(step.interest);
-                                                   print(step.activityScope);
-                                                  print(
-                                                      widget.place.code.value);
-                                                  print(widget.place
-                                                      .verificationCode.value);
-                                                  widget.place
-                                                      .sendRegisterData(
-                                                          name: widget
-                                                              .place.name.text,
-                                                          level: step
-                                                              .accountTypeId
-                                                              .value,
-                                                          mobile: widget.place
-                                                              .mobile.text,
-                                                          ostan: step
-                                                              .ostanSelected
-                                                              .value,
-                                                          city: step
-                                                              .citySelected
-                                                              .value,
-                                                          pass: widget
-                                                              .place.pass.text,
-                                                          address: _addressController.text+" ",
-                                                          lat: _lastMapPosition.latitude
-                                                              .toString(),
-                                                          long: _lastMapPosition
-                                                              .longitude
-                                                              .toString(),
-                                                          interest:
-                                                              step.interest,
-                                                          acivityScope:
-                                                              step.activityScope,
-                                                          code: widget
-                                                              .place.code.value,
-                                                          verificationToken: widget
-                                                              .place
-                                                              .verificationCode
-                                                              .value)
-                                                      .whenComplete(() => listSnackBar(
-                                                          list: widget.place
-                                                              .errorMassages,
-                                                          err: widget.place.checkerror.value))
-                                                      .whenComplete(() {
-                                                    if (widget.place.checkerror
-                                                            .value ==
-                                                        false) {
-                                                      Future.delayed(Duration(
-                                                              seconds: 1))
-                                                          .whenComplete(() =>
-                                                              Get.offAll(
-                                                                  MainPage()));
-                                                    }
+                                                  _firebaseToken.getToken().then((pushToken) {
+                                                    widget.place
+                                                        .sendRegisterData(
+                                                        name: widget
+                                                            .place.name.text,
+                                                        level: step
+                                                            .accountTypeId
+                                                            .value,
+                                                        mobile: widget.place
+                                                            .mobile.text,
+                                                        ostan: step
+                                                            .ostanSelected
+                                                            .value,
+                                                        city: step
+                                                            .citySelected
+                                                            .value,
+                                                        pass: widget
+                                                            .place.pass.text,
+                                                        address: _addressController.text+" ",
+                                                        lat: _lastMapPosition.latitude
+                                                            .toString(),
+                                                        long: _lastMapPosition
+                                                            .longitude
+                                                            .toString(),
+                                                        interest:
+                                                        step.interest,
+                                                        acivityScope:
+                                                        step.activityScope,
+                                                        firebase_token:pushToken ,
+                                                        code: widget
+                                                            .place.code.value,
+                                                        verificationToken: widget
+                                                            .place
+                                                            .verificationCode
+                                                            .value)
+                                                        .whenComplete(() => listSnackBar(
+                                                        list: widget.place
+                                                            .errorMassages,
+                                                        err: widget.place.checkerror.value))
+                                                        .whenComplete(() {
+                                                      if (widget.place.checkerror
+                                                          .value ==
+                                                          false) {
+                                                        Future.delayed(Duration(
+                                                            seconds: 1))
+                                                            .whenComplete(() =>
+                                                            Get.offAll(
+                                                                MainPage()));
+                                                      }
+                                                    });
                                                   });
+
                                                 }
                                               },
                                               child: Text(

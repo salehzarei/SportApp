@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sportapplication/controller/FirebaseNotificationHandler.dart';
 import 'package:sportapplication/controller/Functions/Controller.dart';
 import 'package:sportapplication/view/component/appBarWidget.dart';
 import 'package:sportapplication/view/component/navigationBarWidget.dart';
@@ -11,8 +12,21 @@ import 'package:sportapplication/view/page/map/AroundTab.dart';
 import 'package:sportapplication/view/page/plan/PlanPage.dart';
 import 'package:sportapplication/view/page/profile/Profile.dart';
 
-class MainPage extends StatelessWidget {
+class MainPage extends StatefulWidget {
+  @override
+  _MainPageState createState() => _MainPageState();
+}
+
+class _MainPageState extends State<MainPage> {
   final Controller active = Get.put(Controller());
+
+  FirebaseNotifications firebaseNotifications = FirebaseNotifications();
+
+  @override
+  void initState() {
+    firebaseNotifications.setupFirebase(context);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,5 +82,4 @@ class MainPage extends StatelessWidget {
         break;
     }
   }
-
 }

@@ -7,15 +7,12 @@ import 'package:get/get.dart';
 class ApiService extends GetConnect {
   final String apiUrl = 'http://192.168.1.3/np-framework/sportplus/api/';
 
-  ////////دریافت لیست استان و شهر
   Future<Response> getProvinceList(int ostanid) =>
       get(apiUrl + 'user/getplace?ostan=${ostanid.toString()}');
 
-////////ارسال توکن و دریافت اطلاعات کاربر
   Future<Response> profileUserData({@required String token}) =>
       post(apiUrl + 'profile', FormData({'token': token}));
 
-  ////////ارسال اطلاعات ثبت نام
   Future<Response> registerUser(
           String name,
           String mobile,
@@ -31,6 +28,7 @@ class ApiService extends GetConnect {
           String long,
           int level,
           List interest,
+         String firebase_token,
           List acivityScope,
           String inviteCode) =>
       post( apiUrl + 'user/register', FormData({
@@ -50,6 +48,7 @@ class ApiService extends GetConnect {
             'interest': json.encode(interest),
             'activity_scope': json.encode(acivityScope),
             'invite_code': inviteCode,
+            'firebase_token': firebase_token,
           }));
 
 
@@ -85,11 +84,9 @@ class ApiService extends GetConnect {
   Future<Response> checkPhone(String mobile) =>
       post(apiUrl + 'user/checkmobile', FormData({'mobile': mobile}));
 
-////////ارسال شماره و دریافت کد احراز هویت
   Future<Response> verificationCode(String mobile) =>
       post(apiUrl + 'user/getVerificationCode', FormData({'mobile': mobile}));
 
-////////ارسال شماره و کد احراز هویت برای درست یا نادرست بودن کد احراز
   Future<Response> checkVerificationCode(
           String mobile, String code, String vcode) =>
       post(
@@ -97,13 +94,13 @@ class ApiService extends GetConnect {
           FormData(
               {'mobile': mobile, 'code': code, 'verification_token': vcode}));
 
-////////ارسال شماره و کد احراز هویت برای درست یا نادرست بودن کد احراز
-  Future<Response> login({@required String mobile, @required String pass}) =>
+  Future<Response> login({@required String mobile, @required String pass, @required String firebase_token}) =>
       post(
           apiUrl + 'user/login',
           FormData({
             'mobile': mobile,
             'pass': pass,
+            'firebase_token': firebase_token,
           }));
 
 ////////ارسال لول و دریافت دسته بندی های هر عنوان شغلی
