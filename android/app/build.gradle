@@ -54,6 +54,7 @@ flutter {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.google.firebase:firebase-messaging:20.3.0'
+    implementation 'com.yandex.android:mobmetricalib:3.20.2'
 }
 
 apply plugin: 'com.google.gms.google-services'

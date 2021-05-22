@@ -38,7 +38,7 @@ class _EditArticlePageState extends State<EditArticlePage> {
   FocusNode _summaryFocus;
   TextEditingController _summaryController;
 
-  String url = 'http://192.168.1.3/np-framework/sportplus/files/blog/';
+  String url = 'https://sportapp.pdf.co.ir/files/blog/';
 
   int _selectImage = 0;
   bool _loadToSend = false;

@@ -15,13 +15,14 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
-
+  GlobalKey<ScaffoldState> _scaffoldKey;
   final RegisterFunction check = Get.put(RegisterFunction());
   bool error = false;
   String _token;
 
   @override
   void initState() {
+    _scaffoldKey = GlobalKey<ScaffoldState>();
     Timer(Duration(seconds: 2), () => _setTimer());
     super.initState();
   }
@@ -95,6 +96,7 @@ class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       body: Stack(
         children: [
           Container(

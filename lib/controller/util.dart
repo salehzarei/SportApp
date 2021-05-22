@@ -20,6 +20,23 @@ maskedText(String price) {
       .text;
 }
 
+snackBar(String message, color) {
+  return SnackBar(
+      backgroundColor: color,
+      content: Container(
+        padding: EdgeInsets.all(10),
+        child: Text(
+          message,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+              fontFamily: 'sanse',
+              fontSize: 14,
+              fontWeight: FontWeight.bold,
+              color: Colors.white),
+        ),
+      ));
+}
+
 Future saveShared(String key, String value) async {
   final prefs = await SharedPreferences.getInstance();
   await prefs.setString(key, value);
