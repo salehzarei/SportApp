@@ -3,6 +3,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:sportapplication/controller/Functions/SubSetFunctoin.dart';
 import 'package:sportapplication/controller/util.dart';
+import 'package:sportapplication/view/component/Constans.dart';
 import 'package:sportapplication/view/page/userInfo/DetailConstant.dart';
 
 class SubsetTab extends StatefulWidget {
@@ -15,7 +16,9 @@ class SubsetTab extends StatefulWidget {
 }
 
 class _SubsetTabState extends State<SubsetTab> {
+
   final SubSetFunction subSetFunction = Get.put(SubSetFunction());
+
   @override
   void initState() {
     getShared("token").then((token){
@@ -23,17 +26,16 @@ class _SubsetTabState extends State<SubsetTab> {
     });
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Obx(()=>Directionality(
       textDirection: TextDirection.rtl,
-      child: subSetFunction.userSubsetLoading.value? Padding(
-        padding: EdgeInsets.only(top: 50),
-        child: SpinKitThreeBounce(
-          color:Theme.of(context).primaryColorDark,
-          size: 30.0,
-        ),
-      ): Column(
+      child: subSetFunction.userSubsetLoading.value
+          ? Padding(
+          padding: EdgeInsets.only(top: 80),
+          child: loading(color: Theme.of(context).primaryColorDark))
+          : Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

@@ -53,7 +53,6 @@ class ArticleFunction extends GetxController{
     if (response.statusCode == 200) {
       addArticleLoading.value = response.body['error'];
       if(!addArticleLoading.value){
-        print("200");
         errorMassages = (response.body['report_msg'] is List)
             ? response.body['report_msg']
             : [response.body['report_msg']];
@@ -62,11 +61,9 @@ class ArticleFunction extends GetxController{
         errorMassages = (response.body['error_msg'] is List)
             ? response.body['error_msg']
             : [response.body['error_msg']];
-        print("201");
         return 201;
       }
     } else {
-      print("400");
       errorMassages = ["خطا در برقراری ارتباط با سرور"];
       return 400;
     }
@@ -96,12 +93,9 @@ class ArticleFunction extends GetxController{
         tags:tags,
         proId:proId
       );
-    print("response");
-    print(response.body);
     if (response.statusCode == 200) {
       addArticleLoading.value = response.body['error'];
       if(!addArticleLoading.value){
-        print("200");
         errorMassages = (response.body['report_msg'] is List)
             ? response.body['report_msg']
             : [response.body['report_msg']];
@@ -110,11 +104,9 @@ class ArticleFunction extends GetxController{
         errorMassages = (response.body['error_msg'] is List)
             ? response.body['error_msg']
             : [response.body['error_msg']];
-        print("201");
         return 201;
       }
     } else {
-      print("400");
       errorMassages = ["خطا در برقراری ارتباط با سرور"];
       return 400;
     }
@@ -138,9 +130,6 @@ class ArticleFunction extends GetxController{
         word: word
       );
 
-    print("response.body");
-    print(response.body);
-
     if (response.statusCode == 200) {
       articleModel = ArticleModel.fromJson(response.body);
       articleLoading.value = false;
@@ -162,7 +151,6 @@ class ArticleFunction extends GetxController{
     if (response.statusCode == 200) {
       bool error = response.body['error'];
       if(!error){
-        print("200");
         errorMassages = (response.body['report_msg'] is List)
             ? response.body['report_msg']
             : [response.body['report_msg']];
@@ -172,11 +160,9 @@ class ArticleFunction extends GetxController{
         errorMassages = (response.body['error_msg'] is List)
             ? response.body['error_msg']
             : [response.body['error_msg']];
-        print("201");
         return 201;
       }
     } else {
-      print("400");
       errorMassages = ["خطا در برقراری ارتباط با سرور"];
       return 400;
     }
@@ -196,7 +182,6 @@ class ArticleFunction extends GetxController{
     if (response.statusCode == 200) {
       bool error = response.body['error'];
       if(!error){
-        print("200");
         errorMassages = (response.body['report_msg'] is List)
             ? response.body['report_msg']
             : [response.body['report_msg']];
@@ -205,15 +190,12 @@ class ArticleFunction extends GetxController{
         errorMassages = (response.body['error_msg'] is List)
             ? response.body['error_msg']
             : [response.body['error_msg']];
-        print("201");
         return 201;
       }
     } else {
-      print("400");
       errorMassages = ["خطا در برقراری ارتباط با سرور"];
       return 400;
     }
-    update();
   }
 
   Future showBlog(
@@ -247,9 +229,6 @@ class ArticleFunction extends GetxController{
         token: token,
         bId: bId,
       );
-
-    print(response.body);
-
     if (response.statusCode == 200) {
       showPBlogModel = ProviderBlogModel.fromJson(response.body);
       showPBlogLoading.value = false;
@@ -341,7 +320,6 @@ class ArticleFunction extends GetxController{
     if (response.statusCode == 200) {
       removeArticleBool.value = response.body['error'];
       if(!removeArticleBool.value){
-        print("200");
         errorMassages = (response.body['report_msg'] is List)
             ? response.body['report_msg']
             : [response.body['report_msg']];
@@ -350,11 +328,9 @@ class ArticleFunction extends GetxController{
         errorMassages = (response.body['error_msg'] is List)
             ? response.body['error_msg']
             : [response.body['error_msg']];
-        print("201");
         return 201;
       }
     } else {
-      print("400");
       errorMassages = ["خطا در برقراری ارتباط با سرور"];
       return 400;
     }

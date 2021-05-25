@@ -60,8 +60,7 @@ class ProfileFunction extends GetxController {
       editeProfileLoading.value = false;
       bool error = response.body['error'];
       if(!error){
-        print("200");
-        print("200");
+
         errorMassages = (response.body['report_msg'] is List)
             ? response.body['report_msg']
             : [response.body['report_msg']];
@@ -71,12 +70,10 @@ class ProfileFunction extends GetxController {
         errorMassages = (response.body['error_msg'] is List)
             ? response.body['error_msg']
             : [response.body['error_msg']];
-        print("201");
         return 201;
       }
     } else {
       editeProfileLoading.value = false;
-      print("400");
       errorMassages = ["خطا در برقراری ارتباط با سرور"];
       return 400;
     }

@@ -16,7 +16,6 @@ class _MyBoxPageState extends State<MyBoxPage> {
   @override
   void initState() {
     getShared('token').then((t){
-      print(t);
       pack.getMyPackagesList(token: t);
     });
     super.initState();

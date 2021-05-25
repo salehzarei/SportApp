@@ -10,8 +10,7 @@
         android:name=".Application"
         android:label="Sport+"
         android:icon="@drawable/icon"
-        android:usesCleartextTraffic="true"
-        >
+        android:usesCleartextTraffic="true" >
 
         <activity
             android:name=".MainActivity"
@@ -36,8 +35,8 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data
-                    android:scheme="http"
-                    android:host="192.168.1.3/np-framework/sportplus"
+                    android:scheme="https"
+                    android:host="sportapp.pdf.co.ir"
                     android:pathPrefix="/backtoapp"/>
 
             </intent-filter>
@@ -59,8 +58,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
 
-        <!-- Don't delete the meta-data below.
-             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />

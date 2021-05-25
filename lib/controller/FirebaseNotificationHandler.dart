@@ -29,7 +29,6 @@ class FirebaseNotifications {
       _messaging.configure(
           onBackgroundMessage: fcmBackgroundMessageHandler,
           onMessage: (Map<String, dynamic> message) async {
-            print('firebase message is $message');
             showNotification(message['data']['title'], message['data']['body']);
           },
           onLaunch: (Map<String, dynamic> message) async {},

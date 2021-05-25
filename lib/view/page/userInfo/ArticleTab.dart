@@ -3,6 +3,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:sportapplication/controller/Functions/ArticleFunction.dart';
 import 'package:sportapplication/controller/util.dart';
+import 'package:sportapplication/view/component/Constans.dart';
 import 'package:sportapplication/view/page/userInfo/DetailConstant.dart';
 
 class ArticleTab extends StatefulWidget {
@@ -39,13 +40,11 @@ class _ArticleTabState extends State<ArticleTab> {
   Widget build(BuildContext context) {
     return Obx(()=> Directionality(
       textDirection: TextDirection.rtl,
-      child:articleFunction.userArticleLoading.value? Padding(
-        padding: EdgeInsets.only(top: 50),
-        child: SpinKitThreeBounce(
-          color:Theme.of(context).primaryColorDark,
-          size: 30.0,
-        ),
-      ): Container(
+      child:articleFunction.userArticleLoading.value
+          ? Padding(
+          padding: EdgeInsets.only(top: 80),
+          child: loading(color: Theme.of(context).primaryColorDark))
+          : Container(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,

@@ -68,8 +68,6 @@ class _HomeState extends State<Home> {
 
               _newBlogModel= articleFunction.blogModel;
               _newBlogLoading = false;
-              print("_newBlogModel.post.length");
-              print(_newBlogModel.post.length);
             });
           }
           articleFunction.blogList(token: token, folowing: '', interest: '1', uid: '', page: '', order: '', catId: '', favorite: '', word: '', tag: '', limit: '', sort: '', asc: '').whenComplete((){
@@ -105,9 +103,6 @@ class _HomeState extends State<Home> {
           if (mounted) {
             setState(() {
               _specialPackage = packageFunction.userPackageModel;
-              print("sdfsdfsdfsdfsdf");
-              print(_specialPackage.count);
-              print( packageFunction.userPackageModel.count);
               _specialPackageLoading = false;
             });
           }
@@ -133,9 +128,6 @@ class _HomeState extends State<Home> {
                 setState(() {
                   _interestPackage = packageFunction.userPackageModel;
                   _interestPackageLoading = false;
-                  print("sdfsdfsdfsdfsdfd");
-                  print(_interestPackage.count);
-                  print( packageFunction.userPackageModel.count);
                 });
               }
             }
@@ -263,7 +255,7 @@ class _HomeState extends State<Home> {
               child: imageShower(
                   imageUrl:appFunction.getDividerLoading.value?
                   'https://dkstatics-public.digikala.com/digikala-adservice-banners/c7cc9b7a063cfe5fb6665d0e53e430acb6fff847_1617785021.jpg':
-                  '${appFunction.dividerModel.content[0].pic}?id=${new Random().nextInt(100)}',
+                  appFunction.dividerModel.content[0].pic,
                   margin: EdgeInsets.all(10),
                   fit: BoxFit.fill,
                   borderRadius: BorderRadius.circular(10)),
@@ -277,7 +269,7 @@ class _HomeState extends State<Home> {
                     child: imageShower(
                         imageUrl:appFunction.getDividerLoading.value?
                             'https://dkstatics-public.digikala.com/digikala-adservice-banners/956cd52f1f18f11284016c86561d53bcdcfdeedd_1612606849.jpg?x-oss-process=image/quality,q_80':
-                        '${appFunction.dividerModel.content[1].pic}?id=${new Random().nextInt(100)}',
+                            appFunction.dividerModel.content[1].pic,
                         margin: EdgeInsets.only(left: 6, right: 10),
                         fit: BoxFit.fill,
                         borderRadius: BorderRadius.circular(10)),
@@ -290,7 +282,7 @@ class _HomeState extends State<Home> {
                     child: imageShower(
                         imageUrl:appFunction.getDividerLoading.value?
                             'https://dkstatics-public.digikala.com/digikala-adservice-banners/bc928cad36c9cc9aed866ec4de30dfd9f5e50ec7_1607016116.jpg?x-oss-process=image/quality,q_80':
-                        '${appFunction.dividerModel.content[2].pic}?id=${new Random().nextInt(100)}',
+                        appFunction.dividerModel.content[2].pic,
                         margin: EdgeInsets.only(left: 10, right: 6),
                         fit: BoxFit.fill,
                         borderRadius: BorderRadius.circular(10)),
@@ -334,7 +326,7 @@ class _HomeState extends State<Home> {
               child: imageShower(
                   imageUrl:appFunction.getDividerLoading.value?
                       'https://dkstatics-public.digikala.com/digikala-adservice-banners/cfd7950b634d48c5fb2891b54e6bed8c6749e2e4_1618057187.jpg?x-oss-process=image/quality,q_80':
-                  '${appFunction.dividerModel.content[3].pic}?id=${new Random().nextInt(100)}',
+                  appFunction.dividerModel.content[3].pic,
                   margin: EdgeInsets.all(10),
                   fit: BoxFit.fill,
                   borderRadius: BorderRadius.circular(10)),
@@ -348,7 +340,7 @@ class _HomeState extends State<Home> {
                     child: imageShower(
                         imageUrl:appFunction.getDividerLoading.value?
                             'https://dkstatics-public.digikala.com/digikala-adservice-banners/4733b740d15e74f00d50ac92fb126911632b8053_1599385682.jpg?x-oss-process=image/quality,q_80':
-                        '${appFunction.dividerModel.content[4].pic}?id=${new Random().nextInt(100)}',
+                        appFunction.dividerModel.content[4].pic,
                         margin: EdgeInsets.only(left: 6, right: 10),
                         fit: BoxFit.fill,
                         borderRadius: BorderRadius.circular(10)),
@@ -361,7 +353,7 @@ class _HomeState extends State<Home> {
                     child: imageShower(
                         imageUrl:appFunction.getDividerLoading.value?
                             'https://dkstatics-public.digikala.com/digikala-adservice-banners/76998daf25428efd1a62130b631abfe65b2ceea8_1612288934.jpg?x-oss-process=image/quality,q_80':
-                        '${appFunction.dividerModel.content[5].pic}?id=${new Random().nextInt(100)}',
+                        appFunction.dividerModel.content[5].pic,
                         margin: EdgeInsets.only(left: 10, right: 6),
                         fit: BoxFit.fill,
                         borderRadius: BorderRadius.circular(10)),
@@ -374,7 +366,7 @@ class _HomeState extends State<Home> {
               child: imageShower(
                   imageUrl:appFunction.getDividerLoading.value?
                       'https://dkstatics-public.digikala.com/digikala-adservice-banners/b6c47e53eeab9b91ddd2797244dfa3b6cc7919d6_1618152479.jpg?x-oss-process=image/quality,q_80':
-                  '${appFunction.dividerModel.content[6].pic}?id=${new Random().nextInt(100)}',
+                  appFunction.dividerModel.content[6].pic,
                   margin: EdgeInsets.all(10),
                   fit: BoxFit.fill,
                   borderRadius: BorderRadius.circular(10)),

@@ -96,8 +96,6 @@ showBtn({
   @required int discountPrice,
   @required showBtnState,
   @required payClick} ) {
-  print('discountPrice');
-  print(discountPrice);
   showModalBottomSheet(context: context,
       // backgroundColor: Theme.of(context).primaryColorDark,
       backgroundColor: Colors.white,

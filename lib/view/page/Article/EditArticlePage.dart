@@ -71,13 +71,10 @@ class _EditArticlePageState extends State<EditArticlePage> {
   @override
   void initState() {
     _initView();
-    print(widget.bId);
     getShared('token').then((value){
       _token = value;
       articleFunction.showPBlog(token: value, bId: widget.bId).whenComplete(() {
         if(!articleFunction.showPBlogLoading.value){
-          print( 'articleFunction.showPBlogModel.gallery');
-          print( articleFunction.showPBlogModel.data.gallery.length);
           if(mounted){
             setState(() {
               _titleController.text = articleFunction.showPBlogModel.data.title;
@@ -503,9 +500,6 @@ class _EditArticlePageState extends State<EditArticlePage> {
                                 _loadToSend = true;
                               });
                             }
-                              print("asdfasdf");
-                              print(_imageUrl);
-                              print(_imageUrl.length);
                             articleFunction.editArticle(
                               token: _token,
                               title: _titleController.text,
@@ -514,7 +508,6 @@ class _EditArticlePageState extends State<EditArticlePage> {
                               pics: _imageUrl,
                               summary: _summaryController.text,
                               tags: _values, proId: widget.bId,).then((value){
-                              print("sdfsdgsdg");
                               if(value == 200){
                                 articleFunction.articleList(token: _token, catId: "", limit: "", page: "", word: "");
                                 listSnackBar(list: articleFunction.errorMassages, err: false,);

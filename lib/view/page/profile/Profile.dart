@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:math';
 
 import 'package:barcode_scan_fix/barcode_scan.dart';
 import 'package:flutter/material.dart';
@@ -24,8 +23,6 @@ import 'package:sportapplication/view/page/plan/MyBoxPage.dart';
 import 'package:sportapplication/view/page/plan/PlanListPage.dart';
 import 'package:sportapplication/view/page/profile/profileConstance.dart';
 import 'package:sportapplication/view/page/support/SupportPage.dart';
-
-import 'EditeProfile.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -63,7 +60,6 @@ class _ProfileState extends State<Profile> {
         }
       });
 
-      print(barcode);
     } on PlatformException catch (e) {
       if (e.code == BarcodeScanner.CameraAccessDenied) {
         errorSnackBar(
@@ -71,22 +67,18 @@ class _ProfileState extends State<Profile> {
         // setState(() {
         //   this.bar.barcode.value =
         //       'The user did not grant the camera permission!';
-        //   print(bar.barcode.value );
         // });
       } else {
         errorSnackBar(
             text: "خطای خواندنن اطلاعات بارکد", error: true, context: context);
         // setState(() => this.bar.barcode.value = 'Unknown error: $e');
-        // print(bar.barcode.value );
       }
     } on FormatException {
       // errorSnackBar(text: "خطای خواندنن اطلاعات بارکد", error: true,context: context);
       // setState(() => this.bar.barcode.value =
       //     'null (User returned using the "back"-button before scanning anything. Result)');
-      // print(bar.barcode.value );
     } catch (e) {
       // setState(() => this.bar.barcode.value = 'Unknown error: $e');
-      print('Unknown error: $e');
     }
   }
 
@@ -95,8 +87,7 @@ class _ProfileState extends State<Profile> {
     getShared("token").then((va) {
       _token = va;
       getUserInfo(va);
-      print('new Random().nextInt(100)');
-      print(new Random().nextInt(100));
+
     });
     super.initState();
   }
@@ -164,7 +155,7 @@ class _ProfileState extends State<Profile> {
                                         //
                                         //   ),
                                         child: imageShower(
-                                            imageUrl:'${profile.userProfile.pic}?id=${new Random().nextInt(100)}',
+                                            imageUrl:profile.userProfile.pic,
                                             margin: EdgeInsets.all(6),
                                             fit: BoxFit.fill,
                                             borderRadius:BorderRadius.circular(8)

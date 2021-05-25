@@ -25,22 +25,15 @@ class PlanFunction extends GetxController {
       List<PlanData> pln =
           (responseData).map((i) => PlanData.fromJson(i)).toList();
       planList = pln;
-      update();
       planLoading.value = false;
-    } else {
-      // Constans().dialogboxCheckInternet(response.statusCode);
     }
     update();
-    planLoading.value = false;
-    print('planList');
-    print(planList);
   }
 
   Future getMyPackagesList({@required String token}) async {
     mypackLoading.value = true;
     final response = await ApiService().myPlans(token: token);
     if (response.statusCode == 200) {
-      print(response.body);
       planModel = MyPlanListModel.fromJson(response.body);
       mypackLoading.value = false;
     }
@@ -56,24 +49,18 @@ class PlanFunction extends GetxController {
     if (response.statusCode == 200) {
       bool error = response.body['error'];
       if(!error){
-        print("200");
         errorMassages = (response.body['report_msg'] is List)
             ? response.body['report_msg']
             : [response.body['report_msg']];
-        print("sdf");
-        print(response.body['coupon']);
-        print(response.body['coupon']['discount']);
         couponDiscount = response.body['coupon']['discount'];
         return 200;
       }else{
         errorMassages = (response.body['error_msg'] is List)
             ? response.body['error_msg']
             : [response.body['error_msg']];
-        print("201");
         return 201;
       }
     } else {
-      print("400");
       errorMassages = ["خطا در برقراری ارتباط با سرور"];
       return 400;
     }
@@ -85,7 +72,6 @@ class PlanFunction extends GetxController {
     if (response.statusCode == 200) {
       bool error = response.body['error'];
       if(!error){
-        print("200");
         errorMassages = (response.body['report_msg'] is List)
             ? response.body['report_msg']
             : [response.body['report_msg']];
@@ -96,11 +82,9 @@ class PlanFunction extends GetxController {
         errorMassages = (response.body['error_msg'] is List)
             ? response.body['error_msg']
             : [response.body['error_msg']];
-        print("201");
         return 201;
       }
     } else {
-      print("400");
       errorMassages = ["خطا در برقراری ارتباط با سرور"];
       return 400;
     }

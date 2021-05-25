@@ -18,15 +18,11 @@ class SubSetFunction extends GetxController{
     loading.value = true;
     final response = await ApiService().subSet(token: token);
     if (response.statusCode == 200) {
-      print("getSubset");
-      print("200");
       subSetModel =SubSetModel.fromJson(response.body);
       loading.value = false;
       update();
       notifyChildrens();
     } else {
-      print("getSubset");
-      print("200");
       loading.value = true;
       update();
       notifyChildrens();
@@ -53,7 +49,6 @@ class SubSetFunction extends GetxController{
       deleteError.value = response.body['error'];
       if(!deleteError.value){
         deleteError.value = false;
-        print("200");
         errorMassages = (response.body['report_msg'] is List)
             ? response.body['report_msg']
             : [response.body['report_msg']];
@@ -63,12 +58,10 @@ class SubSetFunction extends GetxController{
         errorMassages = (response.body['error_msg'] is List)
             ? response.body['error_msg']
             : [response.body['error_msg']];
-        print("201");
         update();
       }
     } else {
       deleteError.value = true;
-      print("400");
       errorMassages = ["خطا در برقراری ارتباط با سرور"];
     }
   }
@@ -80,7 +73,6 @@ class SubSetFunction extends GetxController{
       deleteError.value = response.body['error'];
       if(!deleteError.value){
         deleteError.value = false;
-        print("200");
         errorMassages = (response.body['report_msg'] is List)
             ? response.body['report_msg']
             : [response.body['report_msg']];
@@ -90,12 +82,10 @@ class SubSetFunction extends GetxController{
         errorMassages = (response.body['error_msg'] is List)
             ? response.body['error_msg']
             : [response.body['error_msg']];
-        print("201");
         update();
       }
     } else {
       deleteError.value = true;
-      print("400");
       errorMassages = ["خطا در برقراری ارتباط با سرور"];
     }
   }
@@ -106,7 +96,6 @@ class SubSetFunction extends GetxController{
     if (response.statusCode == 200) {
       bool err = response.body['error'];
       if(!err){
-        print("200");
         errorMassages = (response.body['report_msg'] is List)
             ? response.body['report_msg']
             : [response.body['report_msg']];
@@ -115,11 +104,9 @@ class SubSetFunction extends GetxController{
         errorMassages = (response.body['error_msg'] is List)
             ? response.body['error_msg']
             : [response.body['error_msg']];
-        print("201");
         return 201;
       }
     } else {
-      print("400");
       errorMassages = ["خطا در برقراری ارتباط با سرور"];
       return 400;
     }

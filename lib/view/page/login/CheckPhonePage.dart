@@ -132,7 +132,6 @@ class CheckPhonePage extends StatelessWidget {
                                                 child: HtmlWidget(
                                                   check.errorMassages[index],
                                                   // onTapUrl: (url) =>
-                                                  //     print('tapped $url'),
                                                   textStyle: TextStyle(
                                                       color: Colors.white,
                                                       // letterSpacing: 10,
@@ -183,7 +182,6 @@ class CheckPhonePage extends StatelessWidget {
                                                       check
                                                           .errorMassages[index],
                                                       // onTapUrl: (url) =>
-                                                      //     print('tapped $url'),
                                                       textStyle: TextStyle(
                                                           color: Colors.white,
                                                           // letterSpacing: 10,

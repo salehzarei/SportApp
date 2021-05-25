@@ -63,10 +63,8 @@ class RegisterFunction extends GetxController {
     if (response.statusCode == 200) {
       if (ostanId > 0) {
         cityList = response.body;
-        // print(cityList);
       } else {
         ostanList = response.body;
-        // print(ostanList);
       }
       update();
       return true;
@@ -114,8 +112,6 @@ class RegisterFunction extends GetxController {
         acivityScope,
         inviteCode);
     checkerror.value = response.body['error'];
-    // print('chekerror');
-    // print(checkerror);
     if (response.statusCode == 200 && !checkerror.value) {
       // String _token = response.body['token'];
       saveShared("token", response.body['token'].toString());
@@ -127,8 +123,6 @@ class RegisterFunction extends GetxController {
       errorMassages = (response.body['error_msg'] is List)
           ? response.body['error_msg']
           : [response.body['error_msg']];
-      // print('errorMassages');
-      // print(errorMassages);
     }
     registerLoading.value = false;
   }
@@ -138,16 +132,10 @@ class RegisterFunction extends GetxController {
     errorMassages = [];
     final response = await ApiService().checkPhone(m);
     checkerror.value = response.body['error'];
-    // print('chekerror');
-    // print(checkerror);
     if (response.statusCode == 200 && !checkerror.value) {
       // verificationCode.value = response.body['verification_token'];
       // checkregister.value = response.body['register'];
       // setRegisterCode(checkregister.value);
-      // print('verificationCode');
-      // print(verificationCode);
-      // print('checkregister');
-      // print(checkregister);
     } else {
       errorMassages = (response.body['error_msg'] is List)
           ? response.body['error_msg']
@@ -161,7 +149,6 @@ class RegisterFunction extends GetxController {
     final response = await ApiService().checkLogin(token: token);
     if (response.statusCode == 200) {
       checkerror.value = response.body['error'];
-      print(response.body['error']);
       checkLoginLoading.value = false;
       if (!checkerror.value) {
         return 200;
@@ -190,18 +177,11 @@ class RegisterFunction extends GetxController {
     errorMassages = [];
     final response = await ApiService()
         .checkVerificationCode(mobile, code, verificationCode.value);
-
-    // print('chekerror');
-    // print(checkerror);
     if (response.statusCode == 200 ) {
       checkerror.value = response.body['error'];
       // verificationCode.value = response.body['verification_token'];
       // checkregister.value = response.body['register'];
       // setRegisterCode(checkregister.value);
-      // print('verificationCode');
-      // print(verificationCode);
-      // print('checkregister');
-      // print(checkregister);
     } else {
       errorMassages = (response.body['error_msg'] is List)
           ? response.body['error_msg']
@@ -224,9 +204,6 @@ class RegisterFunction extends GetxController {
         errorMassages = (response.body['error_msg'] is List)
             ? response.body['error_msg']
             : [response.body['error_msg']];
-        print(errorMassages);
-        print(errorMassages.length);
-        print(errorMassages[0]);
         return 201;
       }
     } else {
@@ -241,17 +218,10 @@ class RegisterFunction extends GetxController {
     errorMassages = [];
     final response = await ApiService().verificationCode(m);
     checkerror.value = response.body['error'];
-    // print('chekerror');
-    // print(checkerror);
     if (response.statusCode == 200 && !checkerror.value) {
       verificationCode.value = response.body['verification_token'];
-      // print(verificationCode.value);
       // checkregister.value = response.body['register'];
       // setRegisterCode(checkregister.value);
-      // print('verificationCode');
-      // print(verificationCode);
-      // print('checkregister');
-      // print(checkregister);
     } else {
       errorMassages = (response.body['error_msg'] is List)
           ? response.body['error_msg']
@@ -270,7 +240,6 @@ class RegisterFunction extends GetxController {
     if (response.statusCode == 200) {
       bool err = response.body['error'];
       if(!err){
-        print("200");
         errorMassages = (response.body['report_msg'] is List)
             ? response.body['report_msg']
             : [response.body['report_msg']];
@@ -279,11 +248,9 @@ class RegisterFunction extends GetxController {
         errorMassages = (response.body['error_msg'] is List)
             ? response.body['error_msg']
             : [response.body['error_msg']];
-        print("201");
         return 201;
       }
     } else {
-      print("400");
       errorMassages = ["خطا در برقراری ارتباط با سرور"];
       return 400;
     }
@@ -316,8 +283,6 @@ class RegisterFunction extends GetxController {
     }
     update();
     categoryLoading.value = false;
-    print('Category List account Type');
-    print(interestList);
   }
 
   Future providers(
@@ -331,9 +296,6 @@ class RegisterFunction extends GetxController {
     final response = await ApiService().providers(token , level , following,special,activity_scope);
 
     if (response.statusCode == 200) {
-      print("count of list");
-      print(response.body);
-
       providerList = ProviderModel.fromJson(response.body);
       providerLoading.value = false;
       update();
@@ -352,7 +314,6 @@ class RegisterFunction extends GetxController {
     showProviderLoading.value = true;
     final response = await ApiService().showProvider(token , bId);
     if (response.statusCode == 200) {
-      print(response.body);
       showProviderModel = ShowProviderModel.fromJson(response.body);
       showProviderLoading.value = false;
       update();

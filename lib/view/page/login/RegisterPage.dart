@@ -39,38 +39,19 @@ class _RegisterPageState extends State<RegisterPage> {
   void findPersonActivityScopeWhere(List<dynamic> active, int ids) {
     // Find the index of person. If not found, index = -1
     final indexs = active.indexWhere((element) => element == ids);
-    // print('indexs');
-    // print(indexs);
-
     if (indexs > -1) {
-      // print('Using indexWhere: ${inter[indexs]}');
-
       active.remove(ids);
-      print('active remove');
-      print(active);
     } else {
       active.add(ids);
-      print('active add');
-      print(active);
     }
   }
 
   void findPersonInterestWhere(List<dynamic> inter, int ids) {
-    // Find the index of person. If not found, index = -1
     final indexs = inter.indexWhere((element) => element == ids);
-    // print('indexs');
-    // print(indexs);
-
     if (indexs > -1) {
-      // print('Using indexWhere: ${inter[indexs]}');
-
       inter.remove(ids);
-      print('inter remove');
-      print(inter);
     } else {
       inter.add(ids);
-      print('inter add');
-      print(inter);
     }
   }
 
@@ -295,9 +276,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                                                   .value =
                                                               index + 1;
                                                           Get.back();
-                                                          print(step
-                                                              .accountTypeId
-                                                              .value);
+
                                                         },
                                                         child: Container(
                                                           height: 40,
@@ -482,9 +461,6 @@ class _RegisterPageState extends State<RegisterPage> {
                                                  if(mounted){
                                                    setState(() {
                                                      _addressController.text = value;
-                                                     print(value);
-                                                     print(_lastMapPosition.latitude.toString());
-                                                     print(_lastMapPosition.longitude.toString());
                                                    });
                                                  }
                                               });
@@ -557,8 +533,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                     children: [
                                       ElevatedButton(
                                         onPressed: () {
-                                          print(_lastMapPosition.latitude);
-                                          print(_lastMapPosition.longitude);
+
                                           step.lat.value = _lastMapPosition
                                               .latitude
                                               .toString();

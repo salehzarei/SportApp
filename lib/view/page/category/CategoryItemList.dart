@@ -67,7 +67,6 @@ userItem(
     @required Controller controller}) {
   return InkWell(
     onTap: () {
-      // Get.to(NewDetailTab());
       Get.to(DetailUserInfoPage(data.id.toString()));
     },
     focusColor: Colors.transparent,

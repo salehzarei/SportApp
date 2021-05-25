@@ -69,8 +69,6 @@ class _MyArticleState extends State<MyArticle> {
   }
 
   _removeArticle(String id) {
-    print(_token);
-    print(id);
     articleFunction.removeArticle(_token, id).then((value){
       if(value == 200){
         listSnackBar(list: articleFunction.errorMassages, err: false,);

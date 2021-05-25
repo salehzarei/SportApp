@@ -35,8 +35,11 @@ class ProviderPost {
     String lng;
     String pic;
     String title;
+    int package_count;
+    int blog_count;
+    int me;
 
-    ProviderPost({this.address, this.cell, this.level_title, this.description, this.email, this.expire, this.following, this.id, this.lat, this.level, this.lng, this.pic, this.title});
+    ProviderPost({this.address, this.cell, this.level_title,this.package_count, this.blog_count, this.me, this.description, this.email, this.expire, this.following, this.id, this.lat, this.level, this.lng, this.pic, this.title});
 
     factory ProviderPost.fromJson(Map<String, dynamic> json) {
         return ProviderPost(
@@ -52,7 +55,10 @@ class ProviderPost {
             level: json['level'], 
             lng: json['lng'], 
             pic: json['pic'], 
-            title: json['title'], 
+            title: json['title'],
+            package_count: json['package_count'],
+            blog_count: json['blog_count'],
+            me: json['me'],
         );
     }
 

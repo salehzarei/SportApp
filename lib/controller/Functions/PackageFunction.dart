@@ -68,7 +68,6 @@ class PackageFunction extends GetxController {
     //                     height: 2.5),
     //               }
     //                 // onTapUrl: (url) =>
-    //                 //     print('tapped $url'),
     //                 // textStyle: TextStyle(
     //                 //     color: Colors.white,
     //                 //     // letterSpacing: 10,
@@ -97,10 +96,6 @@ class PackageFunction extends GetxController {
     //       : sendAddProductPic(croppedFile).whenComplete(() {
     //     uploadUrlPic.add(uploadpicurl.value);
     //     uploadProductPicName.add(uploadpic.value);
-    //     // print('uploadUrlPic         Listtttt');
-    //     // print(uploadUrlPic);
-    //     // print('upload Product Pic Name         Listtttt');
-    //     // print(uploadProductPicName);
     //   });
     // }
   }
@@ -111,8 +106,6 @@ class PackageFunction extends GetxController {
 
     final response =
         await ApiService().uploadProductPic(token: token, pic: pic);
-
-    print('uploadImage');
 
     if (response.statusCode == 200) {
       bool err = response.body['error'];
@@ -167,7 +160,6 @@ class PackageFunction extends GetxController {
     if (response.statusCode == 200) {
       addPackageLoading.value = response.body['error'];
       if (!addPackageLoading.value) {
-        print("200");
         errorMassages = (response.body['report_msg'] is List)
             ? response.body['report_msg']
             : [response.body['report_msg']];
@@ -176,11 +168,9 @@ class PackageFunction extends GetxController {
         errorMassages = (response.body['error_msg'] is List)
             ? response.body['error_msg']
             : [response.body['error_msg']];
-        print("201");
         return 201;
       }
     } else {
-      print("400");
       errorMassages = ["خطا در برقراری ارتباط با سرور"];
       return 400;
     }
@@ -219,7 +209,6 @@ class PackageFunction extends GetxController {
     if (response.statusCode == 200) {
       editPackageLoading.value = response.body['error'];
       if (!editPackageLoading.value) {
-        print("200");
         errorMassages = (response.body['report_msg'] is List)
             ? response.body['report_msg']
             : [response.body['report_msg']];
@@ -228,11 +217,9 @@ class PackageFunction extends GetxController {
         errorMassages = (response.body['error_msg'] is List)
             ? response.body['error_msg']
             : [response.body['error_msg']];
-        print("201");
         return 201;
       }
     } else {
-      print("400");
       errorMassages = ["خطا در برقراری ارتباط با سرور"];
       return 400;
     }
@@ -249,7 +236,6 @@ class PackageFunction extends GetxController {
     if (response.statusCode == 200) {
       bool error = response.body['error'];
       if (!error) {
-        print("200");
         errorMassages = (response.body['report_msg'] is List)
             ? response.body['report_msg']
             : [response.body['report_msg']];
@@ -259,11 +245,9 @@ class PackageFunction extends GetxController {
         errorMassages = (response.body['error_msg'] is List)
             ? response.body['error_msg']
             : [response.body['error_msg']];
-        print("201");
         return 201;
       }
     } else {
-      print("400");
       errorMassages = ["خطا در برقراری ارتباط با سرور"];
       return 400;
     }
@@ -280,7 +264,6 @@ class PackageFunction extends GetxController {
     if (response.statusCode == 200) {
       bool error = response.body['error'];
       if (!error) {
-        print("200");
         errorMassages = (response.body['report_msg'] is List)
             ? response.body['report_msg']
             : [response.body['report_msg']];
@@ -290,15 +273,12 @@ class PackageFunction extends GetxController {
         errorMassages = (response.body['error_msg'] is List)
             ? response.body['error_msg']
             : [response.body['error_msg']];
-        print("201");
         return 201;
       }
     } else {
-      print("400");
       errorMassages = ["خطا در برقراری ارتباط با سرور"];
       return 400;
     }
-    update();
   }
 
   Future removeFav({@required String token, @required String proId}) async {
@@ -311,7 +291,6 @@ class PackageFunction extends GetxController {
     if (response.statusCode == 200) {
       bool error = response.body['error'];
       if (!error) {
-        print("200");
         errorMassages = (response.body['report_msg'] is List)
             ? response.body['report_msg']
             : [response.body['report_msg']];
@@ -320,11 +299,9 @@ class PackageFunction extends GetxController {
         errorMassages = (response.body['error_msg'] is List)
             ? response.body['error_msg']
             : [response.body['error_msg']];
-        print("201");
         return 201;
       }
     } else {
-      print("400");
       errorMassages = ["خطا در برقراری ارتباط با سرور"];
       return 400;
     }
@@ -375,11 +352,8 @@ class PackageFunction extends GetxController {
         limit: limit,
         page: page);
     if (response.statusCode == 200) {
-      print('response.body');
-      print(response.body);
       userPackageLoading.value = false;
       userPackageModel = MyPackageModel.fromJson(response.body);
-      print(userPackageModel.post.length);
     } else {
       userPackageLoading.value = true;
     }
@@ -391,7 +365,6 @@ class PackageFunction extends GetxController {
     if (response.statusCode == 200) {
       addPackageLoading.value = response.body['error'];
       if (!addPackageLoading.value) {
-        print("200");
         errorMassages = (response.body['report_msg'] is List)
             ? response.body['report_msg']
             : [response.body['report_msg']];
@@ -400,11 +373,9 @@ class PackageFunction extends GetxController {
         errorMassages = (response.body['error_msg'] is List)
             ? response.body['error_msg']
             : [response.body['error_msg']];
-        print("201");
         return 201;
       }
     } else {
-      print("400");
       errorMassages = ["خطا در برقراری ارتباط با سرور"];
       return 400;
     }
@@ -413,8 +384,6 @@ class PackageFunction extends GetxController {
   Future showPackage(String token, String pId) async {
     showPackageLoading.value = true;
     final response = await ApiService().showPackage(token, pId);
-    print("response.statusCode");
-    print(response.statusCode);
 
     if (response.statusCode == 200) {
       showPackageLoading.value = false;
@@ -427,8 +396,6 @@ class PackageFunction extends GetxController {
     final response = await ApiService().showUserPackage(token, pId);
 
     if (response.statusCode == 200) {
-      print('response.body');
-      print(response.body);
       showPackageLoading.value = false;
       showPackageModel = ShowPackageModel.fromJson(response.body);
     } else {

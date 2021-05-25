@@ -21,16 +21,12 @@ class _RulesPageState extends State<RulesPage> {
   Widget build(BuildContext context) {
     return Obx(()=>Container(
       padding: EdgeInsets.symmetric(vertical: 10,horizontal: 15),
-      child: SingleChildScrollView(
-        child: roulef.rulesLoading.value?
-        Padding(padding: EdgeInsets.only(top: 50),
-            child:  loading(color: Theme.of(context).primaryColorDark)):
-        Directionality(
+      child:roulef.rulesLoading.value? loading(color: Theme.of(context).primaryColorDark) :SingleChildScrollView(
+        child:Directionality(
             textDirection: TextDirection.rtl,
             child:  HtmlWidget(
               roulef.rulesModel.data,
               // onTapUrl: (url) =>
-              //     print('tapped $url'),
               textStyle: TextStyle(
                   color: Colors.black87,
                   // letterSpacing: 10,

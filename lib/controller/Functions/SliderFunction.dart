@@ -19,8 +19,6 @@ class SliderFunction extends GetxController {
     sliderList.clear();
     final response = await ApiService().getSlider();
     if (response.statusCode == 200) {
-      print('response.body');
-      print(response.body);
       final List<dynamic> responseData = response.body;
       List<SliderModel> sld = (responseData)
           .map((i) => SliderModel.fromJson(i))
@@ -38,7 +36,6 @@ class SliderFunction extends GetxController {
     aboutLoading.value = true;
     final response = await ApiService().about();
     if (response.statusCode == 200) {
-      print(response.body);
       aboutModel = AboutModel.fromJson(response.body);
       aboutLoading.value = false;
     }
@@ -49,7 +46,6 @@ class SliderFunction extends GetxController {
     rulesLoading.value = true;
     final response = await ApiService().rules();
     if (response.statusCode == 200) {
-      print(response.body);
       rulesModel = AboutModel.fromJson(response.body);
       rulesLoading.value = false;
     }

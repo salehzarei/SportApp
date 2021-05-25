@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 typedef void Onckick(val);
 class TabViewHeader extends SliverPersistentHeaderDelegate {
+
   TabController tabController;
+  int level;
   Onckick onckick;
   
-  TabViewHeader({@required this.tabController,@required this.onckick});
+  TabViewHeader({@required this.tabController,@required this.onckick,@required this.level});
 
   @override
   Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
@@ -42,15 +44,25 @@ class TabViewHeader extends SliverPersistentHeaderDelegate {
                   color: Colors.white,
                 )
             ),
-            Tab(
-                text: "زیرمجموعه",
+            if(level == 3|| level == 2)
+              Tab(
+                text: level == 3?"مربیان":"باشگاها",
                 icon: SvgPicture.asset(
                   "assets/svg/doctor.svg",
                   width: 18,
                   height: 18,
                   color: Colors.white,
                 )
-            )
+            ),
+            Tab(
+                text: "گالری",
+                icon: SvgPicture.asset(
+                  "assets/svg/gym.svg",
+                  width: 18,
+                  height: 18,
+                  color: Colors.white,
+                )
+            ),
           ],
           controller: tabController,
         ),

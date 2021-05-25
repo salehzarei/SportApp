@@ -10,6 +10,8 @@ import 'package:sportapplication/view/component/Constans.dart';
 import 'package:sportapplication/view/component/TabViewHeader.dart';
 import 'package:sportapplication/view/page/userInfo/ArticleTab.dart';
 import 'package:sportapplication/view/page/userInfo/DetailConstant.dart';
+import 'package:sportapplication/view/page/userInfo/GalleryTab.dart';
+import 'package:sportapplication/view/page/userInfo/IntroductionPage.dart';
 import 'package:sportapplication/view/page/userInfo/SubsetTab.dart';
 import 'package:sportapplication/view/page/userInfo/UserPackageTab.dart';
 
@@ -43,9 +45,11 @@ class _DetailUserInfoPageState extends State<DetailUserInfoPage>
     getShared("token").then((token) {
       _token = token;
       registerFunction.showProviderLoading.value= true;
-      registerFunction.showProvider(token: token, bId: widget.uId);
+      registerFunction.showProvider(token: token, bId: widget.uId).whenComplete(() {
+        _tabController = TabController(vsync: this, length: registerFunction.showProviderModel.info.level == 3 || registerFunction.showProviderModel.info.level == 2 ?4 : 3);
+      });
     });
-    _tabController = TabController(vsync: this, length: 3);
+
   }
 
   @override
@@ -59,12 +63,7 @@ class _DetailUserInfoPageState extends State<DetailUserInfoPage>
     return Obx(()=>SafeArea(
       child: Scaffold(
         body: registerFunction.showProviderLoading.value ?
-            Center(
-              child: SpinKitThreeBounce(
-                color: Theme.of(context).primaryColorDark,
-                size: 30.0,
-              ),
-            ):
+            loading(color: Theme.of(context).primaryColorDark):
             CustomScrollView(
               physics: PageScrollPhysics(),
               slivers: <Widget>[
@@ -96,7 +95,8 @@ class _DetailUserInfoPageState extends State<DetailUserInfoPage>
                             _select = val;
                           });
                         }
-                      }),
+                      },
+                      level: registerFunction.showProviderModel.info.level),
                 ),
                 SliverList(
                   delegate: SliverChildListDelegate(
@@ -118,7 +118,10 @@ class _DetailUserInfoPageState extends State<DetailUserInfoPage>
         return ArticleTab(widget.uId);
         break;
       case 2:
-        return SubsetTab(widget.uId);
+        return  registerFunction.showProviderModel.info.level == 3 || registerFunction.showProviderModel.info.level == 2 ?SubsetTab(widget.uId): GalleryTab();
+        break;
+      case 3:
+        return GalleryTab();
         break;
     }
   }
@@ -158,7 +161,7 @@ class _DetailUserInfoPageState extends State<DetailUserInfoPage>
                               child: AspectRatio(
                                 aspectRatio: 2 / 2,
                                 child: imageShower(
-                                    imageUrl:'${registerFunction.showProviderModel.info.pic}?id=${new Random().nextInt(100)}',
+                                    imageUrl:registerFunction.showProviderModel.info.pic,
                                     margin: EdgeInsets.all(8),
                                     fit: BoxFit.fill,
                                     borderRadius: BorderRadius.circular(100)),
@@ -245,8 +248,9 @@ class _DetailUserInfoPageState extends State<DetailUserInfoPage>
                   Expanded(
                     child: ElevatedButton(
                       onPressed: () {
-                        dialogBase(
-                            context: context, child: _dialogShoInformation());
+                        Get.to(IntroductionPage());
+                        // dialogBase(
+                        //     context: context, child: _dialogShoInformation());
                       },
                       style: ButtonStyle(
                           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -258,7 +262,7 @@ class _DetailUserInfoPageState extends State<DetailUserInfoPage>
                           backgroundColor: MaterialStateProperty.all<Color>(
                               Colors.red)),
                       child: Text(
-                        "اطلاعات بیشتر",
+                        "معرفی",
                         style: TextStyle(fontSize: 14, color: Colors.white),
                       ),),
                   ),

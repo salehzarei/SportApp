@@ -208,8 +208,6 @@ class _LoginPageState extends State<LoginPage> {
                               });
                             }
                             _firebaseToken.getToken().then((pushToken) {
-                              print('pushToken');
-                              print(pushToken);
                               check
                                   .login(
                                   mobile: _mobController.text,

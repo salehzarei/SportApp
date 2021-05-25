@@ -29,10 +29,8 @@ class ProfileFunctions extends GetxController {
     if (response.statusCode == 200) {
       if (ostanId > 0) {
         cityList = response.body;
-        // print(cityList);
       } else {
         ostanList = response.body;
-        // print(ostanList);
       }
       update();
       return true;

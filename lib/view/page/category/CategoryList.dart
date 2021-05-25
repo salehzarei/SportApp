@@ -24,6 +24,7 @@ class _CategoryListState extends State<CategoryList> {
   final Controller activ = Get.put(Controller());
   final RegisterFunction registerFunction = Get.put(RegisterFunction());
 
+  bool _loaded = false;
   String _token;
 
   @override
@@ -31,8 +32,13 @@ class _CategoryListState extends State<CategoryList> {
     activ.catActive(-1);
     getShared('token').then((token) {
       _token = token;
+      registerFunction.providerLoading.value = true;
       registerFunction.getProductCategories(widget.level).whenComplete(() {
-        registerFunction.providers( token: token, following: '', level: widget.level.toString(), activity_scope: '', special: '',);
+        registerFunction.providers( token: token, following: '', level: widget.level.toString(), activity_scope: '', special: '',).whenComplete(() {
+          setState(() {
+            _loaded = true;
+          });
+        });
       });
     });
 
@@ -47,7 +53,7 @@ class _CategoryListState extends State<CategoryList> {
         child: Scaffold(
           body: Column(
             children: [
-              AppBarWidget(from: 1, onShopPressed: () {  }, onBackPressed: () { Get.back();},),
+              AppBarWidget(from: 1, onShopPressed: () {}, onBackPressed: () { Get.back();},),
               Expanded(
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -72,7 +78,6 @@ class _CategoryListState extends State<CategoryList> {
                                     level: '',
                                     activity_scope: registerFunction.categoryList[index].id.toString(),
                                     special: '');
-                                  print(registerFunction.categoryList[index].id.toString());
                                  activ.catActive(index);
                             })),
                       ),
@@ -98,14 +103,13 @@ class _CategoryListState extends State<CategoryList> {
                                     color: Colors.black),
                               ),
                             ),
-                            registerFunction.providerLoading.value? Expanded(
+                            registerFunction.providerLoading.value?
+                            Expanded(
                               child: Center(
-                                child: SpinKitThreeBounce(
-                                  color: Colors.red,
-                                  size: 25.0,
-                                ),
+                                child:  loading(color: Theme.of(context).primaryColorDark)
                               ),
-                            ): registerFunction.providerList.post.isEmpty?
+                            ):
+                            registerFunction.providerList.post.isEmpty?
                             Expanded(
                               child: Center(
                                 child: noItem(),

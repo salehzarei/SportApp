@@ -120,7 +120,6 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
                             //             child: HtmlWidget(
                             //               reg.errorMassages[index],
                             //               // onTapUrl: (url) =>
-                            //               //     print('tapped $url'),
                             //               textStyle: TextStyle(
                             //                   color: Colors.white,
                             //                   // letterSpacing: 10,

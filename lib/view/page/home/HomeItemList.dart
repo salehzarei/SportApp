@@ -39,7 +39,7 @@ specialList({@required context,@required controller,@required MyPackagePost data
                         borderRadius:  BorderRadius.only(
                         topLeft: Radius.circular(6),
                         topRight: Radius.circular(6)),
-                        imageUrl: '${data.pic}?id=${new Random().nextInt(100)}',
+                        imageUrl: data.pic,
                         fit: BoxFit.fill),
                   ),
                 ),
@@ -183,7 +183,7 @@ newArticleItemList({@required context,@required ArticleModelPost data}){
                         alignment: Alignment.bottomLeft,
                         child: imageShower(margin: EdgeInsets.all(0),
                             borderRadius:  BorderRadius.circular(15),
-                            imageUrl:'${data.pic}?id=${new Random().nextInt(100)}',
+                            imageUrl:data.pic,
                             fit: BoxFit.fill),
                         decoration: BoxDecoration(
                           // color: Colors.grey,
@@ -221,7 +221,7 @@ newArticleItemList({@required context,@required ArticleModelPost data}){
                                   color: Colors.blueGrey,
                                   image: DecorationImage(
                                       image: NetworkImage(
-                                          '${data.owner_pic}?id=${new Random().nextInt(100)}')),
+                                          data.owner_pic)),
                                   borderRadius:
                                   BorderRadiusDirectional.circular(60)),
                             ),
@@ -315,7 +315,7 @@ packageMe({@required context,@required controller,@required MyPackagePost data})
                     child:imageShower(margin: EdgeInsets.all(0), borderRadius:  BorderRadius.only(
                         topLeft: Radius.circular(6),
                         topRight: Radius.circular(6)),
-                        imageUrl: '${data.pic}?id=${new Random().nextInt(100)}',
+                        imageUrl: data.pic,
                         fit: BoxFit.fill),
                   ),
                 ),
@@ -457,7 +457,7 @@ articleMe({@required context,@required ArticleModelPost data}){
                      alignment: Alignment.bottomLeft,
                      child: imageShower(margin: EdgeInsets.all(0),
                          borderRadius:  BorderRadius.only(topLeft: Radius.circular(15),topRight: Radius.circular(15)),
-                         imageUrl: '${data.pic}?id=${new Random().nextInt(100)}',
+                         imageUrl: data.pic,
                          fit: BoxFit.fill),
                      decoration: BoxDecoration(
                        // color: Colors.grey,
@@ -573,7 +573,7 @@ followingItem({@required ProviderPost data}){
                 margin: EdgeInsets.only(bottom: 6),
                 child: CachedNetworkImage(
                   fit: BoxFit.cover,
-                  imageUrl:'${data.pic}?id=${new Random().nextInt(100)}',
+                  imageUrl:data.pic,
                   imageBuilder: (context, imageProvider) => Container(
                     margin: EdgeInsets.all(0.5),
                     decoration: BoxDecoration(
@@ -662,7 +662,7 @@ suggestedUser({@required context,@required ProviderPost data}){
                                     fontWeight: FontWeight.w200),
                               ),
                               Text(
-                                '4',
+                                data.package_count.toString(),
                                 style: TextStyle(
                                     fontWeight: FontWeight.w900,
                                     fontSize:14,
@@ -680,7 +680,7 @@ suggestedUser({@required context,@required ProviderPost data}){
                     child: Column(
                       children: [
                         CachedNetworkImage(
-                          imageUrl:'${data.pic}?id=${new Random().nextInt(100)}',
+                          imageUrl:data.pic,
                           imageBuilder: (context, imageProvider) =>
                               Container(
                                 width: _width * 0.46,

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:sportapplication/Model/PlanModel.dart';
 import 'package:sportapplication/controller/Functions/PlanFunction.dart';
@@ -98,16 +97,10 @@ class _PackagePageState extends State<PackagePage> {
               ],
             ),
           ):
-              Padding(padding: EdgeInsets.symmetric(vertical: 20),
-              child:loading(color: Theme.of(context).primaryColorDark),),
+              SizedBox(),
 
           Expanded(
-            child: planFunction.planLoading.value?Center(
-              child: SpinKitThreeBounce(
-                color: Colors.white,
-                size: 30.0,
-              ),
-            ):ListView.builder(
+            child: planFunction.planLoading.value?loading(color: Theme.of(context).primaryColorDark):ListView.builder(
               itemCount:planFunction.planList.length,
               padding: EdgeInsets.symmetric(vertical: 10),
               shrinkWrap: true,

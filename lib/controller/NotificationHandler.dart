@@ -16,7 +16,6 @@ class NotificationHandlerr {
 
   static Future onSelectNotification(String payload) async {
     if (payload != null) {
-      print('Notification Payload  ' + payload);
       // launch(payload);
       // Get.to(ProfileUser());
     }
