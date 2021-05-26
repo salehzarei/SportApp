@@ -7,9 +7,11 @@ import 'package:sportapplication/view/component/Constans.dart';
 import 'package:sportapplication/view/page/userInfo/DetailConstant.dart';
 
 class SubsetTab extends StatefulWidget {
-  String uId;
 
-  SubsetTab(this.uId);
+  String uId;
+  int level;
+
+  SubsetTab(this.uId,this.level);
 
   @override
   _SubsetTabState createState() => _SubsetTabState();
@@ -41,7 +43,10 @@ class _SubsetTabState extends State<SubsetTab> {
         children: [
           Padding(
             padding: EdgeInsets.only(right: 15 , top: 10 , bottom: 10),
-            child: Text("تعداد کاربران زیر مجموعه ${subSetFunction.subSetModel.post.length}"
+            child: Text(
+              widget.level == 2 ?
+              "تعداد مربیان عضو ${subSetFunction.subSetModel.post.length}":
+              "تعداد باشگاه های مشغول به فعالیت ${subSetFunction.subSetModel.post.length}"
               ,style: TextStyle(fontWeight: FontWeight.w600,
                   fontSize: 14,
                   color: Colors.black),),

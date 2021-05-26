@@ -15,6 +15,7 @@ import 'package:sportapplication/view/page/Article/AddArticlePage.dart';
 import 'package:sportapplication/view/page/addPackage/AddPackagePage.dart';
 import 'package:sportapplication/view/page/favorite/FavoritePage.dart';
 import 'package:sportapplication/view/page/following/FollowPage.dart';
+import 'package:sportapplication/view/page/gallery/MyGalleryPage.dart';
 import 'package:sportapplication/view/page/login/LoginPage.dart';
 import 'package:sportapplication/view/page/myInfo/MyArticle.dart';
 import 'package:sportapplication/view/page/myInfo/MyPackage.dart';
@@ -426,6 +427,12 @@ class _ProfileState extends State<Profile> {
                                           Get.to(MySubSet());
                                         },
                                         title: "درخواست ها"),
+                                    itemProfile(
+                                        context: context,
+                                        onTap: () {
+                                         Get.to(MyGalleryPage());
+                                        },
+                                        title: "گالری من"),
                                     itemProfile(
                                         context: context,
                                         onTap: () {

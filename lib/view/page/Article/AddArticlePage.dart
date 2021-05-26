@@ -248,7 +248,7 @@ class _AddAtrticlePageState extends State<AddArticlePage> {
                                   }),
                             ),
                             SizedBox(
-                              width: 6,),
+                              width: 4,),
                             Expanded(
                               flex:1,
                               child:itemImageAdd(
@@ -265,7 +265,7 @@ class _AddAtrticlePageState extends State<AddArticlePage> {
                                   }),
                             ),
                             SizedBox(
-                              width: 6,),
+                              width: 4,),
                             Expanded(
                               flex:1,
                               child:itemImageAdd(
@@ -303,7 +303,7 @@ class _AddAtrticlePageState extends State<AddArticlePage> {
                                   }),
                             ),
                             SizedBox(
-                              width: 6,),
+                              width: 4,),
                             Expanded(
                               flex:1,
                               child:itemImageAdd(
@@ -320,7 +320,7 @@ class _AddAtrticlePageState extends State<AddArticlePage> {
                                   }),
                             ),
                             SizedBox(
-                              width: 6,),
+                              width: 4,),
                             Expanded(
                               flex:1,
                               child:itemImageAdd(

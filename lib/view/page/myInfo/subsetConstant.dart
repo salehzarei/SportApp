@@ -472,7 +472,7 @@ myArticleList({@required BuildContext context, @required int index, @required re
                                 padding: EdgeInsets.symmetric(
                                     horizontal: 4, vertical: 6),
                                 child: Text(
-                                  "#فوتسال",
+                                    data.tages.isEmpty?"#":'# ${data.tages[0]}',
                                   maxLines: 1,
                                   style: TextStyle(
                                       color: Colors.white, fontSize: 12),

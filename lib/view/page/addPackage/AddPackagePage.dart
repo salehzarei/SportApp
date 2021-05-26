@@ -245,7 +245,7 @@ class _AddPackagePageState extends State<AddPackagePage> {
                                         Get.dialog(_showImage(fileOne));
                                       }),
                                 ),
-                                SizedBox(width: 6,),
+                                SizedBox(width: 4,),
                                 Expanded(
                                   flex:1,
                                   child:itemImageAdd(
@@ -261,7 +261,7 @@ class _AddPackagePageState extends State<AddPackagePage> {
                                         Get.dialog(_showImage(fileTow));
                                       }),
                                 ),
-                                SizedBox(width: 6,),
+                                SizedBox(width: 4,),
                                 Expanded(
                                   flex:1,
                                   child:itemImageAdd(
@@ -298,7 +298,7 @@ class _AddPackagePageState extends State<AddPackagePage> {
                                         Get.dialog(_showImage(fileFour));
                                       }),
                                 ),
-                                SizedBox(width: 6,),
+                                SizedBox(width: 4,),
                                 Expanded(
                                   flex:1,
                                   child:itemImageAdd(
@@ -314,7 +314,7 @@ class _AddPackagePageState extends State<AddPackagePage> {
                                         Get.dialog(_showImage(fileFive));
                                       }),
                                 ),
-                                SizedBox(width: 6,),
+                                SizedBox(width: 4,),
                                 Expanded(
                                   flex:1,
                                   child:itemImageAdd(

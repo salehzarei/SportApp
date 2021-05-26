@@ -46,7 +46,7 @@ class TabViewHeader extends SliverPersistentHeaderDelegate {
             ),
             if(level == 3|| level == 2)
               Tab(
-                text: level == 3?"مربیان":"باشگاها",
+                text: level == 2?"مربیان":"باشگاها",
                 icon: SvgPicture.asset(
                   "assets/svg/doctor.svg",
                   width: 18,

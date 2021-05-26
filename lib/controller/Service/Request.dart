@@ -5,7 +5,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 class ApiService extends GetConnect {
-  final String apiUrl = 'https://sportapp.pdf.co.ir/api/';
+  // final String apiUrl = 'https://sportapp.pdf.co.ir/api/';
+  final String apiUrl = 'http://192.168.1.3/np-framework/sportplus/api/';
 
   Future<Response> getProvinceList(int ostanid) =>
       get(apiUrl + 'user/getplace?ostan=${ostanid.toString()}');
@@ -382,10 +383,29 @@ class ApiService extends GetConnect {
   Future<Response> showProvider(String token, String bid) =>
       get(apiUrl + 'providers/show?token=$token&bId=$bid');
 
+  Future<Response> getMyGallery(String token) =>
+      get(apiUrl + 'providergallery?token=$token');
+
   Future<Response> unfollow(String token, String id) =>
       post(apiUrl + 'providers/unfollow',FormData({
         'token': token,
         'id': id,
+      }));
+
+  Future<Response> removeGallery(String token, String proId) =>
+      post(apiUrl + 'providergallery/delete',FormData({
+        'token': token,
+        'proId': proId,
+      }));
+
+  Future<Response> addGallery(String token, String title,File pic) =>
+      post(apiUrl + 'providergallery/add',FormData({
+        'token': token,
+        'title': title,
+        'pic': MultipartFile(
+          pic,
+          filename: pic.path.split('/').last,
+        ),
       }));
 
   Future<Response> follow(String token, String user_id) =>

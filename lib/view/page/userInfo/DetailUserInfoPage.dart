@@ -118,10 +118,10 @@ class _DetailUserInfoPageState extends State<DetailUserInfoPage>
         return ArticleTab(widget.uId);
         break;
       case 2:
-        return  registerFunction.showProviderModel.info.level == 3 || registerFunction.showProviderModel.info.level == 2 ?SubsetTab(widget.uId): GalleryTab();
+        return  registerFunction.showProviderModel.info.level == 3 || registerFunction.showProviderModel.info.level == 2 ?SubsetTab(widget.uId, registerFunction.showProviderModel.info.level): GalleryTab(registerFunction.showProviderModel.info.gallery);
         break;
       case 3:
-        return GalleryTab();
+        return GalleryTab(registerFunction.showProviderModel.info.gallery);
         break;
     }
   }
@@ -249,8 +249,6 @@ class _DetailUserInfoPageState extends State<DetailUserInfoPage>
                     child: ElevatedButton(
                       onPressed: () {
                         Get.to(IntroductionPage());
-                        // dialogBase(
-                        //     context: context, child: _dialogShoInformation());
                       },
                       style: ButtonStyle(
                           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -264,12 +262,13 @@ class _DetailUserInfoPageState extends State<DetailUserInfoPage>
                       child: Text(
                         "معرفی",
                         style: TextStyle(fontSize: 14, color: Colors.white),
-                      ),),
+                      )
+                    ),
                   ),
-                  SizedBox(
+                  registerFunction.showProviderModel.info.me == 0 ?SizedBox(
                     width: 8,
-                  ),
-                  Expanded(
+                  ):SizedBox(),
+                  registerFunction.showProviderModel.info.me == 0 ?Expanded(
                     child: ElevatedButton(
                         onPressed: () {
                           registerFunction.showProviderModel.info.following ==0?
@@ -328,7 +327,7 @@ class _DetailUserInfoPageState extends State<DetailUserInfoPage>
                          registerFunction.showProviderModel.info.following ==0? "دنبال کردن":"حذف از دنبال کردن",
                           style: TextStyle(fontSize: 14, color: Colors.red),
                         )),
-                  ),
+                  ):SizedBox(),
                 ],
               ),
               SizedBox(height: 10,)

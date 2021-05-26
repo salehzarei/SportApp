@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:sportapplication/controller/Functions/PackageFunction.dart';
 import 'package:sportapplication/controller/util.dart';
 import 'package:sportapplication/view/component/Constans.dart';
+import 'package:sportapplication/view/page/userInfo/DetailUserInfoPage.dart';
 import 'package:syncfusion_flutter_barcodes/barcodes.dart';
 
 class PackagesListItemDetail extends StatefulWidget {
@@ -321,71 +322,74 @@ class _PackagesListItemDetailState extends State<PackagesListItemDetail> {
                               ),
                             ),
                           ),
-                          Card(
-                            elevation: 5.0,
-                            margin: EdgeInsets.all(0),
-                            child: Padding(
-                              padding: EdgeInsets.all(10),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  IntrinsicHeight(
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Expanded(
-                                          child: Row(
-                                            children: [
-                                              Container(
-                                                width: 60,
-                                                height: 60,
-                                                child:imageShower(
-                                                    imageUrl: packageFunction.showPackageModel.data.owner_pic,
-                                                    margin: EdgeInsets.all(8),
-                                                    fit: BoxFit.fill,
-                                                    borderRadius: BorderRadius.circular(100)),
-                                              ),
+                          InkWell(
+                            onTap: () => Get.to(DetailUserInfoPage( packageFunction.showPackageModel.data.uid.toString())),
+                            child: Card(
+                              elevation: 5.0,
+                              margin: EdgeInsets.all(0),
+                              child: Padding(
+                                padding: EdgeInsets.all(10),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    IntrinsicHeight(
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Expanded(
+                                            child: Row(
+                                              children: [
+                                                Container(
+                                                  width: 60,
+                                                  height: 60,
+                                                  child:imageShower(
+                                                      imageUrl: packageFunction.showPackageModel.data.owner_pic,
+                                                      margin: EdgeInsets.all(8),
+                                                      fit: BoxFit.fill,
+                                                      borderRadius: BorderRadius.circular(100)),
+                                                ),
 
-                                              Text(
-                                                packageFunction.showPackageModel.data.owner,
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 16),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        InkWell(
-                                          onTap: () {
-                                            launchURL('tel:${ packageFunction.showPackageModel.data.owner_cell}');
-                                          },
-                                          child: Container(
-                                            padding: EdgeInsets.all(10),
-                                            decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(10),
-                                                border:
-                                                Border.all(width: 1, color: Colors.blue)),
-                                            child: Icon(
-                                              Icons.call,
-                                              color: Colors.blue,
+                                                Text(
+                                                  packageFunction.showPackageModel.data.owner,
+                                                  style: TextStyle(
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: 16),
+                                                ),
+                                              ],
                                             ),
                                           ),
-                                        )
-                                      ],
+                                          InkWell(
+                                            onTap: () {
+                                              launchURL('tel:${ packageFunction.showPackageModel.data.owner_cell}');
+                                            },
+                                            child: Container(
+                                              padding: EdgeInsets.all(10),
+                                              decoration: BoxDecoration(
+                                                  borderRadius: BorderRadius.circular(10),
+                                                  border:
+                                                  Border.all(width: 1, color: Colors.blue)),
+                                              child: Icon(
+                                                Icons.call,
+                                                color: Colors.blue,
+                                              ),
+                                            ),
+                                          )
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Row(
-                                    children: [
-                                      Icon(Icons.location_on_outlined),
-                                      Text(
-                                        packageFunction.showPackageModel.data.owner_address,)
-                                    ],
-                                  )
-                                ],
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    Row(
+                                      children: [
+                                        Icon(Icons.location_on_outlined),
+                                        Text(
+                                          packageFunction.showPackageModel.data.owner_address,)
+                                      ],
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
                           ),
