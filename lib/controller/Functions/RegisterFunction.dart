@@ -28,6 +28,7 @@ class RegisterFunction extends GetxController {
   final checkerror = false.obs;
   final resetPassLoading = false.obs;
   final verificationCode = ''.obs;
+  final mobile = ''.obs;
   final code = ''.obs;
   List<CategoryAccountTypeModel> categoryList = [];
   List<CategoryAccountTypeModel> interestList = [];
@@ -38,10 +39,7 @@ class RegisterFunction extends GetxController {
 
   List<dynamic> errorMassages = [];
 
-  TextEditingController mobile = TextEditingController();
-  TextEditingController name = TextEditingController();
-  TextEditingController pass = TextEditingController();
-  TextEditingController repass = TextEditingController();
+
 
 //// دریافت لیست استان ها و شهر ها
 
@@ -131,17 +129,24 @@ class RegisterFunction extends GetxController {
     checkLoginLoading.value = true;
     errorMassages = [];
     final response = await ApiService().checkPhone(m);
-    checkerror.value = response.body['error'];
-    if (response.statusCode == 200 && !checkerror.value) {
-      // verificationCode.value = response.body['verification_token'];
-      // checkregister.value = response.body['register'];
-      // setRegisterCode(checkregister.value);
+    if (response.statusCode == 200) {
+      bool error = response.body['error'];
+      if(!error){
+        errorMassages = (response.body['report_msg'] is List)
+            ? response.body['report_msg']
+            : [response.body['report_msg']];
+
+        return 200;
+      }else{
+        errorMassages = (response.body['error_msg'] is List)
+            ? response.body['error_msg']
+            : [response.body['error_msg']];
+        return 201;
+      }
     } else {
-      errorMassages = (response.body['error_msg'] is List)
-          ? response.body['error_msg']
-          : [response.body['error_msg']];
+      errorMassages = ["خطا در برقراری ارتباط با سرور"];
+      return 400;
     }
-    checkLoginLoading.value = false;
   }
 
   Future<int> checkLogin({@required String token}) async {
@@ -172,22 +177,27 @@ class RegisterFunction extends GetxController {
     }
   }
 
-  Future checkVerificationCodes(String mobile, String code) async {
-    // checkLoginLoading.value = true;
+  Future checkVerificationCodes(String code) async {
     errorMassages = [];
     final response = await ApiService()
-        .checkVerificationCode(mobile, code, verificationCode.value);
-    if (response.statusCode == 200 ) {
-      checkerror.value = response.body['error'];
-      // verificationCode.value = response.body['verification_token'];
-      // checkregister.value = response.body['register'];
-      // setRegisterCode(checkregister.value);
+        .checkVerificationCode(mobile.value, code, verificationCode.value);
+    if (response.statusCode == 200) {
+      bool error = response.body['error'];
+      if(!error){
+        errorMassages = (response.body['report_msg'] is List)
+            ? response.body['report_msg']
+            : [response.body['report_msg']];
+        return 200;
+      }else{
+        errorMassages = (response.body['error_msg'] is List)
+            ? response.body['error_msg']
+            : [response.body['error_msg']];
+        return 201;
+      }
     } else {
-      errorMassages = (response.body['error_msg'] is List)
-          ? response.body['error_msg']
-          : [response.body['error_msg']];
+      errorMassages = ["خطا در برقراری ارتباط با سرور"];
+      return 400;
     }
-    // checkLoginLoading.value = false;
   }
 
   Future<int> login({@required String mobile, @required String pass, @required String firebase_token}) async {
@@ -217,17 +227,24 @@ class RegisterFunction extends GetxController {
     checkLoginLoading.value = true;
     errorMassages = [];
     final response = await ApiService().verificationCode(m);
-    checkerror.value = response.body['error'];
-    if (response.statusCode == 200 && !checkerror.value) {
-      verificationCode.value = response.body['verification_token'];
-      // checkregister.value = response.body['register'];
-      // setRegisterCode(checkregister.value);
+    if (response.statusCode == 200) {
+      bool error = response.body['error'];
+      if(!error){
+        errorMassages = (response.body['report_msg'] is List)
+            ? response.body['report_msg']
+            : [response.body['report_msg']];
+        verificationCode.value = response.body['verification_token'];
+        return 200;
+      }else{
+        errorMassages = (response.body['error_msg'] is List)
+            ? response.body['error_msg']
+            : [response.body['error_msg']];
+        return 201;
+      }
     } else {
-      errorMassages = (response.body['error_msg'] is List)
-          ? response.body['error_msg']
-          : [response.body['error_msg']];
+      errorMassages = ["خطا در برقراری ارتباط با سرور"];
+      return 400;
     }
-    checkLoginLoading.value = false;
   }
 
   Future resetPass({@required String mobile, @required String code,@required String pass,@required String verification_token})async {

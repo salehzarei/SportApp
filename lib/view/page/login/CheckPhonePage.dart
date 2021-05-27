@@ -1,14 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:get/get.dart';
 import 'package:sportapplication/controller/Functions/RegisterFunction.dart';
+import 'package:sportapplication/controller/util.dart';
 import 'package:sportapplication/view/component/Constans.dart';
 
 import 'VerificationCodePage.dart';
 
-class CheckPhonePage extends StatelessWidget {
+class CheckPhonePage extends StatefulWidget {
+  @override
+  _CheckPhonePageState createState() => _CheckPhonePageState();
+}
+
+class _CheckPhonePageState extends State<CheckPhonePage> {
   final RegisterFunction check = Get.put(RegisterFunction());
+
+  TextEditingController _mobileController;
+  bool _clicked = false;
+
+  @override
+  void initState() {
+    _mobileController = TextEditingController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _mobileController.dispose();
+    super.dispose();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +43,7 @@ class CheckPhonePage extends StatelessWidget {
               style: TextStyle(fontSize: 14, color: Colors.black),
             ),
           ),
-          body: Obx(
-            () => Container(
+          body:Container(
               padding: EdgeInsets.all(15),
               decoration: BoxDecoration(
                   image: DecorationImage(
@@ -43,195 +63,64 @@ class CheckPhonePage extends StatelessWidget {
                   textFieldLogin(
                       context: context,
                       maxLength: 11,
-                      controllers: check.mobile,
+                      controllers:_mobileController,
                       labeltext: 'شماره همراه',
                       obscureText: false,
-                      textInputType: TextInputType.phone,
-                      icons: null),
-                  SizedBox(
-                    height: 15,
-                  ),
+                      icons: Icon(Icons.phone_android_outlined),
+                      textInputType: TextInputType.phone,),
                   Container(
-                    // margin: EdgeInsets.symmetric(horizontal: 10),
+                    margin: EdgeInsets.only(top: 15),
                     width: Get.width,
                     height: 40,
-                    child: check.checkLoginLoading.value
-                        ? ElevatedButton(
-                            style: ButtonStyle(
-                                backgroundColor:
-                                    MaterialStateProperty.all(Colors.red)),
-                            // color: Colors.white,
-                            onPressed: () {},
-                            child: Center(
-                              child: SpinKitThreeBounce(
-                                color: Colors.white,
-                                size: 15.0,
-                              ),
-                            ))
-                        : ElevatedButton(
-                            onPressed: () {
-                              if ( check.mobile.text.isEmpty) {
-                                Get.snackbar(
-                                  '',
-                                  '',
-                                  titleText: Text(''),
-                                  messageText: Text(
-                                    'موبایل را وارد کنید',
-                                    textDirection: TextDirection.rtl,
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 18),
-                                  ),
-                                  backgroundColor: Colors.red,
-                                  colorText: Colors.white,
-                                  icon: Icon(
-                                    Icons.error,
-                                    color: Colors.white,
-                                    size: 40,
-                                  ),
-                                );
-                              } else if ( check.mobile.text.length != 11) {
-                                Get.snackbar(
-                                  '',
-                                  '',
-                                  titleText: Text(''),
-                                  messageText: Text(
-                                    'شماره باید ۱۱ رقم باشد',
-                                    textDirection: TextDirection.rtl,
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 18),
-                                  ),
-                                  backgroundColor: Colors.red,
-                                  colorText: Colors.white,
-                                  icon: Icon(
-                                    Icons.error,
-                                    color: Colors.white,
-                                    size: 40,
-                                  ),
-                                );
-                              } else {
-                                check
-                                    .checkMobile( check.mobile.text)
-                                    .whenComplete(() {
-                                  if (check.checkerror.value == true) {
-                                    Get.snackbar(
-                                      '',
-                                      '',
-                                      titleText: Text(''),
-                                      messageText: Container(
-                                        // height: 300,
-                                        child: ListView.builder(
-                                            itemCount:
-                                                check.errorMassages.length,
-                                            physics:
-                                                NeverScrollableScrollPhysics(),
-                                            shrinkWrap: true,
-                                            itemBuilder: (context, index) {
-                                              return Directionality(
-                                                textDirection:
-                                                    TextDirection.rtl,
-                                                child: HtmlWidget(
-                                                  check.errorMassages[index],
-                                                  // onTapUrl: (url) =>
-                                                  textStyle: TextStyle(
-                                                      color: Colors.white,
-                                                      // letterSpacing: 10,
-                                                      // textBaseline: TextBaseline.alphabetic,
-                                                      height: 2.5,
-                                                      fontSize: 18),
-                                                ),
-                                              );
-                                              // return Text(
-                                              //   register.errorMassages[index],
-                                              //   textDirection: TextDirection.rtl,
-                                              //   style: TextStyle(
-                                              //       color: Colors.white, fontSize: 18),
-                                              // );
-                                            }),
-                                      ),
-                                      backgroundColor: Colors.red,
-                                      colorText: Colors.white,
-                                      icon: Icon(
-                                        Icons.error,
-                                        color: Colors.white,
-                                        size: 40,
-                                      ),
-                                    );
-                                    // check.update();
-                                  } else {
-                                    check
-                                        .getVerificationCode( check.mobile.text)
-                                        .whenComplete(() {
-                                      if (check.checkerror.value == true) {
-                                        Get.snackbar(
-                                          '',
-                                          '',
-                                          titleText: Text(''),
-                                          messageText: Container(
-                                            // height: 300,
-                                            child: ListView.builder(
-                                                itemCount:
-                                                    check.errorMassages.length,
-                                                physics:
-                                                    NeverScrollableScrollPhysics(),
-                                                shrinkWrap: true,
-                                                itemBuilder: (context, index) {
-                                                  return Directionality(
-                                                    textDirection:
-                                                        TextDirection.rtl,
-                                                    child: HtmlWidget(
-                                                      check
-                                                          .errorMassages[index],
-                                                      // onTapUrl: (url) =>
-                                                      textStyle: TextStyle(
-                                                          color: Colors.white,
-                                                          // letterSpacing: 10,
-                                                          // textBaseline: TextBaseline.alphabetic,
-                                                          height: 2.5,
-                                                          fontSize: 18),
-                                                    ),
-                                                  );
-                                                  // return Text(
-                                                  //   register.errorMassages[index],
-                                                  //   textDirection: TextDirection.rtl,
-                                                  //   style: TextStyle(
-                                                  //       color: Colors.white, fontSize: 18),
-                                                  // );
-                                                }),
-                                          ),
-                                          backgroundColor: Colors.red,
-                                          colorText: Colors.white,
-                                          icon: Icon(
-                                            Icons.error,
-                                            color: Colors.white,
-                                            size: 40,
-                                          ),
-                                        );
-                                      } else {
-                                        Get.offAll(VerificationCodePage(
-                                          reg: check,
-                                        ));
-                                        // check.mobile(_mobile.text);
-                                      }
-                                    });
+                    child:ElevatedButton(
+                      onPressed: () {
 
-                                    // check.mobile.value = _mobile.text;
+                        if(_mobileController.text.isEmpty){
+                          errorSnackBar(text: 'موبایل را وارد کنید', error: true, context: context);
+                          return;
+                        }
+
+                        if(_mobileController.text.length != 11){
+                          errorSnackBar(text: 'موبایل را اشتباه وارد کرده اید!', error: true, context: context);
+                          return;
+                        }
+                        if(mounted){
+                          setState(() {
+                            check.checkMobile(_mobileController.text).then((value) {
+                              if(value == 200){
+                                check.getVerificationCode(_mobileController.text).then((value2){
+                                  if(value2 == 200){
+                                    check.mobile.value=_mobileController.text;
+                                    Get.to(VerificationCodePage());
+                                  }else{
+                                    listSnackBar(list: check.errorMassages, err: true);
                                   }
                                 });
+                              }else{
+                                listSnackBar(list: check.errorMassages, err: true);
                               }
-                            },
-                            child: Text(
-                              'دریافت کد',
-                              textAlign: TextAlign.center,
-                            ),
-                            style: ButtonStyle(
-                                backgroundColor:
-                                    MaterialStateProperty.all(Colors.red)),
-                          ),
+                            });
+                          });
+                        }
+                      },
+                      child: _clicked ? Center(
+                        child: SpinKitThreeBounce(
+                          color: Theme.of(context).primaryColorDark,
+                          size: 25.0,
+                        ),
+                      ):Text(
+                        "ثبت و ارسال",
+                        style: TextStyle(fontSize: 14, color: Colors.white),
+                      ),
+                      style: ButtonStyle(
+                          backgroundColor:
+                          MaterialStateProperty.all(Colors.red)),
+                    )
+
                   ),
                 ],
               ),
             ),
-          ),
         ),
       ),
     );

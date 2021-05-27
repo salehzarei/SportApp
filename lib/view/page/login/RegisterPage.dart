@@ -10,8 +10,6 @@ import 'package:grouped_buttons/grouped_buttons.dart';
 import 'package:sportapplication/controller/Functions/Controller.dart';
 import 'package:sportapplication/controller/Functions/RegisterFunction.dart';
 import 'package:sportapplication/controller/Functions/SliderFunction.dart';
-import 'package:sportapplication/controller/Functions/SliderFunction.dart';
-import 'package:sportapplication/controller/Functions/SliderFunction.dart';
 import 'package:sportapplication/controller/util.dart';
 import 'package:sportapplication/view/component/Constans.dart';
 

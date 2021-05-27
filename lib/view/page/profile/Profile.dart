@@ -167,9 +167,9 @@ class _ProfileState extends State<Profile> {
                                         onTap: () =>
                                             importImageSelectBottomSheet(
                                                 ontap: () {
-                                                  // addPackage.imagePicker(isCamera: true).then((value) {
-                                                  //   editPro(value);
-                                                  // });
+                                                  addPackage.imagePicker(isCamera: true).then((value) {
+                                                    editPro(value);
+                                                  });
                                                 },
                                                 ontap2: () {
                                                   addPackage.imagePicker(isCamera: false).then((value) {

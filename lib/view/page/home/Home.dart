@@ -152,8 +152,7 @@ class _HomeState extends State<Home> {
           level: '',
           activity_scope: '',
           special: '1',
-        )
-            .whenComplete(() {
+        ).whenComplete(() {
           if (mounted) {
             setState(() {
               _specialProviderLoading = false;

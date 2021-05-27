@@ -83,10 +83,6 @@ textFieldLogin(
     textDirection: TextDirection.rtl,
     child: Container(
       height: 45,
-      // padding: EdgeInsets.symmetric(horizontal: 0),
-      // decoration: BoxDecoration(
-      //     borderRadius: BorderRadius.circular(10),
-      //     border: Border.all(width: 1, color: Theme.of(context).primaryColor)),
       child: TextFormField(
         controller: controllers,
         keyboardType: textInputType,
@@ -98,7 +94,6 @@ textFieldLogin(
         obscuringCharacter: '*',
         style: TextStyle(color: Colors.black, fontSize: 18),
         decoration: InputDecoration(
-          // icon: icons,
           prefixIcon: icons,
           fillColor: Colors.white,
           filled: true,
@@ -107,7 +102,7 @@ textFieldLogin(
           border: InputBorder.none,
           labelText: labeltext,
           enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10.0),
+            borderRadius: BorderRadius.circular(8.0),
             borderSide: BorderSide(
               // color: Colors.greenAccent,
               color: controllers.text != ''
@@ -117,15 +112,14 @@ textFieldLogin(
             ),
           ),
           focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10.0),
+            borderRadius: BorderRadius.circular(8.0),
             borderSide: BorderSide(
               color: Theme.of(context).primaryColor,
               width: 2.0,
             ),
           ),
-
           disabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10.0),
+            borderRadius: BorderRadius.circular(8.0),
             borderSide: BorderSide(
               color: Theme.of(context).primaryColor,
               width: 2.0,
@@ -307,14 +301,15 @@ errorSnackBar({@required String text,@required bool error,@required BuildContext
 }
 
 formTextLabelWidget(
-    {@required context,
-    @required focus,
-    @required controller,
-    @required label,
-    @required maxLine,
-    @required keyboardType,
-    @required readeOnly,
-    @required maxLength}) {
+    {@required BuildContext context,
+    @required FocusNode focus,
+    @required TextEditingController controller,
+    @required String label,
+    @required int maxLine,
+    @required int minLine,
+    @required TextInputType keyboardType,
+    @required bool readeOnly,
+    @required int maxLength}) {
   return Directionality(
     textDirection: TextDirection.rtl,
     child: TextFormField(
@@ -327,40 +322,34 @@ formTextLabelWidget(
       enableInteractiveSelection: true,
       keyboardType: keyboardType,
       maxLines: maxLine,
+      minLines: minLine,
       maxLength: maxLength,
       textAlign: TextAlign.right,
       textDirection: TextDirection.rtl,
-      style: TextStyle(fontSize: 14, color: Color(0xff3D4152)),
+      style: TextStyle(fontSize: 14, height: 1.4,color: Color(0xff3D4152)),
       decoration: InputDecoration(
         contentPadding: EdgeInsets.symmetric(
-          horizontal: 18,
+          horizontal: 12,
           vertical: 10,
         ),
-        // enabledBorder: OutlineInputBorder(
-        //   borderRadius: BorderRadius.circular(6.0),
-        //   borderSide: BorderSide(
-        //     color: Colors.grey[400],
-        //     width: 1.0,
-        //   ),
-        // ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(6.0),
           borderSide: BorderSide(
-            color: Theme.of(context).primaryColorDark,
+            color: Colors.grey[400],
             width: 1.0,
           ),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(6.0),
           borderSide: BorderSide(
-            color: Theme.of(context).primaryColorDark,
+            color: Colors.blueGrey[600],
             width: 1.0,
           ),
         ),
         labelText: label,
         labelStyle: TextStyle(
           fontSize: 14,
-          color: Theme.of(context).primaryColorDark,
+            color: focus.hasFocus ? Colors.blueGrey[600] : Colors.grey[700],
         ),
         counterText: "",
       ),
@@ -691,7 +680,7 @@ sliderWidget({
               borderRadius: borderRadius, fit: fit);
         },
         autoplay: true,
-        duration: 10,
+        duration: 100,
         pagination: SwiperPagination(
             builder: DotSwiperPaginationBuilder(
                 size: 6.0, activeSize: 10.0, space: 4.0),
