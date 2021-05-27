@@ -438,6 +438,8 @@ class ApiService extends GetConnect {
 
   Future<Response> getSlider() => get(apiUrl + 'slider');
 
+  Future<Response> getFaq() => get(apiUrl + 'faq');
+
   Future<Response> about() => get(apiUrl + 'about');
 
   Future<Response> rules() => get(apiUrl + 'rules');

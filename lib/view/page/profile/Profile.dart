@@ -13,6 +13,7 @@ import 'package:sportapplication/controller/util.dart';
 import 'package:sportapplication/view/component/Constans.dart';
 import 'package:sportapplication/view/page/Article/AddArticlePage.dart';
 import 'package:sportapplication/view/page/addPackage/AddPackagePage.dart';
+import 'package:sportapplication/view/page/faq/FaqPage.dart';
 import 'package:sportapplication/view/page/favorite/FavoritePage.dart';
 import 'package:sportapplication/view/page/following/FollowPage.dart';
 import 'package:sportapplication/view/page/gallery/MyGalleryPage.dart';
@@ -389,7 +390,7 @@ class _ProfileState extends State<Profile> {
                                                   profile.userProfile.level))
                                               : errorSnackBar(
                                                   text:
-                                                      "شما مجاز به استفاده از این قسمت از اپلیکیشن نیستید",
+                                                  "به علت اتمام زمان اعتبار,شما مجاز به استفاده از این قسمت از اپلیکیشن نیستید",
                                                   error: true,
                                                   context: context);
                                         },
@@ -410,7 +411,7 @@ class _ProfileState extends State<Profile> {
                                                   profile.userProfile.level))
                                               : errorSnackBar(
                                                   text:
-                                                      "شما مجاز به استفاده از این قسمت از اپلیکیشن نیستید",
+                                                      "به علت اتمام زمان اعتبار,شما مجاز به استفاده از این قسمت از اپلیکیشن نیستید",
                                                   error: true,
                                                   context: context);
                                         },
@@ -451,6 +452,12 @@ class _ProfileState extends State<Profile> {
                                 Get.to(SupportPage());
                               },
                               title: "پشتیبانی و قوانین"),
+                          itemProfile(
+                              context: context,
+                              onTap: () {
+                                Get.to(FaqPage());
+                              },
+                              title: "سوالات متداول"),
                           itemProfile(
                               context: context,
                               onTap: () {

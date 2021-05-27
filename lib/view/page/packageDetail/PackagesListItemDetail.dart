@@ -326,7 +326,7 @@ class _PackagesListItemDetailState extends State<PackagesListItemDetail> {
                             onTap: () => Get.to(DetailUserInfoPage( packageFunction.showPackageModel.data.uid.toString())),
                             child: Card(
                               elevation: 5.0,
-                              margin: EdgeInsets.all(0),
+                              margin: EdgeInsets.only(bottom: 10),
                               child: Padding(
                                 padding: EdgeInsets.all(10),
                                 child: Column(

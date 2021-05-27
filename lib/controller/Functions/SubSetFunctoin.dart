@@ -11,6 +11,8 @@ class SubSetFunction extends GetxController{
 
   final addSubsetLoading = true.obs;
 
+  int subset_id = 0;
+
   final deleteError = false.obs;
   List<dynamic> errorMassages = [];
 
@@ -99,6 +101,7 @@ class SubSetFunction extends GetxController{
         errorMassages = (response.body['report_msg'] is List)
             ? response.body['report_msg']
             : [response.body['report_msg']];
+        // subset_id = response.body['id'];
         return 200;
       }else{
         errorMassages = (response.body['error_msg'] is List)

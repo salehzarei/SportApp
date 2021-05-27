@@ -14,8 +14,10 @@ class IntroductionPage extends StatefulWidget {
   int level;
   int me;
   List<ActivityScope> activity_scope;
+  int me_level;
+  int i_am_subset;
 
-  IntroductionPage(this.title,this.description,this.level,this.id,this.me,this.activity_scope);
+  IntroductionPage(this.title,this.description,this.level,this.id,this.me,this.activity_scope,this.me_level,this.i_am_subset);
 
   @override
   _IntroductionPageState createState() => _IntroductionPageState();
@@ -98,6 +100,7 @@ class _IntroductionPageState extends State<IntroductionPage> {
               Card(
                 margin: EdgeInsets.symmetric(horizontal: 15,vertical: 20),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
                       padding: EdgeInsets.only(left: 15 , right: 15 , top: 20),
@@ -128,9 +131,12 @@ class _IntroductionPageState extends State<IntroductionPage> {
                       height: 1,
                       color: Colors.grey[400],
                     ):SizedBox(height: 20,),
-                    _desOpen? Text(widget.description , style: TextStyle(
-                      fontSize: 14 , color: Colors.grey[600]
-                    ),):SizedBox()
+                    _desOpen? Padding(
+                      padding: EdgeInsets.only(bottom: 20 , right: 15 , left: 15),
+                      child: Text(widget.description , style: TextStyle(
+                        fontSize: 14 , color: Colors.grey[600]
+                      ),),
+                    ):SizedBox()
                   ],
                 ),
               ),
@@ -191,52 +197,70 @@ class _IntroductionPageState extends State<IntroductionPage> {
                     physics: NeverScrollableScrollPhysics(),
                     itemBuilder: (context, index) => itemHoze(context: context, index: index,data:widget.activity_scope[index]),
                   ):SizedBox(height: 20,),
-                  if(_desScope)
-                     Text(widget.description , style: TextStyle(
-                      fontSize: 14 , color: Colors.grey[600]
-                  ),)
                 ],
               ),
             ),
-               if(widget.me == 0)
+               if(widget.me == 0 && widget.me_level == 2 || widget.me_level  == 3 && widget.level == 2 || widget.level == 3 )
+                 if(widget.me_level == 2 && widget.level == 3 || widget.me_level == 3 && widget.level == 2)
                    Container(
-              width: double.infinity,
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: ElevatedButton(
-                onPressed: () {
-                  if(mounted){
-                    setState(() {
-                      subsetLoading = true;
-                    });
-                  }
-                  subSetFunction.addSubset(_token,widget.id).then((value) {
-                    if(mounted){
-                      setState(() {
-                        subsetLoading = false;
-                      });
-                    }
-                    if(value == 200){
-                      listSnackBar(list: subSetFunction.errorMassages, err: false);
-                    }else{
-                      listSnackBar(list: subSetFunction.errorMassages, err: true);
-                    }
-                  });
-                },
-                style: ButtonStyle(
-                    shape: MaterialStateProperty.all<
-                        RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(4.0),
-                            side: BorderSide(color: Colors.red)
-                        )
-                    ),
-                    backgroundColor:MaterialStateProperty.all<Color>(Colors.white)),
-                child: subsetLoading? loading(color: Colors.red):Text(
-                  "ثبت درخواست عضویت",
-                  style: TextStyle(fontSize: 12, color: Colors.red),
-                ),
-              ),
-            ),
+                        width: double.infinity,
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            if(widget.i_am_subset == 0){
+                              if(mounted){
+                                setState(() {
+                                  subsetLoading = true;
+                                });
+                              }
+                              subSetFunction.addSubset(_token,widget.id).then((value) {
+                                if(mounted){
+                                  setState(() {
+                                    subsetLoading = false;
+                                  });
+                                }
+                                if(value == 200){
+                                  if(mounted){
+                                    setState(() {
+                                      // widget.i_am_subset = subSetFunction.subset_id;
+                                    });
+                                  }
+                                  listSnackBar(list: subSetFunction.errorMassages, err: false);
+                                }else{
+                                  listSnackBar(list: subSetFunction.errorMassages, err: true);
+                                }
+                              });
+                            }else{
+                              if(mounted){
+                                setState(() {
+                                  subsetLoading = true;
+                                });
+                              }
+                              subSetFunction.deleteSubset(_token , widget.i_am_subset.toString()).whenComplete(() {
+                                listSnackBar(list: subSetFunction.errorMassages, err: subSetFunction.deleteError.value);
+                                if(mounted){
+                                  setState(() {
+                                    subsetLoading = false;
+                                  });
+                                }
+                              });
+                            }
+                          },
+                          style: ButtonStyle(
+                              shape: MaterialStateProperty.all<
+                                  RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(4.0),
+                                      side: BorderSide(color: Colors.red)
+                                  )
+                              ),
+                              backgroundColor:MaterialStateProperty.all<Color>(Colors.white)),
+                          child: subsetLoading? loading(color: Colors.red):Text(
+                            widget.i_am_subset == 0? "ثبت درخواست عضویت": "حذف درخواست عضویت",
+                            style: TextStyle(fontSize: 12, color: Colors.red),
+                          ),
+                        ),
+                  ),
           ],
         ),
       ),

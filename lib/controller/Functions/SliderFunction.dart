@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sportapplication/Model/AboutModel.dart';
+import 'package:sportapplication/Model/FaqModel.dart';
 import 'package:sportapplication/Model/SliderModel.dart';
 import 'package:sportapplication/controller/Service/Request.dart';
 
@@ -13,6 +14,9 @@ class SliderFunction extends GetxController {
 
   final rulesLoading = true.obs;
   AboutModel rulesModel;
+
+  final faqLoading = true.obs;
+  FaqModel faqModel;
 
   //////دریافت اسلایدر
   Future <List<SliderModel>> getSlider() async {
@@ -38,6 +42,16 @@ class SliderFunction extends GetxController {
     if (response.statusCode == 200) {
       aboutModel = AboutModel.fromJson(response.body);
       aboutLoading.value = false;
+    }
+    update();
+  }
+
+  Future  getFaq() async {
+    faqLoading.value = true;
+    final response = await ApiService().getFaq();
+    if (response.statusCode == 200) {
+      faqModel = FaqModel.fromJson(response.body);
+      faqLoading.value = false;
     }
     update();
   }

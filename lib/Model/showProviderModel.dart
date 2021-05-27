@@ -32,6 +32,8 @@ class Info {
     List<Interest> interest;
     String lat;
     int level;
+    int my_level;
+    int i_am_subset;
     String level_title;
     String lng;
     int me;
@@ -40,7 +42,7 @@ class Info {
     int special;
     String title;
 
-    Info({this.activity_scope, this.address, this.blog_count, this.cell, this.description, this.email, this.expire, this.following, this.gallery, this.id, this.interest, this.lat, this.level, this.level_title, this.lng, this.me, this.package_count, this.pic, this.special, this.title});
+    Info({this.activity_scope, this.address,this.i_am_subset, this.my_level, this.blog_count, this.cell, this.description, this.email, this.expire, this.following, this.gallery, this.id, this.interest, this.lat, this.level, this.level_title, this.lng, this.me, this.package_count, this.pic, this.special, this.title});
 
     factory Info.fromJson(Map<String, dynamic> json) {
         return Info(
@@ -56,8 +58,10 @@ class Info {
             id: json['id'], 
             interest: json['interest'] != null ? (json['interest'] as List).map((i) => Interest.fromJson(i)).toList() : null, 
             lat: json['lat'], 
-            level: json['level'], 
-            level_title: json['level_title'], 
+            level: json['level'],
+            i_am_subset: json['i_am_subset'],
+            my_level: json['my_level'],
+            level_title: json['level_title'],
             lng: json['lng'], 
             me: json['me'], 
             package_count: json['package_count'], 

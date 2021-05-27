@@ -248,12 +248,14 @@ class _DetailUserInfoPageState extends State<DetailUserInfoPage>
                   Expanded(
                     child: ElevatedButton(
                       onPressed: () {
-                        Get.to(IntroductionPage( registerFunction.showProviderModel.info.title,
+                        Get.to(IntroductionPage(registerFunction.showProviderModel.info.title,
                             registerFunction.showProviderModel.info.description,
                             registerFunction.showProviderModel.info.level,
                             registerFunction.showProviderModel.info.id.toString(),
-                          registerFunction.showProviderModel.info.me,
-                            registerFunction.showProviderModel.info.activity_scope));
+                            registerFunction.showProviderModel.info.me,
+                            registerFunction.showProviderModel.info.activity_scope,
+                            registerFunction.showProviderModel.info.my_level,
+                            registerFunction.showProviderModel.info.i_am_subset));
                       },
                       style: ButtonStyle(
                           shape: MaterialStateProperty.all<RoundedRectangleBorder>(

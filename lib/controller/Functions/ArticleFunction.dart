@@ -129,14 +129,12 @@ class ArticleFunction extends GetxController{
         token: token,
         word: word
       );
-
     if (response.statusCode == 200) {
       articleModel = ArticleModel.fromJson(response.body);
       articleLoading.value = false;
-    } else {
-      articleLoading.value = true;
+      update();
     }
-    update();
+
   }
 
   Future addFavorite(

@@ -50,9 +50,7 @@ class _MyArticleState extends State<MyArticle> {
       body:Directionality(
         textDirection: TextDirection.rtl,
         child: articleFunction.articleLoading.value?
-        SpinKitThreeBounce(
-          color: Theme.of(context).primaryColorDark,
-          size: 30.0,):
+            loading(color: Theme.of(context).primaryColorDark,):
         articleFunction.articleModel.post.isEmpty ? noItem():ListView.builder(
           itemCount: articleFunction.articleModel.post.length,
           padding: EdgeInsets.only(top: 10),
