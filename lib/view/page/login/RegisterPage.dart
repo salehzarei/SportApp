@@ -206,13 +206,13 @@ class _RegisterPageState extends State<RegisterPage> {
                                 SizedBox(
                                   height: 15,
                                 ),
-                                textFieldLogin(
-                                    context: context,
-                                    controllers: widget.place.name,
-                                    labeltext: 'نام و نام خانوادگی',
-                                    obscureText: false,
-                                    textInputType: TextInputType.text,
-                                    icons: null),
+                                // textFieldLogin(
+                                //     context: context,
+                                //     controllers: widget.place.name,
+                                //     labeltext: 'نام و نام خانوادگی',
+                                //     obscureText: false,
+                                //     textInputType: TextInputType.text,
+                                //     icons: null),
                                 SizedBox(
                                   height: 15,
                                 ),
@@ -328,14 +328,14 @@ class _RegisterPageState extends State<RegisterPage> {
                                 SizedBox(
                                   height: 15,
                                 ),
-                                textFieldLogin(
-                                    context: context,
-                                    controllers: widget.place.mobile,
-                                    labeltext: 'شماره همراه',
-                                    obscureText: false,
-                                    enabled: false,
-                                    textInputType: TextInputType.number,
-                                    icons: null),
+                                // textFieldLogin(
+                                //     context: context,
+                                //     controllers: widget.place.mobile,
+                                //     labeltext: 'شماره همراه',
+                                //     obscureText: false,
+                                //     enabled: false,
+                                //     textInputType: TextInputType.number,
+                                //     icons: null),
                                 SizedBox(
                                   height: 15,
                                 ),
@@ -347,77 +347,77 @@ class _RegisterPageState extends State<RegisterPage> {
                                 SizedBox(
                                   height: 15,
                                 ),
-                                textFieldLogin(
-                                    context: context,
-                                    controllers: widget.place.pass,
-                                    labeltext: 'رمز عبور',
-                                    maxLength: 15,
-                                    obscureText: true,
-                                    textInputType: TextInputType.text,
-                                    icons: null),
+                                // textFieldLogin(
+                                //     context: context,
+                                //     controllers: widget.place.pass,
+                                //     labeltext: 'رمز عبور',
+                                //     maxLength: 15,
+                                //     obscureText: true,
+                                //     textInputType: TextInputType.text,
+                                //     icons: null),
                                 SizedBox(
                                   height: 15,
                                 ),
-                                textFieldLogin(
-                                    context: context,
-                                    controllers: widget.place.repass,
-                                    labeltext: 'تکرار رمز عبور',
-                                    obscureText: true,
-                                    maxLength: 15,
-                                    enabled: true,
-                                    textInputType: TextInputType.text,
-                                    icons: null),
+                                // textFieldLogin(
+                                //     context: context,
+                                //     controllers: widget.place.repass,
+                                //     labeltext: 'تکرار رمز عبور',
+                                //     obscureText: true,
+                                //     maxLength: 15,
+                                //     enabled: true,
+                                //     textInputType: TextInputType.text,
+                                //     icons: null),
                                 SizedBox(
                                   height: 15,
                                 ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    ElevatedButton(
-                                      onPressed: () {
-                                        if (widget.place.name.text.isEmpty) {
-                                          errorSnackBar(text:'نام و نام خانوادگی نمی تواند خالی باشد', error: true,context: context);
-                                        } else if (step.accountTypeId.value ==
-                                            0) {
-                                          errorSnackBar(text:'انتخاب نوع کاربری اجباری می باشد', error: true,context: context);
-                                        } else if (step.ostanSelected.value ==
-                                            0) {
-                                          errorSnackBar( text:'انتخاب استان اجباری می باشد', error: true,context: context);
-                                        } else if (step.citySelected.value ==
-                                            0) {
-                                          errorSnackBar(text:'انتخاب شهرستان اجباری می باشد', error: true,context: context);
-                                        } else if (widget
-                                                .place.pass.text.isEmpty ||
-                                            widget.place.pass.text.length <=
-                                                5) {
-                                          errorSnackBar( text: 'رمز عبور را وارد کنید', error: true,context: context);
-                                        } else if (widget
-                                            .place.repass.text.isEmpty) {
-                                          errorSnackBar(text:'تکرار رمز عبور را وارد کنید', error: true,context: context);
-                                        } else if (widget.place.pass.text !=
-                                            widget.place.repass.text) {
-                                          errorSnackBar(text: 'رمز عبور همخوانی ندارد', error: true,context: context);
-                                        } else {
-                                          step.name.value =
-                                              widget.place.name.text;
-                                          step.pass.value =
-                                              widget.place.pass.text;
-                                          step.activeSteptwo.value = 1;
-                                          step.stepPlus.value = 1;
-                                        }
-                                      },
-                                      child: Text(
-                                        'مرحله بعد',
-                                        textAlign: TextAlign.center,
-                                      ),
-                                      style: ButtonStyle(
-                                          backgroundColor:
-                                              MaterialStateProperty.all(
-                                                  Theme.of(context)
-                                                      .primaryColor)),
-                                    ),
-                                  ],
-                                ),
+                                // Row(
+                                //   mainAxisAlignment: MainAxisAlignment.end,
+                                //   children: [
+                                //     ElevatedButton(
+                                //       onPressed: () {
+                                //         if (widget.place.name.text.isEmpty) {
+                                //           errorSnackBar(text:'نام و نام خانوادگی نمی تواند خالی باشد', error: true,context: context);
+                                //         } else if (step.accountTypeId.value ==
+                                //             0) {
+                                //           errorSnackBar(text:'انتخاب نوع کاربری اجباری می باشد', error: true,context: context);
+                                //         } else if (step.ostanSelected.value ==
+                                //             0) {
+                                //           errorSnackBar( text:'انتخاب استان اجباری می باشد', error: true,context: context);
+                                //         } else if (step.citySelected.value ==
+                                //             0) {
+                                //           errorSnackBar(text:'انتخاب شهرستان اجباری می باشد', error: true,context: context);
+                                //         } else if (widget
+                                //                 .place.pass.text.isEmpty ||
+                                //             widget.place.pass.text.length <=
+                                //                 5) {
+                                //           errorSnackBar( text: 'رمز عبور را وارد کنید', error: true,context: context);
+                                //         } else if (widget
+                                //             .place.repass.text.isEmpty) {
+                                //           errorSnackBar(text:'تکرار رمز عبور را وارد کنید', error: true,context: context);
+                                //         } else if (widget.place.pass.text !=
+                                //             widget.place.repass.text) {
+                                //           errorSnackBar(text: 'رمز عبور همخوانی ندارد', error: true,context: context);
+                                //         } else {
+                                //           step.name.value =
+                                //               widget.place.name.text;
+                                //           step.pass.value =
+                                //               widget.place.pass.text;
+                                //           step.activeSteptwo.value = 1;
+                                //           step.stepPlus.value = 1;
+                                //         }
+                                //       },
+                                //       child: Text(
+                                //         'مرحله بعد',
+                                //         textAlign: TextAlign.center,
+                                //       ),
+                                //       style: ButtonStyle(
+                                //           backgroundColor:
+                                //               MaterialStateProperty.all(
+                                //                   Theme.of(context)
+                                //                       .primaryColor)),
+                                //     ),
+                                //   ],
+                                // ),
                               ]),
                         ))
                       : step.stepPlus.value == 1
@@ -630,10 +630,8 @@ class _RegisterPageState extends State<RegisterPage> {
                                                                   (List<String>
                                                                       checked) {
                                                                 findPersonActivityScopeWhere(
-                                                                    step
-                                                                        .activityScope,
-                                                                    widget
-                                                                        .place
+                                                                    step.activityScope,
+                                                                    widget.place
                                                                         .categoryList[
                                                                             index]
                                                                         .id);
@@ -657,133 +655,133 @@ class _RegisterPageState extends State<RegisterPage> {
                                                 SizedBox(
                                                   height: 15,
                                                 ),
-                                                ListView.builder(
-                                                    itemCount: widget.place
-                                                        .interestList.length,
-                                                    shrinkWrap: true,
-                                                    
-                                                    physics:
-                                                        NeverScrollableScrollPhysics(),
-                                                    itemBuilder:
-                                                        (context, index) {
-                                                      return Row(
-                                                        children: [
-                                                          CheckboxGroup(
-                                                              labels: <String>[
-                                                                widget
-                                                                    .place
-                                                                    .interestList[
-                                                                        index]
-                                                                    .title
-                                                              ],
-                                                              activeColor: Theme
-                                                                      .of(
-                                                                          context)
-                                                                  .primaryColor,
-                                                              onSelected:
-                                                                  (List<String>
-                                                                      checked) {
-                                                                findPersonInterestWhere(
-                                                                    step
-                                                                        .interest,
-                                                                    widget
-                                                                        .place
-                                                                        .interestList[
-                                                                            index]
-                                                                        .id);
-                                                              }),
-                                                        ],
-                                                      );
-                                                    }),
+                                                // ListView.builder(
+                                                //     itemCount: widget.place
+                                                //         .interestList.length,
+                                                //     shrinkWrap: true,
+                                                //
+                                                //     physics:
+                                                //         NeverScrollableScrollPhysics(),
+                                                //     itemBuilder:
+                                                //         (context, index) {
+                                                //       return Row(
+                                                //         children: [
+                                                //           CheckboxGroup(
+                                                //               labels: <String>[
+                                                //                 widget
+                                                //                     .place
+                                                //                     .interestList[
+                                                //                         index]
+                                                //                     .title
+                                                //               ],
+                                                //               activeColor: Theme
+                                                //                       .of(
+                                                //                           context)
+                                                //                   .primaryColor,
+                                                //               onSelected:
+                                                //                   (List<String>
+                                                //                       checked) {
+                                                //                 findPersonInterestWhere(
+                                                //                     step
+                                                //                         .interest,
+                                                //                     widget
+                                                //                         .place
+                                                //                         .interestList[
+                                                //                             index]
+                                                //                         .id);
+                                                //               }),
+                                                //         ],
+                                                //       );
+                                                //     }),
                                               ],
                                             )),
                                           ],
                                         ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.end,
-                                          children: [
-                                            ElevatedButton(
-                                              onPressed: () {
-                                                if (step.activityScope.length ==
-                                                        0 ||
-                                                    step.activityScope == []) {
-                                                  errorSnackBar( text:'انتخاب حداقل یک حوزه فعالیت اجباری است', error: true,context: context);
-                                                } else if (step
-                                                            .interest.length ==
-                                                        0 ||
-                                                    step.interest == []) {
-                                                  errorSnackBar( text:'انتخاب حداقل یک علاقه مندی اجباری است', error: true,context: context);
-                                                } else {
-                                                  step.activeStepcomplete
-                                                      .value = 1;
-                                                  step.stepPlus.value = 2;
-                                                  _firebaseToken.getToken().then((pushToken) {
-                                                    widget.place
-                                                        .sendRegisterData(
-                                                        name: widget
-                                                            .place.name.text,
-                                                        level: step
-                                                            .accountTypeId
-                                                            .value,
-                                                        mobile: widget.place
-                                                            .mobile.text,
-                                                        ostan: step
-                                                            .ostanSelected
-                                                            .value,
-                                                        city: step
-                                                            .citySelected
-                                                            .value,
-                                                        pass: widget
-                                                            .place.pass.text,
-                                                        address: _addressController.text+" ",
-                                                        lat: _lastMapPosition.latitude
-                                                            .toString(),
-                                                        long: _lastMapPosition
-                                                            .longitude
-                                                            .toString(),
-                                                        interest:
-                                                        step.interest,
-                                                        acivityScope:
-                                                        step.activityScope,
-                                                        firebase_token:pushToken ,
-                                                        code: widget
-                                                            .place.code.value,
-                                                        verificationToken: widget
-                                                            .place
-                                                            .verificationCode
-                                                            .value)
-                                                        .whenComplete(() => listSnackBar(
-                                                        list: widget.place
-                                                            .errorMassages,
-                                                        err: widget.place.checkerror.value))
-                                                        .whenComplete(() {
-                                                      if (widget.place.checkerror
-                                                          .value ==
-                                                          false) {
-                                                        Future.delayed(Duration(
-                                                            seconds: 1))
-                                                            .whenComplete(() =>
-                                                            Get.offAll(
-                                                                MainPage()));
-                                                      }
-                                                    });
-                                                  });
-
-                                                }
-                                              },
-                                              child: Text(
-                                                'تکمیل ثبت نام',
-                                                textAlign: TextAlign.center,
-                                              ),
-                                              style: ButtonStyle(
-                                                  backgroundColor:
-                                                      MaterialStateProperty.all(
-                                                          Theme.of(context)
-                                                              .primaryColor)),
-                                            ),
-                                          ],
-                                        ),
+                                        // Row(
+                                        //   mainAxisAlignment:
+                                        //       MainAxisAlignment.end,
+                                        //   children: [
+                                        //     ElevatedButton(
+                                        //       onPressed: () {
+                                        //         if (step.activityScope.length ==
+                                        //                 0 ||
+                                        //             step.activityScope == []) {
+                                        //           errorSnackBar( text:'انتخاب حداقل یک حوزه فعالیت اجباری است', error: true,context: context);
+                                        //         } else if (step
+                                        //                     .interest.length ==
+                                        //                 0 ||
+                                        //             step.interest == []) {
+                                        //           errorSnackBar( text:'انتخاب حداقل یک علاقه مندی اجباری است', error: true,context: context);
+                                        //         } else {
+                                        //           step.activeStepcomplete
+                                        //               .value = 1;
+                                        //           step.stepPlus.value = 2;
+                                        //           _firebaseToken.getToken().then((pushToken) {
+                                        //             widget.place
+                                        //                 .sendRegisterData(
+                                        //                 name: widget
+                                        //                     .place.name.text,
+                                        //                 level: step
+                                        //                     .accountTypeId
+                                        //                     .value,
+                                        //                 mobile: widget.place
+                                        //                     .mobile.text,
+                                        //                 ostan: step
+                                        //                     .ostanSelected
+                                        //                     .value,
+                                        //                 city: step
+                                        //                     .citySelected
+                                        //                     .value,
+                                        //                 pass: widget
+                                        //                     .place.pass.text,
+                                        //                 address: _addressController.text+" ",
+                                        //                 lat: _lastMapPosition.latitude
+                                        //                     .toString(),
+                                        //                 long: _lastMapPosition
+                                        //                     .longitude
+                                        //                     .toString(),
+                                        //                 interest:
+                                        //                 step.interest,
+                                        //                 acivityScope:
+                                        //                 step.activityScope,
+                                        //                 firebase_token:pushToken ,
+                                        //                 code: widget
+                                        //                     .place.code.value,
+                                        //                 verificationToken: widget
+                                        //                     .place
+                                        //                     .verificationCode
+                                        //                     .value)
+                                        //                 .whenComplete(() => listSnackBar(
+                                        //                 list: widget.place
+                                        //                     .errorMassages,
+                                        //                 err: widget.place.checkerror.value))
+                                        //                 .whenComplete(() {
+                                        //               if (widget.place.checkerror
+                                        //                   .value ==
+                                        //                   false) {
+                                        //                 Future.delayed(Duration(
+                                        //                     seconds: 1))
+                                        //                     .whenComplete(() =>
+                                        //                     Get.offAll(
+                                        //                         MainPage()));
+                                        //               }
+                                        //             });
+                                        //           });
+                                        //
+                                        //         }
+                                        //       },
+                                        //       child: Text(
+                                        //         'تکمیل ثبت نام',
+                                        //         textAlign: TextAlign.center,
+                                        //       ),
+                                        //       style: ButtonStyle(
+                                        //           backgroundColor:
+                                        //               MaterialStateProperty.all(
+                                        //                   Theme.of(context)
+                                        //                       .primaryColor)),
+                                        //     ),
+                                        //   ],
+                                        // ),
                                       ],
                                     ),
                                   ),
@@ -1012,6 +1010,5 @@ class _RegisterPageState extends State<RegisterPage> {
       ),
     );
   }
-
 
 }

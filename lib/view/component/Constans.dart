@@ -633,12 +633,14 @@ textSelected(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            title,
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
-              color: selected ? Colors.black : Colors.black26,
+          Expanded(
+            child: Text(
+              title,
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+                color: selected ? Colors.black : Colors.black26,
+              ),
             ),
           ),
           Icon(
@@ -906,4 +908,26 @@ botSheet({
           ),
         ),
       ));
+}
+
+buttonWidget({@required String title,@required onPressed,@required btnColor,@required txtColor,}){
+  return ElevatedButton(
+    onPressed: onPressed,
+    style: ButtonStyle(
+        shape: MaterialStateProperty.all<
+            RoundedRectangleBorder>(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8.0),
+              // side: BorderSide(color: Colors.white)
+            )),
+        backgroundColor:
+        MaterialStateProperty.all<Color>(btnColor)),
+    child: Padding(
+      padding: const EdgeInsets.all(15.0),
+      child: Text(
+        title,
+        style: TextStyle(fontSize: 12, color: txtColor),
+      ),
+    ),
+  );
 }

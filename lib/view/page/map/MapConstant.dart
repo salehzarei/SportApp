@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:sportapplication/Model/CategoryAccountTypeModel.dart';
 import 'package:sportapplication/Model/MyPackageModel.dart';
 import 'package:sportapplication/Model/showProviderModel.dart';
-import 'package:sportapplication/controller/Functions/Controller.dart';
 import 'package:sportapplication/controller/util.dart';
 import 'package:sportapplication/view/component/Constans.dart';
 import 'package:sportapplication/view/page/packageDetail/PackagesListItemDetail.dart';

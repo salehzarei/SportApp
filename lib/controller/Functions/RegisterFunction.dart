@@ -31,7 +31,6 @@ class RegisterFunction extends GetxController {
   final mobile = ''.obs;
   final code = ''.obs;
   List<CategoryAccountTypeModel> categoryList = [];
-  List<CategoryAccountTypeModel> interestList = [];
 
   ProviderModel providerList ;
   ShowProviderModel showProviderModel ;
@@ -72,23 +71,24 @@ class RegisterFunction extends GetxController {
   }
 
   Future sendRegisterData(
-      {String name,
-      String mobile,
-      String email,
-      String address,
-      String code,
-      String pass,
-      String verificationToken,
-      int ostan,
-      int city,
-      String sysApp,
-      String lat,
-      String long,
-      int level,
-      List interest,
-        String firebase_token,
-      List acivityScope,
-      String inviteCode}) async {
+      {
+     @required String name,
+     @required String mobile,
+     @required String email,
+     @required String address,
+     @required String code,
+     @required String pass,
+     @required String verificationToken,
+     @required int ostan,
+     @required int city,
+     @required String sysApp,
+     @required String lat,
+     @required String long,
+     @required int level,
+     @required List interest,
+     @required String firebase_token,
+     @required List acivityScope,
+     @required String inviteCode}) async {
     errorMassages = [];
     registerLoading.value = true;
     final response = await ApiService().registerUser(
@@ -109,20 +109,24 @@ class RegisterFunction extends GetxController {
         firebase_token,
         acivityScope,
         inviteCode);
-    checkerror.value = response.body['error'];
-    if (response.statusCode == 200 && !checkerror.value) {
-      // String _token = response.body['token'];
-      saveShared("token", response.body['token'].toString());
-      errorMassages = (response.body['report_msg'] is List)
-          ? response.body['report_msg']
-          : [response.body['report_msg']];
-      update();
+    if (response.statusCode == 200) {
+      bool err = response.body['error'];
+      if(!err){
+        saveShared("token", response.body['token'].toString());
+        errorMassages = (response.body['report_msg'] is List)
+            ? response.body['report_msg']
+            : [response.body['report_msg']];
+        return 200;
+      }else{
+        errorMassages = (response.body['error_msg'] is List)
+            ? response.body['error_msg']
+            : [response.body['error_msg']];
+        return 201;
+      }
     } else {
-      errorMassages = (response.body['error_msg'] is List)
-          ? response.body['error_msg']
-          : [response.body['error_msg']];
+      errorMassages = ["خطا در برقراری ارتباط با سرور"];
+      return 400;
     }
-    registerLoading.value = false;
   }
 
   Future checkMobile(String m) async {
@@ -277,29 +281,18 @@ class RegisterFunction extends GetxController {
   Future getProductCategories(int level) async {
     categoryLoading.value = true;
     categoryList.clear();
-    interestList.clear();
 
     final response = await ApiService().getCategoryAccountType(level);
-    final response2 = await ApiService().getCategoryAccountType(0);
 
-    if (response.statusCode == 200 && response2.statusCode == 200) {
+    if (response.statusCode == 200) {
       final List<dynamic> responseData = response.body['post'];
-      final List<dynamic> responseData2 = response2.body['post'];
       List<CategoryAccountTypeModel> cat = (responseData)
           .map((i) => CategoryAccountTypeModel.fromJson(i))
           .toList();
       categoryList = cat;
-      List<CategoryAccountTypeModel> cat2 = (responseData2)
-          .map((i) => CategoryAccountTypeModel.fromJson(i))
-          .toList();
-      interestList = cat2;
       update();
       categoryLoading.value = false;
-    } else {
-      // Constans().dialogboxCheckInternet(response.statusCode);
     }
-    update();
-    categoryLoading.value = false;
   }
 
   Future providers(

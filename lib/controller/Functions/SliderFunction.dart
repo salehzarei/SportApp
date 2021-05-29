@@ -18,6 +18,8 @@ class SliderFunction extends GetxController {
   final faqLoading = true.obs;
   FaqModel faqModel;
 
+
+
   //////دریافت اسلایدر
   Future <List<SliderModel>> getSlider() async {
     sliderList.clear();

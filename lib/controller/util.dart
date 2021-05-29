@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_masked_text/flutter_masked_text.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:package_info/package_info.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sportapplication/Model/PlanModel.dart';
@@ -294,4 +296,48 @@ Future<String> getVersion() async {
   PackageInfo packageInfo = await PackageInfo.fromPlatform();
   return packageInfo.version;
 
+}
+
+
+Future<Position> determinePosition() async {
+  bool serviceEnabled;
+  LocationPermission permission;
+  serviceEnabled = await Geolocator.isLocationServiceEnabled();
+  if (!serviceEnabled) {
+    print("Location services are disabled.");
+    return Future.error('Location services are disabled.');
+  }
+
+  permission = await Geolocator.checkPermission();
+  if (permission == LocationPermission.denied) {
+    print("Location permissions are denied.0");
+    permission = await Geolocator.requestPermission();
+    if (permission == LocationPermission.denied) {
+      print("Location permissions are denied.");
+      return Future.error('Location permissions are denied');
+    }
+  }
+
+  if (permission == LocationPermission.deniedForever) {
+    print("'Location permissions are permanently denied, we cannot request permissions.");
+    return Future.error(
+        'Location permissions are permanently denied, we cannot request permissions.');
+  }
+  print("Location services are OK.");
+  return await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+}
+
+Future<Position> displayCurrentLocation() async {
+  Position position = await Geolocator.getCurrentPosition(
+      desiredAccuracy: LocationAccuracy.high);
+  return position;
+}
+
+void currentLocation({@required LatLng latlong, @required zoom, @required dcontroller }) async {
+  final GoogleMapController controller = await dcontroller.future;
+  controller.animateCamera(
+    CameraUpdate.newCameraPosition(
+      CameraPosition(target: latlong, zoom: zoom),
+    ),
+  );
 }
