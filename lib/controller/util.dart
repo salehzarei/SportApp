@@ -52,11 +52,18 @@ Future<String> getShared(String key) async {
 }
 
 launchURL(String url) async {
-  if (await canLaunch(url)) {
+  try{
     await launch(url);
-  } else {
-    throw 'امکان باز کردن این سایت وجود ندارد:  $url';
+  }catch(e){
+    toast(msg: "متاسفانه خطایی رخ داده لطفا مجددا امتحان کنید", textColor: Colors.white, backgroundColor: Colors.red, fontSize: 14.2);
   }
+
+  // if (await canLaunch("https://pub.dev/packages/url_launcher/example")) {
+  //   await launch("https://pub.dev/packages/url_launcher/example");
+  // } else {
+  //
+  //   toast(msg: "متاسفانه خطایی رخ داده لطفا مجددا امتحان کنید", textColor: Colors.white, backgroundColor: Colors.red, fontSize: 14.2);
+  // }
 }
 
 listSnackBar({@required list, @required bool err}) {

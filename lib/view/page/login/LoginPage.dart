@@ -124,39 +124,33 @@ class _LoginPageState extends State<LoginPage> {
                             if(_mobController.text.isEmpty){
                               errorSnackBar(context: context,text: 'شماره موبایل را وارد نمایید',error: true);
                             }else{
-                              check
-                                  .getVerificationCode(_mobController.text)
-                                  .whenComplete(() {
-                                if (check.checkerror.value == true) {
-                                  listSnackBar(list: check.errorMassages, err: true);
-                                } else {
-
-                                  _codeController.text = '';
-                                  _newPassController.text = '';
-
-                                  botSheet(context: context,
-                                      controller: _newPassController,
-                                      codeController: _codeController,
-                                      focusNode: _newPassFocus,
-                                      codeFocus: _codeFocus,
-                                      changePass: (){
-                                    check.resetPass(
-                                        mobile: _mobController.text,
-                                        code: _codeController.text,
-                                        pass: _newPassController.text,
-                                        verification_token: check.verificationCode.value).then((value){
-                                          if(value == 200){
-                                            Get.back();
-                                            listSnackBar(list: check.errorMassages, err: false);
-                                          }else{
-                                            listSnackBar(list: check.errorMassages, err: true);
-                                          }
-                                       });
-                                      });
-                               }
+                              check.getVerificationCode(_mobController.text).then((value) {
+                                    if(value == 200){
+                                      _codeController.text = '';
+                                      _newPassController.text = '';
+                                      botSheet(context: context,
+                                          controller: _newPassController,
+                                          codeController: _codeController,
+                                          focusNode: _newPassFocus,
+                                          codeFocus: _codeFocus,
+                                          changePass: (){
+                                            check.resetPass(
+                                                mobile: _mobController.text,
+                                                code: _codeController.text,
+                                                pass: _newPassController.text,
+                                                verification_token: check.verificationCode.value).then((value){
+                                              if(value == 200){
+                                                Get.back();
+                                                listSnackBar(list: check.errorMassages, err: false);
+                                              }else{
+                                                listSnackBar(list: check.errorMassages, err: true);
+                                              }
+                                            });
+                                          });
+                                    }else{
+                                      listSnackBar(list: check.errorMassages, err: true);
+                                    }
                               });
-
-
                             }
                           },
                           child: Container(
