@@ -88,7 +88,7 @@ userItem(
               borderRadius: BorderRadius.circular(6)),
         ),
         SizedBox(
-          height: 10,
+          height: 3,
         ),
         Text(
           data.title,

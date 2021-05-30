@@ -31,7 +31,9 @@ class ApiService extends GetConnect {
           List interest,
          String firebase_token,
           List acivityScope,
-          String inviteCode) =>
+          String inviteCode,
+          String description
+      ) =>
       post( apiUrl + 'user/register', FormData({
             'name': name,
             'mobile': mobile,
@@ -49,6 +51,7 @@ class ApiService extends GetConnect {
             'interest': json.encode(interest),
             'activity_scope': json.encode(acivityScope),
             'invite_code': inviteCode,
+            'description': description,
             'firebase_token': firebase_token,
           }));
 

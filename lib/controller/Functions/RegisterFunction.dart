@@ -88,6 +88,7 @@ class RegisterFunction extends GetxController {
      @required List interest,
      @required String firebase_token,
      @required List acivityScope,
+     @required String description,
      @required String inviteCode}) async {
     errorMassages = [];
     registerLoading.value = true;
@@ -108,7 +109,9 @@ class RegisterFunction extends GetxController {
         interest,
         firebase_token,
         acivityScope,
-        inviteCode);
+        inviteCode,
+        description
+    );
     if (response.statusCode == 200) {
       bool err = response.body['error'];
       if(!err){

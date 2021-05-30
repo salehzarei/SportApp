@@ -122,8 +122,8 @@ class _CategoryListState extends State<CategoryList> {
                                 SliverGridDelegateWithFixedCrossAxisCount(
                                   childAspectRatio: 3 / 3,
                                   crossAxisCount: 3,
-                                  crossAxisSpacing: 4,
-                                  mainAxisSpacing: 10
+                                  crossAxisSpacing: 2,
+                                  mainAxisSpacing: 2
                                 ),
                                 itemCount: registerFunction.providerList.post.length,
                                 physics: BouncingScrollPhysics(),

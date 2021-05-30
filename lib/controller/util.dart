@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_masked_text/flutter_masked_text.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -283,7 +284,6 @@ showBtn({
       ));
 }
 
-
 Future<Uint8List> getBytesFromAsset(String path, int width) async {
   ByteData data = await rootBundle.load(path);
   ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(), targetWidth: width);
@@ -291,13 +291,23 @@ Future<Uint8List> getBytesFromAsset(String path, int width) async {
   return (await fi.image.toByteData(format: ui.ImageByteFormat.png)).buffer.asUint8List();
 }
 
+void toast({@required String msg,@required textColor,@required backgroundColor,@required fontSize}){
+  Fluttertoast.showToast(
+      msg: msg,
+      toastLength: Toast.LENGTH_LONG,
+      gravity: ToastGravity.BOTTOM,
+      timeInSecForIosWeb: 1,
+      backgroundColor: backgroundColor,
+      textColor:textColor,
+      fontSize: fontSize
+  );
+}
 
 Future<String> getVersion() async {
   PackageInfo packageInfo = await PackageInfo.fromPlatform();
   return packageInfo.version;
 
 }
-
 
 Future<Position> determinePosition() async {
   bool serviceEnabled;

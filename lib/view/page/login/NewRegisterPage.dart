@@ -790,7 +790,7 @@ class _NewRegisterPageState extends State<NewRegisterPage> {
                   address: _title[1],
                   code: _regFunction.code.value,
                   verificationToken: _regFunction.verificationCode.value,
-                  sysApp: 'android')
+                  sysApp: 'android', description: _desController.text)
               .then((value) {
             if (value == 200) {
               Get.offAll(MainPage());

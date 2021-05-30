@@ -682,7 +682,9 @@ sliderWidget({
               borderRadius: borderRadius, fit: fit);
         },
         autoplay: true,
-        duration: 100,
+        duration:1000,
+        autoplayDelay: 10000,
+
         pagination: SwiperPagination(
             builder: DotSwiperPaginationBuilder(
                 size: 6.0, activeSize: 10.0, space: 4.0),
