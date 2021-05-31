@@ -76,7 +76,7 @@ class _AddPackagePageState extends State<AddPackagePage> {
   void initState() {
     getShared('token').then((value){
       _token = value;
-      registerFunction.getProductCategories(widget.level_provider);
+      registerFunction.getProductCategories(widget.level_provider, token: value);
     });
 
     _initView();

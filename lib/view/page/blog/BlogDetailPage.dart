@@ -230,6 +230,7 @@ class _BlogDetailPageState extends State<BlogDetailPage> {
                       ),
                     ),
                   ),
+                  SizedBox(height: 10,),
 
                 ],
               ),

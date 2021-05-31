@@ -41,8 +41,8 @@ class _EditProviderPackageState extends State<EditProviderPackage> {
   int _selectImage = 0;
   bool _loadToSend = false;
 
-  // String url = 'https://sportapp.pdf.co.ir/files/package/';
-  String url = 'http://192.168.1.3/np-framework/sportplus/files/package/';
+  String url = 'https://sportapp.pdf.co.ir/files/package/';
+  // String url = 'http://192.168.1.3/np-framework/sportplus/files/package/';
 
   List _bool=[
     false,

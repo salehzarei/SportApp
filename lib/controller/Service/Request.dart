@@ -5,8 +5,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 class ApiService extends GetConnect {
-  // final String apiUrl = 'https://sportapp.pdf.co.ir/api/';
-  final String apiUrl = 'http://192.168.1.3/np-framework/sportplus/api/';
+  final String apiUrl = 'https://sportapp.pdf.co.ir/api/';
+  // final String apiUrl = 'http://192.168.1.3/np-framework/sportplus/api/';
 
   Future<Response> getProvinceList(int ostanid) =>
       get(apiUrl + 'user/getplace?ostan=${ostanid.toString()}');
@@ -29,7 +29,7 @@ class ApiService extends GetConnect {
           String long,
           int level,
           List interest,
-         String firebase_token,
+          String firebase_token,
           List acivityScope,
           String inviteCode,
           String description
@@ -65,6 +65,8 @@ class ApiService extends GetConnect {
     @required String city,
     @required String lat,
     @required String lng,
+    @required String description,
+    @required String address,
     @required List interest,
     @required List activityScope,
     @required File pic,
@@ -77,6 +79,8 @@ class ApiService extends GetConnect {
             'city': city,
             'lat': lat,
             'lng': lng,
+            'description': description,
+            'address': address,
             'interest': json.encode(interest),
             'activity_scope': json.encode(activityScope),
             'pic':  MultipartFile(
@@ -108,8 +112,8 @@ class ApiService extends GetConnect {
           }));
 
 ////////ارسال لول و دریافت دسته بندی های هر عنوان شغلی
-  Future<Response> getCategoryAccountType(int level) =>
-      get(apiUrl + 'category?level=${level.toString()}');
+  Future<Response> getCategoryAccountType({@required int level,@required String token}) =>
+      get(apiUrl + 'category?token=$token&level=${level.toString()}');
 
 
 ////////ارسال لول و دریافت دسته بندی های هر عنوان شغلی

@@ -587,7 +587,9 @@ class _ProfileState extends State<Profile> {
         lng: profile.userProfile.lng,
         interest: intrest,
         activityScope: activity_scope,
-        pic: value).then((status){
+        pic: value,
+        address: profile.userProfile.address,
+        description: profile.userProfile.description).then((status){
           if(status == 200){
             Get.back();
             Get.back();

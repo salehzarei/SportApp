@@ -35,6 +35,8 @@ class ProfileFunction extends GetxController {
      @required String tell,
      @required String email,
      @required String ostan,
+     @required String description,
+     @required String address,
      @required String city,
      @required String lat,
      @required String lng,
@@ -55,7 +57,9 @@ class ProfileFunction extends GetxController {
         lat: lat,
         city: city,
         activityScope:activityScope,
-        ostan: ostan);
+        ostan: ostan,
+        address: address,
+        description: description);
     if (response.statusCode == 200) {
       editeProfileLoading.value = false;
       bool error = response.body['error'];

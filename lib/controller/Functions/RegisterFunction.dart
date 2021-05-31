@@ -281,11 +281,11 @@ class RegisterFunction extends GetxController {
 
   }
 
-  Future getProductCategories(int level) async {
+  Future getProductCategories(int level ,{@required String token}) async {
     categoryLoading.value = true;
     categoryList.clear();
 
-    final response = await ApiService().getCategoryAccountType(level);
+    final response = await ApiService().getCategoryAccountType(token: token , level: level);
 
     if (response.statusCode == 200) {
       final List<dynamic> responseData = response.body['post'];
