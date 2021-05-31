@@ -84,7 +84,7 @@ class _SearchPageState extends State<SearchPage> {
             Expanded(
                 child:packageFunction.userPackageLoading.value?SizedBox():Directionality(
                   textDirection: TextDirection.rtl,
-                  child: ListView.builder(
+                  child:packageFunction.userPackageModel.post.isEmpty? noItem() : ListView.builder(
                     shrinkWrap: true,
                     padding: EdgeInsets.symmetric(vertical: 20),
                     itemCount:  packageFunction.userPackageModel.post.length,

@@ -221,7 +221,7 @@ class _HomeState extends State<Home> {
               height: 13,
             ),
             Container(
-              height: Get.width * .53,
+              height: Get.width * .65,
               child: !_specialPackageLoading
                   ? ListView.builder(
                       padding: EdgeInsets.symmetric(horizontal: 10),
@@ -293,7 +293,7 @@ class _HomeState extends State<Home> {
               Get.to(ViewAllPage(2));
             }),
             Container(
-              height: Get.width * .53,
+              height: Get.width * .65,
               child: !_interestPackageLoading
                   ? ListView.builder(
                       padding: EdgeInsets.symmetric(horizontal: 10),
@@ -311,7 +311,7 @@ class _HomeState extends State<Home> {
               Get.to(ViewAllPage(4));
             }),
             Container(
-              height: Get.width * .53,
+              height: Get.width * .65,
               child: _interestBlogLoading? loading(color: Theme.of(context).primaryColorDark):ListView.builder(
                   padding: EdgeInsets.symmetric(horizontal: 10),
                   itemCount: _interestBlogModel.post.length,

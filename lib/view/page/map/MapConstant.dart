@@ -154,7 +154,7 @@ itemPackageList({@required BuildContext context,@required int index,@required My
           IntrinsicHeight(
             child: Row(
               children: [
-                Expanded(flex:2,child:  AspectRatio(aspectRatio: 2/2,child: imageShower(imageUrl: data.pic,
+                Expanded(flex:2,child:  AspectRatio(aspectRatio: 4/3,child: imageShower(imageUrl: data.pic,
                     margin: EdgeInsets.only(left: 0,right: 0), fit: BoxFit.fill, borderRadius: BorderRadius.circular(8)),)),
                 SizedBox(width: 8,),
                 Expanded(flex:5,child: Column(

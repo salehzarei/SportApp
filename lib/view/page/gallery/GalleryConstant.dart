@@ -27,7 +27,7 @@ itemGallery({@required MyGalleryPost data,@required removeGallery,@required show
               Expanded(
                   flex: 2,
                   child: AspectRatio(
-                      aspectRatio: 2 / 2,
+                      aspectRatio: 4/3,
                       child: Stack(
                         children: [
                           imageShower(
@@ -46,7 +46,7 @@ itemGallery({@required MyGalleryPost data,@required removeGallery,@required show
                                     Colors.grey[800],
                                   ])),
                               padding: EdgeInsets.symmetric(
-                                  horizontal: 4, vertical: 6),
+                                  horizontal: 4, vertical: 4),
                               child: Text(
                                 data.status_title,
                                 maxLines: 1,
@@ -70,7 +70,7 @@ itemGallery({@required MyGalleryPost data,@required removeGallery,@required show
                                           Colors.grey[800],
                                         ])),
                                     margin: EdgeInsets.only(top:  6 ,right: 6),
-                                    padding: EdgeInsets.all(6),
+                                    padding: EdgeInsets.all(4),
                                     child: Icon(
                                       Icons.zoom_out_map,
                                       size: 20,

@@ -451,7 +451,7 @@ myArticleList({@required BuildContext context, @required int index, @required re
                 Expanded(
                     flex: 2,
                     child: AspectRatio(
-                        aspectRatio: 2 / 2,
+                        aspectRatio: 4 / 3,
                         child: Stack(
                           children: [
                             imageShower(
@@ -470,7 +470,7 @@ myArticleList({@required BuildContext context, @required int index, @required re
                                   Colors.grey[800],
                                 ])),
                                 padding: EdgeInsets.symmetric(
-                                    horizontal: 4, vertical: 6),
+                                    horizontal: 4, vertical: 4),
                                 child: Text(
                                     data.tages.isEmpty?"#":'# ${data.tages[0]}',
                                   maxLines: 1,

@@ -25,7 +25,7 @@ class _GalleryTabState extends State<GalleryTab> {
             padding: EdgeInsets.symmetric(horizontal: 10 , vertical: 8),
             gridDelegate:
             SliverGridDelegateWithFixedCrossAxisCount(
-                childAspectRatio: 2 / 2,
+                childAspectRatio: 4 / 3,
                 crossAxisCount: 2,
                 crossAxisSpacing: 4,
                 mainAxisSpacing: 5
@@ -113,7 +113,7 @@ class _GalleryTabState extends State<GalleryTab> {
               child: Stack(
                 children: [
                   AspectRatio(
-                    aspectRatio: 1,
+                    aspectRatio: 4/3,
                     child: imageShower(
                         imageUrl: url,
                         margin: EdgeInsets.all(0),

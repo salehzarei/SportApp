@@ -75,7 +75,7 @@ itemPackageFav({@required BuildContext context,@required int index,@required MyP
               children: [
                 Expanded(
                     flex:2,
-                    child:  AspectRatio(aspectRatio: 2/2,child: imageShower(imageUrl:data.pic,
+                    child:  AspectRatio(aspectRatio: 4/3,child: imageShower(imageUrl:data.pic,
                         margin: EdgeInsets.only(left: 0,right: 0), fit: BoxFit.fill, borderRadius: BorderRadius.circular(8)),)),
                 SizedBox(
                   width: 8,),
@@ -197,7 +197,7 @@ itemArticleFav({@required BuildContext context,@required int index,@required Art
         child: Row(
           children: [
             Expanded(flex: 2,
-                child: AspectRatio(aspectRatio: 2 / 2, child: Stack(
+                child: AspectRatio(aspectRatio: 4 / 3, child: Stack(
                   children: [
                     imageShower(imageUrl: data.pic,
                         margin: EdgeInsets.only(left: 0, right: 0),
@@ -208,6 +208,7 @@ itemArticleFav({@required BuildContext context,@required int index,@required Art
                       child: Container(
                         width: double.infinity,
                         decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(bottomRight: Radius.circular(12),bottomLeft: Radius.circular(12)),
                             gradient: LinearGradient(
                                 colors: [
                                   Colors.black26,
@@ -215,7 +216,7 @@ itemArticleFav({@required BuildContext context,@required int index,@required Art
                                 ]
                             )
                         ),
-                        padding: EdgeInsets.symmetric(horizontal: 4 , vertical: 6),
+                        padding: EdgeInsets.symmetric(horizontal: 4 , vertical: 4),
                         child: Text(data.tages.isEmpty?"#":data.tages[0] ,maxLines: 1, style: TextStyle(
                             color: Colors.white,
                             fontSize: 12

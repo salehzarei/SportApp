@@ -862,7 +862,7 @@ class _EditArticlePageState extends State<EditArticlePage> {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(10),
             child: AspectRatio(
-              aspectRatio: 1,
+              aspectRatio: 4/3,
               child: Container(
                   width: MediaQuery.of(context).size.width / 2.4,
                   decoration: BoxDecoration(
@@ -912,7 +912,7 @@ class _EditArticlePageState extends State<EditArticlePage> {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(10),
             child: AspectRatio(
-              aspectRatio: 1,
+              aspectRatio: 4/3,
               child: Container(
                   width: MediaQuery.of(context).size.width / 2.4,
                   decoration: BoxDecoration(

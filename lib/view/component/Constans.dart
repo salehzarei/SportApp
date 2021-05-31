@@ -440,7 +440,7 @@ itemImageAdd(
       radius: Radius.circular(12),
       padding: EdgeInsets.all(4),
       child: AspectRatio(
-        aspectRatio: 1,
+        aspectRatio: 4/3,
         child: Container(
             decoration: BoxDecoration(
                 color: Colors.grey[200],
@@ -534,13 +534,13 @@ itemImageloaded({@required context,
     onTap: onTap,
     child: DottedBorder(
       dashPattern: [4, 2],
-      strokeWidth: 1,
+      strokeWidth: 4/3,
       strokeCap: StrokeCap.round,
       borderType: BorderType.RRect,
       radius: Radius.circular(12),
       padding: EdgeInsets.all(4),
       child: AspectRatio(
-        aspectRatio: 1,
+        aspectRatio: 4/3,
         child: Container(
             decoration: BoxDecoration(
                 color: Colors.grey[200],

@@ -33,7 +33,7 @@ class PackageFunction extends GetxController {
     File croppedFile = await ImageCropper.cropImage(
         sourcePath: pic.path,
         compressFormat: ImageCompressFormat.jpg,
-        aspectRatio: CropAspectRatio(ratioX: 800, ratioY: 800),
+        aspectRatio: CropAspectRatio(ratioX: 800, ratioY: 600),
         maxWidth: 800,
         maxHeight: 600,
         androidUiSettings: AndroidUiSettings(

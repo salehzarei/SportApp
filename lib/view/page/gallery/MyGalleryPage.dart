@@ -169,7 +169,7 @@ class _MyGalleryPageState extends State<MyGalleryPage> {
               child: Stack(
                 children: [
                   AspectRatio(
-                    aspectRatio: 1,
+                    aspectRatio: 4/3,
                     child: imageShower(
                         imageUrl: url,
                         margin: EdgeInsets.all(0),
@@ -250,7 +250,7 @@ class _MyGalleryPageState extends State<MyGalleryPage> {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 50),
                         child: AspectRatio(
-                            aspectRatio: 1,
+                            aspectRatio: 4/3,
                             child: _itemImageAdd(
                               context: context,
                               onTap: () {
@@ -336,7 +336,7 @@ class _MyGalleryPageState extends State<MyGalleryPage> {
         radius: Radius.circular(12),
         padding: EdgeInsets.all(4),
         child: AspectRatio(
-          aspectRatio: 1,
+          aspectRatio: 4/3,
           child: Container(
               decoration: BoxDecoration(
                   color: Colors.grey[200],

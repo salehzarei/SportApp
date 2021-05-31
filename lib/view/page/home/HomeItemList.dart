@@ -32,7 +32,7 @@ specialList({@required context,@required controller,@required MyPackagePost data
             Stack(
               children: [
                 AspectRatio(
-                  aspectRatio: 4/2,
+                  aspectRatio: 4/3,
                   child: Container(
                     width: double.infinity,
                     child:imageShower(margin: EdgeInsets.all(0),
@@ -309,7 +309,7 @@ packageMe({@required context,@required controller,@required MyPackagePost data})
             Stack(
               children: [
                 AspectRatio(
-                  aspectRatio: 4/2,
+                  aspectRatio: 4/3,
                   child: Container(
                     width: double.infinity,
                     child:imageShower(margin: EdgeInsets.all(0), borderRadius:  BorderRadius.only(
@@ -449,7 +449,7 @@ articleMe({@required context,@required ArticleModelPost data}){
            crossAxisAlignment: CrossAxisAlignment.start,
            children: [
              AspectRatio(
-               aspectRatio: 5/3,
+               aspectRatio: 4/3,
                child: Stack(
                  children: [
                    Container(

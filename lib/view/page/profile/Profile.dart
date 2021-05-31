@@ -142,11 +142,11 @@ class _ProfileState extends State<Profile> {
                           child: Row(
                             children: [
                               Expanded(
-                                  flex: 1,
+                                  flex: 2,
                                   child: Stack(
                                     children: [
                                       AspectRatio(
-                                        aspectRatio: 2 / 2,
+                                        aspectRatio: 4 / 3,
                                         // child:Container(
                                         //   margin: EdgeInsets.all(6),
                                         //   decoration: BoxDecoration(
@@ -223,7 +223,7 @@ class _ProfileState extends State<Profile> {
                                     ],
                                   )),
                               Expanded(
-                                  flex: 3,
+                                  flex: 5,
                                   child: Padding(
                                     padding: EdgeInsets.all(8.0),
                                     child: Column(
