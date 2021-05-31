@@ -158,7 +158,7 @@ class _ProfileState extends State<Profile> {
                                         //   ),
                                         child: imageShower(
                                             imageUrl:profile.userProfile.pic,
-                                            margin: EdgeInsets.all(6),
+                                            margin: EdgeInsets.all(2),
                                             fit: BoxFit.fill,
                                             borderRadius:BorderRadius.circular(8)
                                         ),
