@@ -398,12 +398,7 @@ class _PackagesListItemDetailState extends State<PackagesListItemDetail> {
                       ),
                     ),
                   ))
-              : Center(
-                  child: SpinKitThreeBounce(
-                    color: Theme.of(context).primaryColorDark,
-                    size: 30.0,
-                  ),
-                ),
+              : loading(color: Colors.red),
         ));
   }
 

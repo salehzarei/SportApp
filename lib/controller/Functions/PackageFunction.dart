@@ -393,13 +393,12 @@ class PackageFunction extends GetxController {
   }
 
   Future showUserPackage(String token, String pId) async {
+    showPackageLoading.value = true;
     final response = await ApiService().showUserPackage(token, pId);
 
     if (response.statusCode == 200) {
       showPackageLoading.value = false;
       showPackageModel = ShowPackageModel.fromJson(response.body);
-    } else {
-      showPackageLoading.value = false;
     }
     update();
   }

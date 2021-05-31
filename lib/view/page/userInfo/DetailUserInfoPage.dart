@@ -76,11 +76,6 @@ class _DetailUserInfoPageState extends State<DetailUserInfoPage>
                         Get.back();
                       }),
                   elevation: 0.0,
-                  // centerTitle: true,
-                  // title: Text(
-                  //   "عنوان کاربری",
-                  //   style: TextStyle(color: Theme.of(context).accentColor),
-                  // ),
                   floating: true,
                   flexibleSpace: _infoItem(),
                   expandedHeight: 220,
