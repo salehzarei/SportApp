@@ -200,6 +200,7 @@ class _BlogDetailPageState extends State<BlogDetailPage> {
                                     onTap: () {
                                       launchURL('tel:${ articleFunction.showBlogModel.data.owner_cell}');
                                     },
+                                    borderRadius: BorderRadius.circular(10),
                                     child: Container(
                                       padding: EdgeInsets.all(10),
                                       decoration: BoxDecoration(

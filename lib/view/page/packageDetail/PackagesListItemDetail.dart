@@ -363,6 +363,7 @@ class _PackagesListItemDetailState extends State<PackagesListItemDetail> {
                                             onTap: () {
                                               launchURL('tel:${ packageFunction.showPackageModel.data.owner_cell}');
                                             },
+                                            borderRadius: BorderRadius.circular(10),
                                             child: Container(
                                               padding: EdgeInsets.all(10),
                                               decoration: BoxDecoration(

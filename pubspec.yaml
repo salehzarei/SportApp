@@ -37,9 +37,7 @@ dependencies:
   firebase_messaging: ^7.0.3
   flutter_local_notifications: ^3.0.0
   fluttertoast: ^8.0.7
-
-
-
+  lottie: ^0.5.1
 
 dev_dependencies:
   flutter_test:
@@ -50,6 +48,7 @@ flutter:
   assets:
     - assets/image/
     - assets/svg/
+    - assets/json/
 
   fonts:
     - family: Yekan

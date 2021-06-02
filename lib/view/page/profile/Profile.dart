@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 import 'package:sportapplication/controller/Functions/Controller.dart';
 import 'package:sportapplication/controller/Functions/PackageFunction.dart';
 import 'package:sportapplication/controller/Functions/ProfileFunction.dart';
@@ -49,38 +51,30 @@ class _ProfileState extends State<Profile> {
   Future scanbarcode() async {
     try {
       String barcode = await BarcodeScanner.scan();
-      // setState(() => this.bar.barcode.value = barcode);
-
       profile.profileLoading.value = true;
       packageFunction.checkpackage(token: _token, code: barcode).then((value) {
         if (value == 200) {
           profile.profileLoading.value = false;
-          listSnackBar(list: packageFunction.errorMassages, err: false);
+          Get.dialog(_checkC( packageFunction.errorMassages , false));
+          // listSnackBar(list: packageFunction.errorMassages, err: false);
         } else {
           profile.profileLoading.value = false;
-          listSnackBar(list: packageFunction.errorMassages, err: true);
+          Get.dialog(_checkC( packageFunction.errorMassages , true));
+          // listSnackBar(list: packageFunction.errorMassages, err: true);
         }
       });
 
     } on PlatformException catch (e) {
       if (e.code == BarcodeScanner.CameraAccessDenied) {
-        errorSnackBar(
-            text: "خطای عدم دسترسی به دوربین", error: true, context: context);
-        // setState(() {
-        //   this.bar.barcode.value =
-        //       'The user did not grant the camera permission!';
-        // });
+        errorSnackBar(text: "خطای عدم دسترسی به دوربین", error: true, context: context);
+
       } else {
-        errorSnackBar(
-            text: "خطای خواندنن اطلاعات بارکد", error: true, context: context);
-        // setState(() => this.bar.barcode.value = 'Unknown error: $e');
+        errorSnackBar(text: "خطای خواندنن اطلاعات بارکد", error: true, context: context);
       }
     } on FormatException {
-      // errorSnackBar(text: "خطای خواندنن اطلاعات بارکد", error: true,context: context);
-      // setState(() => this.bar.barcode.value =
-      //     'null (User returned using the "back"-button before scanning anything. Result)');
+      errorSnackBar(text: "خطای خواندنن اطلاعات بارکد", error: true, context: context);
     } catch (e) {
-      // setState(() => this.bar.barcode.value = 'Unknown error: $e');
+      errorSnackBar(text: "خطای خواندنن اطلاعات بارکد", error: true, context: context);
     }
   }
 
@@ -608,4 +602,169 @@ class _ProfileState extends State<Profile> {
           }
     });
   }
+
+  Widget _checkC(List<dynamic> errorMassages , bool err) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Dialog(
+          shape:RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(10),
+            child: Directionality(
+                  textDirection: TextDirection.rtl,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        margin: EdgeInsets.symmetric(vertical: 15 , horizontal: 20),
+                        child: ListView.builder(
+                            itemCount: errorMassages.length,
+                            physics: NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemBuilder: (context, index) {
+                              return Directionality(
+                                textDirection: TextDirection.rtl,
+                                child: HtmlWidget(
+                                  errorMassages[index],
+                                  textStyle: TextStyle(
+                                      color: err ?Colors.red :Colors.green,
+                                      height: 1.2,
+                                      fontSize: 14,
+                                      fontFamily: 'sanse',
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              );
+                            }),
+
+                      ),
+                      err ? Lottie.asset(
+                              'assets/json/error.json',
+                              width: 100,
+                              height: 100,
+                            ):Lottie.asset(
+                               'assets/json/verify.json',
+                                width: 100,
+                                height: 100,
+                            ),
+
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 30),
+                        margin: EdgeInsets.symmetric(vertical: 20),
+                        child: Row(
+                          children: [
+                            if(!err)
+                               Expanded(
+                                child:  ElevatedButton(
+                                  onPressed: (){
+
+                                  },
+                                  style: ButtonStyle(
+                                      shape: MaterialStateProperty.all<
+                                          RoundedRectangleBorder>(
+                                          RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(8.0),
+                                              side: BorderSide(color: Colors.white))),
+                                      backgroundColor:
+                                      MaterialStateProperty.all<Color>(Colors.green)),
+                                  child: Text(
+                                    "تایید و ثبت",
+                                    style: TextStyle(fontSize: 12, color: Colors.white),
+                                  ),
+                                ),),
+                            if(!err)
+                               SizedBox(
+                              width: 20,),
+
+                            Expanded(
+                                child:  ElevatedButton(
+                                  onPressed: (){
+                                    Get.back();
+                                  },
+                                  style: ButtonStyle(
+                                      shape: MaterialStateProperty.all<
+                                          RoundedRectangleBorder>(
+                                          RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(8.0),
+                                              side: BorderSide(color: Colors.white))),
+                                      backgroundColor:
+                                      MaterialStateProperty.all<Color>(Colors.red)),
+                                  child: Text(
+                                    "انصراف",
+                                    style: TextStyle(fontSize: 12, color: Colors.white),
+                                  ),
+                                ),)
+                          ],
+                        ),
+                      )
+                    ],
+                  )),
+          ),
+        ),
+      ],
+    );
+    return Directionality(
+        textDirection: TextDirection.rtl,
+        child: Dialog(
+          shape:
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          child: Container(
+            height: 220,
+            width: MediaQuery.of(context).size.width,
+            child: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Column(
+                children: [
+                  Container(
+                    width: 100,
+                    height: 100,
+                    child: Lottie.asset(
+                      'assets/json/loading_cart.json',
+                      width: 50,
+                      height: 20,
+                    ),
+                  ),
+                  Text(
+                    'شرکت پیشگامان دامنه فناوری',
+                    style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    'www.pdf.co.ir',
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.white,
+                    ),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      launchURL('https://pdf.co.ir/');
+                    },
+                    style: ButtonStyle(
+                        shape:
+                        MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                                side: BorderSide(color: Colors.white))),
+                        backgroundColor:
+                        MaterialStateProperty.all<Color>(Colors.red)),
+                    child: Text(
+                      "ارتباط با توسعه دهنده",
+                      style: TextStyle(fontSize: 14, color: Colors.white),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        )
+    );
+  }
+
 }
