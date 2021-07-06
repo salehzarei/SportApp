@@ -14,8 +14,8 @@ class PackagePage extends StatefulWidget {
 
 class _PackagePageState extends State<PackagePage> {
 
-  final PlanFunction planFunction = Get.put(PlanFunction());
-  final ProfileFunction profileFunction = Get.put(ProfileFunction());
+  final planFunction = PlanFunction.to;
+  final profileFunction = ProfileFunction.to;
   TextEditingController _discountController;
   FocusNode _discountFocus;
   String _token;

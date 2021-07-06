@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:sportapplication/view/page/support/AboutUsPage.dart';
-import 'package:sportapplication/view/page/support/CallUsPage.dart';
 import 'package:sportapplication/view/page/support/RulesPage.dart';
 
 class SupportPage extends StatefulWidget {

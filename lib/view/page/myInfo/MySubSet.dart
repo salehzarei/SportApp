@@ -13,7 +13,7 @@ class MySubSet extends StatefulWidget {
 }
 
 class _MySubSetState extends State<MySubSet> {
-  final SubSetFunction subSetFunction = Get.put(SubSetFunction());
+  final subSetFunction = SubSetFunction.to;
   String _token;
 
   @override

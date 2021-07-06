@@ -25,7 +25,8 @@ class IntroductionPage extends StatefulWidget {
 
 class _IntroductionPageState extends State<IntroductionPage> {
 
-  final SubSetFunction subSetFunction = Get.put(SubSetFunction());
+  final subSetFunction = SubSetFunction.to;
+
   bool _desOpen = true;
   bool _desScope = true;
   bool subsetLoading = false;

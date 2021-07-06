@@ -11,7 +11,7 @@ class PackageFavoritePage extends StatefulWidget {
 }
 
 class _PackageFavoritePageState extends State<PackageFavoritePage> {
-  final PackageFunction packageFunction = Get.put(PackageFunction());
+  final packageFunction = PackageFunction.to;
   String _token;
   @override
   void initState() {

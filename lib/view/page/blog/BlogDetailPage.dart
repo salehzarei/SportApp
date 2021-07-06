@@ -17,7 +17,8 @@ class BlogDetailPage extends StatefulWidget {
 
 class _BlogDetailPageState extends State<BlogDetailPage> {
 
-  final ArticleFunction articleFunction = Get.put(ArticleFunction());
+  final articleFunction = ArticleFunction.to;
+
   String _token;
   int fav= 0;
 

@@ -13,10 +13,11 @@ class ListPage extends StatefulWidget {
 
 class _ListPageState extends State<ListPage> {
 
-  final PackageFunction packageFunction = Get.put(PackageFunction());
   int indexItem = 0;
   List<String> accountList = [ 'باشگاه', 'مربی', 'دکتر', 'فروشگاه'];
   String _token;
+
+  final packageFunction = PackageFunction.to;
 
   @override
   void initState() {

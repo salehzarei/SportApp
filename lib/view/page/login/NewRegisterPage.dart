@@ -19,8 +19,9 @@ class NewRegisterPage extends StatefulWidget {
 }
 
 class _NewRegisterPageState extends State<NewRegisterPage> {
-  final RegisterFunction _regFunction = Get.put(RegisterFunction());
   final FirebaseMessaging _firebaseToken = FirebaseMessaging();
+
+  final _regFunction = RegisterFunction.to;
 
   bool _desOpen = true;
   bool _workOpen = true;

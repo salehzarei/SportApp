@@ -7,6 +7,8 @@ import 'package:sportapplication/controller/Service/Request.dart';
 
 class ArticleFunction extends GetxController{
 
+  static ArticleFunction get to => Get.find<ArticleFunction>();
+
   List errorMassages = [];
   final addArticleLoading = false.obs;
 

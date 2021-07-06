@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:sportapplication/controller/Functions/PackageFunction.dart';
 import 'package:sportapplication/controller/util.dart';
@@ -16,7 +15,7 @@ class UserPackageTab extends StatefulWidget {
 }
 
 class _UserPackageTabState extends State<UserPackageTab> {
-  final PackageFunction packageFunction = Get.put(PackageFunction());
+  final packageFunction = PackageFunction.to;
 
   @override
   void initState() {

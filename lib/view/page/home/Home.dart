@@ -26,12 +26,13 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final Controller controller = Get.put(Controller());
-  final SliderFunction slider = Get.put(SliderFunction());
-  final PackageFunction packageFunction = Get.put(PackageFunction());
-  final RegisterFunction registerFunction = Get.put(RegisterFunction());
-  final ArticleFunction articleFunction = Get.put(ArticleFunction());
-  final AppFunction appFunction = Get.put(AppFunction());
+
+  final  controller = Controller.to;
+  final  slider = SliderFunction.to;
+  final  packageFunction = PackageFunction.to;
+  final  registerFunction = RegisterFunction.to;
+  final  appFunction = AppFunction.to;
+  final  articleFunction = ArticleFunction.to;
 
   MyPackageModel _specialPackage;
   MyPackageModel _interestPackage;
@@ -314,7 +315,8 @@ class _HomeState extends State<Home> {
               Container(
                 height: Get.width * .65,
                 child: !_interestPackageLoading
-                    ? ListView.builder(
+                    ? _interestPackage.post.isNotEmpty?
+                ListView.builder(
                         padding: EdgeInsets.symmetric(horizontal: 10),
                         itemCount: _interestPackage.post.length,
                         shrinkWrap: false,
@@ -323,7 +325,7 @@ class _HomeState extends State<Home> {
                         itemBuilder: (context, index) => packageMe(
                             context: context,
                             controller: controller,
-                            data: _interestPackage.post[index]))
+                            data: _interestPackage.post[index])):Center(child: noItem(),)
                     : loading(color: Theme.of(context).primaryColorDark),
               ),
               divider(title: 'مقالات مرتبط', callback: () {
@@ -331,13 +333,14 @@ class _HomeState extends State<Home> {
               }),
               Container(
                 height: Get.width * .65,
-                child: _interestBlogLoading? loading(color: Theme.of(context).primaryColorDark):ListView.builder(
+                child: _interestBlogLoading? loading(color: Theme.of(context).primaryColorDark):
+                _interestBlogModel.post.isNotEmpty? ListView.builder(
                     padding: EdgeInsets.symmetric(horizontal: 10),
                     itemCount: _interestBlogModel.post.length,
                     shrinkWrap: false,
                     physics: BouncingScrollPhysics(),
                     scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) => articleMe(context: context,data: _interestBlogModel.post[index])),
+                    itemBuilder: (context, index) => articleMe(context: context,data: _interestBlogModel.post[index])):Center(child: noItem(),),
               ),
               AspectRatio(
                 aspectRatio: 16 / 6,

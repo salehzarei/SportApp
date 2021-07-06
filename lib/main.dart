@@ -2,9 +2,21 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:sportapplication/controller/Functions/AppFunction.dart';
+import 'package:sportapplication/controller/Functions/ArticleFunction.dart';
+import 'package:sportapplication/controller/Functions/Controller.dart';
+import 'package:sportapplication/controller/Functions/PackageFunction.dart';
+import 'package:sportapplication/controller/Functions/PlanFunction.dart';
+import 'package:sportapplication/controller/Functions/ProfileFunction.dart';
+import 'package:sportapplication/controller/Functions/ProfileFunctions.dart';
+import 'package:sportapplication/controller/Functions/RegisterFunction.dart';
+import 'package:sportapplication/controller/Functions/SliderFunction.dart';
+import 'package:sportapplication/controller/Functions/SubSetFunctoin.dart';
+import 'package:sportapplication/controller/TextTranslations.dart';
 import 'package:sportapplication/view/page/SplashPage.dart';
 
-//Color(0xfffbc02d)
+import 'controller/Functions/GalleryFunction.dart';
+
 main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,9 +34,23 @@ main() async {
   //     statusBarColor: Colors.tr, statusBarIconBrightness: Brightness.dark));
 
 //Red=====>Color(0xffE24A62)
+  Get.put(AppFunction());
+  Get.put(ArticleFunction());
+  Get.put(RegisterFunction());
+  Get.put(PackageFunction());
+  Get.put(SliderFunction());
+  Get.put(Controller());
+  Get.put(SubSetFunction());
+  Get.put(ProfileFunctions());
+  Get.put(ProfileFunction());
+  Get.put(PlanFunction());
+  Get.put(GalleryFunction());
 
   runApp(GetMaterialApp(
     title: 'Sport+',
+    translations: TextTranslations(),
+    // locale: Get.deviceLocale,
+    // locale: Locale("fa" ,"IR"),
     debugShowCheckedModeBanner: false,
     home: SplashPage(),
     theme: ThemeData(

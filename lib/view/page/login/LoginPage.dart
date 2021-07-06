@@ -2,6 +2,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
+import 'package:sms_autofill/sms_autofill.dart';
 import 'package:sportapplication/controller/Functions/RegisterFunction.dart';
 import 'package:sportapplication/controller/util.dart';
 import 'package:sportapplication/view/component/Constans.dart';
@@ -24,8 +25,8 @@ class _LoginPageState extends State<LoginPage> {
   FocusNode _codeFocus;
   FocusNode _newPassFocus;
 
-  final RegisterFunction check = Get.put(RegisterFunction());
   final FirebaseMessaging _firebaseToken = FirebaseMessaging();
+  final check = RegisterFunction.to;
   bool _clicked = false;
 
   @override
@@ -202,12 +203,12 @@ class _LoginPageState extends State<LoginPage> {
                               });
                             }
                             _firebaseToken.getToken().then((pushToken) {
-                              check
-                                  .login(
+                              check.login(
                                   mobile: _mobController.text,
                                   pass: _passController.text, firebase_token: pushToken)
-                                  .then((value) {
+                                  .then((value)  {
                                 if (value == 200) {
+
                                   Get.off(MainPage());
                                 } else {
                                   if (mounted) {

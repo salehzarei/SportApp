@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:sportapplication/controller/Service/Request.dart';
 
 class ProfileFunctions extends GetxController {
+  static ProfileFunctions get to => Get.find<ProfileFunctions>();
   final ostanSelected = 0.obs;
   final citySelected = 0.obs;
   final ostanLoding = false.obs;

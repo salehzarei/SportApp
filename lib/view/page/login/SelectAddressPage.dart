@@ -22,13 +22,14 @@ class _SelectAddressPageState extends State<SelectAddressPage> {
 
   Completer<GoogleMapController> _controller = Completer();
   Set<Marker> _markers = {};
-  final SliderFunction sliderFunction = Get.put(SliderFunction());
   String _address = "ابن سینا";
   static const LatLng _center = const LatLng(36.30, 59.58);
   LatLng _lastMapPosition = _center;
 
   TextEditingController _addressCont ;
   FocusNode _addressF;
+
+  final sliderFunction = SliderFunction.to;
 
   @override
   void initState() {

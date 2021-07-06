@@ -6,6 +6,7 @@ import 'package:sportapplication/Model/MyGalleryModel.dart';
 import 'package:sportapplication/controller/Service/Request.dart';
 
 class GalleryFunction extends GetxController{
+  static GalleryFunction get to => Get.find<GalleryFunction>();
 
   final showMyGalleryLoading = true.obs;
   MyGalleryModel showGalleryModel;

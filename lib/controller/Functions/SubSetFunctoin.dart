@@ -4,7 +4,7 @@ import 'package:sportapplication/Model/SubSetModel.dart';
 import 'package:sportapplication/controller/Service/Request.dart';
 
 class SubSetFunction extends GetxController{
-
+  static SubSetFunction get to => Get.find<SubSetFunction>();
   SubSetModel subSetModel;
   final loading = true.obs;
   final userSubsetLoading = true.obs;

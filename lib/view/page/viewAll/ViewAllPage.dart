@@ -8,7 +8,6 @@ import 'package:sportapplication/controller/util.dart';
 import 'package:sportapplication/view/component/Constans.dart';
 import 'package:sportapplication/view/page/favorite/FavoriteConstant.dart';
 import 'package:sportapplication/view/page/following/followConstant.dart';
-import 'package:sportapplication/view/page/home/HomeItemList.dart';
 
 class ViewAllPage extends StatefulWidget {
   int from;
@@ -20,11 +19,10 @@ class ViewAllPage extends StatefulWidget {
 }
 
 class _ViewAllPageState extends State<ViewAllPage> {
-  final RegisterFunction registerFunction = Get.put(RegisterFunction());
-  final PackageFunction packageFunction = Get.put(PackageFunction());
-  final ArticleFunction articleFunction = Get.put(ArticleFunction());
-  final SubSetFunction subSetFunction = Get.put(SubSetFunction());
-
+  final subSetFunction = SubSetFunction.to;
+  final articleFunction = ArticleFunction.to;
+  final packageFunction = PackageFunction.to;
+  final registerFunction = RegisterFunction.to;
   String _title = ' ';
   String _token = ' ';
 

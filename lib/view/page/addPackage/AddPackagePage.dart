@@ -22,8 +22,8 @@ class AddPackagePage extends StatefulWidget {
 
 class _AddPackagePageState extends State<AddPackagePage> {
 
-  final RegisterFunction registerFunction = Get.put(RegisterFunction());
-  final PackageFunction addPackage = Get.put(PackageFunction());
+  final registerFunction = RegisterFunction.to;
+  final addPackage = PackageFunction.to;
 
   FocusNode _titleFocus;
   TextEditingController _titleController;

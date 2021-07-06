@@ -11,7 +11,7 @@ class AboutUsPage extends StatefulWidget {
 
 class _AboutUsPageState extends State<AboutUsPage> {
 
-  final SliderFunction aboutF = Get.put(SliderFunction());
+  final aboutF = SliderFunction.to;
 
   @override
   void initState() {

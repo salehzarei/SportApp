@@ -9,7 +9,6 @@ import 'package:sportapplication/view/component/Constans.dart';
 import 'package:sportapplication/view/page/packageDetail/PackagesListItemDetail.dart';
 import 'package:sportapplication/view/page/userInfo/DetailUserInfoPage.dart';
 
-// final Controller constant = Get.put(Controller());
 
 categoryItemList({@required CategoryAccountTypeModel model,@required BuildContext context,@required onTab,@required int index,@required int indexItem }){
   return InkWell(

@@ -18,13 +18,12 @@ class MyGalleryPage extends StatefulWidget {
 }
 
 class _MyGalleryPageState extends State<MyGalleryPage> {
-  final GalleryFunction _galleryFunction = Get.put(GalleryFunction());
-  final PackageFunction _addPackage = Get.put(PackageFunction());
 
+  final _galleryFunction = GalleryFunction.to;
+  final _addPackage = PackageFunction.to;
 
   FocusNode _titleFocus;
   TextEditingController _titleController;
-
 
   String _token;
   bool _loaded = false;

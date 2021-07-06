@@ -7,7 +7,8 @@ import 'package:sportapplication/view/page/map/MapConstant.dart';
 
 class AroundTab extends StatelessWidget {
 
-  final Controller controller = Get.put(Controller());
+  final controller = Controller.to;
+
   @override
   Widget build(BuildContext context) {
     return Obx(()=> Expanded(

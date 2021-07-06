@@ -60,7 +60,7 @@ class UserInfoTab extends StatelessWidget {
                 controller: _desController,
                 focus: _desFocus,
                 readeOnly: true,
-                label: "توضیحات", maxLine: 6, keyboardType: TextInputType.multiline,maxLength: 200),
+                label: "توضیحات", maxLine: 6, keyboardType: TextInputType.multiline,maxLength: 200, minLine: 1),
           ),
           userInfoDivider(title: "اطلاعات کاربری"),
           Padding(

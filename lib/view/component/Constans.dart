@@ -7,6 +7,11 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
 
+final localsLang = [
+  {"name" :"فارسی" , "local" : Locale("fa" ,"IR") , "img" : "assets/svg/iran.svg" },
+  {"name" :"انگلیسی" , "local" : Locale("en" ,"US") , "img" : "assets/svg/uk.svg"},
+];
+
 divider({
   @required String title,
   @required callback,
@@ -932,4 +937,8 @@ buttonWidget({@required String title,@required onPressed,@required btnColor,@req
       ),
     ),
   );
+}
+
+trText({@required String txt,@required style}){
+  return Text(txt.tr,style: style,);
 }

@@ -9,6 +9,7 @@ import 'package:sportapplication/Model/ShowPackageModel.dart';
 import 'package:sportapplication/controller/Service/Request.dart';
 
 class PackageFunction extends GetxController {
+  static PackageFunction get to => Get.find<PackageFunction>();
   final editPackageLoading = false.obs;
 
   final addPackageLoading = false.obs;

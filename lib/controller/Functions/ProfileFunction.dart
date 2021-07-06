@@ -6,6 +6,9 @@ import 'package:sportapplication/Model/ProfileModel.dart';
 import 'package:sportapplication/controller/Service/Request.dart';
 
 class ProfileFunction extends GetxController {
+
+  static ProfileFunction get to => Get.find<ProfileFunction>();
+
   UserDataModel userProfile;
   final profileLoading = true.obs;
   final editeProfileLoading = false.obs;

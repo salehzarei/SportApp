@@ -16,7 +16,7 @@ class SplashPage extends StatefulWidget {
 
 class _SplashPageState extends State<SplashPage> {
   GlobalKey<ScaffoldState> _scaffoldKey;
-  final RegisterFunction check = Get.put(RegisterFunction());
+  final check = RegisterFunction.to;
   bool error = false;
   String _token;
 
@@ -24,6 +24,8 @@ class _SplashPageState extends State<SplashPage> {
   void initState() {
     _scaffoldKey = GlobalKey<ScaffoldState>();
     Timer(Duration(seconds: 2), () => _setTimer());
+    print("Get.deviceLocale=>      ${Get.deviceLocale}");
+    // Get.updateLocale(Locale("fa" ,"IR"));
     super.initState();
   }
 

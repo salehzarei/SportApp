@@ -17,7 +17,7 @@ class PackagesListItemDetail extends StatefulWidget {
 }
 
 class _PackagesListItemDetailState extends State<PackagesListItemDetail> {
-  final PackageFunction packageFunction = Get.put(PackageFunction());
+  final packageFunction = PackageFunction.to;
   String _token;
   int fav= 0;
 

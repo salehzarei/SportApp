@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sportapplication/Model/CategoryAccountTypeModel.dart';
@@ -11,8 +13,8 @@ import '../util.dart';
 import 'Controller.dart';
 
 class RegisterFunction extends GetxController {
+  static RegisterFunction get to => Get.find<RegisterFunction>();
   final Controller os = Get.put(Controller());
-
   Map<dynamic, dynamic> ostanList = {};
   Map<dynamic, dynamic> cityList = {};
   final ostanLoding = false.obs;
@@ -38,9 +40,6 @@ class RegisterFunction extends GetxController {
 
   List<dynamic> errorMassages = [];
 
-
-
-//// دریافت لیست استان ها و شهر ها
 
   void fetchCity(int ostan) {
     cityLoding.value = true;
@@ -186,8 +185,11 @@ class RegisterFunction extends GetxController {
 
   Future checkVerificationCodes(String code) async {
     errorMassages = [];
+    print("checkVerificationCodes");
     final response = await ApiService()
         .checkVerificationCode(mobile.value, code, verificationCode.value);
+    print("response.statusCode =>        ${response.statusCode}");
+    print("response.body =>        ${response.body}");
     if (response.statusCode == 200) {
       bool error = response.body['error'];
       if(!error){

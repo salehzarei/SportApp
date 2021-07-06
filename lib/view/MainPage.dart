@@ -21,7 +21,7 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
 
   GlobalKey<ScaffoldState> _scaffoldKey;
-  final Controller active = Get.put(Controller());
+  final active = Controller.to;
 
   FirebaseNotifications firebaseNotifications = FirebaseNotifications();
   DateTime currentBackPressTime;

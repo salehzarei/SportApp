@@ -35,10 +35,10 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
 
-  final Controller bar = Get.put(Controller());
-  final ProfileFunction profile = Get.put(ProfileFunction());
-  final PackageFunction packageFunction = Get.put(PackageFunction());
-  final PackageFunction addPackage = Get.put(PackageFunction());
+  final bar = Controller.to;
+  final profile = ProfileFunction.to;
+  final packageFunction = PackageFunction.to;
+  final addPackage = PackageFunction.to;
 
   String _token;
 
@@ -349,7 +349,7 @@ class _ProfileState extends State<Profile> {
                               onTap: () {
                                 Get.to(FavoritePage());
                               },
-                              title: "علاقه مندی ها"),
+                              title:"علاقه مندی ها"),
                           itemProfile(
                               context: context,
                               onTap: () {
@@ -371,15 +371,13 @@ class _ProfileState extends State<Profile> {
                           SizedBox(
                             height: 20,
                           ),
-                          profile.userProfile.level != 1
-                              ? Column(
+                          if( profile.userProfile.level != 1)
+                            Column(
                                   children: [
                                     itemProfile(
                                         context: context,
                                         onTap: () {
-                                          profile.userProfile.provider
-                                                      .active ==
-                                                  1
+                                          profile.userProfile.provider.active ==1
                                               ? Get.to(AddArticlePage(
                                                   profile.userProfile.level))
                                               : errorSnackBar(
@@ -433,10 +431,9 @@ class _ProfileState extends State<Profile> {
                                         onTap: () {
                                           scanbarcode();
                                         },
-                                        title: "بررسی qrCode"),
+                                        title:"بررسی qrCode"),
                                   ],
-                                )
-                              : Container(),
+                                ),
                           SizedBox(
                             height: 20,
                           ),
@@ -459,6 +456,13 @@ class _ProfileState extends State<Profile> {
                                 Get.dialog(_dialogDeveloper(context));
                               },
                               title: "درباره توسعه دهنده"),
+                          // itemProfile(
+                          //     context: context,
+                          //     onTap: () {
+                          //       // dialogBase(context: context, child: _aboutDeveloper());
+                          //       Get.dialog(_changeDialog());
+                          //     },
+                          //     title:"changeLanguage"),
                           SizedBox(
                             height: 20,
                           ),
@@ -489,21 +493,54 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-  _aboutDeveloper() {
+  _changeDialog() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Dialog(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(10),
-            child: Directionality(
-                textDirection: TextDirection.rtl,
-                child: Column(
-                  children: [],
-                )),
+            child: Container(
+              width: double.maxFinite,
+              child: Column(
+                children: [
+                  Padding(padding: EdgeInsets.symmetric(vertical: 20 , horizontal: 30),
+                  child: Text("choseLanguage".tr,style: TextStyle(
+                    fontSize: 18 , color: Colors.black
+                  ),),),
+                  ListView.separated(
+                    shrinkWrap: true,
+                    scrollDirection: Axis.vertical,
+                    itemCount: localsLang.length,
+                    separatorBuilder: (BuildContext context, int index)=>Divider(color: Colors.black,),
+                    itemBuilder: (BuildContext context, int index)=> InkWell(
+                      onTap: () {
+                        Get.back();
+                        Get.updateLocale( localsLang[index]['Locale']);
+                      },
+                      child: Container(
+                        padding: EdgeInsets.symmetric(vertical: 12 , horizontal: 8),
+                        child: Row(
+                          children: [
+                            SvgPicture.asset(
+                              localsLang[index]['img'],
+                              width: 30,
+                              height: 20,
+                            ),
+                            Expanded(child: Text(
+                              localsLang[index]['name'],
+                              style: TextStyle(fontSize: 16 , color: Colors.grey[600])))
+                          ],
+                        ),
+                      ),
+                    ),
+
+                  ),
+                ],
+              ),
+            ),
           ),
         ),
       ],

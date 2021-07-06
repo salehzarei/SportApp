@@ -21,8 +21,8 @@ class CategoryList extends StatefulWidget {
 
 class _CategoryListState extends State<CategoryList> {
 
-  final Controller activ = Get.put(Controller());
-  final RegisterFunction registerFunction = Get.put(RegisterFunction());
+  final registerFunction = RegisterFunction.to;
+  final activ = Controller.to;
 
   bool _loaded = false;
   String _token;

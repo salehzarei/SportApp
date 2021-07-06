@@ -4,6 +4,8 @@ import 'package:sportapplication/controller/Service/Request.dart';
 
 class AppFunction extends GetxController{
 
+  static AppFunction get to => Get.find<AppFunction>();
+
   final getDividerLoading = true.obs;
   DividerModel dividerModel;
 

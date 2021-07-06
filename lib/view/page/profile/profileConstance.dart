@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 itemProfile(
     {@required BuildContext context, @required String title, @required onTap}) {

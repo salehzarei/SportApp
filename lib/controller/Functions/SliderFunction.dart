@@ -6,7 +6,7 @@ import 'package:sportapplication/Model/SliderModel.dart';
 import 'package:sportapplication/controller/Service/Request.dart';
 
 class SliderFunction extends GetxController {
-
+  static SliderFunction get to => Get.find<SliderFunction>();
   List<SliderModel> sliderList = [];
 
   final aboutLoading = true.obs;

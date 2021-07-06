@@ -24,10 +24,9 @@ class EditArticlePage extends StatefulWidget {
 
 class _EditArticlePageState extends State<EditArticlePage> {
 
-
-  final RegisterFunction registerFunction = Get.put(RegisterFunction());
-  final PackageFunction addPackage = Get.put(PackageFunction());
-  final ArticleFunction articleFunction = Get.put(ArticleFunction());
+  final registerFunction = RegisterFunction.to;
+  final addPackage = PackageFunction.to;
+  final articleFunction = ArticleFunction.to;
 
   FocusNode _titleFocus;
   TextEditingController _titleController;

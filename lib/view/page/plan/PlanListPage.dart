@@ -13,7 +13,7 @@ class PackageListPage extends StatefulWidget {
 
 class _PackageListPageState extends State<PackageListPage> {
 
-  final PlanFunction planFunction = Get.put(PlanFunction());
+  final planFunction = PlanFunction.to;
 
   TextEditingController _discountController;
   FocusNode _discountFocus;

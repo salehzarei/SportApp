@@ -13,7 +13,7 @@ class FollowPage extends StatefulWidget {
 
 class _FollowPageState extends State<FollowPage> {
 
-  final RegisterFunction registerFunction = Get.put(RegisterFunction());
+  final registerFunction = RegisterFunction.to;
   String _token;
 
   @override

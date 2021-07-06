@@ -16,7 +16,8 @@ class MyPackage extends StatefulWidget {
 
 class _MyPackageState extends State<MyPackage> {
 
-  final PackageFunction addPackage = Get.put(PackageFunction());
+  final addPackage = PackageFunction.to;
+
   List<MyPackagePost> _myListPackage = [];
   bool _loaded = false;
   String _token;

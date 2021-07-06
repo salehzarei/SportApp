@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:sportapplication/controller/Functions/ArticleFunction.dart';
 import 'package:sportapplication/controller/util.dart';
@@ -16,7 +15,7 @@ class ArticleTab extends StatefulWidget {
 }
 
 class _ArticleTabState extends State<ArticleTab> {
-  final ArticleFunction articleFunction = Get.put(ArticleFunction());
+  final articleFunction = ArticleFunction.to;
 
   @override
   void initState() {

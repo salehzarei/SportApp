@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:sportapplication/controller/Functions/SubSetFunctoin.dart';
 import 'package:sportapplication/controller/util.dart';
@@ -19,7 +18,7 @@ class SubsetTab extends StatefulWidget {
 
 class _SubsetTabState extends State<SubsetTab> {
 
-  final SubSetFunction subSetFunction = Get.put(SubSetFunction());
+  final subSetFunction = SubSetFunction.to;
 
   @override
   void initState() {

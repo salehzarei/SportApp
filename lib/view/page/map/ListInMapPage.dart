@@ -18,11 +18,12 @@ class _ListInMapPageState extends State<ListInMapPage> {
 
   Set<Marker> _markers = {};
   Completer<GoogleMapController> _controller = Completer();
-  final RegisterFunction registerFunction = Get.put(RegisterFunction());
   int indexItem = 0;
   List<String> accountList = [ 'باشگاه', 'مربی', 'دکتر', 'فروشگاه'];
   String _token;
   bool showUser = false;
+
+  final registerFunction = RegisterFunction.to;
 
   @override
   void initState() {

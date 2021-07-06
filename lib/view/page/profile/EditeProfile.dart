@@ -14,7 +14,8 @@ class EditeProfile extends StatefulWidget {
 }
 
 class _EditeProfileState extends State<EditeProfile> {
-  final ProfileFunctions pro = Get.put(ProfileFunctions());
+  final pro = ProfileFunctions.to;
+
   Completer<GoogleMapController> controllerrs = Completer();
   static const LatLng _center = const LatLng(0, 0);
 

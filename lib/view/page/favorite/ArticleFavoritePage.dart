@@ -11,7 +11,7 @@ class ArticleFavoritePage extends StatefulWidget {
 }
 
 class _ArticleFavoritePageState extends State<ArticleFavoritePage> {
-  final ArticleFunction articleFunction = Get.put(ArticleFunction());
+  final articleFunction = ArticleFunction.to;
   String _token;
 
   @override

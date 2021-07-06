@@ -27,11 +27,12 @@ class _RegisterPageState extends State<RegisterPage> {
   TextEditingController _addressController ;
   FocusNode _addressFocus;
 
-  final Controller step = Get.put(Controller());
-  final SliderFunction sliderFunction = Get.put(SliderFunction());
   final FirebaseMessaging _firebaseToken = FirebaseMessaging();
   Completer<GoogleMapController> controllerr = Completer();
   static const LatLng _center = const LatLng(36.30, 59.58);
+
+  final step = Controller.to;
+  final sliderFunction = SliderFunction.to;
 
   LatLng _lastMapPosition = _center;
   void findPersonActivityScopeWhere(List<dynamic> active, int ids) {

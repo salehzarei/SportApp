@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
+import 'package:sms_autofill/sms_autofill.dart';
 import 'package:sportapplication/controller/Functions/RegisterFunction.dart';
 import 'package:sportapplication/controller/util.dart';
 import 'package:sportapplication/view/component/Constans.dart';
@@ -13,7 +14,7 @@ class CheckPhonePage extends StatefulWidget {
 }
 
 class _CheckPhonePageState extends State<CheckPhonePage> {
-  final RegisterFunction check = Get.put(RegisterFunction());
+  final check = RegisterFunction.to;
 
   TextEditingController _mobileController;
   bool _clicked = false;
@@ -74,38 +75,41 @@ class _CheckPhonePageState extends State<CheckPhonePage> {
                     height: 40,
                     child:ElevatedButton(
                       onPressed: () {
-
                         if(_mobileController.text.isEmpty){
                           errorSnackBar(text: 'موبایل را وارد کنید', error: true, context: context);
                           return;
                         }
-
                         if(_mobileController.text.length != 11){
                           errorSnackBar(text: 'موبایل را اشتباه وارد کرده اید!', error: true, context: context);
                           return;
                         }
-                        if(mounted){
                           setState(() {
-                            check.checkMobile(_mobileController.text).then((value) {
-                              if(value == 200){
-                                check.getVerificationCode(_mobileController.text).then((value2){
-                                  if(value2 == 200){
-                                    check.mobile.value=_mobileController.text;
-                                    Get.to(VerificationCodePage());
-                                  }else{
-                                    listSnackBar(list: check.errorMassages, err: true);
-                                  }
-                                });
+                            _clicked = true;
+                          });
+                        check.checkMobile(_mobileController.text).then((value) {
+                          if(value == 200){
+                            check.getVerificationCode(_mobileController.text).then((value2){
+                              setState(() {
+                                _clicked = false;
+                              });
+                              if(value2 == 200){
+                                check.mobile.value=_mobileController.text;
+                                Get.to(VerificationCodePage());
                               }else{
                                 listSnackBar(list: check.errorMassages, err: true);
                               }
                             });
-                          });
-                        }
+                          }else{
+                            setState(() {
+                              _clicked = false;
+                            });
+                            listSnackBar(list: check.errorMassages, err: true);
+                          }
+                        });
                       },
                       child: _clicked ? Center(
                         child: SpinKitThreeBounce(
-                          color: Theme.of(context).primaryColorDark,
+                          color: Colors.white,
                           size: 25.0,
                         ),
                       ):Text(

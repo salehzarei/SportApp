@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:sportapplication/controller/Functions/PlanFunction.dart';
 import 'package:sportapplication/controller/util.dart';
@@ -12,7 +11,9 @@ class MyBoxPage extends StatefulWidget {
 }
 
 class _MyBoxPageState extends State<MyBoxPage> {
-  final PlanFunction pack = Get.put(PlanFunction());
+
+  final pack = PlanFunction.to;
+
   @override
   void initState() {
     getShared('token').then((t){
@@ -43,16 +44,13 @@ class _MyBoxPageState extends State<MyBoxPage> {
             textDirection: TextDirection.rtl,
             child: pack.mypackLoading.value
                 ? loading(color: Theme.of(context).primaryColorDark)
-                : Directionality(
-                    textDirection: TextDirection.rtl,
-                    child:pack.planModel.data.isEmpty ? noItem(): ListView.builder(
-                      itemCount: pack.planModel.data.length,
-                      padding: EdgeInsets.only(top: 10),
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) => itemMyBox(
-                          context: context, lists: pack.planModel.data[index]),
-                    ),
-                  ),
+                : pack.planModel.data.isEmpty ? noItem(): ListView.builder(
+                  itemCount: pack.planModel.data.length,
+                  padding: EdgeInsets.only(top: 10),
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) => itemMyBox(
+                      context: context, lists: pack.planModel.data[index]),
+                ),
           ),
         ));
   }

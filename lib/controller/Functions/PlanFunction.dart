@@ -5,6 +5,7 @@ import 'package:sportapplication/Model/PlanModel.dart';
 import 'package:sportapplication/controller/Service/Request.dart';
 
 class PlanFunction extends GetxController {
+  static PlanFunction get to => Get.find<PlanFunction>();
   final planLoading = false.obs;
   final mypackLoading = false.obs;
 

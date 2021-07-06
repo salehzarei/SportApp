@@ -13,7 +13,7 @@ class FaqPage extends StatefulWidget {
 
 class _FaqPageState extends State<FaqPage> {
 
-  final SliderFunction faqF = Get.put(SliderFunction());
+  final faqF = SliderFunction.to;
 
   @override
   void initState() {

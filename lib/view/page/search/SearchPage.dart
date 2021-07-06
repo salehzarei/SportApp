@@ -13,15 +13,11 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
-  final Controller active = Get.put(Controller());
-
+  final active = Controller.to;
+  final packageFunction = PackageFunction.to;
   FocusNode _searchFocus = FocusNode();
-
   TextEditingController _searchController = TextEditingController();
-
-  final PackageFunction packageFunction = Get.put(PackageFunction());
   String _token;
-
   @override
   void initState() {
     getShared('token').then((value) {

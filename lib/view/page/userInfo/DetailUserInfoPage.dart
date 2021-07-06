@@ -1,4 +1,3 @@
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -28,8 +27,8 @@ class DetailUserInfoPage extends StatefulWidget {
 class _DetailUserInfoPageState extends State<DetailUserInfoPage>
     with SingleTickerProviderStateMixin {
 
-  final RegisterFunction registerFunction = Get.put(RegisterFunction());
-  final SubSetFunction subSetFunction = Get.put(SubSetFunction());
+  final registerFunction = RegisterFunction.to;
+  final subSetFunction = SubSetFunction.to;
 
   TabController _tabController;
 

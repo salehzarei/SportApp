@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:sportapplication/controller/Functions/Controller.dart';
 
 class PackagesListItem extends StatelessWidget {
-  final Controller off = Get.put(Controller());
+  final off = Controller.to;
 
   @override
   Widget build(BuildContext context) {

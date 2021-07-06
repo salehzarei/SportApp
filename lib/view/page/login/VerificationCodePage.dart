@@ -1,10 +1,12 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
-import 'package:pin_code_text_field/pin_code_text_field.dart';
+import 'package:sms_autofill/sms_autofill.dart';
 import 'package:sportapplication/controller/Functions/RegisterFunction.dart';
 import 'package:sportapplication/controller/util.dart';
+import 'package:sportapplication/view/component/Constans.dart';
 import 'package:sportapplication/view/page/login/NewRegisterPage.dart';
 
 class VerificationCodePage extends StatefulWidget {
@@ -16,24 +18,30 @@ class VerificationCodePage extends StatefulWidget {
 
 class _VerificationCodePageState extends State<VerificationCodePage> {
 
-  final RegisterFunction check = Get.put(RegisterFunction());
+  final check = RegisterFunction.to;
 
   Timer _timer;
   int _start = 180;
-  String _time;
+  String _time=" ";
+  String _code;
+  String a ="0";
+
+  TextEditingController _codeNumber;
+  bool _clicked = false;
 
   @override
   void initState() {
+    _codeNumber = TextEditingController();
     _time = _start.toString();
+    _initSms();
     startTimer();
     super.initState();
   }
 
   void startTimer() {
-    const oneSec = const Duration(seconds: 1);
     _timer = new Timer.periodic(
-      oneSec,
-      (Timer timer) {
+      Duration(seconds: 1),
+          (Timer timer) {
         if (_start == 0) {
           setState(() {
             timer.cancel();
@@ -52,6 +60,7 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
   @override
   void dispose() {
     _timer.cancel();
+    _codeNumber.dispose();
     super.dispose();
   }
 
@@ -85,45 +94,32 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
                 Container(
                   margin: EdgeInsets.only(top: 20, bottom: 15),
                   padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-                  decoration:
-                      BoxDecoration(borderRadius: BorderRadius.circular(10)),
-                  child: FittedBox(
-                    child: PinCodeTextField(
-                      onDone: (text) {
-                        check.checkVerificationCodes(text).then((value) {
-                          if(value == 200){
-                            check.code.value = text;
-                            Get.offAll(NewRegisterPage());
-                          }else{
-                            listSnackBar(
-                                list: check.errorMassages,
-                                err: true);
-                          }
-                        });
-                      },
-                      autofocus: true,
-                      // controller: controller,
-                      hideCharacter: false,
-                      highlight: true,
-                      highlightColor: Colors.grey[600],
-                      defaultBorderColor: Colors.grey[600],
-                      hasTextBorderColor: Theme.of(context).primaryColorDark,
-                      maxLength: 4,
-                      pinBoxWidth: 70,
-                      pinBoxHeight: 40,
-                      wrapAlignment: WrapAlignment.spaceAround,
-                      pinBoxDecoration:
-                          ProvidedPinBoxDecoration.underlinedPinBoxDecoration,
-                      pinTextStyle:
-                          TextStyle(fontSize: 22.0, color: Colors.black),
-                      pinTextAnimatedSwitcherTransition:
-                          ProvidedPinBoxTextAnimation.scalingTransition,
-                      pinTextAnimatedSwitcherDuration:
-                          Duration(milliseconds: 150),
-                      highlightAnimationBeginColor: Colors.black,
-                      // highlightAnimationEndColor: Colors.blue,
-                      keyboardType: TextInputType.number,
+                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                  child: PinFieldAutoFill(
+                    decoration: UnderlineDecoration(
+                      colorBuilder: PinListenColorBuilder(Colors.red[600], Colors.grey[300]),
                     ),
+                    controller: _codeNumber,
+                    onCodeSubmitted: (code) {
+                       setState(() {
+                         _code = code;
+                         _clicked = true;
+                       });
+                       _verificationReq();
+                    },
+                    currentCode:_code ,
+                    codeLength: 4,
+                    onCodeChanged: (code) {
+                     _code = code;
+                      print(code);
+                      if (code.length == 4) {
+                        FocusScope.of(context).requestFocus(FocusNode());
+                        setState(() {
+                          _clicked = true;
+                        });
+                        _verificationReq();
+                      }
+                    },
                   ),
                 ),
                 InkWell(
@@ -151,12 +147,60 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
                       style: TextStyle(fontSize: 15, color: Colors.black),
                     ),
                   ),
-                )
+                ),
+                Container(
+                    margin: EdgeInsets.only(top: 15,right: 30 , left: 30 , bottom: 40),
+                    width: Get.width,
+                    height: 40,
+                    child:ElevatedButton(
+                      onPressed: () {
+                        if(_codeNumber.text.isEmpty){
+                          errorSnackBar(text: 'کد تایید را وارد کنید', error: true, context: context);
+                          return;
+                        }
+                        _verificationReq();
+                      },
+                      child: _clicked ? Center(
+                        child: SpinKitThreeBounce(
+                          color: Colors.white,
+                          size: 25.0,
+                        ),
+                      ):Text(
+                        "ثبت و ادامه",
+                        style: TextStyle(fontSize: 14, color: Colors.white),
+                      ),
+                      style: ButtonStyle(
+                          backgroundColor:
+                          MaterialStateProperty.all(Colors.red)),
+                    )
+
+                ),
               ],
             ),
           ),
         ),
       ),
     );
+  }
+
+  _verificationReq(){
+    setState(() {
+      _clicked = true;
+    });
+    check.checkVerificationCodes(_codeNumber.text).then((value) {
+      setState(() {
+        _clicked = false;
+      });
+      if(value == 200){
+        check.code.value = _codeNumber.text;
+        Get.to(NewRegisterPage());
+      }else{
+        listSnackBar(list: check.errorMassages,err: true);
+      }
+    });
+  }
+
+  Future<void> _initSms() async {
+    await SmsAutoFill().listenForCode;
   }
 }

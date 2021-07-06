@@ -10,7 +10,7 @@ class RulesPage extends StatefulWidget {
 }
 
 class _RulesPageState extends State<RulesPage> {
-  final SliderFunction roulef = Get.put(SliderFunction());
+  final roulef = SliderFunction.to;
 
   @override
   void initState() {
