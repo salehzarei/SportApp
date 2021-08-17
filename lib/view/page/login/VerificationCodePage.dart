@@ -34,7 +34,6 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
     _codeNumber = TextEditingController();
     _time = _start.toString();
     _initSms();
-
     startTimer();
     super.initState();
   }

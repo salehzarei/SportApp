@@ -105,7 +105,7 @@ showBtn({
   @required checkCouponClick,
   @required int discountPrice,
   @required showBtnState,
-  @required payClick} ) {
+  @required payClick}) {
   showModalBottomSheet(context: context,
       // backgroundColor: Theme.of(context).primaryColorDark,
       backgroundColor: Colors.white,

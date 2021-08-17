@@ -34,12 +34,13 @@ class RegisterFunction extends GetxController {
   final code = ''.obs;
   List<CategoryAccountTypeModel> categoryList = [];
 
-  ProviderModel providerList ;
-  ShowProviderModel showProviderModel ;
-  UpdateModel updateModel ;
+  ProviderModel providerList;
+
+  ShowProviderModel showProviderModel;
+
+  UpdateModel updateModel;
 
   List<dynamic> errorMassages = [];
-
 
   void fetchCity(int ostan) {
     cityLoding.value = true;
@@ -70,25 +71,24 @@ class RegisterFunction extends GetxController {
   }
 
   Future sendRegisterData(
-      {
-     @required String name,
-     @required String mobile,
-     @required String email,
-     @required String address,
-     @required String code,
-     @required String pass,
-     @required String verificationToken,
-     @required int ostan,
-     @required int city,
-     @required String sysApp,
-     @required String lat,
-     @required String long,
-     @required int level,
-     @required List interest,
-     @required String firebase_token,
-     @required List acivityScope,
-     @required String description,
-     @required String inviteCode}) async {
+      {@required String name,
+      @required String mobile,
+      @required String email,
+      @required String address,
+      @required String code,
+      @required String pass,
+      @required String verificationToken,
+      @required int ostan,
+      @required int city,
+      @required String sysApp,
+      @required String lat,
+      @required String long,
+      @required int level,
+      @required List interest,
+      @required String firebase_token,
+      @required List acivityScope,
+      @required String description,
+      @required String inviteCode}) async {
     errorMassages = [];
     registerLoading.value = true;
     final response = await ApiService().registerUser(
@@ -109,17 +109,16 @@ class RegisterFunction extends GetxController {
         firebase_token,
         acivityScope,
         inviteCode,
-        description
-    );
+        description);
     if (response.statusCode == 200) {
       bool err = response.body['error'];
-      if(!err){
+      if (!err) {
         saveShared("token", response.body['token'].toString());
         errorMassages = (response.body['report_msg'] is List)
             ? response.body['report_msg']
             : [response.body['report_msg']];
         return 200;
-      }else{
+      } else {
         errorMassages = (response.body['error_msg'] is List)
             ? response.body['error_msg']
             : [response.body['error_msg']];
@@ -137,13 +136,13 @@ class RegisterFunction extends GetxController {
     final response = await ApiService().checkPhone(m);
     if (response.statusCode == 200) {
       bool error = response.body['error'];
-      if(!error){
+      if (!error) {
         errorMassages = (response.body['report_msg'] is List)
             ? response.body['report_msg']
             : [response.body['report_msg']];
 
         return 200;
-      }else{
+      } else {
         errorMassages = (response.body['error_msg'] is List)
             ? response.body['error_msg']
             : [response.body['error_msg']];
@@ -156,17 +155,22 @@ class RegisterFunction extends GetxController {
   }
 
   Future<int> checkLogin({@required String token}) async {
-    checkLoginLoading.value = true;
-    final response = await ApiService().checkLogin(token: token);
-    if (response.statusCode == 200) {
-      checkerror.value = response.body['error'];
-      checkLoginLoading.value = false;
-      if (!checkerror.value) {
-        return 200;
+    try {
+      checkLoginLoading.value = true;
+      final response = await ApiService().checkLogin(token: token);
+      if (response.statusCode == 200) {
+        checkerror.value = response.body['error'];
+        checkLoginLoading.value = false;
+        if (checkerror.value) {
+          return 201;
+        } else {
+          return 200;
+        }
       } else {
-        return 201;
+        checkLoginLoading.value = false;
+        return 400;
       }
-    } else {
+    } catch (e) {
       checkLoginLoading.value = false;
       return 400;
     }
@@ -174,7 +178,7 @@ class RegisterFunction extends GetxController {
 
   Future<UpdateModel> checkUpdate() async {
     final response = await ApiService().checkUpdate();
-    if (response.statusCode == 200 ) {
+    if (response.statusCode == 200) {
       updateModel = UpdateModel.fromJson(response.body);
       return updateModel;
     } else {
@@ -192,12 +196,12 @@ class RegisterFunction extends GetxController {
     print("response.body =>        ${response.body}");
     if (response.statusCode == 200) {
       bool error = response.body['error'];
-      if(!error){
+      if (!error) {
         errorMassages = (response.body['report_msg'] is List)
             ? response.body['report_msg']
             : [response.body['report_msg']];
         return 200;
-      }else{
+      } else {
         errorMassages = (response.body['error_msg'] is List)
             ? response.body['error_msg']
             : [response.body['error_msg']];
@@ -209,10 +213,14 @@ class RegisterFunction extends GetxController {
     }
   }
 
-  Future<int> login({@required String mobile, @required String pass, @required String firebase_token}) async {
+  Future<int> login(
+      {@required String mobile,
+      @required String pass,
+      @required String firebase_token}) async {
     loginLoading.value = true;
     errorMassages = [];
-    final response = await ApiService().login(pass: pass, mobile: mobile, firebase_token: firebase_token);
+    final response = await ApiService()
+        .login(pass: pass, mobile: mobile, firebase_token: firebase_token);
     if (response.statusCode == 200) {
       checkerror.value = response.body['error'];
       if (!checkerror.value) {
@@ -238,13 +246,13 @@ class RegisterFunction extends GetxController {
     final response = await ApiService().verificationCode(m);
     if (response.statusCode == 200) {
       bool error = response.body['error'];
-      if(!error){
+      if (!error) {
         errorMassages = (response.body['report_msg'] is List)
             ? response.body['report_msg']
             : [response.body['report_msg']];
         verificationCode.value = response.body['verification_token'];
         return 200;
-      }else{
+      } else {
         errorMassages = (response.body['error_msg'] is List)
             ? response.body['error_msg']
             : [response.body['error_msg']];
@@ -256,21 +264,28 @@ class RegisterFunction extends GetxController {
     }
   }
 
-  Future resetPass({@required String mobile, @required String code,@required String pass,@required String verification_token})async {
-
+  Future resetPass(
+      {@required String mobile,
+      @required String code,
+      @required String pass,
+      @required String verification_token}) async {
     resetPassLoading.value = true;
     errorMassages.clear();
 
-    final response = await ApiService().resetPass(verification_token: verification_token,code: code,mobile: mobile,pass: pass);
+    final response = await ApiService().resetPass(
+        verification_token: verification_token,
+        code: code,
+        mobile: mobile,
+        pass: pass);
 
     if (response.statusCode == 200) {
       bool err = response.body['error'];
-      if(!err){
+      if (!err) {
         errorMassages = (response.body['report_msg'] is List)
             ? response.body['report_msg']
             : [response.body['report_msg']];
         return 200;
-      }else{
+      } else {
         errorMassages = (response.body['error_msg'] is List)
             ? response.body['error_msg']
             : [response.body['error_msg']];
@@ -280,14 +295,14 @@ class RegisterFunction extends GetxController {
       errorMassages = ["خطا در برقراری ارتباط با سرور"];
       return 400;
     }
-
   }
 
-  Future getProductCategories(int level ,{@required String token}) async {
+  Future getProductCategories(int level, {@required String token}) async {
     categoryLoading.value = true;
     categoryList.clear();
 
-    final response = await ApiService().getCategoryAccountType(token: token , level: level);
+    final response =
+        await ApiService().getCategoryAccountType(token: token, level: level);
 
     if (response.statusCode == 200) {
       final List<dynamic> responseData = response.body['post'];
@@ -300,15 +315,16 @@ class RegisterFunction extends GetxController {
     }
   }
 
-  Future providers(
-      {@required String token,
-       @required String level,
-       @required String following,
-       @required String special,
-       @required String activity_scope,
+  Future providers({
+    @required String token,
+    @required String level,
+    @required String following,
+    @required String special,
+    @required String activity_scope,
   }) async {
     providerLoading.value = true;
-    final response = await ApiService().providers(token , level , following,special,activity_scope);
+    final response = await ApiService()
+        .providers(token, level, following, special, activity_scope);
 
     if (response.statusCode == 200) {
       providerList = ProviderModel.fromJson(response.body);
@@ -320,14 +336,11 @@ class RegisterFunction extends GetxController {
       update();
       notifyChildrens();
     }
-
   }
 
-  Future showProvider(
-      {@required String token,
-       @required String bId }) async {
+  Future showProvider({@required String token, @required String bId}) async {
     showProviderLoading.value = true;
-    final response = await ApiService().showProvider(token , bId);
+    final response = await ApiService().showProvider(token, bId);
     if (response.statusCode == 200) {
       showProviderModel = ShowProviderModel.fromJson(response.body);
       showProviderLoading.value = false;
@@ -340,50 +353,47 @@ class RegisterFunction extends GetxController {
     }
   }
 
- // آنفالو کردن پروایدر
-  Future unFollow(String token , String id) async {
-    final response = await ApiService().unfollow(token , id );
+  // آنفالو کردن پروایدر
+  Future unFollow(String token, String id) async {
+    final response = await ApiService().unfollow(token, id);
     if (response.statusCode == 200) {
       checkerror.value = response.body['error'];
-      if( checkerror.value){
+      if (checkerror.value) {
         errorMassages = (response.body['error_msg'] is List)
             ? response.body['error_msg']
             : [response.body['error_msg']];
-      }else{
+      } else {
         errorMassages = (response.body['report_msg'] is List)
             ? response.body['report_msg']
             : [response.body['report_msg']];
       }
       update();
     } else {
-      checkerror.value  = true;
+      checkerror.value = true;
       errorMassages = ["خطا در برقراری ارتباط با سرور"];
       update();
     }
-
   }
 
- // فالو کردن پروایدر
-  Future follow(String token , String id) async {
-    final response = await ApiService().follow(token , id );
+  // فالو کردن پروایدر
+  Future follow(String token, String id) async {
+    final response = await ApiService().follow(token, id);
     if (response.statusCode == 200) {
       checkerror.value = response.body['error'];
-      if( checkerror.value){
+      if (checkerror.value) {
         errorMassages = (response.body['error_msg'] is List)
             ? response.body['error_msg']
             : [response.body['error_msg']];
-      }else{
+      } else {
         errorMassages = (response.body['report_msg'] is List)
             ? response.body['report_msg']
             : [response.body['report_msg']];
       }
       update();
     } else {
-      checkerror.value  = true;
+      checkerror.value = true;
       errorMassages = ["خطا در برقراری ارتباط با سرور"];
       update();
     }
-
   }
-
 }
